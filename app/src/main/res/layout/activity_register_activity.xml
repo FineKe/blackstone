@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bootstrap_brand_info"
+    tools:context="com.hdu.myship.blackstone.register_activity">
+
+    <com.beardedhen.androidbootstrap.BootstrapWell
+        android:layout_width="290dp"
+        android:layout_height="179dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/bootstrap_gray_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="129dp"
+        android:id="@+id/bootstrapWell2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/register_user_name_bootstrapEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:hint="name"
+                android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:hint="password"
+                android:id="@+id/register_user_pwd_bootstrapEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:roundedCorners="true"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:maxLength="20"
+                app:bootstrapBrand="primary"/>
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:hint="phoneNumber"
+                android:id="@+id/register_get_user_phone_bootstrapEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:roundedCorners="true"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="11"
+                app:bootstrapBrand="primary"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <com.beardedhen.androidbootstrap.BootstrapEditText
+                    android:id="@+id/get_verifyCode_bootstrapEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    app:roundedCorners="true"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="6"
+                    app:bootstrapBrand="primary"/>
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/get_verifyCode_bootstrapButton"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:gravity="center_horizontal"
+                    android:text="获取验证码"
+                    app:roundedCorners="true"
+                    android:layout_marginLeft="10dp"
+                    app:bootstrapBrand="success"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </com.beardedhen.androidbootstrap.BootstrapWell>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/regester_submit_bootstrapButton"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:text="提交"
+        app:roundedCorners="true"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/bootstrapWell2"
+        app:layout_constraintVertical_bias="0.100000024"
+        tools:layout_editor_absoluteY="312dp"
+        tools:layout_editor_absoluteX="120dp"
+        app:showOutline="false"
+        android:gravity="center_horizontal|center_vertical"
+        app:bootstrapBrand="secondary"/>
+</android.support.constraint.ConstraintLayout>

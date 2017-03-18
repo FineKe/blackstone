@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         InitView();//初始化控件
-        register_button.setOnClickListener(this);
+        reset_password_button.setOnClickListener(this);
         register_button.setOnClickListener(this);
         login_button.setOnClickListener(this);
 
@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 register(this);
                 break;
             case R.id.reset_password_bootstrapButton:
+                resetPwd(this);
                 break;
             default:break;
         }
@@ -125,9 +126,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         requestQueue.add(request);
     }
 
-    public void resetPwd()//密码重置处理
+    public void resetPwd(Context context)//密码重置处理
     {
-
+            Intent intent=new Intent(context,ResetPasswordActivity.class);
+            startActivity(intent);
     }
 
     public void register(Context context)//用户注册处理

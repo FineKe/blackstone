@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="#f6f6f6"
+    >
+    <LinearLayout
+        android:id="@+id/tab_species"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:clickable="false"
+            android:id="@+id/imageButton_species"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/delete_24"
+             />
+
+        <TextView
+            android:id="@+id/textView_species"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:text="种类" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_guide"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:clickable="false"
+            android:id="@+id/imageButton_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/delete_24"
+             />
+
+        <TextView
+            android:id="@+id/textView_guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:text="指南" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_add_record"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:clickable="false"
+            android:id="@+id/imageButton_add_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/delete_24"
+             />
+
+        <TextView
+            android:id="@+id/textView_add_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:text="添加记录" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_personal_cneter"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:clickable="false"
+            android:id="@+id/imageButton_personal_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/delete_24"
+            />
+
+        <TextView
+            android:id="@+id/textView_personal_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:text="个人中心" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_setting"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:clickable="false"
+            android:id="@+id/imageButton_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/delete_24"
+            />
+
+        <TextView
+            android:id="@+id/textView_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center_horizontal"
+            android:text="设置" />
+    </LinearLayout>
+
+
+</LinearLayout>

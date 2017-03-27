@@ -7,6 +7,6 @@
     <string name="reset_pwd_button">"提交"</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="queryHint">请输入搜索内容</string>
     <string name="action_settings">Settings</string>
 </resources>

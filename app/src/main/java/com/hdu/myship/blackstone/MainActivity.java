@@ -11,13 +11,27 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Set;
 
+import JsonUtil.JsonResolverList;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private int textColor=Color.argb(100,74,144,226);
+    private String getSpeciesList_url="http://api.blackstone.ebirdnote.cn/v1/species/list";
+    private RequestQueue requestQueue;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -55,12 +69,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         initEvents();
+        initData();
 
     }
+
+    private void initData() {//加载物种清单
+        JsonObjectRequest getSpeciesList=new JsonObjectRequest(Request.Method.GET, getSpeciesList_url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                int code;
+                JSONObject data;
+                try {
+                    code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        data=jsonObject.getJSONObject("data");
+                        JsonResolverList jsonResolverList=new JsonResolverList(data);
+                        jsonResolverList.Resolve();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(MainActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestQueue.add(getSpeciesList);
+
+    }
+
     private void initView() {
         fragmentManager=getSupportFragmentManager();
         transaction=fragmentManager.beginTransaction();//开启一个事物
-
+        requestQueue= Volley.newRequestQueue(this);//创建请求队列
         tab_species= (LinearLayout) findViewById(R.id.tab_species);
         tab_guide= (LinearLayout) findViewById(R.id.tab_guide);
         tab_add_record= (LinearLayout) findViewById(R.id.tab_add_record);
@@ -167,4 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         transaction.commit();
     }
+
+
+
 }

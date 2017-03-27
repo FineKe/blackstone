@@ -73,7 +73,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void login(final Context context, String phone, String pwd)//登录处理
-    {
+    {   if(phone.equals("")||pwd.equals(""))
+        {
+            Toast.makeText(context,"用户名和密码不能为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Map<String,String> map=new HashMap<>();
         map.put("username",phone);
         map.put("pwd",pwd);
@@ -92,14 +96,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     code=jsonObject.getInt("code");
                     message=jsonObject.getString("message");
-                    data=jsonObject.getJSONObject("data");
-                    user=data.getJSONObject("user");
-                    token=data.getString("token");
-                    expireAt=data.getLong("expireAt");
-                    Log.d(TAG, "onResponse: "+user.toString());
-                    //userInfo.setId(user.getInt("id"));
-                    //userInfo.setUsername(user.getString("username"));
-                    //userInfo.setNikname(user.getString("nickname"));
                     if(code==88)
                     {
                         Toast.makeText(context,"登陆成功",Toast.LENGTH_SHORT).show();
@@ -111,16 +107,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     {
                         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d(TAG, "onResponse: "+message);
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
 
+                }
 
-            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                    Toast.makeText(context,"请求失败",Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(request);

@@ -43,10 +43,11 @@ public class JsonResolverList {
                     species.setId(object.getInt("id"));
                     species.setChineseName(object.getString("chineseName"));
                     species.setLatinName(object.getString("latinName"));
-                    species.setOrder(object.getString("order"));
-                    Log.d("MAIN", "Resolve: "+object.getString("family"));
-                    family=object.getString("family");
-                    species.setFamily(family);
+                   // species.setOrder(object.getString("order"));
+                   // Log.d("MAIN", "Resolve: "+object.getString("family"));
+                   // family=object.getString("family");
+                    //species.setFamily(family);
+                    species.setSpeciesType(object.getString("speciesType"));
                     species.setMainPhoto(object.getString("mainPhoto"));
                     species.saveFast();
 

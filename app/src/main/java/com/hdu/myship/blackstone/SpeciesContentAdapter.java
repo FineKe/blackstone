@@ -2,6 +2,7 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import database.Species;
  */
 
 public class SpeciesContentAdapter extends RecyclerView.Adapter<SpeciesContentAdapter.MyHolder> {
+    private String dealPicure="?imageView2/1/w/200/h/200";
     private  List<Species>  list=new ArrayList<>();
     private Context context;
     public SpeciesContentAdapter(List<Species> list, Context context ) {
@@ -37,14 +39,18 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<SpeciesContentAd
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyHolder holder=new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_item,parent,false));
+//        MyHolder holder=new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_item,parent,false));
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_item,parent,false);
+        MyHolder holder=new MyHolder(view);
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final MyHolder holder, int position) {
         Species species=list.get(position);
-        Glide.with(context).load(species.getMainPhoto()).into(holder.im);
+        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.drawable.loading).crossFade().override(100,100).fitCenter().into(holder.im);
+//        Glide.with(context).load(species.getMainPhoto()).into(holder.im);
         holder.tv_latinName.setText(species.getLatinName());
         holder.tv_chineseName.setText(species.getChineseName());
         holder.tv_mo.setText(species.getFamily());
@@ -67,5 +73,6 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<SpeciesContentAd
             tv_mo= (TextView) itemView.findViewById(R.id.tv_mo);
         }
     }
+
 
 }

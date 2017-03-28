@@ -3,6 +3,7 @@
     <dbname value="animal"></dbname>
     <version value="1"></version>
     <list>
-    <mapping class="database.Species"></mapping>
+        <mapping class="database.Species"></mapping>
+        <mapping class="database.User"></mapping>
     </list>
 </litepal>

@@ -42,7 +42,7 @@ public class SpeciesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<Species> speciesType=new ArrayList<Species>();
-                speciesType=DataSupport.findAll(Species.class);
+                speciesType=DataSupport.where("speciesType = ?",Type[position]).find(Species.class);
                 fragmentManager=getActivity().getSupportFragmentManager();
                 transaction=fragmentManager.beginTransaction();
                 SpeciesContentFragment speciesContentFragment=new SpeciesContentFragment();

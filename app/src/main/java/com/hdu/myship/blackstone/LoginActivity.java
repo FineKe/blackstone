@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
@@ -20,10 +21,13 @@ import com.beardedhen.androidbootstrap.BootstrapEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import database.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     String TAG="LOGIN";
@@ -33,7 +37,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private BootstrapButton login_button;
     private BootstrapButton register_button;
     private BootstrapButton reset_password_button;
-    private UserInfo userInfo;
+
+    private User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register_button.setOnClickListener(this);
         login_button.setOnClickListener(this);
 
+
+
     }
 
     private void InitView()
@@ -53,6 +61,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_button= (BootstrapButton) findViewById(R.id.login_bootstrapButton);
         reset_password_button= (BootstrapButton) findViewById(R.id.reset_password_bootstrapButton);
         register_button= (BootstrapButton) findViewById(R.id.regist_bootstrapButton);
+        user= DataSupport.findFirst(User.class);
+        if(user!=null)
+        {
+            user_name_Edit.setText(user.getUserName());
+            user_password_Edit.setText(user.getPassword());
+        }
+
     }
 
     @Override
@@ -86,7 +101,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, login_url, object, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                UserInfo userInfo=null;
                 int code;
                 String message;
                 JSONObject data;
@@ -98,6 +112,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     message=jsonObject.getString("message");
                     if(code==88)
                     {
+                        data=jsonObject.getJSONObject("data");
+
+                        token=data.getString("token");
+                        User user_=new User();
+                        user_.setUserName(user_name_Edit.getText().toString());
+                        user_.setPassword(user_password_Edit.getText().toString());
+                        user_.setToken(token);
+                        user_.update(1);
                         Toast.makeText(context,"登陆成功",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(context,MainActivity.class);
                         startActivity(intent);

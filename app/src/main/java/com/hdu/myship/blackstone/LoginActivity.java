@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private BootstrapButton register_button;
     private BootstrapButton reset_password_button;
 
-    private User user;
+    private User user_;
 
 
     @Override
@@ -61,11 +61,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_button= (BootstrapButton) findViewById(R.id.login_bootstrapButton);
         reset_password_button= (BootstrapButton) findViewById(R.id.reset_password_bootstrapButton);
         register_button= (BootstrapButton) findViewById(R.id.regist_bootstrapButton);
-        user= DataSupport.findFirst(User.class);
-        if(user!=null)
+        user_=new User();
+        user_= DataSupport.findFirst(User.class);
+        if(user_!=null)
         {
-            user_name_Edit.setText(user.getUserName());
-            user_password_Edit.setText(user.getPassword());
+            user_name_Edit.setText(user_.getUserName());
+            user_password_Edit.setText(user_.getPassword());
         }
 
     }
@@ -120,6 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         user_.setPassword(user_password_Edit.getText().toString());
                         user_.setToken(token);
                         user_.update(1);
+                        user_.save();
                         Toast.makeText(context,"登陆成功",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(context,MainActivity.class);
                         startActivity(intent);

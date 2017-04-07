@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.beardedhen.androidbootstrap.BootstrapEditText;
+import com.bumptech.glide.load.resource.bitmap.FileDescriptorBitmapDataLoadProvider;
 
 import org.litepal.crud.DataSupport;
 
@@ -29,6 +33,9 @@ public class SpeciesFragment extends Fragment {
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private  ListView listView_speciesClass;
+
+    private Button cancelAction;
+    private BootstrapEditText searchView;
     private List<String> listName;
     private String[] Type={"bird","amphibia","reptiles","insect"};
     @Nullable
@@ -36,6 +43,8 @@ public class SpeciesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.species,container,false);
+        cancelAction= (Button) view.findViewById(R.id.cancel_action);
+        //searchView= (BootstrapEditText) view.findViewById(R.id.searchView);
         listView_speciesClass= (ListView) view.findViewById(R.id.listView_speciesClass);
         listView_speciesClass.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,listName));
         listView_speciesClass.setOnItemClickListener(new AdapterView.OnItemClickListener() {

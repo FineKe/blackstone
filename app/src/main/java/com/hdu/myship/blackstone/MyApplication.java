@@ -3,6 +3,8 @@ package com.hdu.myship.blackstone;
 import android.app.Application;
 import android.content.Context;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import org.litepal.LitePalApplication;
 import org.litepal.util.Const;
 
@@ -17,6 +19,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context=getApplicationContext();
         LitePalApplication.initialize(context);
+        TypefaceProvider.registerDefaultIconSets();
     }
     public static Context getContext()
     {

@@ -9,4 +9,48 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="queryHint">请输入搜索内容</string>
     <string name="action_settings">Settings</string>
+    <array name="sorting_by_order">
+        <item>鹳</item>
+        <item>鹰</item>
+        <item>鸡</item>
+        <item>鹤</item>
+        <item>鸽</item>
+        <item>鹃</item>
+        <item>鸮</item>
+        <item>雨</item>
+        <item>佛</item>
+        <item>鴷</item>
+        <item>雀</item>
+    </array>
+    
+    <array name="soting_by_section">
+        <item>鹭</item>
+        <item>鹰</item>
+        <item>雉</item>
+        <item>秧</item>
+        <item>鸠</item>
+        <item>杜</item>
+        <item>鸱</item>
+        <item>雨</item>
+        <item>翠</item>
+        <item>蜂</item>
+        <item>拟</item>
+        <item>啄</item>
+        <item>鶺</item>
+        <item>叶</item>
+        <item>鹃</item>
+        <item>鹎</item>
+        <item>鹟</item>
+        <item>扇</item>
+        <item>噪</item>
+        <item>鹛</item>
+        <item>幽</item>
+        <item>绣</item>
+        <item>山</item>
+        <item>太</item>
+        <item>伯</item>
+        <item>鸦</item>
+        <item>梅</item>
+        <item>雀</item>
+    </array>
 </resources>

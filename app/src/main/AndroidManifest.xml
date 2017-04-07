@@ -30,7 +30,8 @@
             android:name=".ResetPasswordActivity"
             android:label="密码重置"
             android:parentActivityName=".LoginActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

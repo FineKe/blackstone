@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="mycolor">#3376c5</color>
+    <color name="searchViewBackground">#efefef</color>
+    <color name="slider_bar_color">#4990e2</color>
 </resources>

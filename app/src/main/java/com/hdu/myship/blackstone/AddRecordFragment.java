@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by MY SHIP on 2017/3/18.
+ * 添加记录fragment
  */
 
 public class AddRecordFragment extends Fragment{

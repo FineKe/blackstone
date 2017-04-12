@@ -9,55 +9,19 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:id="@+id/linearLayout">
-        <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/linearLayout"></LinearLayout>
 
-
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            app:fontAwesomeIcon="fa_search"
-            android:background="@color/searchViewBackground"
-            android:gravity="end"
-            />
-        <Button
-            android:id="@+id/cancel_action"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="取消"
-            android:background="#ffff"
-            android:visibility="gone"
-            />
-    </LinearLayout>
-
-
-    <com.hdu.myship.blackstone.SliderBar
-        android:id="@+id/silde"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/spcies_content_recyclerView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/spcies_content_recyclerView"
-        app:layout_constraintTop_toTopOf="@+id/spcies_content_recyclerView"
-        app:layout_constraintVertical_bias="0.498"></com.hdu.myship.blackstone.SliderBar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/spcies_content_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="0dp"
         android:duplicateParentState="false"
         android:foregroundGravity="right"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,5 +36,18 @@
         tools:layout_constraintRight_creator="1">
 
     </android.support.v7.widget.RecyclerView>
+
+    <com.hdu.myship.blackstone.SliderBar
+        android:id="@+id/silde"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spcies_content_recyclerView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/spcies_content_recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/spcies_content_recyclerView"
+        app:layout_constraintVertical_bias="0.498"></com.hdu.myship.blackstone.SliderBar>
 
 </android.support.constraint.ConstraintLayout>

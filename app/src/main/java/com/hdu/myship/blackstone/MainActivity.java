@@ -30,33 +30,39 @@ import JsonUtil.JsonResolverList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private int textColor=Color.argb(100,74,144,226);
-    private String getSpeciesList_url="http://api.blackstone.ebirdnote.cn/v1/species/list";
-    private RequestQueue requestQueue;
+    private String getSpeciesList_url="http://api.blackstone.ebirdnote.cn/v1/species/list";//物种清单获取接口
+    private RequestQueue requestQueue;//请求队列
 
-    private FragmentManager fragmentManager;
-    private FragmentTransaction transaction;
+    private FragmentManager fragmentManager;//fragment 管理者
+    private FragmentTransaction transaction;//开启一个事列
 
-    private SpeciesFragment speciesFragment;
-    private GuideFragment guideFragment;
-    private AddRecordFragment addRecordFragment;
-    private PersonalCenterFragment personalCenterFragment;
-    private SettingFragment settingFragment;
+    private SpeciesFragment speciesFragment;//创建一个speciesFragment
+    private GuideFragment guideFragment;//创建guideFragment
+    private AddRecordFragment addRecordFragment;//创建addRecordFragment
+    private PersonalCenterFragment personalCenterFragment;//创建personalCenterFragment
+    private SettingFragment settingFragment;//创建settingFragment
 
-
+    /**
+     * 底部菜单选项
+     */
     private LinearLayout tab_species;
     private LinearLayout tab_guide;
     private LinearLayout tab_add_record;
     private LinearLayout tab_personal_center;
     private LinearLayout tab_setting;
 
-    private TextView top_title;
-
+    private TextView top_title;//头部
+    /**
+     * 以下5个textview仅仅只是为展示，以后用界面替换掉
+     */
     private TextView textView_species;
     private TextView textView_guide;
     private TextView textView_add_record;
     private TextView textView_personal_center;
     private TextView textView_setting;
-
+    /**
+     * 以下5个imagebutton是底部菜单栏的图片按钮
+     */
     private ImageButton imageButton_species;
     private ImageButton imageButton_guide;
     private ImageButton imageButton_add_record;
@@ -67,13 +73,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-        initView();
-        initEvents();
-        initData();
+        initView();//初始化控件
+        initEvents();//添加逻辑事件控制
+        initData();//从网络中加载数据
 
     }
 
-    private void initData() {//加载物种清单
+    private void initData() {//加载物种清单数据
         JsonObjectRequest getSpeciesList=new JsonObjectRequest(Request.Method.GET, getSpeciesList_url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -148,24 +154,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView_setting.setTextColor(Color.BLACK);
     }
 
+    /**
+     * 主要是实现各种fragment的切换
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         transaction=fragmentManager.beginTransaction();
         resetColor();
         switch (v.getId())
         {
-            case R.id.tab_species:
+            case R.id.tab_species://切换到物种界面
                 if(speciesFragment==null)
                 {
                     speciesFragment=new SpeciesFragment();
-                    transaction.replace(R.id.frame_layout,speciesFragment);
+                    transaction.replace(R.id.frame_layout,speciesFragment);//用该fragment替换activity_main.xml的frame_layout来实现界面的切换
                 }else
                 {
                     transaction.replace(R.id.frame_layout,speciesFragment);
                 }
                 top_title.setText("物种");
                 break;
-            case R.id.tab_guide:
+            case R.id.tab_guide://切换到指南界面
                 if(guideFragment==null)
                 {
                     guideFragment=new GuideFragment();
@@ -176,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 top_title.setText("指南");
                 break;
-            case R.id.tab_add_record:
+            case R.id.tab_add_record://切换到添加记录界面
                 if(addRecordFragment==null)
                 {
                     addRecordFragment=new AddRecordFragment();
@@ -187,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 top_title.setText("添加记录");
                 break;
-            case R.id.tab_personal_cneter:
+            case R.id.tab_personal_cneter://切换到个人中心界面
                 if(personalCenterFragment==null)
                 {
                     personalCenterFragment=new PersonalCenterFragment();
@@ -198,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 top_title.setText("个人中心");
                 break;
-            case R.id.tab_setting:
+            case R.id.tab_setting://切换到设置界面
                 if(settingFragment==null)
                 {
                     settingFragment=new SettingFragment();
@@ -210,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 top_title.setText("设置");
                 break;
         }
-        transaction.commit();
+        transaction.commit();//提交，必须commit以下，否则切换不会执行
     }
 
 

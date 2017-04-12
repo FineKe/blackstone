@@ -27,9 +27,9 @@ import java.util.Map;
 
 public class register_activity extends AppCompatActivity implements View.OnClickListener,View.OnFocusChangeListener{
     String TAG="REGISTER";
-    private String register_url="http://api.blackstone.ebirdnote.cn/v1/user/register/phone";
-    private String getVerifyCode_url="http://api.blackstone.ebirdnote.cn/v1/user/verifyCode/mobile";
-    private String check_url="http://api.blackstone.ebirdnote.cn/v1/user/check";
+    private String register_url="http://api.blackstone.ebirdnote.cn/v1/user/register/phone";//注册接口
+    private String getVerifyCode_url="http://api.blackstone.ebirdnote.cn/v1/user/verifyCode/mobile";//获取验证码接口
+    private String check_url="http://api.blackstone.ebirdnote.cn/v1/user/check";//用户名重复性检查接口
     private BootstrapEditText register_get_user_name;
     private BootstrapEditText register_get_user_pwd;
     private BootstrapEditText register_get_user_phone;
@@ -41,9 +41,9 @@ public class register_activity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_activity);
-        ActionBar actionBar=getSupportActionBar();
+        ActionBar actionBar=getSupportActionBar();//获得actionbar
         actionBar.setDisplayShowTitleEnabled(true);
-        View Title=LayoutInflater.from(this).inflate(R.layout.actionbar_title_layout,null);
+        View Title=LayoutInflater.from(this).inflate(R.layout.actionbar_title_layout,null);//设置标题
         actionBar.setCustomView(Title);
         InitView();
         register_get_user_name.setOnFocusChangeListener(this);
@@ -84,11 +84,20 @@ public class register_activity extends AppCompatActivity implements View.OnClick
         register_get_verrifyCode= (BootstrapButton) findViewById(R.id.get_verifyCode_bootstrapButton);
         register_submit= (BootstrapButton) findViewById(R.id.regester_submit_bootstrapButton);
     }
+
+    /**
+     * 用户名重复性检查
+     * @param context
+     * @param string
+     */
     private void checkUserName(final Context context, String string)  {
-        RequestQueue requestQueue= Volley.newRequestQueue(context);
+        RequestQueue requestQueue= Volley.newRequestQueue(context);//请求队列
         Map<String,String> name=new HashMap<>();
         name.put("username",string);
         final JSONObject object=new JSONObject(name);
+        /**
+         * json请求
+         */
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, check_url, object, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -114,16 +123,21 @@ public class register_activity extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     * 获取验证码处理
+     * @param context
+     * @param string
+     */
     private void getVerifyCode(final Context context,String string)
     {
-        RequestQueue requestqueue=Volley.newRequestQueue(context);
+        RequestQueue requestqueue=Volley.newRequestQueue(context);//请求队列
         Map<String,String> phone=new HashMap<>();
         System.out.println(string);
         phone.put("number",string);
-        JSONObject object=new JSONObject(phone);
+        JSONObject object=new JSONObject(phone);//json对象
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, getVerifyCode_url, object, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
+            public void onResponse(JSONObject jsonObject) {//json请求
                 int code;
                 String message;
                 try {
@@ -149,8 +163,19 @@ public class register_activity extends AppCompatActivity implements View.OnClick
         requestqueue.add(request);
     }
 
+    /**
+     * 提交处理
+     * @param context
+     * @param nickname
+     * @param pwd
+     * @param phoneNumber
+     * @param verifyCode
+     */
     private void submit(final Context context, String nickname, String pwd, String phoneNumber, String verifyCode)
     {
+        /**
+         * 创建一个json对象，讲用户名，密码，验证码，插入到这个对象中
+         */
         Map<String,String> map=new HashMap<>();
         map.put("username",phoneNumber);
         map.put("pwd",pwd);
@@ -158,7 +183,7 @@ public class register_activity extends AppCompatActivity implements View.OnClick
         map.put("verifyCode",verifyCode);
         JSONObject object=new JSONObject(map);
         System.out.println(verifyCode);
-        RequestQueue requestqueue=Volley.newRequestQueue(context);
+        RequestQueue requestqueue=Volley.newRequestQueue(context);//请求队列
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, register_url, object, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -187,7 +212,7 @@ public class register_activity extends AppCompatActivity implements View.OnClick
 
             }
         });
-        requestqueue.add(request);
+        requestqueue.add(request);//将请求添加到请求队列中执行
     }
 
 

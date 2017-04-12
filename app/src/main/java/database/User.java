@@ -4,6 +4,7 @@ import org.litepal.crud.DataSupport;
 
 /**
  * Created by MY SHIP on 2017/3/28.
+ * //user数据表，存放各种信息
  */
 
 public class User extends DataSupport {

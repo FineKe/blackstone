@@ -28,6 +28,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ShapeUtil.GlideRoundTransform;
 import database.Species;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -36,7 +37,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  */
 
 public class SpeciesContentAdapter extends RecyclerView.Adapter<SpeciesContentAdapter.MyHolder> implements View.OnClickListener{
-    private String dealPicure="?imageView2/0/w/200/h/200";
+    private String dealPicure="?imageView2/0/w/500/h/500";//本平台的图片采用了cdn分发，为了节省流量，采用七牛云的api处理接口
     private  List<Species>  list=new ArrayList<>();
     private Context context;
 
@@ -59,8 +60,8 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<SpeciesContentAd
     @Override
     public void onBindViewHolder(final MyHolder holder, int position) {
 
-        Species species=list.get(position);
-        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.drawable.loading).crossFade().into(holder.imageView);
+        Species species=list.get(position);//从数据库中读取当前位置的物种信息
+        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.drawable.loading).transform(new GlideRoundTransform(context,5)).into(holder.imageView);//使用glide框架加载图片到imageview
         holder.tv_latinName.setText(species.getLatinName());
         holder.tv_chineseName.setText(species.getChineseName());
         holder.tv_englishName.setText(species.getFamily());

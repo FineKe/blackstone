@@ -31,7 +31,7 @@ import database.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     String TAG="LOGIN";
-    private String login_url="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String login_url="http://api.blackstone.ebirdnote.cn/v1/user/login";//数据提交接口地址
     private BootstrapEditText user_name_Edit;
     private BootstrapEditText user_password_Edit;
     private BootstrapButton login_button;
@@ -61,9 +61,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_button= (BootstrapButton) findViewById(R.id.login_bootstrapButton);
         reset_password_button= (BootstrapButton) findViewById(R.id.reset_password_bootstrapButton);
         register_button= (BootstrapButton) findViewById(R.id.regist_bootstrapButton);
-        user_=new User();
-        user_= DataSupport.findFirst(User.class);
-        if(user_!=null)
+        user_=new User();//创建一个用户对象
+        user_= DataSupport.findFirst(User.class);//从数据库user表中读取第一个用户的数据
+        if(user_!=null)//从数据库中读取用户的账号和密码，并将其填充到相应的edittext中，实现密码的记住功能
         {
             user_name_Edit.setText(user_.getUserName());
             user_password_Edit.setText(user_.getPassword());
@@ -98,7 +98,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         map.put("username",phone);
         map.put("pwd",pwd);
         JSONObject object=new JSONObject(map);
-        RequestQueue requestQueue= Volley.newRequestQueue(context);
+        RequestQueue requestQueue= Volley.newRequestQueue(context);//创建一个网络请求队列
+        /**
+         * 创建一个json请求
+         */
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, login_url, object, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -119,13 +122,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         User user_=new User();
                         user_.setUserName(user_name_Edit.getText().toString());
                         user_.setPassword(user_password_Edit.getText().toString());
-                        user_.setToken(token);
-                        user_.update(1);
-                        user_.save();
+                        user_.setToken(token);//如果用户登录成功的话，就将其用户名密码和token更新存到数据库中
+                        user_.update(1);//更新第一个用户的信息
+                        user_.save();//保存一下
                         Toast.makeText(context,"登陆成功",Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(context,MainActivity.class);
+                        Intent intent=new Intent(context,MainActivity.class);//跳转到主界面
                         startActivity(intent);
-                        finish();
+                        finish();//将该activity销毁
                     }
                     else
                     {

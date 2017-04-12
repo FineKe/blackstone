@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by MY SHIP on 2017/3/18.
+ * 指南fragment
  */
 
 public class GuideFragment extends Fragment {

@@ -13,9 +13,9 @@ import android.widget.TextView;
  */
 
 public class SliderBar extends LinearLayout{
-    private String[] data=getResources().getStringArray(R.array.sorting_by_order);
+    private String[] data=getResources().getStringArray(R.array.sorting_by_order);//获取数据
         private Context mContext;
-        private CharacterClickListener mListener;
+        private CharacterClickListener mListener;//创建一个接口
 
         public SliderBar(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -38,13 +38,19 @@ public class SliderBar extends LinearLayout{
 
               for(String string:data)
             {
-                TextView textView=buildTextLayout(string);
-                addView(textView);
+                TextView textView=buildTextLayout(string);//创建一个textview
+                addView(textView);//将textview添加至sliderbar中
             }
         }
 
-        private TextView buildTextLayout(final String character) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
+    /**
+     * 该方法返回一个view
+     * 参数 character 是用于显示到view上的字符
+     * @param character
+     * @return
+     */
+    private TextView buildTextLayout(final String character) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);//主要是设置view在父布局的宽高
             TextView tv = new TextView(mContext);
             tv.setLayoutParams(layoutParams);
             tv.setGravity(Gravity.CENTER);
@@ -53,7 +59,7 @@ public class SliderBar extends LinearLayout{
             tv.setText(character);
             tv.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) {//设置点击事件
                     if (mListener != null) {
                         mListener.clickCharacter(character);
                     }
@@ -87,7 +93,6 @@ public class SliderBar extends LinearLayout{
 
         public interface CharacterClickListener {
             void clickCharacter(String character);
-            void clickArrow();
         }
 
     public String[] getData() {

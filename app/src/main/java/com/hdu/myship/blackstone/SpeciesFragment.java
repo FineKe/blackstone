@@ -51,12 +51,12 @@ public class SpeciesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<Species> speciesType=new ArrayList<Species>();
-                speciesType=DataSupport.where("speciesType = ?",Type[position]).find(Species.class);
+                speciesType=DataSupport.where("speciesType = ?",Type[position]).find(Species.class);//从数据库中获取相应position的物种数据粗放到speciesType
                 fragmentManager=getActivity().getSupportFragmentManager();
-                transaction=fragmentManager.beginTransaction();
+                transaction=fragmentManager.beginTransaction();//开启一个事列
                 SpeciesContentFragment speciesContentFragment=new SpeciesContentFragment();
-                speciesContentFragment.setList(speciesType);
-                transaction.replace(R.id.frame_layout,speciesContentFragment).addToBackStack(null).commit();
+                speciesContentFragment.setList(speciesType);//设置物种数据
+                transaction.replace(R.id.frame_layout,speciesContentFragment).addToBackStack(null).commit();//切换到相应的fragment
             }
         });
         return view;

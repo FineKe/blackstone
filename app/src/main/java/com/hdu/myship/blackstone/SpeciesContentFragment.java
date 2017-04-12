@@ -36,6 +36,7 @@ import database.Species;
 
 /**
  * Created by MY SHIP on 2017/3/24.
+ * 物种内容的fragment
  */
 
 public class SpeciesContentFragment extends Fragment {
@@ -57,32 +58,27 @@ public class SpeciesContentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.species_content, container, false);
-        species_content_recyclerView = (RecyclerView) view.findViewById(R.id.spcies_content_recyclerView);
+        View view = inflater.inflate(R.layout.species_content, container, false);//将布局映射到该fragment
+        species_content_recyclerView = (RecyclerView) view.findViewById(R.id.spcies_content_recyclerView);//绑定组件
         sliderBar= (SliderBar) view.findViewById(R.id.silde);
         species_content_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        species_content_recyclerView.setHasFixedSize(true);
-        SpeciesContentAdapter adapter=new SpeciesContentAdapter(list,getContext());
+        species_content_recyclerView.setHasFixedSize(true);//设置固定高度，提高效率
+        SpeciesContentAdapter adapter=new SpeciesContentAdapter(list,getContext());//创建一个适配器，并设置数据
 //        species_content_recyclerView.addOnItemTouchListener();
-        species_content_recyclerView.setAdapter(adapter);
+        species_content_recyclerView.setAdapter(adapter);//给recyclerview设置适配器
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
-            public void onItemClick(View view, Species data) {
+            public void onItemClick(View view, Species data) {//添加点击事件
                 Toast.makeText(getContext(),data.getChineseName(),Toast.LENGTH_SHORT).show();
             }
         });
 //        species_content_recyclerView.addItemDecoration(new SpeciesItemDecoration(getContext()));
-        sliderBar.setData(getResources().getStringArray(R.array.sorting_by_order));
-        sliderBar.setGravity(Gravity.CENTER_VERTICAL);
+        sliderBar.setData(getResources().getStringArray(R.array.sorting_by_order));//索引栏设置数据
+        sliderBar.setGravity(Gravity.CENTER_VERTICAL);//设置位置
         sliderBar.setCharacterListener(new SliderBar.CharacterClickListener() {
             @Override
-            public void clickCharacter(String character) {
+            public void clickCharacter(String character) {//添加监听事件
                 Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void clickArrow() {
-
             }
         });
         return view;

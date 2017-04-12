@@ -27,9 +27,9 @@ import java.util.Map;
 
 public class ResetPasswordActivity extends AppCompatActivity implements View.OnClickListener{
     String TAG="MAIN";
-    private String submit_url="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/setPwd";
-    private String get_url="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/verifyCode/mobile";
-    private RequestQueue requestQueue;
+    private String submit_url="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/setPwd";//提交接口
+    private String get_url="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/verifyCode/mobile";//获取验证码接口
+    private RequestQueue requestQueue;//全局请求队列
     private int color= Color.argb(100,52,119,197);
 
     private BootstrapEditText phone_edit;
@@ -43,8 +43,8 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
-        initView();
-        initEvents();
+        initView();//c初始化控件
+        initEvents();//添加事件
     }
 
     private void initEvents() {
@@ -71,15 +71,18 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
         switch (v.getId())
         {
-            case R.id.reset_password_bootstrapButton_getVerifyCode:
+            case R.id.reset_password_bootstrapButton_getVerifyCode://获取验证码事件处理
                 getCode();
                 break;
-            case R.id.reset_password_bootstrapButton_submit:
+            case R.id.reset_password_bootstrapButton_submit://提交处理
                 submit();
                 break;
         }
     }
 
+    /**
+     * 获取验证码处理
+     */
     private void getCode()
     {
         if((passwotd_edit.getText().toString().equals(confirm_edit.getText().toString()))&&(!phone_edit.getText().toString().equals(""))&&
@@ -126,9 +129,13 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         }else
         {
             Toast.makeText(getApplicationContext(),"密码不一致",Toast.LENGTH_SHORT).show();
+
         }
     }
 
+    /**
+     * 提交处理
+     */
     private void submit()
     {
         HashMap<String,String> map=new HashMap<>();

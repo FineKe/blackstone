@@ -6,6 +6,7 @@ import org.litepal.crud.DataSupport;
 
 /**
  * Created by MY SHIP on 2017/3/24.
+ * 物种信息表
  */
 
 public class Species extends DataSupport{

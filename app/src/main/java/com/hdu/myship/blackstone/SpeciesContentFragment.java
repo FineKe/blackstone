@@ -1,5 +1,7 @@
 package com.hdu.myship.blackstone;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +14,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -44,6 +49,11 @@ public class SpeciesContentFragment extends Fragment {
     private FragmentTransaction transaction;
     private RecyclerView species_content_recyclerView;
     private SliderBar sliderBar;
+
+    private Dialog alertMenu;
+    private boolean flag=false;
+
+    private ImageButton alertMenuImg;
     public List<Species> getList() {
         return list;
     }
@@ -59,6 +69,7 @@ public class SpeciesContentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.species_content, container, false);//将布局映射到该fragment
+        alertMenuImg= (ImageButton) view.findViewById(R.id.img_alert_menu);
         species_content_recyclerView = (RecyclerView) view.findViewById(R.id.spcies_content_recyclerView);//绑定组件
         sliderBar= (SliderBar) view.findViewById(R.id.silde);
         species_content_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -81,8 +92,43 @@ public class SpeciesContentFragment extends Fragment {
                 Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
             }
         });
+        alertMenuImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag==false)
+                {
+                    flag=true;
+                    showAlert(getContext());
+                }else
+                {
+                    flag=false;
+                    dismissAlert();
+                }
+            }
+        });
         return view;
     }
 
+    private void showAlert(Context context)
+    {
+        alertMenu=new Dialog(context);
+        View  alertMenuView=LayoutInflater.from(context).inflate(R.layout.alert_menu,null);
+        alertMenu.setContentView(alertMenuView);
+        Window window=alertMenu.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams layoutParams=window.getAttributes();
+        layoutParams.x=0;
+        layoutParams.y=0;
+        layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height= WindowManager.LayoutParams.WRAP_CONTENT;
+        layoutParams.alpha=9f;
+        window.setAttributes(layoutParams);
+        alertMenu.show();
+    }
+
+    private void dismissAlert()
+    {
+        alertMenu.dismiss();
+    }
 
 }

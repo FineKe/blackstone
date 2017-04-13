@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f9f7f7"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp">
+    <TextView
+        android:gravity="center"
+        android:text="@string/alert_menu_textView"
+        android:background="@color/alertMenu_textView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/textColor"/>
+
+    <Button
+        android:gravity="center"
+        android:text="@string/alert_menu_button1"
+        android:background="@color/alertMenu_background"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/textColor"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000"></View>
+    <Button
+        android:gravity="center"
+        android:text="@string/alert_menu_button2"
+        android:background="@color/alertMenu_background"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/textColor"/>
+</LinearLayout>

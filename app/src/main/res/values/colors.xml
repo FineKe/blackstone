@@ -6,4 +6,9 @@
     <color name="mycolor">#3376c5</color>
     <color name="searchViewBackground">#efefef</color>
     <color name="slider_bar_color">#4990e2</color>
+    <color name="textColor">#3376c5</color>
+    <color name="alertMenu_background">#FFF9F7F7</color>
+    <!--弹出对话框按钮的背景颜色-->
+    <color name="alertMenu_textView">#FFE0E0E0</color>
+    <!--请选择一种查阅类型的背景颜色-->
 </resources>

@@ -9,6 +9,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="queryHint">请输入搜索内容</string>
     <string name="action_settings">Settings</string>
+    <string name="title_bar_species">种类</string>
+    <string name="title_bar_guide">指南</string>
+    <string name="title_bar_add_record">添加记录</string>
+    <string name="title_bar_person_cneter">个人中心</string>
+    <string name="title_bar_setting">设置</string>
     <array name="sorting_by_order">
         <item>鹳</item>
         <item>鹰</item>
@@ -53,4 +58,7 @@
         <item>梅</item>
         <item>雀</item>
     </array>
+    <string name="alert_menu_textView">请选择一种查阅类型</string>
+    <string name="alert_menu_button1">按目浏览</string>
+    <string name="alert_menu_button2">按科浏览</string>
 </resources>

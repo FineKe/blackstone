@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initEvents()
-    {   top_title.setText("物种");
+    {
         transaction.replace(R.id.frame_layout,new SpeciesFragment()).commit();
         tab_guide.setOnClickListener(this);
         tab_setting.setOnClickListener(this);

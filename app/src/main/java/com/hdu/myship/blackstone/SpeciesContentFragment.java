@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -51,8 +53,7 @@ public class SpeciesContentFragment extends Fragment {
     private SliderBar sliderBar;
 
     private Dialog alertMenu;
-    private boolean flag=false;
-
+    private LinearLayout back_linearLayout;
     private ImageButton alertMenuImg;
     public List<Species> getList() {
         return list;
@@ -70,6 +71,7 @@ public class SpeciesContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.species_content, container, false);//将布局映射到该fragment
         alertMenuImg= (ImageButton) view.findViewById(R.id.img_alert_menu);
+        back_linearLayout= (LinearLayout) view.findViewById(R.id.back_linearLayout);
         species_content_recyclerView = (RecyclerView) view.findViewById(R.id.spcies_content_recyclerView);//绑定组件
         sliderBar= (SliderBar) view.findViewById(R.id.silde);
         species_content_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -95,24 +97,26 @@ public class SpeciesContentFragment extends Fragment {
         alertMenuImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag==false)
-                {
-                    flag=true;
                     showAlert(getContext());
-                }else
-                {
-                    flag=false;
-                    dismissAlert();
-                }
+            }
+        });
+        back_linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager=getFragmentManager();
+                manager.popBackStack();
             }
         });
         return view;
     }
 
-    private void showAlert(Context context)
+    private void showAlert(final Context context)
     {
         alertMenu=new Dialog(context);
         View  alertMenuView=LayoutInflater.from(context).inflate(R.layout.alert_menu,null);
+        Button button1= (Button) alertMenuView.findViewById(R.id.browse_by_section);
+        Button button2= (Button) alertMenuView.findViewById(R.id.browse_by_order);
+
         alertMenu.setContentView(alertMenuView);
         Window window=alertMenu.getWindow();
         window.setGravity(Gravity.BOTTOM);
@@ -123,12 +127,19 @@ public class SpeciesContentFragment extends Fragment {
         layoutParams.height= WindowManager.LayoutParams.WRAP_CONTENT;
         layoutParams.alpha=9f;
         window.setAttributes(layoutParams);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"按目浏览",Toast.LENGTH_SHORT).show();
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"按科浏览",Toast.LENGTH_SHORT).show();
+            }
+        });
         alertMenu.show();
-    }
-
-    private void dismissAlert()
-    {
-        alertMenu.dismiss();
     }
 
 }

@@ -11,4 +11,11 @@
     <!--弹出对话框按钮的背景颜色-->
     <color name="alertMenu_textView">#FFE0E0E0</color>
     <!--请选择一种查阅类型的背景颜色-->
+
+    <color name="bottom_bar_backgroung">#F6F6F6</color>
+    <!--底部菜单蓝背景颜色-->
+
+    <color name="bottom_bar_textView_text_normal_color">#9E9F9F</color>
+    <!--底部菜单栏正常字体颜色-->
+    <color name="bottom_bar_textView_text_pressed_color">#4990e2</color>
 </resources>

@@ -17,4 +17,50 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="app_launch_title">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_marginBottom">15px</item>
+    </style>
+
+    <style name="AppTheme.No">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="app_launch_title1">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">15px</item>
+        <item name="android:layout_marginBottom">15px</item>
+    </style>
+
+    <style name="app_launch_title2">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">15px</item>
+    </style>
+
+    <style name="bottom_bar_imageButton_style">
+        <item name="android:scaleType">center</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">33dp</item>
+    </style>
+    <!--底部图片按钮正常的风格-->
+
+    <style name="bottom_bar_text_normal_style">
+        <item name="android:textColor">@color/bottom_bar_textView_text_normal_color</item>
+    </style>
+    <!--底部菜单栏文字的正常风格的-->
+
+    <style name="bottom_bar_text_pressed_style">
+        <item name="android:textColor">@color/bottom_bar_textView_text_pressed_color</item>
+    </style>
+    <!--被按下时的风格-->
+
 </resources>

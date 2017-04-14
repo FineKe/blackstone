@@ -154,6 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
             Intent intent=new Intent(context,ResetPasswordActivity.class);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     public void register(Context context)//用户注册处理

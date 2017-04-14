@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp">
+  >
     <TextView
         android:gravity="center"
         android:text="@string/alert_menu_textView"
@@ -16,6 +15,7 @@
         android:textColor="@color/textColor"/>
 
     <Button
+        android:id="@+id/browse_by_order"
         android:gravity="center"
         android:text="@string/alert_menu_button1"
         android:background="@color/alertMenu_background"
@@ -27,6 +27,7 @@
         android:layout_height="1px"
         android:background="#000000"></View>
     <Button
+        android:id="@+id/browse_by_section"
         android:gravity="center"
         android:text="@string/alert_menu_button2"
         android:background="@color/alertMenu_background"

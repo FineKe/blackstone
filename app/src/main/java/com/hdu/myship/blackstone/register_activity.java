@@ -40,11 +40,12 @@ public class register_activity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_activity);
         ActionBar actionBar=getSupportActionBar();//获得actionbar
         actionBar.setDisplayShowTitleEnabled(true);
         View Title=LayoutInflater.from(this).inflate(R.layout.actionbar_title_layout,null);//设置标题
         actionBar.setCustomView(Title);
+        setContentView(R.layout.activity_register_activity);
+
         InitView();
         register_get_user_name.setOnFocusChangeListener(this);
         register_get_verrifyCode.setOnClickListener(this);

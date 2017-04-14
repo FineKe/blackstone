@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">黑石顶生物多样性</string>
+    <string name="app_launch_title">黑石顶</string>
+    <string name="app_launch_title1">生物多样性</string>
+    <string name="app_launch_title2">野外实习手册</string>
+
+
+
+
     <string name="nike_name">用户</string>
     <string name="password">密码</string>
     <string name="title_activity_main">MainActivity</string>
@@ -27,7 +34,7 @@
         <item>鴷</item>
         <item>雀</item>
     </array>
-    
+
     <array name="soting_by_section">
         <item>鹭</item>
         <item>鹰</item>

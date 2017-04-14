@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +31,7 @@ import JsonUtil.JsonResolverList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private int textColor=Color.argb(100,74,144,226);
-    private String getSpeciesList_url="http://api.blackstone.ebirdnote.cn/v1/species/list";//物种清单获取接口
+
     private RequestQueue requestQueue;//请求队列
 
     private FragmentManager fragmentManager;//fragment 管理者
@@ -75,38 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();//初始化控件
         initEvents();//添加逻辑事件控制
-        initData();//从网络中加载数据
+
 
     }
 
-    private void initData() {//加载物种清单数据
-        JsonObjectRequest getSpeciesList=new JsonObjectRequest(Request.Method.GET, getSpeciesList_url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                int code;
-                JSONObject data;
-                try {
-                    code=jsonObject.getInt("code");
-                    if(code==88)
-                    {
-                        data=jsonObject.getJSONObject("data");
-                        JsonResolverList jsonResolverList=new JsonResolverList(data);
-                        jsonResolverList.Resolve();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(MainActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        requestQueue.add(getSpeciesList);
-
-    }
 
     private void initView() {
         fragmentManager=getSupportFragmentManager();
@@ -137,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initEvents()
     {
         transaction.replace(R.id.frame_layout,new SpeciesFragment()).commit();
+        imageButton_species.setImageResource(R.mipmap.species_pressed);
         tab_guide.setOnClickListener(this);
         tab_setting.setOnClickListener(this);
         tab_species.setOnClickListener(this);
@@ -145,14 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void resetColor()//重置颜色
-    {
-        textView_guide.setTextColor(Color.BLACK);
-        textView_species.setTextColor(Color.BLACK);
-        textView_add_record.setTextColor(Color.BLACK);
-        textView_personal_center.setTextColor(Color.BLACK);
-        textView_setting.setTextColor(Color.BLACK);
-    }
+
 
     /**
      * 主要是实现各种fragment的切换
@@ -162,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         transaction=fragmentManager.beginTransaction();
         resetColor();
+        resetImage();
         switch (v.getId())
         {
             case R.id.tab_species://切换到物种界面
@@ -169,60 +138,94 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     speciesFragment=new SpeciesFragment();
                     transaction.replace(R.id.frame_layout,speciesFragment);//用该fragment替换activity_main.xml的frame_layout来实现界面的切换
+                    imageButton_species.setImageResource(R.mipmap.species_pressed);
+                    textView_species.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }else
                 {
                     transaction.replace(R.id.frame_layout,speciesFragment);
+                    imageButton_species.setImageResource(R.mipmap.species_pressed);
+                    textView_species.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }
-                top_title.setText("物种");
+
                 break;
             case R.id.tab_guide://切换到指南界面
                 if(guideFragment==null)
                 {
                     guideFragment=new GuideFragment();
                     transaction.replace(R.id.frame_layout,guideFragment);
+                    imageButton_guide.setImageResource(R.mipmap.guide_pressed);
+                    textView_guide.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }else
                 {
                     transaction.replace(R.id.frame_layout,guideFragment);
+                    imageButton_guide.setImageResource(R.mipmap.guide_pressed);
+                    textView_guide.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }
-                top_title.setText("指南");
+
                 break;
             case R.id.tab_add_record://切换到添加记录界面
                 if(addRecordFragment==null)
                 {
                     addRecordFragment=new AddRecordFragment();
                     transaction.replace(R.id.frame_layout,addRecordFragment);
+                    imageButton_add_record.setImageResource(R.mipmap.add_record_pressed);
+                    textView_add_record.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }else
                 {
                     transaction.replace(R.id.frame_layout,addRecordFragment);
+                    imageButton_add_record.setImageResource(R.mipmap.add_record_pressed);
+                    textView_add_record.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }
-                top_title.setText("添加记录");
+
                 break;
             case R.id.tab_personal_cneter://切换到个人中心界面
                 if(personalCenterFragment==null)
                 {
                     personalCenterFragment=new PersonalCenterFragment();
                     transaction.replace(R.id.frame_layout,personalCenterFragment);
+                    imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
+                    textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }else
                 {
                     transaction.replace(R.id.frame_layout,personalCenterFragment);
+                    imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
+                    textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }
-                top_title.setText("个人中心");
+
                 break;
             case R.id.tab_setting://切换到设置界面
                 if(settingFragment==null)
                 {
                     settingFragment=new SettingFragment();
                     transaction.replace(R.id.frame_layout,settingFragment);
+                    imageButton_setting.setImageResource(R.mipmap.setting_pressed);
+                    textView_setting.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }else
                 {
                     transaction.replace(R.id.frame_layout,settingFragment);
+                    imageButton_setting.setImageResource(R.mipmap.setting_pressed);
+                    textView_setting.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }
-                top_title.setText("设置");
+
                 break;
         }
         transaction.commit();//提交，必须commit以下，否则切换不会执行
     }
-
-
+     private void   resetImage()
+        {
+            imageButton_species.setImageResource(R.mipmap.species_normal);
+            imageButton_guide.setImageResource(R.mipmap.guide_normal);
+            imageButton_add_record.setImageResource(R.mipmap.add_record_normal);
+            imageButton_personal_center.setImageResource(R.mipmap.person_center_normal);
+            imageButton_setting.setImageResource(R.mipmap.setting_normal);
+        }
+    private void resetColor()//重置颜色
+    {
+        textView_guide.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
+        textView_species.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
+        textView_add_record.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
+        textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
+        textView_setting.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
+    }
 
 }

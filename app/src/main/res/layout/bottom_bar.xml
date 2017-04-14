@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#f6f6f6"
+    android:background="#D7D7D7"
     >
     <LinearLayout
         android:id="@+id/tab_species"
@@ -15,15 +15,13 @@
         android:layout_height="match_parent">
 
         <ImageButton
-            android:clickable="false"
+            style="@style/bottom_bar_imageButton_style"
             android:id="@+id/imageButton_species"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:src="@drawable/delete_24"
-             />
+            android:clickable="false"
+            android:src="@mipmap/species_normal" />
 
         <TextView
+            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_species"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,20 +38,22 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            style="@style/bottom_bar_imageButton_style"
             android:clickable="false"
             android:id="@+id/imageButton_guide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@drawable/delete_24"
+            android:src="@mipmap/guide_normal"
+
              />
 
         <TextView
+            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_guide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|center_horizontal"
-            android:text="指南" />
+            android:text="指南"
+           />
     </LinearLayout>
 
     <LinearLayout
@@ -65,15 +65,15 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            style="@style/bottom_bar_imageButton_style"
             android:clickable="false"
             android:id="@+id/imageButton_add_record"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@drawable/delete_24"
+            android:src="@mipmap/add_record_normal"
              />
 
         <TextView
+            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_add_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,15 +90,15 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            style="@style/bottom_bar_imageButton_style"
             android:clickable="false"
             android:id="@+id/imageButton_personal_center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@drawable/delete_24"
+            android:src="@mipmap/person_center_normal"
             />
 
         <TextView
+            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_personal_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,15 +115,15 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            style="@style/bottom_bar_imageButton_style"
             android:clickable="false"
             android:id="@+id/imageButton_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@drawable/delete_24"
+            android:src="@mipmap/setting_normal"
             />
 
         <TextView
+            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

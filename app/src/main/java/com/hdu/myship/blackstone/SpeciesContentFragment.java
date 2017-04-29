@@ -52,9 +52,12 @@ public class SpeciesContentFragment extends Fragment {
     private RecyclerView species_content_recyclerView;
     private SliderBar sliderBar;
 
+    private ImageButton img_btn_back;
+    private ImageButton img_btn_alert_pick;
+    private ImageButton img_btn_alert_menu;
     private Dialog alertMenu;
     private LinearLayout back_linearLayout;
-    private ImageButton alertMenuImg;
+
     public List<Species> getList() {
         return list;
     }
@@ -70,19 +73,20 @@ public class SpeciesContentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.species_content, container, false);//将布局映射到该fragment
-        alertMenuImg= (ImageButton) view.findViewById(R.id.img_alert_menu);
-        back_linearLayout= (LinearLayout) view.findViewById(R.id.back_linearLayout);
+
+        img_btn_alert_menu= (ImageButton) view.findViewById(R.id.img_btn_alert_menu);
         species_content_recyclerView = (RecyclerView) view.findViewById(R.id.spcies_content_recyclerView);//绑定组件
         sliderBar= (SliderBar) view.findViewById(R.id.silde);
         species_content_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         species_content_recyclerView.setHasFixedSize(true);//设置固定高度，提高效率
         SpeciesContentAdapter adapter=new SpeciesContentAdapter(list,getContext());//创建一个适配器，并设置数据
-//        species_content_recyclerView.addOnItemTouchListener();
+
         species_content_recyclerView.setAdapter(adapter);//给recyclerview设置适配器
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
             public void onItemClick(View view, Species data) {//添加点击事件
-                Toast.makeText(getContext(),data.getChineseName(),Toast.LENGTH_SHORT).show();
+                transaction.replace(R.id.frame_layout,SpeciesDetailedFragment.newInstance(data.getSingl())).addToBackStack(null).commit();
+                Log.d("TAG", "onItemClick: "+data.getSingl());
             }
         });
 //        species_content_recyclerView.addItemDecoration(new SpeciesItemDecoration(getContext()));
@@ -94,22 +98,26 @@ public class SpeciesContentFragment extends Fragment {
                 Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
             }
         });
-        alertMenuImg.setOnClickListener(new View.OnClickListener() {
+        img_btn_alert_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     showAlert(getContext());
             }
         });
-        back_linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager=getFragmentManager();
-                manager.popBackStack();
-            }
-        });
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fragmentManager=getActivity().getSupportFragmentManager();
+        transaction=fragmentManager.beginTransaction();
+    }
+
+    /**
+     * 显示一个按目浏览和按科浏览的对话框
+     * @param context
+     */
     private void showAlert(final Context context)
     {
         alertMenu=new Dialog(context);

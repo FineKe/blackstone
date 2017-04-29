@@ -43,7 +43,7 @@ public class JsonResolverList {
                      */
                     Species species=new Species();
                     JSONObject object=array.getJSONObject(i);
-                    species.setId(object.getInt("id"));
+                    species.setSingl(object.getInt("id"));
                     species.setChineseName(object.getString("chineseName"));
                     species.setLatinName(object.getString("latinName"));
                     /**

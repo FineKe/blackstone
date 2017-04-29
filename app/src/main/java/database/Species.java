@@ -11,7 +11,7 @@ import org.litepal.crud.DataSupport;
 
 public class Species extends DataSupport{
 
-    private int id;
+    private int singl;
     private String chineseName;
     private String latinName;
     private String order_;
@@ -20,12 +20,12 @@ public class Species extends DataSupport{
     private String speciesType;
 
 
-    public int getId() {
-        return id;
+    public int getSingl() {
+        return singl;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSingl(int singl) {
+        this.singl = singl;
     }
 
     public String getChineseName() {

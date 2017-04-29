@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +32,7 @@ import java.util.logging.Handler;
 
 import JsonUtil.JsonResolverList;
 
-public class launcherActivity extends AppCompatActivity {
+public class launcherActivity extends AutoLayoutActivity {
     RequestQueue requestQueue;
     private String getSpeciesList_url="http://api.blackstone.ebirdnote.cn/v1/species/list";//物种清单获取接口
 
@@ -79,6 +80,8 @@ public class launcherActivity extends AppCompatActivity {
                 Toast.makeText(launcherActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         requestQueue.add(getSpeciesList);
 

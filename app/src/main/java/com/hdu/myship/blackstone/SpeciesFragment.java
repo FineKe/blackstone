@@ -55,7 +55,7 @@ public class SpeciesFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view=inflater.from(container.getContext()).inflate(R.layout.species,container,false);
+        View view=inflater.from(container.getContext()).inflate(R.layout.species,null,false);
 
         //searchView= (BootstrapEditText) view.findViewById(R.id.searchView);
         listView_speciesClass= (ListView) view.findViewById(R.id.listView_speciesClass);

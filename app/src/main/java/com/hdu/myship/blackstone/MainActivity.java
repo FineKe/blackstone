@@ -1,20 +1,14 @@
 package com.hdu.myship.blackstone;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,14 +22,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import JsonUtil.JsonResolverList;
-import JsonUtil.JsonResolverSpeciesDetailed;
 import database.Species;
 import database.SpeciesDetailed;
 
@@ -87,7 +77,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         setContentView(R.layout.activity_main);
         initView();//初始化控件
         initEvents();//添加逻辑事件控制
-        initData();
+//        initData();
 
 
     }
@@ -99,7 +89,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         for(Species spec:species)
         {
 //           Log.d(TAG, "initData: "+spec.getChineseName()+spec.getSingl());
-            JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + spec.getSingl(), null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + spec.getSingal(), null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                   //  Log.d(TAG, "onResponse: "+jsonObject);
@@ -279,24 +269,20 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
                 break;
             case R.id.tab_personal_cneter://切换到个人中心界面
-                /**
+
                 if(personalCenterFragment==null)
                 {
                     personalCenterFragment=new PersonalCenterFragment();
                     transaction.replace(R.id.frame_layout,personalCenterFragment);
-
                     imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
                     textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
                 }else
                 {
                     transaction.replace(R.id.frame_layout,personalCenterFragment);
                     imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
-
                     textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
-                }*/
-                imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
-                textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
-                startActivity(new Intent(MainActivity.this,PersonCenterActivity.class));
+                }
+
 
                 break;
             case R.id.tab_setting://切换到设置界面
@@ -323,7 +309,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             imageButton_guide.setImageResource(R.mipmap.guide_normal);
             imageButton_add_record.setImageResource(R.mipmap.add_record_normal);
             imageButton_personal_center.setImageResource(R.mipmap.person_center_normal);
-            imageButton_setting.setImageResource(R.mipmap.setting_normal);
+            imageButton_setting.setImageResource(R.mipmap.setting_pressed);
         }
     private void resetColor()//重置颜色
     {

@@ -10,11 +10,24 @@ import java.util.ArrayList;
  */
 
 public class SpeciesDetailed extends DataSupport {
-    private int singl;
+    private int singl;//id
     private String chineseName;//中文名
     private String latinName;//拉丁名
+    private String order;//
+    private String orderLatin;//
     private String family;//科
+    private String familyLatin;
+
+    public String getFamilyLatin() {
+        return familyLatin;
+    }
+
+    public void setFamilyLatin(String familyLatin) {
+        this.familyLatin = familyLatin;
+    }
+
     private String genus;//属
+    private String genusLatin;
     private String mainPhoto;//主图片
     private ArrayList<String> imgs;//图片数组
     private String shape;//体型
@@ -29,6 +42,31 @@ public class SpeciesDetailed extends DataSupport {
     private String biotope;//
     private String digitalFormula;//
     private String nuptial;
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getOrderLatin() {
+        return orderLatin;
+    }
+
+    public void setOrderLatin(String orderLatin) {
+        this.orderLatin = orderLatin;
+    }
+
+    public String getGenusLatin() {
+        return genusLatin;
+    }
+
+    public void setGenusLatin(String genusLatin) {
+        this.genusLatin = genusLatin;
+    }
+
     private String speciesType;
 
     public int getSingl() {

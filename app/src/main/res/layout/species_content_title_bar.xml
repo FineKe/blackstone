@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <ImageButton
-        android:id="@+id/img_btn_back"
+        android:id="@+id/species_class_imageButton_actionBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
@@ -31,7 +31,7 @@
         android:textColor="#ffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/img_btn_back"
+        app:layout_constraintLeft_toRightOf="@+id/species_class_imageButton_actionBack"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -62,13 +62,13 @@
         android:background="@color/mycolor"
         android:src="@mipmap/alert_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/img_btn_alert_pick"
+        app:layout_constraintRight_toLeftOf="@+id/species_class_imageButton_alert_pick"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
 
     <ImageButton
-        android:id="@+id/img_btn_alert_pick"
+        android:id="@+id/species_class_imageButton_alert_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

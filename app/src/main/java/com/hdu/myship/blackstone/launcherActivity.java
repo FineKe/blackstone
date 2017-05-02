@@ -24,24 +24,31 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
 
 import JsonUtil.JsonResolverList;
+import database.Species;
 
 public class launcherActivity extends AutoLayoutActivity {
-    RequestQueue requestQueue;
-    private String getSpeciesList_url="http://api.blackstone.ebirdnote.cn/v1/species/list";//物种清单获取接口
 
+    private String getSpeciesListURL="http://api.blackstone.ebirdnote.cn/v1/species/list";//物种清单获取接口
+    private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";//物种详情接口
+    private RequestQueue requestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         requestQueue= Volley.newRequestQueue(this);
         initData();
+
+
         Timer timer=new Timer();
         TimerTask timerTask=new TimerTask() {
             @Override
@@ -56,8 +63,9 @@ public class launcherActivity extends AutoLayoutActivity {
 
     }
 
-    private void initData() {//加载物种清单数据
-        JsonObjectRequest getSpeciesList=new JsonObjectRequest(Request.Method.GET, getSpeciesList_url, null, new Response.Listener<JSONObject>() {
+    private void initData() {
+        //加载物种清单数据
+        JsonObjectRequest getSpeciesList=new JsonObjectRequest(Request.Method.GET, getSpeciesListURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 int code;
@@ -80,7 +88,6 @@ public class launcherActivity extends AutoLayoutActivity {
                 Toast.makeText(launcherActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         requestQueue.add(getSpeciesList);

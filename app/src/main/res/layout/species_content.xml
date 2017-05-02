@@ -23,15 +23,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/spcies_content_recyclerView"
+        app:layout_constraintBottom_toBottomOf="@+id/species_class_recyclerView_speciesContent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/spcies_content_recyclerView"
-        app:layout_constraintTop_toTopOf="@+id/spcies_content_recyclerView"
+        app:layout_constraintRight_toRightOf="@+id/species_class_recyclerView_speciesContent"
+        app:layout_constraintTop_toTopOf="@+id/species_class_recyclerView_speciesContent"
         app:layout_constraintVertical_bias="0.498"></com.hdu.myship.blackstone.SliderBar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/spcies_content_recyclerView"
+        android:id="@+id/species_class_recyclerView_speciesContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:duplicateParentState="false"

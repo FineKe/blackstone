@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,13 +43,7 @@ import database.Species;
  */
 
 public class SpeciesFragment extends Fragment{
-    private FragmentManager fragmentManager;
-    private FragmentTransaction transaction;
     private  ListView listView_speciesClass;
-
-
-
-    private BootstrapEditText searchView;
     private List<String> listName;
     private String[] Type={"bird","amphibia","reptiles","insect"};
     @Nullable
@@ -56,20 +51,18 @@ public class SpeciesFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view=inflater.from(container.getContext()).inflate(R.layout.species,null,false);
-
-        //searchView= (BootstrapEditText) view.findViewById(R.id.searchView);
         listView_speciesClass= (ListView) view.findViewById(R.id.listView_speciesClass);
         listView_speciesClass.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,listName));
         listView_speciesClass.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                List<Species> speciesType=new ArrayList<Species>();
-                speciesType=DataSupport.where("speciesType = ?",Type[position]).find(Species.class);//从数据库中获取相应position的物种数据粗放到speciesType
-                fragmentManager=getActivity().getSupportFragmentManager();
-                transaction=fragmentManager.beginTransaction();//开启一个事列
-                SpeciesContentFragment speciesContentFragment=new SpeciesContentFragment();
-                speciesContentFragment.setList(speciesType);//设置物种数据
-                transaction.replace(R.id.frame_layout,speciesContentFragment).addToBackStack(null).commit();//切换到相应的fragment
+
+                Intent intent=new Intent(getContext(),SpeciesClassActivity.class);
+                ArrayList<Integer> integerArrayList=new ArrayList<Integer>();
+                intent.putExtra("SpeciesType",Type[position]);
+                intent.putExtra("position",position);
+                startActivity(intent);
+
             }
         });
 

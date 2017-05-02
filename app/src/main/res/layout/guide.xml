@@ -1,8 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/guide_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/guide_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/guideFragment_linearlayout_tab1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/guideFragment_button_introduce"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffff"
+            android:clickable="false"
+            android:gravity="center_vertical|start"
+            android:text="黑石顶自然情况"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:clickable="false"
+            android:elevation="0dp"
+            android:src="@mipmap/action_back" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="8dp"
+        android:background="#808080" />
+
+    <LinearLayout
+        android:id="@+id/guideFragment_linearlayout_tab2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/guideFragment_button_main_features"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#ffff"
+            android:gravity="center_vertical|start"
+            android:text="黑石顶陆生脊椎动物区系的主要特征"
+            android:textColor="#f000"
+            android:textSize="20sp"
+            android:clickable="false"/>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:clickable="false"
+            android:src="@mipmap/action_back" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="8dp"
+        android:background="#808080" />
+
+    <LinearLayout
+        android:id="@+id/guideFragment_linearlayout_tab3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/guideFarment_button_sortingByfeatures"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#ffff"
+            android:gravity="center_vertical|start"
+            android:text="昆虫纲的分类特征"
+            android:textColor="#f000"
+            android:textSize="20sp"
+            android:clickable="false"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:clickable="false"
+            android:src="@mipmap/action_back" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="8dp"
+        android:background="#808080" />
+
+    <LinearLayout
+        android:id="@+id/guideFragment_linearlayout_tab4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/guideFagment_button_land_sortingByfeatures"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#ffff"
+            android:gravity="center_vertical|start"
+            android:text="陆生脊椎动物的分类特征"
+            android:textColor="#f000"
+            android:textSize="20sp"
+            android:clickable="false"/>
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:clickable="false"
+            android:src="@mipmap/action_back" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="8dp"
+        android:background="#808080" />
+
 </LinearLayout>

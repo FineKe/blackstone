@@ -31,8 +31,12 @@ public class JsonResolverSpeciesDetailed {
                 int singl=data.getInt("id");
                 String chineseName=data.getString("chineseName");
                 String latinName=data.getString("latinName");
+                String order=data.getString("order");
+                String orderLatin=data.getString("orderLatin");
                 String family=data.getString("family");
+                String familyLatin=data.getString("familyLatin");
                 String genus=data.getString("genus");
+                String genusLatin=data.getString("genusLatin");
                 String mainPhoto=data.getString("mainPhoto");
                 JSONArray imgs=data.getJSONArray("imgs");
 
@@ -57,8 +61,12 @@ public class JsonResolverSpeciesDetailed {
                 speciesDetailed.setSingl(singl);
                 speciesDetailed.setChineseName(chineseName);
                 speciesDetailed.setLatinName(latinName);
+                speciesDetailed.setOrder(order);
+                speciesDetailed.setOrderLatin(orderLatin);
                 speciesDetailed.setFamily(family);
+                speciesDetailed.setFamilyLatin(familyLatin);
                 speciesDetailed.setGenus(genus);
+                speciesDetailed.setGenusLatin(genusLatin);
                 speciesDetailed.setMainPhoto(mainPhoto);
                 ArrayList<String> imgsList=new ArrayList<>();
 
@@ -66,7 +74,6 @@ public class JsonResolverSpeciesDetailed {
                 {
                     imgsList.add(imgs.getString(i));
                     Log.d("TAG", "onResponse: "+imgs.getString(i));
-
                 }
                 speciesDetailed.setImgs(imgsList);
                 speciesDetailed.setShape(shape);
@@ -80,8 +87,7 @@ public class JsonResolverSpeciesDetailed {
                 speciesDetailed.setDigitalFormula(digital_formula);
                 speciesDetailed.setNuptial(nuptial);
                 speciesDetailed.setSpeciesType(speciesType);
-                speciesDetailed.saveFast();
-
+                speciesDetailed.save();
             }
         } catch (JSONException e) {
             e.printStackTrace();

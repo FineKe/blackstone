@@ -119,7 +119,7 @@
             android:clickable="false"
             android:id="@+id/imageButton_setting"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@mipmap/setting_normal"
+            android:src="@mipmap/setting_pressed"
             />
 
         <TextView

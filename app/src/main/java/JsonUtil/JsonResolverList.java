@@ -26,40 +26,51 @@ public class JsonResolverList {
 
     public void Resolve()//数据解析过程//详情去csdn博客上看看json的解析
     {
-        jsonArrayList=new ArrayList<>();
+        /**
+         *解析reptiles bird amphibia 物种数据
+         */
+        jsonArrayList = new ArrayList<>();
         try {
             jsonArrayList.add(jsonObject.getJSONArray("reptiles"));
             jsonArrayList.add(jsonObject.getJSONArray("bird"));
-            jsonArrayList.add(jsonObject.getJSONArray("insect"));
             jsonArrayList.add(jsonObject.getJSONArray("amphibia"));
 
-            for(JSONArray array:jsonArrayList)
-            {
-
-                for(int i=0;i<array.length();i++)
-                {
-                    /**
-                     * 讲json中数据解析出来并存入到数据库中
-                     */
-                    Species species=new Species();
-                    JSONObject object=array.getJSONObject(i);
-                    species.setSingl(object.getInt("id"));
+            for (JSONArray array : jsonArrayList) {
+                for (int i = 0; i < array.length(); i++) {
+                    Species species = new Species();
+                    JSONObject object = array.getJSONObject(i);
+                    species.setSingal(object.getInt("id"));
                     species.setChineseName(object.getString("chineseName"));
                     species.setLatinName(object.getString("latinName"));
-                    /**
-                     * 该段由于order，family字段没有值所以暂时不解析
-                     */
-                   // species.setOrder(object.getString("order"));
-                   // Log.d("MAIN", "Resolve: "+object.getString("family"));
-                   // family=object.getString("family");
-                    //species.setFamily(family);
+                    species.setOrder(object.getString("order"));
+                    species.setFamily(object.getString("family"));
                     species.setSpeciesType(object.getString("speciesType"));
                     species.setMainPhoto(object.getString("mainPhoto"));
-                    species.saveFast();
-
+                    species.save();
                 }
+            }
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        /**
+         * * 单独解析insect类，因为inset类没有fiamily字段
+         */
+        try {
+            JSONArray insect = jsonObject.getJSONArray("insect");
+            for(int i=0;i<insect.length();i++)
+            {
+                Species species = new Species();
+                JSONObject object =insect.getJSONObject(i);
+                species.setSingal(object.getInt("id"));
+                species.setChineseName(object.getString("chineseName"));
+                species.setLatinName(object.getString("latinName"));
+                species.setOrder(object.getString("order"));
+                species.setFamily("无");
+                species.setSpeciesType(object.getString("speciesType"));
+                species.setMainPhoto(object.getString("mainPhoto"));
+                species.save();
             }
         } catch (JSONException e) {
             e.printStackTrace();

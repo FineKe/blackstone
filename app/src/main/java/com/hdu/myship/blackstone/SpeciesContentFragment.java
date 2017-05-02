@@ -16,29 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import JsonUtil.JsonResolverList;
 import database.Species;
 
 /**
@@ -75,7 +59,7 @@ public class SpeciesContentFragment extends Fragment {
         View view = inflater.inflate(R.layout.species_content, container, false);//将布局映射到该fragment
 
         img_btn_alert_menu= (ImageButton) view.findViewById(R.id.img_btn_alert_menu);
-        species_content_recyclerView = (RecyclerView) view.findViewById(R.id.spcies_content_recyclerView);//绑定组件
+        species_content_recyclerView = (RecyclerView) view.findViewById(R.id.species_class_recyclerView_speciesContent);//绑定组件
         sliderBar= (SliderBar) view.findViewById(R.id.silde);
         species_content_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         species_content_recyclerView.setHasFixedSize(true);//设置固定高度，提高效率
@@ -85,8 +69,9 @@ public class SpeciesContentFragment extends Fragment {
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
             public void onItemClick(View view, Species data) {//添加点击事件
-                transaction.replace(R.id.frame_layout,SpeciesDetailedFragment.newInstance(data.getSingl())).addToBackStack(null).commit();
-                Log.d("TAG", "onItemClick: "+data.getSingl());
+                //transaction.replace(R.id.frame_layout,SpeciesDetailedFragment.newInstance(data.getSingl())).addToBackStack(null).commit();
+                Toast.makeText(getContext(), data.getChineseName(), Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "onItemClick: "+data.getSingal());
             }
         });
 //        species_content_recyclerView.addItemDecoration(new SpeciesItemDecoration(getContext()));

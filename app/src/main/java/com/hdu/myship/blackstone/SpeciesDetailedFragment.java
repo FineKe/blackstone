@@ -82,20 +82,12 @@ public class SpeciesDetailedFragment extends Fragment {
         List<SpeciesDetailed> speciesDetaileds=new ArrayList<>();
         speciesDetaileds=DataSupport.where("singl=?",""+singl).find(SpeciesDetailed.class);
 
-        /* List<SpeciesDetailed> speciesDetaileds=new ArrayList<>();
-        speciesDetaileds=DataSupport.where("singl=?",""+singl).find(SpeciesDetailed.class);
-        Log.d(TAG, "onCreate: "+speciesDetaileds.get(0));*/
+
         SpeciesDetailed sp=speciesDetaileds.get(0);
        for(String picture:sp.getImgs())
         {
             views.add(createView(picture));
         }
-
-
-      /*  View view1=getLayoutInflater(savedInstanceState).inflate(R.layout.view_pager_item_view,null);
-        ImageView imageView= (ImageView) view1.findViewById(R.id.viewpager_imgView);
-        imageView.setBackgroundColor(Color.YELLOW);*/
-
 
 
     }

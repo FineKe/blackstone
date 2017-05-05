@@ -38,7 +38,11 @@
             android:name=".RegisterActivity"
             android:parentActivityName=".PersonCenterActivity" />
         <activity android:name=".SpeciesDeatailedActivity" />
-        <activity android:name=".SpeciesClassActivity"></activity>
+        <activity android:name=".SpeciesClassActivity" />
+        <activity android:name=".AddRecordActivity" />
+        <activity android:name=".AccountAndSecurityActivity" />
+        <activity android:name=".PersonInformationActivity" />
+        <activity android:name=".ResetPhoneActivity"></activity>
     </application>
 
 </manifest>

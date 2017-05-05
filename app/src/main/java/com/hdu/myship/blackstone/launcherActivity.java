@@ -59,7 +59,7 @@ public class launcherActivity extends AutoLayoutActivity {
 
             }
         };
-        timer.schedule(timerTask,2000);
+        timer.schedule(timerTask,1000);
 
     }
 

@@ -1,14 +1,33 @@
 package com.hdu.myship.blackstone;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by MY SHIP on 2017/3/18.
@@ -16,9 +35,30 @@ import android.widget.ImageView;
  */
 
 public class PersonalCenterFragment extends Fragment implements View.OnClickListener{
+    private String loginURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private RequestQueue requestQueue;
+
+
+
     private Button login;
     private Button register;
+
+
+    private EditText iuputAccount;
+    private EditText inputPassword;
+
+
+    private TextView loginForget;
+    private TextView Ok;
+    private TextView errorLoginForget;
+    private TextView inputAgain;
+
+
+    private ImageView showPassword;
+    private ImageView actionCancel;
     private ImageView userPicture;
+
+    private boolean isShowed=false;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,7 +80,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.person_center_button_login:
+            case R.id.person_center_button_login:login();
                 break;
 
             case R.id.person_center_button_register:
@@ -54,7 +94,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
 
     public void login()
     {
-
+        showLoginDialog();
     }
 
 
@@ -62,4 +102,113 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     {
         startActivity(new Intent(getActivity(),RegisterActivity.class));
     }
+
+    public void showLoginDialog()
+    {
+        final LoginDialog loginDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.login_dialog);
+        loginDialog.show();
+        iuputAccount= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_account);
+        inputPassword= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_password);
+        loginForget= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_forget);
+        Ok= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_Ok);
+        actionCancel= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_actionCancel);
+        showPassword= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_showPassword);
+
+
+
+        showPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isShowed)
+                {
+                    inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    showPassword.setImageResource(R.mipmap.see);
+                }
+                else
+                {
+                    inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showPassword.setImageResource(R.mipmap.no_see);
+                }
+                isShowed=!isShowed;
+                inputPassword.postInvalidate();
+            }
+        });
+
+        actionCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginDialog.dismiss();
+            }
+        });
+
+        Ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,String> loginMap=new HashMap<String, String>();
+                loginMap.put("username",iuputAccount.getText().toString());
+                loginMap.put("pwd",inputPassword.getText().toString());
+                JSONObject loginJsonObject=new JSONObject(loginMap);
+                requestQueue=Volley.newRequestQueue(getContext());
+                JsonObjectRequest loginRequest=new JsonObjectRequest(Request.Method.POST, loginURL, loginJsonObject, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            int code=jsonObject.getInt("code");
+                            if(code==88)
+                            {
+                                startActivity(new Intent(getContext(),PersonCenterActivity.class));
+                                loginDialog.dismiss();
+                            }
+                            else
+                            {
+
+                                loginDialog.dismiss();
+                                showErrorDialog();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getContext(),"请求异常",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                requestQueue.add(loginRequest);
+            }
+        });
+
+        loginForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+
+    public void showErrorDialog()
+    {
+        final LoginDialog errorDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.error_login_dialog);
+        errorDialog.show();
+        errorLoginForget= (TextView) errorDialog.findViewById(R.id.error_login_dialog_forget);
+        inputAgain= (TextView) errorDialog.findViewById(R.id.error_login_dialog_inputAgain);
+
+        errorLoginForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        inputAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLoginDialog();
+                errorDialog.dismiss();
+            }
+        });
+    }
+
 }

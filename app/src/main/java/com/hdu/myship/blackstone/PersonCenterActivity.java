@@ -25,19 +25,16 @@ public class PersonCenterActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_person_center);
-        roundedImageView= (RoundedImageView) findViewById(R.id.roundeImageView);
+
         initView();
         initEvents();
     }
 
     private void initEvents() {
-        button_login.setOnClickListener(this);
-        button_register.setOnClickListener(this);
     }
 
     private void initView() {
-        button_register= (BootstrapButton) findViewById(R.id.button_register);
-        button_login= (BootstrapButton) findViewById(R.id.button_login);
+
     }
 
     private void showLoginDialog()
@@ -52,12 +49,7 @@ public class PersonCenterActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.button_login:
-                showLoginDialog();
-                break;
-            case R.id.button_register:
-                startActivity(new Intent(PersonCenterActivity.this,RegisterActivity.class));
-                break;
+
         }
     }
 }

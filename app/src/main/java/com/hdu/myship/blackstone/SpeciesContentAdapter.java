@@ -61,7 +61,7 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<SpeciesContentAd
     public void onBindViewHolder(final MyHolder holder, int position) {
 
         Species species=list.get(position);//从数据库中读取当前位置的物种信息
-        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.drawable.loading).transform(new GlideRoundTransform(context,5)).into(holder.imageView);//使用glide框架加载图片到imageview
+        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(holder.imageView);//使用glide框架加载图片到imageview
         holder.tv_latinName.setText(species.getLatinName());
         holder.tv_chineseName.setText(species.getChineseName());
         holder.tv_englishName.setText(species.getFamily());

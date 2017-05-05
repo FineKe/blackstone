@@ -1,46 +1,27 @@
 package com.hdu.myship.blackstone;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
-import database.Species;
-import database.SpeciesDetailed;
+import database.Amphibia;
 
 /**
  * Created by MY SHIP on 2017/4/28.
@@ -79,11 +60,11 @@ public class SpeciesDetailedFragment extends Fragment {
         this.singl=getArguments().getInt("singl");
         views=new ArrayList<>();
         scheduledExecutorService= Executors.newSingleThreadScheduledExecutor();
-        List<SpeciesDetailed> speciesDetaileds=new ArrayList<>();
-        speciesDetaileds=DataSupport.where("singl=?",""+singl).find(SpeciesDetailed.class);
+        List<Amphibia> speciesDetaileds=new ArrayList<>();
+        speciesDetaileds=DataSupport.where("singl=?",""+singl).find(Amphibia.class);
 
 
-        SpeciesDetailed sp=speciesDetaileds.get(0);
+        Amphibia sp=speciesDetaileds.get(0);
        for(String picture:sp.getImgs())
         {
             views.add(createView(picture));

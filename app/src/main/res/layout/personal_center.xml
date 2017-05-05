@@ -21,9 +21,9 @@
     <ImageView
 
         android:id="@+id/person_center_imageView_uesrPicture"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="63dp"
         android:background="@drawable/person_center_circle"
         android:src="@mipmap/person_center"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,46 +31,42 @@
         app:layout_constraintTop_toBottomOf="@+id/include4"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="46dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <Button
         android:id="@+id/person_center_button_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/person_center_register_background"
         android:text="注册"
         android:textColor="#4990E2"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/person_center_button_login"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/person_center_imageView_uesrPicture" />
 
     <Button
         android:id="@+id/person_center_button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="175dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
         android:background="@drawable/person_center_login_backgroud"
         android:text="登录"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="@+id/person_center_button_register"
+        app:layout_constraintRight_toRightOf="@+id/person_center_button_register"
+        app:layout_constraintTop_toBottomOf="@+id/person_center_button_register" />
 
 
 

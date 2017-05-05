@@ -1,80 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:background="#D7D7D7"
-    >
+    android:orientation="horizontal">
+
     <LinearLayout
         android:id="@+id/tab_species"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
-            style="@style/bottom_bar_imageButton_style"
             android:id="@+id/imageButton_species"
+            style="@style/bottom_bar_imageButton_style"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:clickable="false"
             android:src="@mipmap/species_normal" />
 
         <TextView
-            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_species"
+            style="@style/bottom_bar_text_normal_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:text="种类" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tab_guide"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
-            style="@style/bottom_bar_imageButton_style"
-            android:clickable="false"
             android:id="@+id/imageButton_guide"
-            android:layout_gravity="bottom|center_horizontal"
-            android:src="@mipmap/guide_normal"
-
-             />
+            style="@style/bottom_bar_imageButton_style"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:clickable="false"
+            android:src="@mipmap/guide_normal" />
 
         <TextView
-            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_guide"
+            style="@style/bottom_bar_text_normal_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|center_horizontal"
-            android:text="指南"
-           />
+            android:text="指南" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tab_add_record"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
-            style="@style/bottom_bar_imageButton_style"
-            android:clickable="false"
             android:id="@+id/imageButton_add_record"
+            style="@style/bottom_bar_imageButton_style"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|center_horizontal"
             android:src="@mipmap/add_record_normal"
-             />
+            android:clickable="false"/>
 
         <TextView
-            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_add_record"
+            style="@style/bottom_bar_text_normal_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|center_horizontal"
@@ -83,23 +85,24 @@
 
     <LinearLayout
         android:id="@+id/tab_personal_cneter"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
-            style="@style/bottom_bar_imageButton_style"
-            android:clickable="false"
             android:id="@+id/imageButton_personal_center"
+            style="@style/bottom_bar_imageButton_style"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|center_horizontal"
             android:src="@mipmap/person_center_normal"
-            />
+            android:clickable="false"/>
 
         <TextView
-            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_personal_center"
+            style="@style/bottom_bar_text_normal_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|center_horizontal"
@@ -108,23 +111,24 @@
 
     <LinearLayout
         android:id="@+id/tab_setting"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
-            style="@style/bottom_bar_imageButton_style"
-            android:clickable="false"
             android:id="@+id/imageButton_setting"
+            style="@style/bottom_bar_imageButton_style"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@mipmap/setting_pressed"
-            />
+            android:src="@mipmap/setting_normal"
+            android:clickable="false"/>
 
         <TextView
-            style="@style/bottom_bar_text_normal_style"
             android:id="@+id/textView_setting"
+            style="@style/bottom_bar_text_normal_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|center_horizontal"

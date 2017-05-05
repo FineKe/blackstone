@@ -95,6 +95,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             public void onItemClick(View view, Species data) {//添加点击事件
                 Intent intent=new Intent(SpeciesClassActivity.this,SpeciesDeatailedActivity.class);
                 intent.putExtra("singal",data.getSingal());
+                intent.putExtra("speciesType",data.getSpeciesType());
+                intent.putExtra("speciesTypeChineseName",typeTitle[position]);
                 startActivity(intent);
             }
         });

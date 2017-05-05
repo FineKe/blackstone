@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by MY SHIP on 2017/4/28.
  */
 
-public class SpeciesDetailed extends DataSupport {
+public class Amphibia extends DataSupport {
     private int singl;//id
     private String chineseName;//中文名
     private String latinName;//拉丁名

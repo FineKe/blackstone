@@ -3,12 +3,9 @@ package com.hdu.myship.blackstone;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +45,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private int position;
 
     private String typeTitle[]={"鸟类","两栖类","爬行类","昆虫类"};
+    private List<String> indexList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +79,12 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private void initData() {
         species=new ArrayList<>();
         species=DataSupport.where("speciesType=?",SpeciesType).find(Species.class);
+        indexList=new ArrayList<>();
+        for(String s:getResources().getStringArray(R.array.sorting_by_order))
+        {
+            indexList.add(s);
+        }
+
     }
 
     private void initEvents() {
@@ -88,14 +92,14 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         alertMenu.setOnClickListener(this);
         alertPick.setOnClickListener(this);
 
-        SpeciesContentAdapter adapter=new SpeciesContentAdapter(species,this);
+        SpeciesContentAdapter adapter=new SpeciesContentAdapter(species,indexList,this);
         speciesContent.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
-            public void onItemClick(View view, Species data) {//添加点击事件
+            public void onItemClick(View view, SpeciesContentAdapter.result data) {//添加点击事件
                 Intent intent=new Intent(SpeciesClassActivity.this,SpeciesDeatailedActivity.class);
-                intent.putExtra("singal",data.getSingal());
-                intent.putExtra("speciesType",data.getSpeciesType());
+                intent.putExtra("singal",data.getSpecies().getSingal());
+                intent.putExtra("speciesType",data.getSpecies().getSpeciesType());
                 intent.putExtra("speciesTypeChineseName",typeTitle[position]);
                 startActivity(intent);
             }

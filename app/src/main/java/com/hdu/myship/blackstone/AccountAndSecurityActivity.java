@@ -54,6 +54,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                 break;
 
             case R.id.account_security_imageButton_action_back:
+                startActivity(new Intent(this,ResetPasswordActivity.class));
                 break;
         }
     }

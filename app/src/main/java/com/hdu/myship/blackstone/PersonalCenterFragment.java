@@ -1,10 +1,14 @@
 package com.hdu.myship.blackstone;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -38,7 +42,13 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     private String loginURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
     private RequestQueue requestQueue;
 
+    private FragmentManager fragmentManager;//fragment 管理者
+    private FragmentTransaction transaction;//开启一个事列
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String isLoginedFile="isLogin";
+    private Boolean isLogined;
 
     private Button login;
     private Button register;
@@ -74,6 +84,19 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
 
         userPicture.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData();
+    }
+
+    private void initData() {
+        fragmentManager=getActivity().getSupportFragmentManager();
+        transaction=fragmentManager.beginTransaction();
+        sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
+        editor=sharedPreferences.edit();
     }
 
     @Override
@@ -156,8 +179,10 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                             int code=jsonObject.getInt("code");
                             if(code==88)
                             {
-                                startActivity(new Intent(getContext(),PersonCenterActivity.class));
                                 loginDialog.dismiss();
+                                editor.putBoolean("islogined",true).apply();
+                                transaction.replace(R.id.frame_layout,new LoginedFragment()).commit();
+
                             }
                             else
                             {

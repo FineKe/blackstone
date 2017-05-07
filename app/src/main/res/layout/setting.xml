@@ -12,122 +12,26 @@
         android:layout_marginBottom="10dp"/>
 
     <LinearLayout
-        android:id="@+id/setting_linearlayout_night_mode"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
-            android:layout_weight="1"
-            android:text="夜间模式"
-            android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="#ffff"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/switch_off" />
-
-    </LinearLayout>
-
-    <include layout="@layout/setting_divider_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:id="@+id/setting_linearlayout_slient_mode"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
-            android:layout_weight="1"
-            android:text="静音模式"
-            android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0"
-            android:background="#ffff"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/switch_off" />
-
-    </LinearLayout>
-
-    <include layout="@layout/setting_divider_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:id="@+id/setting_linearlayout_paging_support"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
-            android:layout_weight="1"
-            android:text="翻页辅助"
-            android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0"
-            android:background="#ffff"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/switch_off" />
-
-    </LinearLayout>
-
-    <include layout="@layout/setting_divider_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
         android:id="@+id/setting_linearlayout_version_update"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
             android:layout_weight="1"
             android:text="版本更新"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
         />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="21dp"
             android:text="2.0"
             android:textColor="@color/font_color" />
     </LinearLayout>
@@ -140,17 +44,17 @@
         android:id="@+id/setting_linearlayout_account_and_security"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
             android:layout_weight="1"
             android:text="账号与安全"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -168,17 +72,17 @@
         android:id="@+id/setting_linearlayout_copyright"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
             android:layout_weight="1"
             android:text="版权信息"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -196,45 +100,17 @@
         android:id="@+id/setting_linearlayout_developing_team"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
             android:layout_weight="1"
             android:text="制作团队"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:src="@mipmap/action_back" />
-    </LinearLayout>
-
-    <include layout="@layout/setting_divider_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:id="@+id/setting_linearlayout_rating"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
-            android:layout_weight="1"
-            android:text="给我们打分"
-            android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -252,6 +128,7 @@
         android:id="@+id/setting_linearlayout_suggestions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical">
 
@@ -259,11 +136,10 @@
             android:id="@+id/textView12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="52px"
             android:layout_weight="1"
             android:text="给我们建议"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -282,7 +158,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="4">
 
     </LinearLayout>
 </LinearLayout>

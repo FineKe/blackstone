@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,13 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.litepal.crud.DataSupport;
+
+import java.security.PrivateKey;
+import java.util.List;
+
+import database.Species;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener{
     private String TAG="MainActivity";
@@ -27,7 +35,12 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private AddRecordFragment addRecordFragment;//创建addRecordFragment
     private PersonalCenterFragment personalCenterFragment;//创建personalCenterFragment
     private SettingFragment settingFragment;//创建settingFragment
+    private LoginedFragment loginedFragment;//
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String isLoginedFile="isLogin";
+    private Boolean isLogined;
     /**
      * 底部菜单选项
      */
@@ -61,12 +74,19 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         setContentView(R.layout.activity_main);
         initView();//初始化控件
         initEvents();//添加逻辑事件控制
-//        initData();
+        initData();
+        List<Species >species= DataSupport.findAll(Species.class);
+        for(Species s:species)
+        {
+            System.out.println(s.getChineseName());
+        }
 
 
     }
 
     private void initData() {
+        sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
+        editor=sharedPreferences.edit();
     }
 
     private void initView() {
@@ -165,20 +185,39 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 }
 
                 break;
-            case R.id.tab_personal_cneter://切换到个人中心界面
+            case R.id.tab_personal_cneter://切换到个人中心界面(登录前和登录后的界面，这里进行判断一下)
 
-                if(personalCenterFragment==null)
+                isLogined=sharedPreferences.getBoolean("islogined",false);//默认为未登录
+                if(isLogined==false)
                 {
-                    personalCenterFragment=new PersonalCenterFragment();
-                    transaction.replace(R.id.frame_layout,personalCenterFragment);
-                    imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
-                    textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
-                }else
+                    if(personalCenterFragment==null)
+                    {
+                        personalCenterFragment=new PersonalCenterFragment();
+                        transaction.replace(R.id.frame_layout,personalCenterFragment);
+                        imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
+                        textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
+                    }else
+                    {
+                        transaction.replace(R.id.frame_layout,personalCenterFragment);
+                        imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
+                        textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
+                    }
+                }else if(isLogined==true)
                 {
-                    transaction.replace(R.id.frame_layout,personalCenterFragment);
-                    imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
-                    textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
+                    if(loginedFragment==null)
+                    {
+                        loginedFragment=new LoginedFragment();
+                        transaction.replace(R.id.frame_layout,loginedFragment);
+                        imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
+                        textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
+                    }else
+                    {
+                        transaction.replace(R.id.frame_layout,loginedFragment);
+                        imageButton_personal_center.setImageResource(R.mipmap.person_center_pressed);
+                        textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_pressed_color));
+                    }
                 }
+
 
 
                 break;

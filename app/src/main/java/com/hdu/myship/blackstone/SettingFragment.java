@@ -40,9 +40,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.setting_linearlayout_copyright:
+                startActivity(new Intent(getContext(),CopyRightActivity.class));
                 break;
 
             case R.id.setting_linearlayout_developing_team:
+                startActivity(new Intent(getContext(),MakeTeamActivity.class));
                 break;
         }
     }

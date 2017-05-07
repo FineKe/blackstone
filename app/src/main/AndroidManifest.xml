@@ -33,7 +33,6 @@
             android:name="design_height"
             android:value="1920" />
 
-        <activity android:name=".PersonCenterActivity" />
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".PersonCenterActivity" />
@@ -42,7 +41,10 @@
         <activity android:name=".AddRecordActivity" />
         <activity android:name=".AccountAndSecurityActivity" />
         <activity android:name=".PersonInformationActivity" />
-        <activity android:name=".ResetPhoneActivity"></activity>
+        <activity android:name=".ResetPhoneActivity" />
+        <activity android:name=".MakeTeamActivity" />
+        <activity android:name=".CopyRightActivity" />
+        <activity android:name=".ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

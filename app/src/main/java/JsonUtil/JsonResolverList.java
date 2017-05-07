@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +38,21 @@ public class JsonResolverList {
 
             for (JSONArray array : jsonArrayList) {
                 for (int i = 0; i < array.length(); i++) {
-                    Species species = new Species();
+
                     JSONObject object = array.getJSONObject(i);
-                    species.setSingal(object.getInt("id"));
-                    species.setChineseName(object.getString("chineseName"));
-                    species.setLatinName(object.getString("latinName"));
-                    species.setOrder(object.getString("order"));
-                    species.setFamily(object.getString("family"));
-                    species.setSpeciesType(object.getString("speciesType"));
-                    species.setMainPhoto(object.getString("mainPhoto"));
-                    species.save();
+                    Species species= new Species();
+
+                        species.setId(object.getInt("id"));
+                        species.setChineseName(object.getString("chineseName"));
+                        species.setLatinName(object.getString("latinName"));
+                        species.setOrder(object.getString("order"));
+                        species.setFamily(object.getString("family"));
+                        species.setSpeciesType(object.getString("speciesType"));
+                        species.setMainPhoto(object.getString("mainPhoto"));
+                        species.save();
+
+
+
                 }
             }
 
@@ -61,16 +67,18 @@ public class JsonResolverList {
             JSONArray insect = jsonObject.getJSONArray("insect");
             for(int i=0;i<insect.length();i++)
             {
-                Species species = new Species();
+
                 JSONObject object =insect.getJSONObject(i);
-                species.setSingal(object.getInt("id"));
-                species.setChineseName(object.getString("chineseName"));
-                species.setLatinName(object.getString("latinName"));
-                species.setOrder(object.getString("order"));
-                species.setFamily("无");
-                species.setSpeciesType(object.getString("speciesType"));
-                species.setMainPhoto(object.getString("mainPhoto"));
-                species.save();
+                Species species=new Species();
+                    species.setId(object.getInt("id"));
+                    species.setChineseName(object.getString("chineseName"));
+                    species.setLatinName(object.getString("latinName"));
+                    species.setOrder(object.getString("order"));
+                    species.setFamily("无");
+                    species.setSpeciesType(object.getString("speciesType"));
+                    species.setMainPhoto(object.getString("mainPhoto"));
+                    species.save();
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

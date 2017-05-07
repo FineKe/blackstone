@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f6f6f6"
+    android:orientation="vertical"
     tools:context="com.hdu.myship.blackstone.AccountAndSecurityActivity"
-    tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
-    android:orientation="vertical">
+    tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -90,7 +91,7 @@
                 android:layout_weight="1"
                 android:text="个人资料"
                 android:textColor="#f000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -123,7 +124,7 @@
                 android:layout_weight="1"
                 android:text="修改密码"
                 android:textColor="#f000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -156,7 +157,7 @@
                 android:layout_weight="1"
                 android:text="修改绑定手机号"
                 android:textColor="#f000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -177,13 +178,13 @@
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/bootstrapButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="342dp"
+        android:layout_height="37dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="8dp"
         android:text="退出当前账号"
         android:textSize="20sp"
@@ -191,5 +192,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:roundedCorners="true" />
+        app:roundedCorners="true"
+        tools:layout_editor_absoluteY="442dp"
+        tools:layout_editor_absoluteX="10dp" />
 </android.support.constraint.ConstraintLayout>

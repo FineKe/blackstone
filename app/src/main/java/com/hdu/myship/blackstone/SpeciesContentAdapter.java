@@ -107,7 +107,7 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         {
             HeadHolder headHolder= (HeadHolder) holder;
             headHolder.orderOrFamilyChinaeseName.setText(resultList.get(position).getHead()+"形目");
-            headHolder.orderOrFamilyLatinName.setText(resultList.get(position+1).getSpecies().getLatinName());
+            //headHolder.orderOrFamilyLatinName.setText(resultList.get(position+1).getSpecies().getLatinName());
         }else if(holder instanceof MyHolder)
         {
             MyHolder myHolder= (MyHolder) holder;

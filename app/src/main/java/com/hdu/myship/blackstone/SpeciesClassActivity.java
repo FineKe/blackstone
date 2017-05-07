@@ -44,6 +44,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     private int position;
 
+    private LinearLayoutManager linearLayoutManager;
     private String typeTitle[]={"鸟类","两栖类","爬行类","昆虫类"};
     private List<String> indexList;
     @Override
@@ -71,7 +72,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         sliderBar= (SliderBar) findViewById(R.id.species_class_sliderBar);
 
         speciesClassName.setText(typeTitle[position]);
-        speciesContent.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager=new LinearLayoutManager(this);
+        speciesContent.setLayoutManager(linearLayoutManager);
         speciesContent.setHasFixedSize(true);
 
     }
@@ -98,7 +100,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             @Override
             public void onItemClick(View view, SpeciesContentAdapter.result data) {//添加点击事件
                 Intent intent=new Intent(SpeciesClassActivity.this,SpeciesDeatailedActivity.class);
-                intent.putExtra("singal",data.getSpecies().getSingal());
+                intent.putExtra("id",data.getSpecies().getId());
                 intent.putExtra("speciesType",data.getSpecies().getSpeciesType());
                 intent.putExtra("speciesTypeChineseName",typeTitle[position]);
                 startActivity(intent);
@@ -109,8 +111,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         sliderBar.setGravity(Gravity.CENTER_VERTICAL);//设置位置
         sliderBar.setCharacterListener(new SliderBar.CharacterClickListener() {
             @Override
-            public void clickCharacter(String character) {//添加监听事件
-                Toast.makeText(SpeciesClassActivity.this,"",Toast.LENGTH_SHORT).show();
+            public void clickCharacter(int position) {
+                linearLayoutManager.scrollToPositionWithOffset(position,0);
             }
         });
     }

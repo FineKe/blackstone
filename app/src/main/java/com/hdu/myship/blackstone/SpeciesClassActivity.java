@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.List;
 import database.Species;
 
 public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnClickListener{
+    private static final String TAG ="SpeciesClassActivity";
     private ImageButton actionBack;
     private ImageButton alertMenu;
     private ImageButton alertPick;
@@ -99,6 +101,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
             public void onItemClick(View view, SpeciesContentAdapter.result data) {//添加点击事件
+                Log.d(TAG, "onItemClick: "+data.getSpecies().getId());
                 Intent intent=new Intent(SpeciesClassActivity.this,SpeciesDeatailedActivity.class);
                 intent.putExtra("id",data.getSpecies().getId());
                 intent.putExtra("speciesType",data.getSpecies().getSpeciesType());

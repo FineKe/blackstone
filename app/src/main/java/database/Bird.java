@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public class Bird extends DataSupport{
-    private int singal;//id
+    private int id;//id
     private String chineseName;
     private String englishName;
     private String latinName;
@@ -32,12 +32,14 @@ public class Bird extends DataSupport{
     private String fly_pattern;
     private String speciesType;
 
-    public int getSingal() {
-        return singal;
+
+
+    public int getId() {
+        return id;
     }
 
-    public void setSingal(int singal) {
-        this.singal = singal;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getChineseName() {

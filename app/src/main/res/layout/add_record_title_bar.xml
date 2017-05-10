@@ -27,12 +27,13 @@
         android:layout_marginBottom="0dp" />
 
     <TextView
+        android:id="@+id/add_record_titleBar_textView_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="保存"
+        android:text="修改"
         android:textColor="#ffff"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

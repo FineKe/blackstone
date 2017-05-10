@@ -25,6 +25,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private String speciesType;
     private ViewPager viewPager;
     private ArrayList<View> views;
-    private Object object;
+    private Object speciesDetailed;
     private MyViewPagerAdapter adapter;
     String TAG="TEST";
     private String speciesTypeChineseName;
@@ -60,101 +61,22 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         speciesType=getIntent().getStringExtra("speciesType");
         speciesTypeChineseName=getIntent().getStringExtra("speciesTypeChineseName");
         setContentView(R.layout.activity_species_deatailed);
-        views=new ArrayList<>();
-        initData();
+        Log.d(TAG, "onCreate: "+singal);
         initViews();
+        initData();
 
     }
 
     private void initData() {
 
-        adapter=new MyViewPagerAdapter();
+
         requestQueue= Volley.newRequestQueue(this);
-        request=new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                JsonResolverSpeciesDetailed detailed=new JsonResolverSpeciesDetailed();
-                switch (speciesType) {
-                    case "reptiles":
-                        object=detailed.ResolveRepties(jsonObject);
-                        final Reptiles re=detailed.ResolveRepties(jsonObject);
-                        for(String picture:re.getImgs())
-                        {
-                            views.add(createView(picture));
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SpeciesChineseName=re.getChineseName();
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                        break;
 
-                    case "bird":
-//                        object=detailed.ResolveBird(jsonObject);
-                        final Bird bi=detailed.ResolveBird(jsonObject);
-                        for(String picture:bi.getImgs())
-                        {
-                            Log.d(TAG, "onResponse: bird"+picture);
-                            views.add(createView(picture));
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SpeciesChineseName=bi.getChineseName();
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                        break;
-
-                    case "amphibia":
-                        object=detailed.ResolveAmphibia(jsonObject);
-                        final Amphibia am=detailed.ResolveAmphibia(jsonObject);
-                        for(String picture:am.getImgs())
-                        {
-                            Log.d(TAG, "onResponse: am"+picture);
-                            views.add(createView(picture));
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SpeciesChineseName=am.getChineseName();
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                        break;
-
-                    case "insect":
-                        object=detailed.ResolveInsect(jsonObject);
-                        final Insect in=detailed.ResolveInsect(jsonObject);
-                        for(String picture:in.getImgs())
-                        {
-                            Log.d(TAG, "onResponse: in"+picture);
-                            views.add(createView(picture));
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SpeciesChineseName=in.getChineseName();
-                                    adapter.notifyDataSetChanged();
-
-                                }
-                            });
-                        }
-                        break;
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(SpeciesDeatailedActivity.this,"请求异常",Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(request);
 
     }
 
     private void initViews() {
+        adapter=new MyViewPagerAdapter();
         viewPager = (ViewPager) findViewById(R.id.species_detailed_viewpager);
         speciesClassName= (TextView) findViewById(R.id.species_detailed_title_bar_textView_speciesClassName);
         speciesName= (TextView) findViewById(R.id.species_detailed_title_bar_textView_speciesNameAndOrder);
@@ -162,6 +84,34 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         speciesClassName.setText(speciesTypeChineseName);
         speciesName.setText(SpeciesChineseName);
         viewPager.setAdapter(adapter);
+        views=new ArrayList<>();
+        switch (speciesType)
+        {
+            case "reptiles":speciesDetailed= DataSupport.find(Reptiles.class,singal);
+                for(String picture:((Reptiles)speciesDetailed).getImgs())
+                {
+                    views.add(createView(picture));
+                }
+                break;
+            case "bird":;speciesDetailed=DataSupport.find(Bird.class,singal);
+                for(String picture:((Bird)speciesDetailed).getImgs())
+                {
+                    views.add(createView(picture));
+                }
+                break;
+            case "amphibia":speciesDetailed=DataSupport.find(Amphibia.class,singal);
+                for(String picture:((Amphibia)speciesDetailed).getImgs())
+                {
+                    views.add(createView(picture));
+                }
+                break;
+            case "insect":;speciesDetailed=DataSupport.find(Insect.class,singal);
+                for(String picture:((Insect)speciesDetailed).getImgs())
+                {
+                    views.add(createView(picture));
+                }
+                break;
+        }
     }
 
     @Override

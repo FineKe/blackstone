@@ -18,11 +18,36 @@ import database.Reptiles;
  */
 
 public class JsonResolverSpeciesDetailed {
+    private JSONObject jsonObject;
 
-    public Amphibia ResolveAmphibia(JSONObject jsonObject) {
+    public JsonResolverSpeciesDetailed(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+    }
+
+    public void ResolveSpeciesDetailed(){
         try {
-            int code = jsonObject.getInt("code");
-            if (code == 88) {
+            int code=jsonObject.getInt("code");
+            if(code==88)
+            {
+                switch (jsonObject.getString("speciesType"))
+                {
+                    case "reptiles":ResolveRepties(jsonObject);
+                        break;
+                    case "bird":ResolveBird(jsonObject);
+                        break;
+                    case "amphibia":ResolveAmphibia(jsonObject);
+                        break;
+                    case "insect":ResolveInsect(jsonObject);
+                        break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void ResolveAmphibia(JSONObject jsonObject) {
+        try {
+
                 JSONObject data = jsonObject.getJSONObject("data");
                 int singl = data.getInt("id");
                 String chineseName = data.getString("chineseName");
@@ -54,7 +79,7 @@ public class JsonResolverSpeciesDetailed {
 
                 Amphibia speciesDetailed = new Amphibia();
 
-                speciesDetailed.setSingl(singl);
+                speciesDetailed.setId(singl);
                 speciesDetailed.setChineseName(chineseName);
                 speciesDetailed.setLatinName(latinName);
                 speciesDetailed.setOrder(order);
@@ -82,22 +107,19 @@ public class JsonResolverSpeciesDetailed {
                 speciesDetailed.setDigitalFormula(digital_formula);
                 speciesDetailed.setNuptial(nuptial);
                 speciesDetailed.setSpeciesType(speciesType);
-
-                return speciesDetailed;
-            }
+                speciesDetailed.save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+
     }
 
-    public Bird ResolveBird(JSONObject jsonObject) {
+    private void ResolveBird(JSONObject jsonObject) {
         try {
-            int code = jsonObject.getInt("code");
-            if (code == 88) {
+
                 Bird bird = new Bird();
                 JSONObject data = jsonObject.getJSONObject("data");
-                bird.setSingal(data.getInt("id"));
+                bird.setId(data.getInt("id"));
                 bird.setChineseName(data.getString("chineseName"));
                 bird.setEnglishName(data.getString("englishName"));
                 bird.setLatinName(data.getString("latinName"));
@@ -124,21 +146,19 @@ public class JsonResolverSpeciesDetailed {
                 bird.setTweet(features.getString("tweet"));
                 bird.setFly_pattern(features.getString("fly_pattern"));
                 bird.setSpeciesType(data.getString("speciesType"));
-                return bird;
-            }
+                bird.save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+
     }
 
-    public Insect ResolveInsect(JSONObject jsonObject) {
+    private void ResolveInsect(JSONObject jsonObject) {
         try {
-            int code = jsonObject.getInt("code");
-            if (code == 88) {
+
                 Insect insect = new Insect();
                 JSONObject data = jsonObject.getJSONObject("data");
-                insect.setSingal(data.getInt("id"));
+                insect.setId(data.getInt("id"));
                 insect.setChineseName(data.getString("chineseName"));
                 insect.setLatinName(data.getString("latinName"));
                 insect.setOrder(data.getString("order"));
@@ -163,21 +183,19 @@ public class JsonResolverSpeciesDetailed {
                 insect.setYoung_feature(features.getString("young_feature"));
                 insect.setLeg(features.getString("leg"));
                 insect.setSpeciesType(data.getString("speciesType"));
-                return insect;
-            }
+                insect.save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+
     }
 
-    public Reptiles ResolveRepties(JSONObject jsonObject) {
+    private void ResolveRepties(JSONObject jsonObject) {
         try {
-            int code = jsonObject.getInt("code");
-            if (code == 88) {
+
                 Reptiles reptiles = new Reptiles();
                 JSONObject data = jsonObject.getJSONObject("data");
-                reptiles.setSingal(data.getInt("id"));
+                reptiles.setId(data.getInt("id"));
                 reptiles.setChineseName(data.getString("chineseName"));
                 reptiles.setLatinName(data.getString("latinName"));
                 reptiles.setOrder(data.getString("order"));
@@ -204,12 +222,11 @@ public class JsonResolverSpeciesDetailed {
                 reptiles.setEating_pattern(features.getString("eating_pattern"));
                 reptiles.setMajor_color(features.getString("major_color"));
                 reptiles.setSpeciesType(data.getString("speciesType"));
-                return reptiles;
-            }
+                reptiles.save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+
     }
 
 }

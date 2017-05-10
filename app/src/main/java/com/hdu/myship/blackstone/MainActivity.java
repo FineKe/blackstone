@@ -5,20 +5,28 @@ import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.security.PrivateKey;
 import java.util.List;
 
+import JsonUtil.JsonResolverSpeciesDetailed;
 import database.Species;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener{
@@ -71,15 +79,10 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        initData();
         setContentView(R.layout.activity_main);
         initView();//初始化控件
         initEvents();//添加逻辑事件控制
-        initData();
-        List<Species >species= DataSupport.findAll(Species.class);
-        for(Species s:species)
-        {
-            System.out.println(s.getChineseName());
-        }
 
 
     }
@@ -87,6 +90,33 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private void initData() {
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
         editor=sharedPreferences.edit();
+        List<Species> speciesList=DataSupport.findAll(Species.class);
+        for(Species s:speciesList)
+        {
+            JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getId(), null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    try {
+                        int code=jsonObject.getInt("code");
+                        if(code==88)
+                        {
+                            JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
+                            speciesDetailed.ResolveSpeciesDetailed();
+                            Log.d(TAG, "onResponse: "+code);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+
+        }
+
     }
 
     private void initView() {
@@ -218,9 +248,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                     }
                 }
 
-
-
                 break;
+
             case R.id.tab_setting://切换到设置界面
                 if(settingFragment==null)
                 {

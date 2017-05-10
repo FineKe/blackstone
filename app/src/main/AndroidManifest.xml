@@ -38,13 +38,16 @@
             android:parentActivityName=".PersonCenterActivity" />
         <activity android:name=".SpeciesDeatailedActivity" />
         <activity android:name=".SpeciesClassActivity" />
-        <activity android:name=".AddRecordActivity" />
         <activity android:name=".AccountAndSecurityActivity" />
         <activity android:name=".PersonInformationActivity" />
         <activity android:name=".ResetPhoneActivity" />
         <activity android:name=".MakeTeamActivity" />
         <activity android:name=".CopyRightActivity" />
-        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MyCollectionsActivity" />
+        <activity android:name=".MyRecordsActivity" />
+        <activity android:name=".AddNotesActivity"></activity>
     </application>
 
 </manifest>

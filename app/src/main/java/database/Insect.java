@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class Insect extends DataSupport{
-    private int singal;
+    private int id;
     private String chineseName;
     private String latinName;
     private String order;
@@ -28,12 +28,12 @@ public class Insect extends DataSupport{
     private String leg;
     private String speciesType;
 
-    public int getSingal() {
-        return singal;
+    public int getId() {
+        return id;
     }
 
-    public void setSingal(int singal) {
-        this.singal = singal;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getChineseName() {

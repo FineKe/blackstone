@@ -47,7 +47,11 @@
         <activity android:name=".SearchActivity" />
         <activity android:name=".MyCollectionsActivity" />
         <activity android:name=".MyRecordsActivity" />
-        <activity android:name=".AddNotesActivity"></activity>
+        <activity android:name=".AddNotesActivity" />
+
+        <service
+            android:name=".UploadIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

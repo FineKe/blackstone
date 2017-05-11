@@ -9,5 +9,6 @@
         <mapping class="database.Bird"></mapping>
         <mapping class="database.Reptiles"></mapping>
         <mapping class="database.Insect"></mapping>
+        <mapping class="database.Record"></mapping>
     </list>
 </litepal>

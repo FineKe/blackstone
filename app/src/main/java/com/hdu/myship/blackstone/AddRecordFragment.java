@@ -32,12 +32,15 @@ import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.Inflater;
 
+import database.Bird;
+import database.Record;
 import database.Species;
 
 /**
@@ -47,9 +50,11 @@ import database.Species;
 
 public class AddRecordFragment extends Fragment implements View.OnClickListener{
     private String loginURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String upLoadRecordURL="http://api.blackstone.ebirdnote.cn/v1/record/new";
     private RequestQueue requestQueue;
     private ExpandableListView expandableListView;
     private List<List<Species>> speciesList;
+    private List<List<Record>> records;
     private String TAG="AddRecordFragment";
 
     private TextView save;
@@ -73,14 +78,17 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
     private ImageView showPassword;
 
     private boolean isShowed=false;
-    private boolean isCollected=false;
+
+    private SharedPreferences createBasicRecordsSharedPreferences;
+    private SharedPreferences.Editor createBasicRecordsEditor;
+    private String createBasicRecordsFile="RecordsFileADT";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.add_record,container,false);
         initData();
         expandableListView= (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
-        expandableListView.setAdapter(new MyExpandListViewAdapter(speciesList));
+        expandableListView.setAdapter(new MyExpandListViewAdapter(records));
         save= (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
         initEvents();
 
@@ -98,20 +106,18 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initData() {
+        createBasicRecordsSharedPreferences=getActivity().getSharedPreferences(createBasicRecordsFile,Context.MODE_PRIVATE);
+        createBasicRecordsEditor=createBasicRecordsSharedPreferences.edit();
         requestQueue=Volley.newRequestQueue(getContext());
-        List<Species> bird=DataSupport.where("speciesType=?","bird").find(Species.class);
-        List<Species> reptiles=DataSupport.where("speciesType=?","reptiles").find(Species.class);
-        List<Species> amphibia=DataSupport.where("speciesType=?","amphibia").find(Species.class);
-        List<Species> insect=DataSupport.where("speciesType=?","insect").find(Species.class);
-        for(Species s:bird)
+        boolean isCreateBasicRecords=createBasicRecordsSharedPreferences.getBoolean("isCreated",false);
+
+        if(isCreateBasicRecords==false)
         {
-            Log.d(TAG, "initData: "+s.getChineseName());
+            createBasicRecords();
+            createBasicRecordsEditor.putBoolean("isCreated",true).apply();
         }
-        speciesList=new ArrayList<>();
-        speciesList.add(bird);
-        speciesList.add(amphibia);
-        speciesList.add(reptiles);
-        speciesList.add(insect);
+
+
 
         sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
         editor=sharedPreferences.edit();
@@ -127,18 +133,26 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    /**
+     * 保存
+     */
     private void save() {
-        if(isLogined==false) {
-            showLoginDialog();
+        if(isLogined==false) {//判断是否登录了
+            showLoginDialog();//如果没有则弹出登录框
         }
+        /**
+         * 开启一个服务用与上传记录
+         */
+
+        //createBasicRecords();//重置一下
     }
 
     class MyExpandListViewAdapter extends BaseExpandableListAdapter
     {   private String [] groups={"鸟类","两栖类","爬行类","昆虫"};
-        List<List<Species>> list;
+        private List<List<Record>> records;
 
-        public MyExpandListViewAdapter(List<List<Species>> list) {
-            this.list = list;
+        public MyExpandListViewAdapter( List<List<Record>>  records) {
+            this.records = records;
         }
 
         @Override
@@ -148,7 +162,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return list.get(groupPosition).size();
+            return records.get(groupPosition).size();
         }
 
         @Override
@@ -158,7 +172,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return list.get(groupPosition).get(childPosition);
+            return records.get(groupPosition).get(childPosition);
         }
 
         @Override
@@ -189,7 +203,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
         }
 
         @Override
-        public View getChildView(int groupPosition, int childPosition, final boolean isLastChild, View convertView, ViewGroup parent) {
+        public View getChildView(final int groupPosition, final int childPosition, final boolean isLastChild, View convertView, ViewGroup parent) {
 
             if (convertView==null)
             {
@@ -197,29 +211,44 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
             }
 
             TextView textView= (TextView) convertView.findViewById(R.id.expand_listView_child_speciesChineseName);
-            textView.setText(list.get(groupPosition).get(childPosition).getChineseName());
+            textView.setText(records.get(groupPosition).get(childPosition).getChineseName());
             final ImageView addNotes= (ImageView) convertView.findViewById(R.id.expand_list_view_child_imageView_addNotes);
             final ImageView collection= (ImageView) convertView.findViewById(R.id.expand_list_view_child_imageView_collection);
+
+            if(records.get(groupPosition).get(childPosition).isRemarkIsNull())//isRemarkNull默认为true
+            {
+                addNotes.setImageResource(R.mipmap.pen_normal);
+            }else
+            {
+                addNotes.setImageResource(R.mipmap.pen_pressed);
+            }
+
 
             addNotes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(),AddNotesActivity.class));
+
+                    startActivity(new Intent(getActivity(),AddNotesActivity.class));//跳转到添加笔记界面
                 }
             });
 
             collection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isCollected==false)
+                    if (!records.get(groupPosition).get(childPosition).isChecked())
                     {
-                        isCollected =true;
+
                         collection.setImageResource(R.mipmap.select_pressed);
+                        records.get(groupPosition).get(childPosition).setChecked(true);
+                        boolean result=records.get(groupPosition).get(childPosition).isSaved();
+                        Log.d(TAG, "onClick: "+result);
                     }
                     else
                     {
-                        isCollected=false;
                         collection.setImageResource(R.mipmap.select_normal);
+                        records.get(groupPosition).get(childPosition).setChecked(false);
+                        boolean result=records.get(groupPosition).get(childPosition).save();
+                        Log.d(TAG, "onClick: "+result);
                     }
                 }
             });
@@ -228,14 +257,20 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return true;
+            return false;
         }
     }
 
+    /**
+     * 登录对话框
+     */
     public void showLoginDialog()
     {
         final LoginDialog loginDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.login_dialog);
         loginDialog.show();
+        /**
+         * 绑定控件
+         */
         iuputAccount= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_account);
         inputPassword= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_password);
         loginForget= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_forget);
@@ -244,7 +279,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
         showPassword= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_showPassword);
 
 
-
+        //设置密码的密码可见性
         showPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,7 +307,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//登录逻辑处理
                 Map<String,String> loginMap=new HashMap<String, String>();
                 loginMap.put("username",iuputAccount.getText().toString());
                 loginMap.put("pwd",inputPassword.getText().toString());
@@ -286,7 +321,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
                             if(code==88)
                             {
                                 loginDialog.dismiss();
-                                editor.putBoolean("islogined",true).apply();
+                                editor.putBoolean("islogined",true).apply();//向文件中写入已经登录true
 
                             }
                             else
@@ -309,7 +344,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        loginForget.setOnClickListener(new View.OnClickListener() {
+        loginForget.setOnClickListener(new View.OnClickListener() {//忘记密码处理逻辑
             @Override
             public void onClick(View v) {
 
@@ -317,15 +352,23 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
         });
     }
 
-
+    /**
+     * 登录错误对话框
+     */
     public void showErrorDialog()
     {
-        final LoginDialog errorDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.error_login_dialog);
-        errorDialog.show();
+        final LoginDialog errorDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.error_login_dialog);//创建一个错误dialog
+        errorDialog.show();//显示dialog
+        /**
+         * 绑定控件
+         */
         errorLoginForget= (TextView) errorDialog.findViewById(R.id.error_login_dialog_forget);
         inputAgain= (TextView) errorDialog.findViewById(R.id.error_login_dialog_inputAgain);
 
-        errorLoginForget.setOnClickListener(new View.OnClickListener() {
+        /**
+         * 设置点击事件
+         */
+        errorLoginForget.setOnClickListener(new View.OnClickListener() {//忘记密码处理逻辑
             @Override
             public void onClick(View v) {
 
@@ -334,10 +377,88 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
         inputAgain.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                showLoginDialog();
+            public void onClick(View v) {//重新输入逻辑
+                showLoginDialog();//显示登录对话框
                 errorDialog.dismiss();
             }
         });
+    }
+
+
+    /**
+     * 生成用于基础记录的records
+     */
+    private void createBasicRecords()
+    {
+        /**
+         * 先将物种分类
+         */
+        List<Species> bird=DataSupport.where("speciesType=?","bird").find(Species.class);
+        List<Species> reptiles=DataSupport.where("speciesType=?","reptiles").find(Species.class);
+        List<Species> amphibia=DataSupport.where("speciesType=?","amphibia").find(Species.class);
+        List<Species> insect=DataSupport.where("speciesType=?","insect").find(Species.class);
+
+        /*speciesList=new ArrayList<>();
+        speciesList.add(bird);
+        speciesList.add(amphibia);
+        speciesList.add(reptiles);
+        speciesList.add(insect);
+        */
+
+        /**
+         * 创建对应的list
+         */
+        List<Record> birdRecord=new ArrayList<>();
+        List<Record> reptilesRecord=new ArrayList<>();
+        List<Record> amphibiaRecord=new ArrayList<>();
+        List<Record> insectRecord=new ArrayList<>();
+
+        /**
+         * 填充数据
+         */
+        for(Species species:bird)
+        {
+            Record record=new Record();
+            record.setChineseName(species.getChineseName());
+            record.setSpeciesId(species.getId());
+            record.save();
+            birdRecord.add(record);
+        }
+
+        for(Species species:reptiles)
+        {
+            Record record=new Record();
+            record.setChineseName(species.getChineseName());
+            record.setSpeciesId(species.getId());
+            record.save();
+            reptilesRecord.add(record);
+        }
+
+        for(Species species:amphibia)
+        {
+            Record record=new Record();
+            record.setChineseName(species.getChineseName());
+            record.setSpeciesId(species.getId());
+            record.save();
+            amphibiaRecord.add(record);
+        }
+
+        for(Species species:insect)
+        {
+            Record record=new Record();
+            record.setChineseName(species.getChineseName());
+            record.setSpeciesId(species.getId());
+            record.save();
+            insectRecord.add(record);
+        }
+
+        /**
+         * 将list添加至recordList
+         */
+        records=new ArrayList<>();
+        records.add(birdRecord);
+        records.add(amphibiaRecord);
+        records.add(reptilesRecord);
+        records.add(insectRecord);
     }
 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by MY SHIP on 2017/5/7.
@@ -22,7 +23,11 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
 
     private ImageView myCollections;
     private ImageView myRecords;
+    private TextView name;
 
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
 
     @Nullable
     @Override
@@ -31,8 +36,11 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         myCollections= (ImageView) view.findViewById(R.id.logined_fragment_my_collections);
         myRecords= (ImageView) view.findViewById(R.id.logined_fragment_my_records);
 
+        name= (TextView) view.findViewById(R.id.logined_frgment_textView_name);
+
         myCollections.setOnClickListener(this);
         myRecords.setOnClickListener(this);
+        name.setText(userInformationSharedPreferences.getString("name",""));
         return view;
     }
 
@@ -43,6 +51,8 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initData() {
+        userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,Context.MODE_PRIVATE);
+        userInformationEditor=userInformationSharedPreferences.edit();
 
     }
 

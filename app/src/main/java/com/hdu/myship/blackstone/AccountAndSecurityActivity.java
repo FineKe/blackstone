@@ -1,16 +1,35 @@
 package com.hdu.myship.blackstone;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class AccountAndSecurityActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private static final String TAG ="AccountAndSecurity";
+    private String LogOutURL="http://api.blackstone.ebirdnote.cn/v1/user/logout";
+    private RequestQueue requestQueue;
+
     private LinearLayout tab_personInformation;
     private LinearLayout tab_resetPassword;
     private LinearLayout tab_resetPhone;
@@ -23,6 +42,11 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
     private SharedPreferences.Editor editor;
     private String isLoginedFile="isLogin";
     private Boolean isLogined;
+
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +58,23 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
     }
 
     private void initData() {
+        /**
+         * 访问用户是否登录的文件
+         */
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
         editor=sharedPreferences.edit();
+
+        /**
+         * 访问用户信息的文件
+         */
+        userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
+        userInformationEditor=userInformationSharedPreferences.edit();
+
+        /**
+         * 创建请求队列
+         */
+        requestQueue= Volley.newRequestQueue(this);
+
 
     }
 
@@ -84,6 +123,57 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
     }
 
     private void logOut() {
-        editor.putBoolean("islogined",false).apply();
+
+        final String token=userInformationSharedPreferences.getString("token","");
+        Log.d(TAG, "logOut: "+userInformationSharedPreferences.getString("token",""));
+        Boolean isLogined=sharedPreferences.getBoolean("islogined",true);
+        if(isLogined)
+        {
+            JsonObjectRequest logOutRequest=new JsonObjectRequest(Request.Method.GET, LogOutURL + "?token=" + token, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    Log.d(TAG, "onResponse: "+jsonObject.toString());
+                    try {
+                        int code=jsonObject.getInt("code");
+                        if(code==88)
+                        {
+                            editor.putBoolean("islogined",false).apply();//将用户登录设为false
+                            resetUserInfomation();
+                            Log.d(TAG, "onResponse: "+code);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(AccountAndSecurityActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String,String>headers=new HashMap<>();
+                    headers.put("token",token);
+                    return headers;
+                }
+            };
+            requestQueue.add(logOutRequest);
+        }
+
+
+    }
+
+    private void resetUserInfomation()//重置用户信息
+    {
+        userInformationEditor.putLong("id",0);
+        userInformationEditor.putString("mobile","");
+        userInformationEditor.putString("studentId","");
+        userInformationEditor.putString("name","");
+        userInformationEditor.putString("gender","");
+        userInformationEditor.putString("mail","");
+        userInformationEditor.putString("token","");
+        userInformationEditor.putLong("expireAt",0);
+        userInformationEditor.apply();
     }
 }

@@ -50,6 +50,11 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     private String isLoginedFile="isLogin";
     private Boolean isLogined;
 
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
+
+
     private Button login;
     private Button register;
 
@@ -97,6 +102,9 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
         transaction=fragmentManager.beginTransaction();
         sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
         editor=sharedPreferences.edit();
+
+        userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,Context.MODE_PRIVATE);
+        userInformationEditor=userInformationSharedPreferences.edit();
     }
 
     @Override
@@ -179,8 +187,20 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                             int code=jsonObject.getInt("code");
                             if(code==88)
                             {
+
                                 loginDialog.dismiss();
                                 editor.putBoolean("islogined",true).apply();
+                                JSONObject data=jsonObject.getJSONObject("data");
+                                JSONObject user=data.getJSONObject("user");
+                                userInformationEditor.putLong("id",user.getLong("id"));
+                                userInformationEditor.putString("mobile",user.getString("mobile"));
+                                userInformationEditor.putString("studentId",user.getString("studentId"));
+                                userInformationEditor.putString("name",user.getString("name"));
+                                userInformationEditor.putString("gender",user.getString("gender"));
+                                userInformationEditor.putString("mail",user.getString("mail"));
+                                userInformationEditor.putString("token",data.getString("token"));
+                                userInformationEditor.putLong("expireAt",data.getLong("expireAt"));
+                                userInformationEditor.commit();
                                 transaction.replace(R.id.frame_layout,new LoginedFragment()).commit();
 
                             }

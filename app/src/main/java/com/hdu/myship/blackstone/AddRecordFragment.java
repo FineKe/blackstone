@@ -1,12 +1,21 @@
 package com.hdu.myship.blackstone;
 
+import android.Manifest;
+import android.app.IntentService;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -40,6 +49,7 @@ import java.util.Map;
 import java.util.zip.Inflater;
 
 import database.Bird;
+import database.Insect;
 import database.Record;
 import database.Species;
 
@@ -48,21 +58,23 @@ import database.Species;
  * 添加记录fragment
  */
 
-public class AddRecordFragment extends Fragment implements View.OnClickListener{
-    private String loginURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
-    private String upLoadRecordURL="http://api.blackstone.ebirdnote.cn/v1/record/new";
+public class AddRecordFragment extends Fragment implements View.OnClickListener {
+    private String loginURL = "http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String upLoadRecordURL = "http://api.blackstone.ebirdnote.cn/v1/record/new";
     private RequestQueue requestQueue;
     private ExpandableListView expandableListView;
     private List<List<Species>> speciesList;
     private List<List<Record>> records;
-    private String TAG="AddRecordFragment";
+    private String TAG = "AddRecordFragment";
 
+    private LocationManager locationManager;
+    private Location location;
     private TextView save;
 
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private String isLoginedFile="isLogin";
+    private String isLoginedFile = "isLogin";
     private Boolean isLogined;
 
     private EditText iuputAccount;
@@ -77,19 +89,53 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
     private ImageView showPassword;
 
-    private boolean isShowed=false;
+    private boolean isShowed = false;
 
     private SharedPreferences createBasicRecordsSharedPreferences;
     private SharedPreferences.Editor createBasicRecordsEditor;
-    private String createBasicRecordsFile="RecordsFileADT";
+    private String createBasicRecordsFile = "RecordsFileADT";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.add_record,container,false);
+        View view = inflater.inflate(R.layout.add_record, container, false);
         initData();
-        expandableListView= (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
+        expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
         expandableListView.setAdapter(new MyExpandListViewAdapter(records));
-        save= (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
+        /*expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
+
+
+                final ImageView addNote= (ImageView) v.findViewById(R.id.expand_list_view_child_imageView_addNotes);
+                final ImageView selected= (ImageView) v.findViewById(R.id.expand_list_view_child_imageView_collection);
+                addNote.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getContext(),AddNotesActivity.class));
+                    }
+                });
+
+                selected.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!records.get(groupPosition).get(childPosition).isChecked())
+                        {
+                            records.get(groupPosition).get(childPosition).setChecked(true);
+                            records.get(groupPosition).get(childPosition).save();
+                            selected.setImageResource(R.mipmap.select_pressed);
+                        }else
+                        {
+                            records.get(groupPosition).get(childPosition).setChecked(false);
+                            records.get(groupPosition).get(childPosition).save();
+                            selected.setImageResource(R.mipmap.select_normal);
+                        }
+                    }
+                });
+                return true;
+            }
+        });*/
+        save = (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
         initEvents();
 
         return view;
@@ -105,17 +151,43 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private Location getLocation() {
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
+
+
+        }else {
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            return  locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        return null;
+    }
+
+
+
     private void initData() {
         createBasicRecordsSharedPreferences=getActivity().getSharedPreferences(createBasicRecordsFile,Context.MODE_PRIVATE);
         createBasicRecordsEditor=createBasicRecordsSharedPreferences.edit();
         requestQueue=Volley.newRequestQueue(getContext());
         boolean isCreateBasicRecords=createBasicRecordsSharedPreferences.getBoolean("isCreated",false);
-
-        if(isCreateBasicRecords==false)
+        records=new ArrayList<>();
+      if(isCreateBasicRecords==false)
         {
-            createBasicRecords();
-            createBasicRecordsEditor.putBoolean("isCreated",true).apply();
+
         }
+
+        createBasicRecords();
+        createBasicRecordsEditor.putBoolean("isCreated",true).apply();
+
 
 
 
@@ -139,10 +211,24 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
     private void save() {
         if(isLogined==false) {//判断是否登录了
             showLoginDialog();//如果没有则弹出登录框
+            location=getLocation();
+            if(location!=null)
+                System.out.println(location.toString());
+            Intent intent=new Intent(getContext(),UploadIntentService.class);
+            getContext().startService(intent);
+        }else{
+
+            location=getLocation();
+            if(location!=null)
+                System.out.println(location.toString());
+            Intent intent=new Intent(getContext(),UploadIntentService.class);
+            getContext().startService(intent);
         }
         /**
          * 开启一个服务用与上传记录
          */
+
+
 
         //createBasicRecords();//重置一下
     }
@@ -187,7 +273,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public boolean hasStableIds() {
-            return false;
+            return true;
         }
 
         @Override
@@ -214,44 +300,31 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
             textView.setText(records.get(groupPosition).get(childPosition).getChineseName());
             final ImageView addNotes= (ImageView) convertView.findViewById(R.id.expand_list_view_child_imageView_addNotes);
             final ImageView collection= (ImageView) convertView.findViewById(R.id.expand_list_view_child_imageView_collection);
-
-            if(records.get(groupPosition).get(childPosition).isRemarkIsNull())//isRemarkNull默认为true
+            if(!records.get(groupPosition).get(childPosition).isChecked())
             {
-                addNotes.setImageResource(R.mipmap.pen_normal);
+                collection.setImageResource(R.mipmap.select_normal);
             }else
             {
-                addNotes.setImageResource(R.mipmap.pen_pressed);
+                collection.setImageResource(R.mipmap.select_pressed);
             }
-
-
-            addNotes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    startActivity(new Intent(getActivity(),AddNotesActivity.class));//跳转到添加笔记界面
-                }
-            });
-
+            addNotes.setImageResource(R.mipmap.pen_normal);
             collection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!records.get(groupPosition).get(childPosition).isChecked())
+                    if(!records.get(groupPosition).get(childPosition).isChecked())
                     {
-
-                        collection.setImageResource(R.mipmap.select_pressed);
                         records.get(groupPosition).get(childPosition).setChecked(true);
-                        boolean result=records.get(groupPosition).get(childPosition).isSaved();
-                        Log.d(TAG, "onClick: "+result);
-                    }
-                    else
+                        records.get(groupPosition).get(childPosition).save();
+                        collection.setImageResource(R.mipmap.select_pressed);
+                    }else
                     {
-                        collection.setImageResource(R.mipmap.select_normal);
                         records.get(groupPosition).get(childPosition).setChecked(false);
-                        boolean result=records.get(groupPosition).get(childPosition).save();
-                        Log.d(TAG, "onClick: "+result);
+                        records.get(groupPosition).get(childPosition).save();
+                        collection.setImageResource(R.mipmap.select_normal);
                     }
                 }
             });
+
             return convertView;
         }
 
@@ -455,7 +528,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener{
         /**
          * 将list添加至recordList
          */
-        records=new ArrayList<>();
+
         records.add(birdRecord);
         records.add(amphibiaRecord);
         records.add(reptilesRecord);

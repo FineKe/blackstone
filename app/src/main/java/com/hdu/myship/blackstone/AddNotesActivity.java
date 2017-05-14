@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +24,16 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
 
     private List<Record> records;
     private Record record;
+
+    private Intent data;
+    private int childPosition;
+    private int groupPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         speciesId=getIntent().getIntExtra("speciesId",1);
+
         setContentView(R.layout.activity_add_notes);
         initData();
         initView();
@@ -37,6 +43,10 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
     private void initData() {
         records= DataSupport.where("speciesId=?",speciesId+"").find(Record.class);
         record=records.get(0);
+        data=new Intent();
+        data.putExtra("speciesId",speciesId);
+
+
 
     }
 
@@ -63,6 +73,8 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+
     private void actionBack() {
         String notesContent=notes.getText().toString();
         Log.d(TAG, "actionBack: "+notesContent);
@@ -71,6 +83,7 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
             record.setRemarkIsNull(false);
             record.setRemark(notesContent);
             record.save();
+            this.setResult(2,data);
             this.finish();
         }else
         {

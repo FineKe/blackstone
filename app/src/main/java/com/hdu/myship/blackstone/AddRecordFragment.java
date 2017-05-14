@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -104,19 +105,22 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private int year,month,day;
     private long millisecond;
 
+    private int fatherPosition;
+    private int childPosition_;
 
     private MyExpandListViewAdapter myExpandListViewAdapter;
 
 
+    private View mview;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_record, container, false);
-        initData();
+       // initData();
         textViewDate= (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
         datePicker= (DatePicker) view.findViewById(R.id.add_record_datepicker);
         expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
-        myExpandListViewAdapter=new MyExpandListViewAdapter(records);
+        myExpandListViewAdapter.notifyDataSetChanged();
         expandableListView.setAdapter(myExpandListViewAdapter);
         calendar=Calendar.getInstance();
         year=calendar.get(Calendar.YEAR);
@@ -164,22 +168,14 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initData();
+        myExpandListViewAdapter=new MyExpandListViewAdapter(records);
+
 
 
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        myExpandListViewAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        myExpandListViewAdapter.notifyDataSetChanged();
-    }
 
     private void getLocation() {
 
@@ -312,6 +308,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         //createBasicRecords();//重置一下
     }
 
+
+
     class MyExpandListViewAdapter extends BaseExpandableListAdapter
     {   private String [] groups={"鸟类","两栖类","爬行类","昆虫"};
         private List<List<Record>> records;
@@ -398,7 +396,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                addNotes.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       startActivity(new Intent(getContext(),AddNotesActivity.class).putExtra("speciesId",records.get(groupPosition).get(childPosition).getSpeciesId()));
+                       fatherPosition=groupPosition;
+                       childPosition_=childPosition;
+
+                      startActivityForResult(new Intent(getContext(),AddNotesActivity.class).putExtra("speciesId",records.get(groupPosition).get(childPosition).getSpeciesId()),1);
                    }
                });
 
@@ -421,7 +422,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             });
 
 
-
+            mview=convertView;
             return convertView;
         }
 
@@ -429,6 +430,15 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return false;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(),"sdasdasdasdas",Toast.LENGTH_SHORT).show();
+        ImageView pen= (ImageView) mview.findViewById(R.id.expand_list_view_child_imageView_addNotes);
+        pen.setImageResource(R.mipmap.pen_pressed);
+
     }
 
     /**
@@ -642,4 +652,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         records.add(reptilesRecord);
         records.add(insectRecord);
     }
+
+
 }

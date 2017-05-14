@@ -30,4 +30,6 @@
 
     <color name="bottom_bar_textView_text_pressed_color">#4990e2</color>
     <!--底部菜单栏被按下字体颜色-->
+
+    <color name="verifyCodeColor">#d9d9d9</color>
 </resources>

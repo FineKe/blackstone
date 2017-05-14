@@ -73,4 +73,17 @@
         <item name="android:windowBackground">@android:color/transparent</item><!--取消window默认背景 不然四角会有黑影-->
     </style>
 
+    <!--LogOutDialog-->
+    <style name="LogOutDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item><!--取消默认Dialog的windowFrame框-->
+        <item name="android:windowNoTitle">true</item><!--设置无标题Dialog-->
+        <item name="android:backgroundDimEnabled">true</item><!--是否四周变暗-->
+        <item name="android:windowIsFloating">true</item><!-- 是否悬浮在activity上 -->
+        <item name="android:windowContentOverlay">@null</item><!-- 取消默认ContentOverlay背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item><!--取消window默认背景 不然四角会有黑影-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        
+    </style>
+
 </resources>

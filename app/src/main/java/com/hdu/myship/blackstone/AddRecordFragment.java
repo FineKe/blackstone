@@ -1,28 +1,24 @@
 package com.hdu.myship.blackstone;
 
 import android.Manifest;
-import android.app.IntentService;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -40,16 +36,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Inflater;
 
-import database.Bird;
-import database.Insect;
 import database.Record;
 import database.Species;
 
@@ -60,7 +53,7 @@ import database.Species;
 
 public class AddRecordFragment extends Fragment implements View.OnClickListener {
     private String loginURL = "http://api.blackstone.ebirdnote.cn/v1/user/login";
-    private String upLoadRecordURL = "http://api.blackstone.ebirdnote.cn/v1/record/new";
+
     private RequestQueue requestQueue;
     private ExpandableListView expandableListView;
     private List<List<Species>> speciesList;
@@ -69,6 +62,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
     private LocationManager locationManager;
     private Location location;
+    private String privoder;
+
     private TextView save;
 
 
@@ -76,6 +71,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private SharedPreferences.Editor editor;
     private String isLoginedFile = "isLogin";
     private Boolean isLogined;
+
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
 
     private EditText iuputAccount;
     private EditText inputPassword;
@@ -85,56 +84,73 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private TextView Ok;
     private TextView errorLoginForget;
     private TextView inputAgain;
+
+    private TextView textViewDate;
     private ImageView actionCancel;
 
     private ImageView showPassword;
 
     private boolean isShowed = false;
 
+    private boolean datePickerShow=false;
+
+    private Calendar calendar;
+    private DatePicker datePicker;
+
     private SharedPreferences createBasicRecordsSharedPreferences;
     private SharedPreferences.Editor createBasicRecordsEditor;
     private String createBasicRecordsFile = "RecordsFileADT";
+
+    private int year,month,day;
+    private long millisecond;
+
+
+    private MyExpandListViewAdapter myExpandListViewAdapter;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_record, container, false);
         initData();
+        textViewDate= (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
+        datePicker= (DatePicker) view.findViewById(R.id.add_record_datepicker);
         expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
-        expandableListView.setAdapter(new MyExpandListViewAdapter(records));
-        /*expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        myExpandListViewAdapter=new MyExpandListViewAdapter(records);
+        expandableListView.setAdapter(myExpandListViewAdapter);
+        calendar=Calendar.getInstance();
+        year=calendar.get(Calendar.YEAR);
+        month=calendar.get(Calendar.MONTH);
+        day=calendar.get(Calendar.DAY_OF_MONTH);
+        month++;
+        textViewDate.setText(year+"年"+month+"月"+day+"日");
+
+        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
-
-
-                final ImageView addNote= (ImageView) v.findViewById(R.id.expand_list_view_child_imageView_addNotes);
-                final ImageView selected= (ImageView) v.findViewById(R.id.expand_list_view_child_imageView_collection);
-                addNote.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getContext(),AddNotesActivity.class));
-                    }
-                });
-
-                selected.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!records.get(groupPosition).get(childPosition).isChecked())
-                        {
-                            records.get(groupPosition).get(childPosition).setChecked(true);
-                            records.get(groupPosition).get(childPosition).save();
-                            selected.setImageResource(R.mipmap.select_pressed);
-                        }else
-                        {
-                            records.get(groupPosition).get(childPosition).setChecked(false);
-                            records.get(groupPosition).get(childPosition).save();
-                            selected.setImageResource(R.mipmap.select_normal);
-                        }
-                    }
-                });
-                return true;
+            public void onDateChanged(DatePicker view, int year_, int monthOfYear, int dayOfMonth) {
+                year=year_;
+                month=monthOfYear;
+                day=dayOfMonth;
+                textViewDate.setText(year+"年"+month+"月"+day+"日");
             }
-        });*/
+        });
+
+        Date millisecondDate=new Date(year,month,day);
+        millisecond=millisecondDate.getTime();//获得毫秒数
+
+        textViewDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(datePickerShow==false){
+                    datePicker.setVisibility(View.VISIBLE);
+                    datePickerShow=true;
+                }
+                else {
+                    datePicker.setVisibility(View.GONE);
+                    datePickerShow = false;
+                }
+            }
+        });
         save = (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
         initEvents();
 
@@ -149,9 +165,17 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
     }
 
-    private Location getLocation() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        myExpandListViewAdapter.notifyDataSetChanged();
+    }
+
+    private void getLocation() {
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -161,15 +185,43 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
-
-
-        }else {
+        }else
+        {
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            return  locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            List<String> list = locationManager.getProviders(true);
+            if (list.contains(LocationManager.GPS_PROVIDER)) {
+                privoder = LocationManager.GPS_PROVIDER;
+            } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                privoder = LocationManager.NETWORK_PROVIDER;
+            } else {
+                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+            }
+
+            location= locationManager.getLastKnownLocation(privoder);
+            locationManager.requestLocationUpdates(privoder, 100, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location_) {
+                    location=location_;
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            });
         }
-        return null;
+
     }
 
 
@@ -177,6 +229,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private void initData() {
         createBasicRecordsSharedPreferences=getActivity().getSharedPreferences(createBasicRecordsFile,Context.MODE_PRIVATE);
         createBasicRecordsEditor=createBasicRecordsSharedPreferences.edit();
+
+        userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,Context.MODE_PRIVATE);
+        userInformationEditor=userInformationSharedPreferences.edit();
+
         requestQueue=Volley.newRequestQueue(getContext());
         boolean isCreateBasicRecords=createBasicRecordsSharedPreferences.getBoolean("isCreated",false);
         records=new ArrayList<>();
@@ -209,20 +265,37 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      * 保存
      */
     private void save() {
+        getLocation();
+        System.out.println(location.toString());
         if(isLogined==false) {//判断是否登录了
             showLoginDialog();//如果没有则弹出登录框
-            location=getLocation();
+
             if(location!=null)
+            {
                 System.out.println(location.toString());
-            Intent intent=new Intent(getContext(),UploadIntentService.class);
-            getContext().startService(intent);
+                Intent intent=new Intent(getContext(),UploadIntentService.class);
+                intent.putExtra("lat",location.getLatitude());
+                intent.putExtra("lon",location.getLongitude());
+                intent.putExtra("milliseconds",millisecond);
+                getContext().startService(intent);
+            }else {
+                Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
+            }
+
         }else{
 
-            location=getLocation();
+            System.out.println(location.toString());
             if(location!=null)
-                System.out.println(location.toString());
-            Intent intent=new Intent(getContext(),UploadIntentService.class);
-            getContext().startService(intent);
+            {
+
+                Intent intent=new Intent(getContext(),UploadIntentService.class);
+                intent.putExtra("lat",location.getLatitude());
+                intent.putExtra("lon",location.getLongitude());
+                intent.putExtra("milliseconds",millisecond);
+                getContext().startService(intent);
+            }else {
+                Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
+            }
         }
         /**
          * 开启一个服务用与上传记录
@@ -307,7 +380,23 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             {
                 collection.setImageResource(R.mipmap.select_pressed);
             }
-            addNotes.setImageResource(R.mipmap.pen_normal);
+
+            if(records.get(groupPosition).get(childPosition).isRemarkIsNull())
+            {
+                addNotes.setImageResource(R.mipmap.pen_normal);
+            }else
+            {
+                addNotes.setImageResource(R.mipmap.pen_pressed);
+            }
+
+               addNotes.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       startActivity(new Intent(getContext(),AddNotesActivity.class).putExtra("speciesId",records.get(groupPosition).get(childPosition).getSpeciesId()));
+                   }
+               });
+
+
             collection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -324,6 +413,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                     }
                 }
             });
+
+
 
             return convertView;
         }
@@ -344,10 +435,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         /**
          * 绑定控件
          */
-        iuputAccount= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_account);
-        inputPassword= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_password);
-        loginForget= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_forget);
-        Ok= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_Ok);
+        iuputAccount= (EditText) loginDialog.findViewById(R.id.update_phone_numbe_dialog_editText_account);
+        inputPassword= (EditText) loginDialog.findViewById(R.id.update_phone_number_dialog_editText_code);
+        loginForget= (TextView) loginDialog.findViewById(R.id.update_phone_number_text_view_get_code);
+        Ok= (TextView) loginDialog.findViewById(R.id.update_phone_number_dialog_textView_Ok);
         actionCancel= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_actionCancel);
         showPassword= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_showPassword);
 
@@ -394,8 +485,19 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                             if(code==88)
                             {
                                 loginDialog.dismiss();
-                                editor.putBoolean("islogined",true).apply();//向文件中写入已经登录true
 
+                                editor.putBoolean("islogined",true).apply();//向文件中写入已经登录true
+                                JSONObject data=jsonObject.getJSONObject("data");
+                                JSONObject user=data.getJSONObject("user");
+                                userInformationEditor.putLong("id",user.getLong("id"));
+                                userInformationEditor.putString("mobile",user.getString("mobile"));
+                                userInformationEditor.putString("studentId",user.getString("studentId"));
+                                userInformationEditor.putString("name",user.getString("name"));
+                                userInformationEditor.putString("gender",user.getString("gender"));
+                                userInformationEditor.putString("mail",user.getString("mail"));
+                                userInformationEditor.putString("token",data.getString("token"));
+                                userInformationEditor.putLong("expireAt",data.getLong("expireAt"));
+                                userInformationEditor.commit();
                             }
                             else
                             {
@@ -420,7 +522,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         loginForget.setOnClickListener(new View.OnClickListener() {//忘记密码处理逻辑
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
             }
         });
     }

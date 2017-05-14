@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/reset_password_imageView_actionBack"
+            android:id="@+id/activity_forget_password_two_imageView_actionBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -41,7 +41,7 @@
             android:textColor="#ffff"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/reset_password_imageView_actionBack"
+            app:layout_constraintLeft_toRightOf="@+id/activity_forget_password_two_imageView_actionBack"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

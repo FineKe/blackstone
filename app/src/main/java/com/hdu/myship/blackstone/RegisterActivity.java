@@ -34,7 +34,6 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
     private BootstrapEditText studentNumber;
     private BootstrapEditText name;
     private BootstrapEditText sex;
-    private BootstrapEditText email;
     private BootstrapEditText password;
     private BootstrapEditText confirm;//确认密码
     private BootstrapEditText phoneNumber;
@@ -55,7 +54,6 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
         studentNumber= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_student_number);
         name= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_name);
         sex= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_sex);
-        email= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_email);
         password= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_password);
         confirm= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_confirm);
         phoneNumber= (BootstrapEditText) findViewById(R.id.register_bootStrap_editText_phone);
@@ -160,7 +158,6 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
         submitMap.put("studentId",studentNumber.getText().toString());
         submitMap.put("name",name.getText().toString());
         submitMap.put("gender",sex.getText().toString());
-        submitMap.put("mail",email.getText().toString());
 
         JSONObject submitJson;
 

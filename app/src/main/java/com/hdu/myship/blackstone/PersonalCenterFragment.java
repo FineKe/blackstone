@@ -1,6 +1,5 @@
 package com.hdu.myship.blackstone;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -138,10 +137,10 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     {
         final LoginDialog loginDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.login_dialog);
         loginDialog.show();
-        iuputAccount= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_account);
-        inputPassword= (EditText) loginDialog.findViewById(R.id.login_dialog_editText_password);
-        loginForget= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_forget);
-        Ok= (TextView) loginDialog.findViewById(R.id.login_dialog_textView_Ok);
+        iuputAccount= (EditText) loginDialog.findViewById(R.id.update_phone_numbe_dialog_editText_account);
+        inputPassword= (EditText) loginDialog.findViewById(R.id.update_phone_number_dialog_editText_code);
+        loginForget= (TextView) loginDialog.findViewById(R.id.update_phone_number_text_view_get_code);
+        Ok= (TextView) loginDialog.findViewById(R.id.update_phone_number_dialog_textView_Ok);
         actionCancel= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_actionCancel);
         showPassword= (ImageView) loginDialog.findViewById(R.id.login_dialog_imageView_showPassword);
 
@@ -200,6 +199,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                                 userInformationEditor.putString("mail",user.getString("mail"));
                                 userInformationEditor.putString("token",data.getString("token"));
                                 userInformationEditor.putLong("expireAt",data.getLong("expireAt"));
+                                userInformationEditor.putString("password",inputPassword.getText().toString());
                                 userInformationEditor.commit();
                                 transaction.replace(R.id.frame_layout,new LoginedFragment()).commit();
 
@@ -227,7 +227,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
         loginForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
             }
         });
     }

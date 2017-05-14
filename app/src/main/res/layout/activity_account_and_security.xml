@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f6f6f6"
     android:orientation="vertical"
     tools:context="com.hdu.myship.blackstone.AccountAndSecurityActivity"
     tools:layout_editor_absoluteX="0dp"
@@ -28,7 +27,7 @@
             tools:layout_editor_absoluteY="0dp">
 
             <ImageButton
-                android:id="@+id/account_security_imageButton_action_back"
+                android:id="@+id/activity_suggestion_image_button_action_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -52,7 +51,7 @@
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/account_security_imageButton_action_back"
+                app:layout_constraintLeft_toRightOf="@+id/activity_suggestion_image_button_action_back"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -78,8 +77,9 @@
         <LinearLayout
             android:id="@+id/account_security_linearlayout_person_information"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="0dp"
@@ -91,12 +91,13 @@
                 android:layout_weight="1"
                 android:text="个人资料"
                 android:textColor="#f000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/action_back" />
+                android:background="#fff"
+                android:src="@mipmap/right_arrow" />
         </LinearLayout>
 
         <include
@@ -111,8 +112,9 @@
         <LinearLayout
             android:id="@+id/account_security_linearlayout_reset_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="0dp"
@@ -124,12 +126,13 @@
                 android:layout_weight="1"
                 android:text="修改密码"
                 android:textColor="#f000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/action_back" />
+                android:background="#fff"
+                android:src="@mipmap/right_arrow" />
         </LinearLayout>
 
         <include
@@ -144,8 +147,9 @@
         <LinearLayout
             android:id="@+id/account_security_linearlayout_reset_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="0dp"
@@ -157,12 +161,13 @@
                 android:layout_weight="1"
                 android:text="修改绑定手机号"
                 android:textColor="#f000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/action_back" />
+                android:background="#fff"
+                android:src="@mipmap/right_arrow" />
         </LinearLayout>
 
         <include
@@ -178,21 +183,17 @@
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/account_and_security_bootStrap_button_logout"
-        android:layout_width="342dp"
-        android:layout_height="37dp"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="23dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
         android:text="退出当前账号"
         android:textSize="20sp"
         app:bootstrapBrand="primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:roundedCorners="true"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="442dp" />
+        app:roundedCorners="true" />
 </android.support.constraint.ConstraintLayout>

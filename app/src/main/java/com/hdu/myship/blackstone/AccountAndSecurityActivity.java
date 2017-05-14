@@ -1,4 +1,6 @@
 package com.hdu.myship.blackstone;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -75,6 +78,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
          */
         requestQueue= Volley.newRequestQueue(this);
 
+        //isLogined=sharedPreferences.getBoolean("islogined",true);
 
     }
 
@@ -83,7 +87,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         tab_resetPassword= (LinearLayout) findViewById(R.id.account_security_linearlayout_reset_password);
         tab_resetPhone= (LinearLayout) findViewById(R.id.account_security_linearlayout_reset_phone);
 
-        actionBack= (ImageButton) findViewById(R.id.account_security_imageButton_action_back);
+        actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
         logOut= (BootstrapButton) findViewById(R.id.account_and_security_bootStrap_button_logout);
     }
 
@@ -112,12 +116,12 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                 startActivity(new Intent(this,ResetPhoneActivity.class));
                 break;
 
-            case R.id.account_security_imageButton_action_back:
+            case R.id.activity_suggestion_image_button_action_back:
                 startActivity(new Intent(this,ResetPasswordActivity.class));
                 break;
 
             case R.id.account_and_security_bootStrap_button_logout:
-                logOut();
+                    showDialog();
                 break;
         }
     }
@@ -126,9 +130,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
 
         final String token=userInformationSharedPreferences.getString("token","");
         Log.d(TAG, "logOut: "+userInformationSharedPreferences.getString("token",""));
-        Boolean isLogined=sharedPreferences.getBoolean("islogined",true);
-        if(isLogined)
-        {
+
             JsonObjectRequest logOutRequest=new JsonObjectRequest(Request.Method.GET, LogOutURL + "?token=" + token, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
@@ -162,8 +164,6 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         }
 
 
-    }
-
     private void resetUserInfomation()//重置用户信息
     {
         userInformationEditor.putLong("id",0);
@@ -175,5 +175,46 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         userInformationEditor.putString("token","");
         userInformationEditor.putLong("expireAt",0);
         userInformationEditor.apply();
+    }
+
+    private void showDialog()
+    {
+        final LogOutDialog logOutDialog=new LogOutDialog(this,R.style.LogOutDialog,R.layout.log_out_dialog);
+        logOutDialog.setCancelable(false);
+        logOutDialog.show();
+        TextView sure= (TextView) logOutDialog.findViewById(R.id.log_out_textView_sure);
+        TextView cancel= (TextView) logOutDialog.findViewById(R.id.log_out_textView_cancel);
+
+        sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+                logOutDialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOutDialog.dismiss();
+            }
+        });
+    }
+
+    private class LogOutDialog extends Dialog {
+        private Context context;
+        private int resId;
+        public LogOutDialog(Context context, int resLayout) {
+            this(context,0,0);
+        }
+        public LogOutDialog(Context context, int themeResId, int resLayout) {
+            super(context, themeResId);
+            this.context = context;
+            this.resId = resLayout;
+        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            this.setContentView(resId);
+        }
     }
 }

@@ -3,8 +3,8 @@
     package="com.hdu.myship.blackstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".MyApplication"
@@ -53,7 +53,12 @@
 
         <service
             android:name=".UploadIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".ResetPasswordTwoActivity" />
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".ForgetPasswordTwoActivity" />
+        <activity android:name=".SuggestionsActivity"></activity>
     </application>
 
 </manifest>

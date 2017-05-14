@@ -20,6 +20,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,19 +36,13 @@ import LocationUtil.LocationUtils;
  * helper methods.
  */
 public class UploadIntentService extends IntentService {
-    Activity activity;
+    private String upLoadRecordURL = "http://api.blackstone.ebirdnote.cn/v1/record/new";
+    private RequestQueue requestQueue;
+    private double lat;
+    private double lon;
 
-    public UploadIntentService(String name, Activity activity) {
-        super(name);
-        this.activity = activity;
-    }
+    String TAG="UploadIntentService";
 
-    private boolean flag;
-    private static final long REFRESHTIME = 2000;//刷新间隔
-    private LocationManager locationManager;
-    private Location l;
-
-    private List<String> permissionList = new ArrayList<>();
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_FOO = "com.hdu.myship.blackstone.action.FOO";
@@ -92,13 +89,10 @@ public class UploadIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        }
+        lat=intent.getDoubleExtra("lat",0.0);
+        lon=intent.getDoubleExtra("lon",0.0);
 
+        Log.d(TAG, "onHandleIntent: "+lat+":"+lon);
 
     }
 
@@ -122,5 +116,9 @@ public class UploadIntentService extends IntentService {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    private void initData()
+    {
+        requestQueue= Volley.newRequestQueue(getApplicationContext());
+    }
 
 }

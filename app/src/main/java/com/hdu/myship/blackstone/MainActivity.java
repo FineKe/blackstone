@@ -27,6 +27,7 @@ import java.security.PrivateKey;
 import java.util.List;
 
 import JsonUtil.JsonResolverSpeciesDetailed;
+import database.Record;
 import database.Species;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener{
@@ -93,6 +94,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         List<Species> speciesList=DataSupport.findAll(Species.class);
         for(Species s:speciesList)
         {
+
             JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getId(), null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {

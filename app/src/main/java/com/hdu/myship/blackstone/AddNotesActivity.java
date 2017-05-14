@@ -43,6 +43,8 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
     private void initView() {
         notes= (EditText) findViewById(R.id.add_notes_editText_notes);
         actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
+        notes.setText(record.getRemark());
+        notes.setSelection(notes.getText().length());
     }
 
     private void initEvents() {

@@ -46,7 +46,6 @@
         <activity android:name=".MakeTeamActivity" />
         <activity android:name=".CopyRightActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".SearchActivity" />
         <activity android:name=".MyCollectionsActivity" />
         <activity android:name=".MyRecordsActivity" />
         <activity android:name=".AddNotesActivity" />
@@ -58,7 +57,12 @@
         <activity android:name=".ResetPasswordTwoActivity" />
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".ForgetPasswordTwoActivity" />
-        <activity android:name=".SuggestionsActivity"></activity>
+        <activity android:name=".SuggestionsActivity" />
+        <activity
+            android:name=".SearchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_search"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

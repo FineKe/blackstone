@@ -67,4 +67,8 @@
     <string name="alert_menu_button1">按目浏览</string>
     <string name="alert_menu_button2">按科浏览</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

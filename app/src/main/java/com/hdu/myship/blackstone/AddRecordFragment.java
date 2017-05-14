@@ -175,6 +175,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         myExpandListViewAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        myExpandListViewAdapter.notifyDataSetChanged();
+    }
+
     private void getLocation() {
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

@@ -62,7 +62,9 @@
             android:name=".SearchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_search"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".ResetPasswordThreeActivity" />
+        <activity android:name=".ForgetPasswordThreeActivity"></activity>
     </application>
 
 </manifest>

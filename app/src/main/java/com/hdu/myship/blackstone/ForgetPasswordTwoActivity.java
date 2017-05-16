@@ -1,6 +1,6 @@
 package com.hdu.myship.blackstone;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,7 +22,6 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -68,7 +67,7 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
 
         code= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
 
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_two_imageView_actionBack);
+        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
 
         sure= (BootstrapButton) findViewById(R.id.activity_forget_password_two_bootStarp_button_sure);
 
@@ -106,7 +105,7 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
     public void onClick(View v) {
          switch (v.getId())
          {
-             case R.id.activity_forget_password_two_imageView_actionBack:
+             case R.id.activity_forget_password_three_image_view_action_back:
                  actionBack();
                  break;
 
@@ -161,8 +160,7 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
 
 
     private void sure() {
-
-
+        startActivity(new Intent(this,ForgetPasswordThreeActivity.class));
     }
 
     private void startCount()

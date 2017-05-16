@@ -117,13 +117,17 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                 break;
 
             case R.id.activity_suggestion_image_button_action_back:
-                startActivity(new Intent(this,ResetPasswordActivity.class));
+                actionBack();
                 break;
 
             case R.id.account_and_security_bootStrap_button_logout:
                     showDialog();
                 break;
         }
+    }
+
+    private void actionBack() {
+        this.finish();
     }
 
     private void logOut() {
@@ -141,6 +145,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                         {
                             editor.putBoolean("islogined",false).apply();//将用户登录设为false
                             resetUserInfomation();
+                            finish();
                             Log.d(TAG, "onResponse: "+code);
                         }
                     } catch (JSONException e) {

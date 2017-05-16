@@ -52,7 +52,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
     private void initData() {
         sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
         editor=sharedPreferences.edit();
-        isLogined=sharedPreferences.getBoolean("islogined",false);
+
     }
 
     @Override
@@ -60,6 +60,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
         switch (v.getId())
         {
             case R.id.setting_linearlayout_account_and_security:
+                isLogined=sharedPreferences.getBoolean("islogined",false);
                 if(isLogined)
                 {
                     startActivity(new Intent(getContext(),AccountAndSecurityActivity.class));

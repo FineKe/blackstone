@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -46,6 +47,8 @@ import java.util.Map;
 
 import database.Record;
 import database.Species;
+
+import static com.hdu.myship.blackstone.R.mipmap.right_arrow;
 
 /**
  * Created by MY SHIP on 2017/3/18.
@@ -120,7 +123,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         textViewDate= (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
         datePicker= (DatePicker) view.findViewById(R.id.add_record_datepicker);
         expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
-        myExpandListViewAdapter.notifyDataSetChanged();
         expandableListView.setAdapter(myExpandListViewAdapter);
         calendar=Calendar.getInstance();
         year=calendar.get(Calendar.YEAR);
@@ -158,6 +160,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         save = (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
         initEvents();
 
+        expandableListView.setGroupIndicator(null);
         return view;
     }
 
@@ -267,8 +270,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      * 保存
      */
     private void save() {
+        isLogined=sharedPreferences.getBoolean("islogined",false);
         getLocation();
-        System.out.println(location.toString());
         if(isLogined==false) {//判断是否登录了
             showLoginDialog();//如果没有则弹出登录框
 
@@ -286,7 +289,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
         }else{
 
-            System.out.println(location.toString());
             if(location!=null)
             {
 
@@ -361,8 +363,22 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
 
             TextView textView= (TextView)convertView.findViewById(R.id.expand_lisetView_father_speciesClassChineseName);
+            ImageView im= (ImageView) convertView.findViewById(R.id.expand_lisetView_father_image_view_arrow);
+            if(isExpanded)
+            {
+                im.setRotation(90);
+            }else
+
+            {
+                im.setRotation(0);
+            }
             textView.setText(groups[groupPosition]);
             return convertView ;
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            super.notifyDataSetChanged();
         }
 
         @Override
@@ -438,7 +454,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         Toast.makeText(getContext(),"sdasdasdasdas",Toast.LENGTH_SHORT).show();
         ImageView pen= (ImageView) mview.findViewById(R.id.expand_list_view_child_imageView_addNotes);
         pen.setImageResource(R.mipmap.pen_pressed);
-
+        myExpandListViewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -447,6 +463,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void showLoginDialog()
     {
         final LoginDialog loginDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.login_dialog);
+        loginDialog.setCancelable(false);
         loginDialog.show();
         /**
          * 绑定控件

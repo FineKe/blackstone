@@ -60,7 +60,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
         phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
 
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_two_imageView_actionBack);
+        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
 
         nextStep= (BootstrapButton) findViewById(R.id.activity_resetPassword_boot_strap_button_next_step);
 
@@ -98,7 +98,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_forget_password_two_imageView_actionBack:actionBack();
+            case R.id.activity_forget_password_three_image_view_action_back:actionBack();
                 break;
 
             case R.id.activity_resetPassword_boot_strap_button_next_step:

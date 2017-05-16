@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,16 +43,28 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
         userInformationEditor=userInformationSharedPreferences.edit();
     }
 
-
+    /**
+     * 控件绑定
+     */
     private void initViews() {
         messagePhone= (TextView) findViewById(R.id.activity_forget_password_two_textView_phoneMessage);
         message= (TextView) findViewById(R.id.activity_forget_password_two_textView_message);
 
         phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);//密码
 
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_two_imageView_actionBack);
+        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
 
         sure= (BootstrapButton) findViewById(R.id.activity_resetPasswordTwo_boot_strap_button_sue);
+
+
+    }
+
+    /**
+     * 设置监听事件
+     */
+    private void initEvents() {
+        actionBack.setOnClickListener(this);
+        sure.setOnClickListener(this);
 
         phone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,18 +87,11 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
         });
     }
 
-    private void initEvents() {
-        actionBack.setOnClickListener(this);
-        sure.setOnClickListener(this);
-
-
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_forget_password_two_imageView_actionBack:actionBack();
+            case R.id.activity_forget_password_three_image_view_action_back:actionBack();
                 break;
 
             case R.id.activity_resetPasswordTwo_boot_strap_button_sue:sure();
@@ -103,7 +109,10 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
     }
 
     private void sure() {
-        if(!phone.getText().toString().equals(userInformationSharedPreferences.getString("password","")))
+        if(phone.getText().toString().equals(userInformationSharedPreferences.getString("password","")))
+        {
+            startActivity(new Intent(this,ResetPasswordThreeActivity.class));
+        }else
         {
             message.setText("密码有误，请重新输入");
         }

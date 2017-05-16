@@ -160,6 +160,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                     showPassword.setImageResource(R.mipmap.no_see);
                 }
                 isShowed=!isShowed;
+                inputPassword.setSelection(inputPassword.getText().length());
                 inputPassword.postInvalidate();
             }
         });
@@ -243,7 +244,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
         errorLoginForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
             }
         });
 

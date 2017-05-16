@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff"
     android:orientation="vertical">
 
     <include
@@ -13,28 +12,29 @@
     <LinearLayout
         android:id="@+id/guideFragment_linearlayout_tab1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/guideFragment_button_introduce"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ffff"
             android:clickable="false"
+            android:textColor="#f000"
             android:gravity="center_vertical|start"
             android:text="黑石顶自然情况"
             android:textSize="20sp" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:clickable="false"
-            android:elevation="0dp"
-            android:src="@mipmap/action_back" />
+            android:src="@mipmap/right_arrow" />
     </LinearLayout>
 
     <include layout="@layout/setting_divider_line"></include>
@@ -42,59 +42,64 @@
     <LinearLayout
         android:id="@+id/guideFragment_linearlayout_tab2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/guideFragment_button_main_features"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ffff"
+
             android:clickable="false"
             android:gravity="center_vertical|start"
             android:text="黑石顶陆生脊椎动物区系的主要特征"
             android:textColor="#f000"
             android:textSize="20sp" />
 
-        <ImageButton
+        <ImageView
+
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:clickable="false"
-            android:src="@mipmap/action_back" />
+            android:src="@mipmap/right_arrow" />
     </LinearLayout>
 
     <include layout="@layout/setting_divider_line"></include>
 
     <LinearLayout
+
         android:id="@+id/guideFragment_linearlayout_tab3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/guideFarment_button_sortingByfeatures"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ffff"
+
             android:clickable="false"
             android:gravity="center_vertical|start"
             android:text="昆虫纲的分类特征"
             android:textColor="#f000"
             android:textSize="20sp" />
 
-        <ImageButton
+        <ImageView
+
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:clickable="false"
-            android:src="@mipmap/action_back" />
+            android:src="@mipmap/right_arrow" />
     </LinearLayout>
 
     <include layout="@layout/setting_divider_line"></include>
@@ -102,29 +107,28 @@
     <LinearLayout
         android:id="@+id/guideFragment_linearlayout_tab4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/guideFagment_button_land_sortingByfeatures"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ffff"
+
             android:clickable="false"
             android:gravity="center_vertical|start"
             android:text="陆生脊椎动物的分类特征"
             android:textColor="#f000"
             android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/imageButton3"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:clickable="false"
-            android:src="@mipmap/action_back" />
+            android:src="@mipmap/right_arrow"/>
     </LinearLayout>
 
     <include layout="@layout/setting_divider_line"></include>

@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/activity_forget_password_two_imageView_actionBack"
+            android:id="@+id/activity_forget_password_three_image_view_action_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -41,7 +41,7 @@
             android:textColor="#ffff"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/activity_forget_password_two_imageView_actionBack"
+            app:layout_constraintLeft_toRightOf="@+id/activity_forget_password_three_image_view_action_back"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -65,45 +65,58 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="344dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="21dp"
-        android:layout_marginRight="0dp"
-        android:text="本项目由国家自然科学基金基础人才培养项目《中山大学生物学基地野外实践能力提高项目》（J1210074）、中山大学生命科学学远资助"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:text="        本项目由国家自然科学基金基础人才培养项目《中山大学生物学基地野外实践能力提高项目》（J1210074）、中山大学生命科学学院资助"
         android:textColor="#4a4a4a"
         android:textSize="16sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="21dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="16dp"
         android:text="封面：叉尾太阳鸟 Aethopyga christinae"
         android:textColor="#4a4a4a"
         android:textSize="16sp"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="21dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="15dp"
-        android:text="版权信息：部分文字来源于《生物学野外实践能力提高丛书：黑石顶陆生脊椎动物图谱3》，高教出版社，2014年出版。"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="        部分文字来源于《生物学野外实践能力提高丛书：黑石顶陆生脊椎动物图谱3》，高教出版社，2014年出版。"
         android:textColor="#4a4a4a"
         android:textSize="16sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        android:id="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="版权信息："
+        android:textColor="#4a4a4a"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 </android.support.constraint.ConstraintLayout>

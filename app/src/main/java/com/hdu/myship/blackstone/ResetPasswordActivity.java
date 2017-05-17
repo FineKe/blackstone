@@ -60,7 +60,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
         phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
 
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
+        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
 
         nextStep= (BootstrapButton) findViewById(R.id.activity_resetPassword_boot_strap_button_next_step);
 
@@ -98,7 +98,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_forget_password_three_image_view_action_back:actionBack();
+            case R.id.activity_make_team_image_view_action_back:actionBack();
                 break;
 
             case R.id.activity_resetPassword_boot_strap_button_next_step:
@@ -110,6 +110,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
     private void actionBack() {
         this.finish();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void nextStep() {
@@ -118,6 +119,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         if(phoneNumber.equals(phone.getText().toString()))
         {
             startActivity(new Intent(this,ResetPasswordTwoActivity.class));
+            overridePendingTransition(R.anim.in,R.anim.out);
         }
         else
         {

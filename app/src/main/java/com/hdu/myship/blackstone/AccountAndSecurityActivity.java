@@ -106,14 +106,17 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         {
             case R.id.account_security_linearlayout_person_information:
                 startActivity(new Intent(this,PersonInformationActivity.class));
+                overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.account_security_linearlayout_reset_password:
                 startActivity(new Intent(this,ResetPasswordActivity.class));
+                overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.account_security_linearlayout_reset_phone:
                 startActivity(new Intent(this,ResetPhoneActivity.class));
+                overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.activity_suggestion_image_button_action_back:
@@ -128,6 +131,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
 
     private void actionBack() {
         this.finish();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void logOut() {
@@ -146,6 +150,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                             editor.putBoolean("islogined",false).apply();//将用户登录设为false
                             resetUserInfomation();
                             finish();
+                            overridePendingTransition(R.anim.in,R.anim.out);
                             Log.d(TAG, "onResponse: "+code);
                         }
                     } catch (JSONException e) {

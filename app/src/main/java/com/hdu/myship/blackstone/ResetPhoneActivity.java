@@ -76,6 +76,7 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
 
     private void actionBack() {
         this.finish();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void update() {

@@ -36,7 +36,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     }
 
     private void initViews() {
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
+        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
         showPassword= (ImageView) findViewById(R.id.activity_reset_password_three_image_view_show_password);
 
         inputPassword= (EditText) findViewById(R.id.activity_reset_password_three_edit_text_input_password);
@@ -74,7 +74,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_forget_password_three_image_view_action_back:
+            case R.id.activity_make_team_image_view_action_back:
                 actionBack();
                 break;
 
@@ -90,6 +90,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
 
     private void actionBack() {
         this.finish();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void showPassword() {

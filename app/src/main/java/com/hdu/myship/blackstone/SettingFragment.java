@@ -64,6 +64,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
                 if(isLogined)
                 {
                     startActivity(new Intent(getContext(),AccountAndSecurityActivity.class));
+                    getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 }else
                 {
                     Toast.makeText(getContext(), "你还未登录", Toast.LENGTH_SHORT).show();
@@ -73,14 +74,17 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
 
             case R.id.setting_linearlayout_copyright:
                 startActivity(new Intent(getContext(),CopyRightActivity.class));
+                getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.setting_linearlayout_developing_team:
                 startActivity(new Intent(getContext(),MakeTeamActivity.class));
+                getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.setting_linearlayout_suggestions:
                 startActivity(new Intent(getContext(),SuggestionsActivity.class));
+                getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 break;
         }
     }

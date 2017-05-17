@@ -67,7 +67,7 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
 
         code= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
 
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
+        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
 
         sure= (BootstrapButton) findViewById(R.id.activity_forget_password_two_bootStarp_button_sure);
 
@@ -105,7 +105,7 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
     public void onClick(View v) {
          switch (v.getId())
          {
-             case R.id.activity_forget_password_three_image_view_action_back:
+             case R.id.activity_make_team_image_view_action_back:
                  actionBack();
                  break;
 

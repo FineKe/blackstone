@@ -36,7 +36,7 @@ public class ForgetPasswordThreeActivity extends AppCompatActivity implements Vi
     }
 
     private void initViews() {
-        actionBack= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_action_back);
+        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
         showPassword= (ImageView) findViewById(R.id.activity_forget_password_three_image_view_show_password);
 
         inputPassword= (EditText) findViewById(R.id.activity_forget_password_three_edit_text_input_password);
@@ -74,7 +74,7 @@ public class ForgetPasswordThreeActivity extends AppCompatActivity implements Vi
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_forget_password_three_image_view_action_back:
+            case R.id.activity_make_team_image_view_action_back:
                 actionBack();
                 break;
 

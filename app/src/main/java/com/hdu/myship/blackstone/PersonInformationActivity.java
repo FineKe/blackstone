@@ -63,5 +63,6 @@ public class PersonInformationActivity extends AppCompatActivity implements View
 
     private void actionBack() {
         this.finish();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 }

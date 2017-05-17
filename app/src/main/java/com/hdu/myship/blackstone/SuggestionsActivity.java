@@ -51,6 +51,7 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
 
     private void actionBack() {
         this.finish();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void send() {

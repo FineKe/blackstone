@@ -64,7 +64,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
                 if(isLogined)
                 {
                     startActivity(new Intent(getContext(),AccountAndSecurityActivity.class));
-                    getActivity().overridePendingTransition(R.anim.in,R.anim.out);
+                    getActivity().overridePendingTransition(R.anim.in,0);
                 }else
                 {
                     Toast.makeText(getContext(), "你还未登录", Toast.LENGTH_SHORT).show();

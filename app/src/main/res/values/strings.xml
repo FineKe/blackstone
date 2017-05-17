@@ -63,6 +63,33 @@
         <item>梅</item>
         <item>雀</item>
     </array>
+
+    <!--脊椎动物列表-->
+    <array name="vertebrate">
+        <item>两栖类</item>
+        <item>爬行类</item>
+        <item>鸟类</item>
+    </array>
+    
+    <!--无脊椎动物-->
+    <array name="invertebrate">
+        <item>石蛃目</item>
+        <item>蜉蝣目</item>
+        <item>蜻蜓目</item>
+        <item>襀翅目</item>
+        <item>等翅目</item>
+        <item>蜚蠊目</item>
+        <item>螳螂目</item>
+        <item>竹节虫目</item>
+        <item>直翅目</item>
+        <item>革翅目</item>
+        <item>半翅目</item>
+        <item>广翅目</item>
+        <item>鞘翅目</item>
+        <item>鳞翅目</item>
+        <item>双翅目</item>
+        <item>膜翅目</item>
+    </array>
     <string name="alert_menu_textView">请选择一种查阅类型</string>
     <string name="alert_menu_button1">按目浏览</string>
     <string name="alert_menu_button2">按科浏览</string>

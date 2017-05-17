@@ -23,9 +23,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapEditText;
@@ -36,52 +39,95 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import JavaBean.SpeciesClasses;
 import database.Species;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by MY SHIP on 2017/3/18.
  */
 
 public class SpeciesFragment extends Fragment{
-    private  ListView listView_speciesClass;
-    private List<String> listName;
-    private String[] Type={"bird","amphibia","reptiles","insect"};
+    private StickyListHeadersListView speciesClassListView;
+    private List<SpeciesClasses>speciesClassesList;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view=inflater.from(container.getContext()).inflate(R.layout.species,null,false);
-        listView_speciesClass= (ListView) view.findViewById(R.id.listView_speciesClass);
-        listView_speciesClass.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,listName));
-        listView_speciesClass.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent=new Intent(getContext(),SpeciesClassActivity.class);
-                ArrayList<Integer> integerArrayList=new ArrayList<Integer>();
-                intent.putExtra("SpeciesType",Type[position]);
-                intent.putExtra("position",position);
-                startActivity(intent);
-
-            }
-        });
-
-       //showAlert(container.getContext());
-        return view;
+        View view=inflater.inflate(R.layout.species,container,false);
+        speciesClassListView= (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
+        return null;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        listName=new ArrayList<>();
-        listName.add("鸟类");
-        listName.add("两栖类");
-        listName.add("爬行类");
-        listName.add("昆虫类");
-
-
+        createClassList();
     }
 
+    private void createClassList() {
+        speciesClassesList=new ArrayList<>();
+        for(String string:getResources().getStringArray(R.array.vertebrate))//创建脊椎动物类列表
+        {
+            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",string);
+            speciesClassesList.add(speciesClasses);
+        }
+
+        for(String string:getResources().getStringArray(R.array.invertebrate))//创建无脊椎动物类列表
+        {
+            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",string);
+            speciesClassesList.add(speciesClasses);
+        }
+    }
+
+    private class StickyListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter
+    {
+        private List<SpeciesClasses> list;
+        private LayoutInflater inflater;
+
+        public StickyListViewAdapter(List<SpeciesClasses> list, Context context) {
+            this.list = list;
+            this.inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public View getHeaderView(int position, View convertView, ViewGroup parent) {
+            convertView=inflater.inflate(R.layout.species_classes_list_view_header,parent,false);
+            TextView title= (TextView) convertView.findViewById(R.id.species_classes_header_text_view_classes_title);
+            title.setText(list.get(position).getTitle());
+            return convertView;
+        }
+
+        @Override
+        public long getHeaderId(int position) {
+            return list.get(position).getId();
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView=inflater.inflate(R.layout.species_classes_list_view_item,parent,false);
+            ImageView picture= (ImageView) convertView.findViewById(R.id.species_classes_item_image_view_class_picture);
+            TextView className= (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
+
+            className.setText(list.get(position).getClassName());
+            return convertView;
+        }
+    }
 
 
 }

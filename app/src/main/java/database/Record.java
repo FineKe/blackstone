@@ -12,10 +12,15 @@ public class Record extends DataSupport {
     private int speciesId;
     private String remark;
     private boolean remarkIsNull;
+    private String speciesType;
 
-    public Record() {
-        this.isChecked = false;
-        this.remarkIsNull = true;
+    public Record(String chineseName, int speciesId, String speciesType) {
+        this.chineseName = chineseName;
+        this.speciesId = speciesId;
+        this.speciesType = speciesType;
+        remarkIsNull=true;
+        isChecked=false;
+        this.save();
     }
 
     public String getChineseName() {

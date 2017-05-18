@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
 import java.util.List;
 
 import JsonUtil.JsonResolverSpeciesDetailed;
@@ -76,6 +77,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private ImageButton imageButton_add_record;
     private ImageButton imageButton_personal_center;
     private ImageButton imageButton_setting;
+    public  int test;
+
+    public static List<List<Record>> records;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +96,12 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
         editor=sharedPreferences.edit();
         List<Species> speciesList=DataSupport.findAll(Species.class);
+        DataSupport.deleteAll(Record.class);
         for(Species s:speciesList)
         {
 
+            Record record=new Record(s.getChineseName(),s.getId(),s.getSpeciesType());
+            record.save();
             JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getId(), null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
@@ -118,6 +125,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             });
 
         }
+        records=new ArrayList<>();
+        createBasicRecords();
 
     }
 
@@ -285,6 +294,24 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         textView_add_record.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
         textView_personal_center.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
         textView_setting.setTextColor(getResources().getColor(R.color.bottom_bar_textView_text_normal_color));
+    }
+
+    public void createBasicRecords() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Record>birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
+                List<Record>amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
+                List<Record>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
+                List<Record>insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
+
+                records.add(birdRecord);
+                records.add(amphibiaRecord);
+                records.add(reptilesRecord);
+                records.add(insectRecord);
+            }
+        }).start();
+
     }
 
 }

@@ -26,34 +26,24 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
     private Record record;
 
     private Intent data;
-    private int childPosition;
-    private int groupPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        speciesId=getIntent().getIntExtra("speciesId",1);
-
         setContentView(R.layout.activity_add_notes);
         initData();
         initView();
         initEvents();
+
     }
 
     private void initData() {
-        records= DataSupport.where("speciesId=?",speciesId+"").find(Record.class);
-        record=records.get(0);
         data=new Intent();
-        data.putExtra("speciesId",speciesId);
-
-
-
     }
 
     private void initView() {
         notes= (EditText) findViewById(R.id.add_notes_editText_notes);
         actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
-        notes.setText(record.getRemark());
         notes.setSelection(notes.getText().length());
     }
 
@@ -79,14 +69,14 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
         String notesContent=notes.getText().toString();
         Log.d(TAG, "actionBack: "+notesContent);
         if(!notesContent.equals(""))
-        {
-            record.setRemarkIsNull(false);
-            record.setRemark(notesContent);
-            record.save();
+        {   data.putExtra("Remark",notesContent);
+            data.putExtra("isNull",false);
             this.setResult(2,data);
             this.finish();
         }else
         {
+            data.putExtra("isNull",true);
+            this.setResult(2,data);
             this.finish();
         }
     }

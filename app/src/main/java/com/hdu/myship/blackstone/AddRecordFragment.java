@@ -3,6 +3,7 @@ package com.hdu.myship.blackstone;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.location.LocationManager;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -61,7 +63,13 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private RequestQueue requestQueue;
     private ExpandableListView expandableListView;
     private List<List<Species>> speciesList;
+
     private List<List<Record>> records;
+    private List<Record>birdRecord;
+    private List<Record>amphibiaRecord;
+    private List<Record>reptilesRecord;
+    private List<Record>insectRecord;
+
     private String TAG = "AddRecordFragment";
 
     private LocationManager locationManager;
@@ -108,22 +116,19 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private int year,month,day;
     private long millisecond;
 
-    private int fatherPosition;
-    private int childPosition_;
-
     private MyExpandListViewAdapter myExpandListViewAdapter;
 
-
-    private View mview;
+    private int GROUPPOSITION;
+    private int CHILDPOSITION;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_record, container, false);
-       // initData();
         textViewDate= (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
         datePicker= (DatePicker) view.findViewById(R.id.add_record_datepicker);
         expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
         expandableListView.setAdapter(myExpandListViewAdapter);
+       //createBasicRecords();
         calendar=Calendar.getInstance();
         year=calendar.get(Calendar.YEAR);
         month=calendar.get(Calendar.MONTH);
@@ -241,14 +246,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         requestQueue=Volley.newRequestQueue(getContext());
         boolean isCreateBasicRecords=createBasicRecordsSharedPreferences.getBoolean("isCreated",false);
         records=new ArrayList<>();
-      if(isCreateBasicRecords==false)
-        {
-
-        }
-
-        createBasicRecords();
+        birdRecord=new ArrayList<>();
+        amphibiaRecord=new ArrayList<>();
+        reptilesRecord=new ArrayList<>();
+        insectRecord=new ArrayList<>();
         createBasicRecordsEditor.putBoolean("isCreated",true).apply();
-
+        records=MainActivity.records;
 
 
 
@@ -270,37 +273,41 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      * 保存
      */
     private void save() {
-        isLogined=sharedPreferences.getBoolean("islogined",false);
         getLocation();
-        if(isLogined==false) {//判断是否登录了
-            showLoginDialog();//如果没有则弹出登录框
+        isLogined=sharedPreferences.getBoolean("islogined",false);
 
-            if(location!=null)
-            {
-                System.out.println(location.toString());
-                Intent intent=new Intent(getContext(),UploadIntentService.class);
-                intent.putExtra("lat",location.getLatitude());
-                intent.putExtra("lon",location.getLongitude());
-                intent.putExtra("milliseconds",millisecond);
-                getContext().startService(intent);
-            }else {
-                Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
-            }
 
-        }else{
+                if(isLogined==false) {//判断是否登录了
+                    showLoginDialog();//如果没有则弹出登录框
 
-            if(location!=null)
-            {
+                    if(location!=null)
+                    {
+                        System.out.println(location.toString());
+                        Intent intent=new Intent(getContext(),UploadIntentService.class);
+                        intent.putExtra("lat",location.getLatitude());
+                        intent.putExtra("lon",location.getLongitude());
+                        intent.putExtra("milliseconds",millisecond);
+                        getContext().startService(intent);
+                    }else {
+                        Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
+                    }
 
-                Intent intent=new Intent(getContext(),UploadIntentService.class);
-                intent.putExtra("lat",location.getLatitude());
-                intent.putExtra("lon",location.getLongitude());
-                intent.putExtra("milliseconds",millisecond);
-                getContext().startService(intent);
-            }else {
-                Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
-            }
-        }
+                }else{
+
+                    if(location!=null)
+                    {
+
+                        Intent intent=new Intent(getContext(),UploadIntentService.class);
+                        intent.putExtra("lat",location.getLatitude());
+                        intent.putExtra("lon",location.getLongitude());
+                        intent.putExtra("milliseconds",millisecond);
+                        getContext().startService(intent);
+                    }else {
+                        Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
         /**
          * 开启一个服务用与上传记录
          */
@@ -316,8 +323,14 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     {   private String [] groups={"鸟类","两栖类","爬行类","昆虫"};
         private List<List<Record>> records;
 
+
         public MyExpandListViewAdapter( List<List<Record>>  records) {
-            this.records = records;
+           this.records = records;
+        }
+
+
+        public MyExpandListViewAdapter() {
+
         }
 
         @Override
@@ -377,11 +390,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         }
 
         @Override
-        public void notifyDataSetChanged() {
-            super.notifyDataSetChanged();
-        }
-
-        @Override
         public View getChildView(final int groupPosition, final int childPosition, final boolean isLastChild, View convertView, ViewGroup parent) {
 
             if (convertView==null)
@@ -412,12 +420,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                addNotes.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       fatherPosition=groupPosition;
-                       childPosition_=childPosition;
-
+                       GROUPPOSITION=groupPosition;
+                       CHILDPOSITION=childPosition;
                       startActivityForResult(new Intent(getContext(),AddNotesActivity.class).putExtra("speciesId",records.get(groupPosition).get(childPosition).getSpeciesId()),1);
                    }
                });
+
 
 
             collection.setOnClickListener(new View.OnClickListener() {
@@ -434,11 +442,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                         records.get(groupPosition).get(childPosition).save();
                         collection.setImageResource(R.mipmap.select_normal);
                     }
+
+
                 }
             });
 
 
-            mview=convertView;
             return convertView;
         }
 
@@ -451,10 +460,17 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getContext(),"sdasdasdasdas",Toast.LENGTH_SHORT).show();
-        ImageView pen= (ImageView) mview.findViewById(R.id.expand_list_view_child_imageView_addNotes);
-        pen.setImageResource(R.mipmap.pen_pressed);
-        myExpandListViewAdapter.notifyDataSetChanged();
+        Boolean isNull=data.getBooleanExtra("isNull",true);
+        if(!isNull)
+        {
+            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(false);
+            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemark(data.getStringExtra("Remark"));
+            myExpandListViewAdapter.notifyDataSetChanged();
+        }else
+        {
+            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(true);
+            myExpandListViewAdapter.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -560,6 +576,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         });
     }
 
+
+
     /**
      * 登录错误对话框
      */
@@ -583,6 +601,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+
         inputAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//重新输入逻辑
@@ -596,79 +615,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     /**
      * 生成用于基础记录的records
      */
-    private void createBasicRecords()
-    {
-        /**
-         * 先将物种分类
-         */
-        List<Species> bird=DataSupport.where("speciesType=?","bird").find(Species.class);
-        List<Species> reptiles=DataSupport.where("speciesType=?","reptiles").find(Species.class);
-        List<Species> amphibia=DataSupport.where("speciesType=?","amphibia").find(Species.class);
-        List<Species> insect=DataSupport.where("speciesType=?","insect").find(Species.class);
 
-        /*speciesList=new ArrayList<>();
-        speciesList.add(bird);
-        speciesList.add(amphibia);
-        speciesList.add(reptiles);
-        speciesList.add(insect);
-        */
-
-        /**
-         * 创建对应的list
-         */
-        List<Record> birdRecord=new ArrayList<>();
-        List<Record> reptilesRecord=new ArrayList<>();
-        List<Record> amphibiaRecord=new ArrayList<>();
-        List<Record> insectRecord=new ArrayList<>();
-
-        /**
-         * 填充数据
-         */
-        for(Species species:bird)
-        {
-            Record record=new Record();
-            record.setChineseName(species.getChineseName());
-            record.setSpeciesId(species.getId());
-            record.save();
-            birdRecord.add(record);
-        }
-
-        for(Species species:reptiles)
-        {
-            Record record=new Record();
-            record.setChineseName(species.getChineseName());
-            record.setSpeciesId(species.getId());
-            record.save();
-            reptilesRecord.add(record);
-        }
-
-        for(Species species:amphibia)
-        {
-            Record record=new Record();
-            record.setChineseName(species.getChineseName());
-            record.setSpeciesId(species.getId());
-            record.save();
-            amphibiaRecord.add(record);
-        }
-
-        for(Species species:insect)
-        {
-            Record record=new Record();
-            record.setChineseName(species.getChineseName());
-            record.setSpeciesId(species.getId());
-            record.save();
-            insectRecord.add(record);
-        }
-
-        /**
-         * 将list添加至recordList
-         */
-
-        records.add(birdRecord);
-        records.add(amphibiaRecord);
-        records.add(reptilesRecord);
-        records.add(insectRecord);
-    }
 
 
 }

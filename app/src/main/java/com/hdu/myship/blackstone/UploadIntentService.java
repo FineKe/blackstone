@@ -23,10 +23,13 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import LocationUtil.LocationUtils;
+import database.Record;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -93,6 +96,15 @@ public class UploadIntentService extends IntentService {
         lon=intent.getDoubleExtra("lon",0.0);
 
         Log.d(TAG, "onHandleIntent: "+lat+":"+lon);
+        Log.d(TAG, "onHandleIntent: "+intent.getLongExtra("milliseconds",0));
+        requestQueue=Volley.newRequestQueue(this);
+        for(int i=0;i<3;i++)
+        {
+            for(Record record:MainActivity.records.get(i))
+            {
+                System.out.println(record.getRemark());
+            }
+        }
 
     }
 

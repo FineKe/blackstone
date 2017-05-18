@@ -1,6 +1,7 @@
 package com.hdu.myship.blackstone;
 
 import android.app.Dialog;
+import android.app.VoiceInteractor;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapEditText;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.FileDescriptorBitmapDataLoadProvider;
 
 import org.litepal.crud.DataSupport;
@@ -51,12 +53,27 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 public class SpeciesFragment extends Fragment{
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
+    private String speciesType[]={"amphibia","reptiles","bird"};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.species,container,false);
         speciesClassListView= (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
-        return null;
+        speciesClassListView.setAdapter(new StickyListViewAdapter(speciesClassesList,getContext()));
+        speciesClassListView.setDivider(null);
+        speciesClassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position<=2)
+                {
+                    startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesType",speciesType[position]).putExtra("position",position));
+                }else
+                {
+                    startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesClassName",speciesClassesList.get(position).getClassName()).putExtra("position",position));
+                }
+            }
+        });
+        return view;
     }
 
     @Override
@@ -67,16 +84,27 @@ public class SpeciesFragment extends Fragment{
 
     private void createClassList() {
         speciesClassesList=new ArrayList<>();
+        /**
+         * 将R.mipmap.species的图片ID封装到数组
+         */
+        int []speciesPicturesId={R.mipmap.species1,R.mipmap.species2,R.mipmap.species3,R.mipmap.species4,R.mipmap.species5,R.mipmap.species6,
+                R.mipmap.species7,R.mipmap.species8,R.mipmap.species9,R.mipmap.species10,R.mipmap.species11,R.mipmap.species12,
+                R.mipmap.species13,R.mipmap.species14,R.mipmap.species15,R.mipmap.species16,R.mipmap.species17,R.mipmap.species18,R.mipmap.species19};
+        int i=0;
         for(String string:getResources().getStringArray(R.array.vertebrate))//创建脊椎动物类列表
         {
-            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",string);
+
+            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",string,speciesPicturesId[i]);
             speciesClassesList.add(speciesClasses);
+            i++;
         }
 
         for(String string:getResources().getStringArray(R.array.invertebrate))//创建无脊椎动物类列表
         {
-            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",string);
+
+            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",string,speciesPicturesId[i]);
             speciesClassesList.add(speciesClasses);
+            i++;
         }
     }
 
@@ -123,7 +151,7 @@ public class SpeciesFragment extends Fragment{
             convertView=inflater.inflate(R.layout.species_classes_list_view_item,parent,false);
             ImageView picture= (ImageView) convertView.findViewById(R.id.species_classes_item_image_view_class_picture);
             TextView className= (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
-
+            picture.setImageResource(list.get(position).getPictureId());
             className.setText(list.get(position).getClassName());
             return convertView;
         }

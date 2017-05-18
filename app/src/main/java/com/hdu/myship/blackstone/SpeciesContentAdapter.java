@@ -41,21 +41,21 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     private String dealPicure="?imageView2/0/w/400/h/400";//本平台的图片采用了cdn分发，为了节省流量，采用七牛云的api处理接口
     private  List<Species>  list;
-    private  List<String> indexList;
-    private  List<result> resultList;
+  //  private  List<String> indexList;
+    //private  List<result> resultList;
     private int HEAD=0;
     private int ITEM=1;
     private Context context;
 
     private OnRecyclerViewItemClickeListener onRecyclerViewItemClickeListener=null;
-    public SpeciesContentAdapter(List<Species> list,List<String> indexList, Context context ) {
+    public SpeciesContentAdapter(List<Species> list, Context context ) {
         this.list=list;
-        this.indexList=indexList;
+        //this.indexList=indexList;
         this.context=context;
-        resultList=hanleList();
+        //resultList=hanleList();
     }
 
-    private List<result>hanleList()
+   /* private List<result>hanleList()
     {
         List<result> resultList=new ArrayList<>();
         int count;
@@ -82,65 +82,65 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         return resultList;
-    }
+    }*/
 
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType==HEAD)
+       /* if(viewType==HEAD)
         {
             return new HeadHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_head,parent,false));
         }
 
-        else{
+        else{*/
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_item, parent, false);
             view.setOnClickListener(this);
             MyHolder holder = new MyHolder(view);
             return holder;
-        }
+       // }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof HeadHolder)
-        {
-            HeadHolder headHolder= (HeadHolder) holder;
-            headHolder.orderOrFamilyChinaeseName.setText(resultList.get(position).getHead()+"形目");
-            //headHolder.orderOrFamilyLatinName.setText(resultList.get(position+1).getSpecies().getLatinName());
-        }else if(holder instanceof MyHolder)
-        {
+//        if(holder instanceof HeadHolder)
+//        {
+//            HeadHolder headHolder= (HeadHolder) holder;
+//            headHolder.orderOrFamilyChinaeseName.setText(resultList.get(position).getHead()+"形目");
+//            //headHolder.orderOrFamilyLatinName.setText(resultList.get(position+1).getSpecies().getLatinName());
+//        }else if(holder instanceof MyHolder)
+//        {
             MyHolder myHolder= (MyHolder) holder;
-            myHolder.tv_englishName.setText(resultList.get(position).getSpecies().getLatinName());
-            Glide.with(context).load(resultList.get(position).getSpecies().getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
-            myHolder.tv_chineseName.setText(resultList.get(position).getSpecies().getChineseName());
-            myHolder.itemView.setTag(resultList.get(position));
-        }
+            myHolder.tv_englishName.setText(list.get(position).getLatinName());
+            Glide.with(context).load(list.get(position).getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
+            myHolder.tv_chineseName.setText(list.get(position).getChineseName());
+            myHolder.itemView.setTag(list.get(position));
+       // }
 
     }
 
-   /* @Override
-    public void onBindViewHolder(final MyHolder holder, int position) {
-
-        Species species=list.get(position);//从数据库中读取当前位置的物种信息
-        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(holder.imageView);//使用glide框架加载图片到imageview
-        holder.tv_latinName.setText(species.getLatinName());
-        holder.tv_chineseName.setText(species.getChineseName());
-        holder.tv_englishName.setText(species.getFamily());
-        holder.itemView.setTag(list.get(position));
-
-
-    }*/
+//   @Override
+//    public void onBindViewHolder(final MyHolder holder, int position) {
+//
+//        Species species=list.get(position);//从数据库中读取当前位置的物种信息
+//        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(holder.imageView);//使用glide框架加载图片到imageview
+//        holder.tv_latinName.setText(species.getLatinName());
+//        holder.tv_chineseName.setText(species.getChineseName());
+//        holder.tv_englishName.setText(species.getFamily());
+//        holder.itemView.setTag(list.get(position));
+//
+//
+//    }
 
     @Override
     public int getItemCount() {
-        return resultList.size();
+        return list.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder
     {
-        private TextView tv_latinName,tv_chineseName,tv_englishName;
-        private RoundedImageView imageView;
+        public TextView tv_latinName,tv_chineseName,tv_englishName;
+        public RoundedImageView imageView;
        // private ImageView imageView;
         public MyHolder(View itemView) {
             super(itemView);
@@ -166,7 +166,7 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        return resultList.get(position).getViewType();
+        return 0;
     }
 
     public static interface OnRecyclerViewItemClickeListener

@@ -9,7 +9,8 @@
         android:layout_height="35dp"
         android:layout_marginLeft="7dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="3dp"/>
+        android:layout_marginBottom="3dp"
+        android:src="@mipmap/species1"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,12 +23,13 @@
 
             <TextView
                 android:id="@+id/species_classes_item_text_view_class_name"
-                android:text="鸟类"
-                android:layout_marginLeft="4dp"
-                android:gravity="center_vertical|left"
                 android:layout_width="0dp"
+                android:layout_height="41dp"
+                android:layout_marginLeft="4dp"
                 android:layout_weight="1"
-                android:layout_height="41dp" />
+                android:gravity="center_vertical|left"
+                android:text="鸟类"
+                android:textSize="16sp" />
 
             <ImageView
                 android:layout_marginRight="16dp"

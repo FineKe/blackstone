@@ -40,21 +40,19 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     private Dialog dialogAlertMenu;
 
-    private List<Species> species;
+    private List<Species> speciesList;
 
     private String SpeciesType;
 
     private int position;
 
     private LinearLayoutManager linearLayoutManager;
-    private String typeTitle[]={"鸟类","两栖类","爬行类","昆虫类"};
+    private String typeTitle[]={"两栖类","爬行类","鸟类"};
     private List<String> indexList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        SpeciesType=getIntent().getStringExtra("SpeciesType");
-        position=getIntent().getIntExtra("position",0);
         setContentView(R.layout.activity_species_class);
 
         initData();
@@ -72,8 +70,14 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesContent= (RecyclerView) findViewById(R.id.species_class_recyclerView_speciesContent);
 
         sliderBar= (SliderBar) findViewById(R.id.species_class_sliderBar);
+        if(position<=2)
+        {
+            speciesClassName.setText(typeTitle[position]);
+        }else
+        {
+            speciesClassName.setText(getIntent().getStringExtra("speciesClassName"));
+        }
 
-        speciesClassName.setText(typeTitle[position]);
         linearLayoutManager=new LinearLayoutManager(this);
         speciesContent.setLayoutManager(linearLayoutManager);
         speciesContent.setHasFixedSize(true);
@@ -81,12 +85,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
     private void initData() {
-        species=new ArrayList<>();
-        species=DataSupport.where("speciesType=?",SpeciesType).find(Species.class);
-        indexList=new ArrayList<>();
-        for(String s:getResources().getStringArray(R.array.sorting_by_order))
+        position=getIntent().getIntExtra("position",0);
+        if(position<=2)
         {
-            indexList.add(s);
+            speciesList=DataSupport.where("speciesType=?",getIntent().getStringExtra("speciesType")).find(Species.class);
+        }else
+        {
+            speciesList=DataSupport.where("chineseName=?",getIntent().getStringExtra("speciesClassName")).find(Species.class);
         }
 
     }
@@ -96,7 +101,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         alertMenu.setOnClickListener(this);
         alertPick.setOnClickListener(this);
 
-        SpeciesContentAdapter adapter=new SpeciesContentAdapter(species,indexList,this);
+        SpeciesContentAdapter adapter=new SpeciesContentAdapter(speciesList,this);
         speciesContent.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override

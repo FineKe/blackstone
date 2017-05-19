@@ -41,8 +41,7 @@ public class JsonResolverList {
 
                     JSONObject object = array.getJSONObject(i);
                     Species species= new Species();
-
-                        species.setId(object.getInt("id"));
+                        species.setSingal(object.getInt("id"));
                         species.setChineseName(object.getString("chineseName"));
                         species.setLatinName(object.getString("latinName"));
                         species.setOrder(object.getString("order"));
@@ -50,9 +49,6 @@ public class JsonResolverList {
                         species.setSpeciesType(object.getString("speciesType"));
                         species.setMainPhoto(object.getString("mainPhoto"));
                         species.save();
-
-
-
                 }
             }
 
@@ -70,7 +66,7 @@ public class JsonResolverList {
 
                 JSONObject object =insect.getJSONObject(i);
                 Species species=new Species();
-                    species.setId(object.getInt("id"));
+                    species.setSingal(object.getInt("id"));
                     species.setChineseName(object.getString("chineseName"));
                     species.setLatinName(object.getString("latinName"));
                     species.setOrder(object.getString("order"));

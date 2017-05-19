@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -20,13 +21,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import LocationUtil.LocationUtils;
 import database.Record;
@@ -43,7 +54,14 @@ public class UploadIntentService extends IntentService {
     private RequestQueue requestQueue;
     private double lat;
     private double lon;
+    private Long milliseconds;
 
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
+    private String token;
+
+    private JsonObjectRequest upLoadRequest;
     String TAG="UploadIntentService";
 
     // TODO: Rename actions, choose action names that describe tasks that this
@@ -94,17 +112,11 @@ public class UploadIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         lat=intent.getDoubleExtra("lat",0.0);
         lon=intent.getDoubleExtra("lon",0.0);
-
+        milliseconds=intent.getLongExtra("milliseconds",0);
         Log.d(TAG, "onHandleIntent: "+lat+":"+lon);
         Log.d(TAG, "onHandleIntent: "+intent.getLongExtra("milliseconds",0));
-        requestQueue=Volley.newRequestQueue(this);
-        for(int i=0;i<3;i++)
-        {
-            for(Record record:MainActivity.records.get(i))
-            {
-                System.out.println(record.getRemark());
-            }
-        }
+        initData();
+
 
     }
 
@@ -131,6 +143,72 @@ public class UploadIntentService extends IntentService {
     private void initData()
     {
         requestQueue= Volley.newRequestQueue(getApplicationContext());
+        userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
+        token=userInformationSharedPreferences.getString("token","");
+        long ex=userInformationSharedPreferences.getLong("expireAt",0);
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("time",milliseconds);
+            jsonObject.put("lat",lat);
+            jsonObject.put("lon",lon);
+            jsonObject.put("addToObservedList",true);
+            jsonObject.put("observationPalName","");
+            JSONArray jsonArray=new JSONArray();
+            for(int i=0;i<3;i++)
+            {
+                for(Record record:MainActivity.records.get(i))
+                {
+                    if(record.isRemarkIsNull()==false&&record.isChecked())
+                    {
+                        JSONObject js=new JSONObject();
+                        js.put("speciesId",record.getSpeciesId());
+                        js.put("remark",record.getRemark());
+                        jsonArray.put(js);
+                    }
+                }
+            }
+            jsonObject.put("notes",jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        upLoadRequest=new JsonObjectRequest(Request.Method.POST, upLoadRecordURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        System.out.println(code);
+                    }else
+                    {
+                        String message=jsonObject.getString("message");
+                        System.out.println(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String,String> headers=new HashMap<>();
+                headers.put("token",token);
+                return headers;
+            }
+        };
+
+        requestQueue.add(upLoadRequest);
+
     }
+
+
 
 }

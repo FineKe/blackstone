@@ -16,8 +16,10 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,10 +39,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,6 +56,7 @@ import java.util.Map;
 import database.Record;
 import database.Species;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.hdu.myship.blackstone.R.mipmap.right_arrow;
 
 /**
@@ -59,8 +66,9 @@ import static com.hdu.myship.blackstone.R.mipmap.right_arrow;
 
 public class AddRecordFragment extends Fragment implements View.OnClickListener {
     private String loginURL = "http://api.blackstone.ebirdnote.cn/v1/user/login";
-
+    private String upLoadRecordURL="http://api.blackstone.ebirdnote.cn/v1/record/new";
     private RequestQueue requestQueue;
+    private JsonObjectRequest upLoadRequest;
     private ExpandableListView expandableListView;
     private List<List<Species>> speciesList;
 
@@ -120,6 +128,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
     private int GROUPPOSITION;
     private int CHILDPOSITION;
+
+    private List<UpdateRecordPosition> updateRecordPositionList;
+
+    private String token;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -133,21 +145,21 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         year=calendar.get(Calendar.YEAR);
         month=calendar.get(Calendar.MONTH);
         day=calendar.get(Calendar.DAY_OF_MONTH);
+        textViewDate.setText(year+"年"+(month+1)+"月"+day+"日");
         month++;
-        textViewDate.setText(year+"年"+month+"月"+day+"日");
-
-        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+        datePicker.init(year, month-1, day, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year_, int monthOfYear, int dayOfMonth) {
                 year=year_;
-                month=monthOfYear;
+                month=monthOfYear+1;
                 day=dayOfMonth;
-                textViewDate.setText(year+"年"+month+"月"+day+"日");
+                textViewDate.setText(year+"年"+(month)+"月"+day+"日");
             }
         });
 
-        Date millisecondDate=new Date(year,month,day);
-        millisecond=millisecondDate.getTime();//获得毫秒数
+
+
+//        millisecond=millisecondDate.getTime();//获得毫秒数
 
         textViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,23 +190,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         initData();
         myExpandListViewAdapter=new MyExpandListViewAdapter(records);
-
-
-
-
     }
 
 
     private void getLocation() {
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
         }else
         {
@@ -237,10 +238,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
 
     private void initData() {
-        createBasicRecordsSharedPreferences=getActivity().getSharedPreferences(createBasicRecordsFile,Context.MODE_PRIVATE);
+        createBasicRecordsSharedPreferences=getActivity().getSharedPreferences(createBasicRecordsFile, MODE_PRIVATE);
         createBasicRecordsEditor=createBasicRecordsSharedPreferences.edit();
 
-        userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,Context.MODE_PRIVATE);
+        userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation, MODE_PRIVATE);
         userInformationEditor=userInformationSharedPreferences.edit();
 
         requestQueue=Volley.newRequestQueue(getContext());
@@ -253,9 +254,9 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         createBasicRecordsEditor.putBoolean("isCreated",true).apply();
         records=MainActivity.records;
 
+        updateRecordPositionList=new ArrayList<>();
 
-
-        sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
+        sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, MODE_PRIVATE);
         editor=sharedPreferences.edit();
         isLogined=sharedPreferences.getBoolean("islogined",false);
     }
@@ -264,7 +265,17 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.add_record_titleBar_textView_save:save();
+            case R.id.add_record_titleBar_textView_save:
+                if(updateRecordPositionList.isEmpty())
+                {
+                    Toast.makeText(getContext(),"你还没有添加记录",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    save();
+                    resetRecords();
+                }
+
                 break;
         }
     }
@@ -281,13 +292,22 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                     showLoginDialog();//如果没有则弹出登录框
 
                     if(location!=null)
-                    {
+                    {   SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            Long second=format.parse(year+"-"+month+"-"+day).getTime();
+                            System.out.println(second);
+                            millisecond=second;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         System.out.println(location.toString());
-                        Intent intent=new Intent(getContext(),UploadIntentService.class);
-                        intent.putExtra("lat",location.getLatitude());
-                        intent.putExtra("lon",location.getLongitude());
-                        intent.putExtra("milliseconds",millisecond);
-                        getContext().startService(intent);
+//                        Intent intent=new Intent(getContext(),UploadIntentService.class);
+//                        intent.putExtra("lat",location.getLatitude());
+//                        intent.putExtra("lon",location.getLongitude());
+//                        intent.putExtra("milliseconds",millisecond);
+//                        getContext().startService(intent);
+                        upLoadData(millisecond,location.getLatitude(),location.getLongitude());
+                        Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
                     }
@@ -296,12 +316,21 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
                     if(location!=null)
                     {
-
-                        Intent intent=new Intent(getContext(),UploadIntentService.class);
-                        intent.putExtra("lat",location.getLatitude());
-                        intent.putExtra("lon",location.getLongitude());
-                        intent.putExtra("milliseconds",millisecond);
-                        getContext().startService(intent);
+                        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            Long second=format.parse(year+"-"+month+"-"+day).getTime();
+                            System.out.println(second);
+                            millisecond=second;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+//                        Intent intent=new Intent(getContext(),UploadIntentService.class);
+//                        intent.putExtra("lat",location.getLatitude());
+//                        intent.putExtra("lon",location.getLongitude());
+//                        intent.putExtra("milliseconds",millisecond);
+//                        getContext().startService(intent);
+                        upLoadData(millisecond,location.getLatitude(),location.getLongitude());
+                        Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
                     }
@@ -422,7 +451,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                    public void onClick(View v) {
                        GROUPPOSITION=groupPosition;
                        CHILDPOSITION=childPosition;
-                      startActivityForResult(new Intent(getContext(),AddNotesActivity.class).putExtra("speciesId",records.get(groupPosition).get(childPosition).getSpeciesId()),1);
+                       startActivityForResult(new Intent(getContext(),AddNotesActivity.class)
+                              .putExtra("groupPosition",groupPosition).putExtra("childPosition",childPosition),1);
                    }
                });
 
@@ -460,17 +490,19 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Boolean isNull=data.getBooleanExtra("isNull",true);
-        if(!isNull)
-        {
-            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(false);
-            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemark(data.getStringExtra("Remark"));
+       // Boolean isNull=data.getBooleanExtra("isNull",true);
+//        if(!isNull)
+//        {
+//            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(false);
+//            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemark(data.getStringExtra("Remark"));
             myExpandListViewAdapter.notifyDataSetChanged();
-        }else
-        {
-            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(true);
-            myExpandListViewAdapter.notifyDataSetChanged();
-        }
+//        }else
+//        {
+//            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(true);
+//            myExpandListViewAdapter.notifyDataSetChanged();
+//        }
+        updateRecordPositionList.add(new UpdateRecordPosition(GROUPPOSITION,CHILDPOSITION));
+        Log.d(TAG, "onActivityResult: "+GROUPPOSITION+":"+CHILDPOSITION);
     }
 
     /**
@@ -617,5 +649,115 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      */
 
 
+    public void resetRecords()
+    {
+        int GROUP;
+        int CHILD;
+        for(UpdateRecordPosition updateRecordPosition:updateRecordPositionList)
+        {
+            GROUP=updateRecordPosition.getGroup();
+            CHILD=updateRecordPosition.getChild();
+            records.get(GROUP).get(CHILD).setRemark("");
+            records.get(GROUP).get(CHILD).setRemarkIsNull(true);
+            records.get(GROUP).get(CHILD).setChecked(false);
+        }
+        myExpandListViewAdapter.notifyDataSetChanged();
+    }
+
+    private class UpdateRecordPosition
+    {
+        private int group;
+        private int child;
+
+        public UpdateRecordPosition(int group, int child) {
+            this.group = group;
+            this.child = child;
+        }
+
+        public int getGroup() {
+            return group;
+        }
+
+        public void setGroup(int group) {
+            this.group = group;
+        }
+
+        public int getChild() {
+            return child;
+        }
+
+        public void setChild(int child) {
+            this.child = child;
+        }
+    }
+
+    private void upLoadData(Long milliseconds,double lat,double lon)
+    {
+        requestQueue= Volley.newRequestQueue(getContext());
+        userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,MODE_PRIVATE);
+        token=userInformationSharedPreferences.getString("token","");
+        long ex=userInformationSharedPreferences.getLong("expireAt",0);
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("time",milliseconds);
+            jsonObject.put("lat",lat);
+            jsonObject.put("lon",lon);
+            jsonObject.put("addToObservedList",true);
+            jsonObject.put("observationPalName","");
+            JSONArray jsonArray=new JSONArray();
+            for(int i=0;i<3;i++)
+            {
+                for(Record record:MainActivity.records.get(i))
+                {
+                    if(record.isRemarkIsNull()==false&&record.isChecked())
+                    {
+                        JSONObject js=new JSONObject();
+                        js.put("speciesId",record.getSpeciesId());
+                        js.put("remark",record.getRemark());
+                        jsonArray.put(js);
+                    }
+                }
+            }
+            jsonObject.put("notes",jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        upLoadRequest=new JsonObjectRequest(Request.Method.POST, upLoadRecordURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        System.out.println(code);
+                    }else
+                    {
+                        String message=jsonObject.getString("message");
+                        System.out.println(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String,String> headers=new HashMap<>();
+                headers.put("token",token);
+                return headers;
+            }
+        };
+
+        requestQueue.add(upLoadRequest);
+
+    }
 
 }

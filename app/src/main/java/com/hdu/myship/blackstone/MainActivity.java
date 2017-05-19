@@ -96,13 +96,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
         editor=sharedPreferences.edit();
         List<Species> speciesList=DataSupport.findAll(Species.class);
-        DataSupport.deleteAll(Record.class);
         for(Species s:speciesList)
         {
-
-            Record record=new Record(s.getChineseName(),s.getId(),s.getSpeciesType());
-            record.save();
-            JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getId(), null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getSingal(), null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
@@ -300,6 +296,15 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         new Thread(new Runnable() {
             @Override
             public void run() {
+                DataSupport.deleteAll(Record.class);
+                List<Species> list=DataSupport.findAll(Species.class);
+                for(Species species:list)
+                {
+                    Record record=new Record(species.getChineseName(),species.getSingal(),species.getSpeciesType());
+                    record.save();
+                    System.out.println(species.getSingal());
+                }
+
                 List<Record>birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
                 List<Record>amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
                 List<Record>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);

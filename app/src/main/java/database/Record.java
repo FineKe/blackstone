@@ -20,7 +20,6 @@ public class Record extends DataSupport {
         this.speciesType = speciesType;
         remarkIsNull=true;
         isChecked=false;
-        this.save();
     }
 
     public String getChineseName() {

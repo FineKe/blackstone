@@ -44,6 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -285,6 +286,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      */
     private void save() {
         getLocation();
+        Log.d(TAG, "save: "+location.getLatitude()+":"+location.getLongitude());
         isLogined=sharedPreferences.getBoolean("islogined",false);
 
 
@@ -300,13 +302,13 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        System.out.println(location.toString());
 //                        Intent intent=new Intent(getContext(),UploadIntentService.class);
 //                        intent.putExtra("lat",location.getLatitude());
 //                        intent.putExtra("lon",location.getLongitude());
 //                        intent.putExtra("milliseconds",millisecond);
 //                        getContext().startService(intent);
-                        upLoadData(millisecond,location.getLatitude(),location.getLongitude());
+                        DecimalFormat d=new DecimalFormat("0.0000");
+                        upLoadData(millisecond,Double.parseDouble(d.format(location.getLatitude())),Double.parseDouble(d.format(location.getLongitude())));
                         Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
@@ -329,7 +331,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 //                        intent.putExtra("lon",location.getLongitude());
 //                        intent.putExtra("milliseconds",millisecond);
 //                        getContext().startService(intent);
-                        upLoadData(millisecond,location.getLatitude(),location.getLongitude());
+                        DecimalFormat d=new DecimalFormat("0.0000");
+                        upLoadData(millisecond,Double.parseDouble(d.format(location.getLatitude())),Double.parseDouble(d.format(location.getLongitude())));
                         Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
@@ -662,6 +665,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             records.get(GROUP).get(CHILD).setChecked(false);
         }
         myExpandListViewAdapter.notifyDataSetChanged();
+        updateRecordPositionList.clear();
     }
 
     private class UpdateRecordPosition

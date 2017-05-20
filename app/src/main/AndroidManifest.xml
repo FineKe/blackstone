@@ -35,48 +35,61 @@
             android:name="design_height"
             android:value="1920" />
 
-        <activity
-            android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".SpeciesDeatailedActivity" />
         <activity android:name=".SpeciesClassActivity" />
-        <activity android:name=".AccountAndSecurityActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".PersonInformationActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ResetPhoneActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".MakeTeamActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".CopyRightActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ResetPasswordActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".MyCollectionsActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".MyRecordsActivity"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".AccountAndSecurityActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".PersonInformationActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ResetPhoneActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".MakeTeamActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".CopyRightActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".MyCollectionsActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".MyRecordsActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".AddNotesActivity" />
 
         <service
             android:name=".UploadIntentService"
             android:exported="false" />
 
-        <activity android:name=".ResetPasswordTwoActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ForgetPasswordActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ForgetPasswordTwoActivity"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".ResetPasswordTwoActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ForgetPasswordTwoActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".SuggestionsActivity" />
         <activity
             android:name=".SearchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_search"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".ResetPasswordThreeActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ForgetPasswordThreeActivity"
-            android:launchMode="singleInstance"></activity>
+        <activity
+            android:name=".ResetPasswordThreeActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ForgetPasswordThreeActivity"
+            android:launchMode="singleInstance" />
+        <activity android:name=".MyCollectionsTwoActivity"></activity>
     </application>
 
 </manifest>

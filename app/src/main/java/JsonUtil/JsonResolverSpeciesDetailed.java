@@ -29,7 +29,8 @@ public class JsonResolverSpeciesDetailed {
             int code=jsonObject.getInt("code");
             if(code==88)
             {
-                switch (jsonObject.getString("speciesType"))
+                JSONObject data=jsonObject.getJSONObject("data");
+             switch (data.getString("speciesType"))
                 {
                     case "reptiles":ResolveRepties(jsonObject);
                         break;
@@ -58,7 +59,7 @@ public class JsonResolverSpeciesDetailed {
                 String familyLatin = data.getString("familyLatin");
                 String genus = data.getString("genus");
                 String genusLatin = data.getString("genusLatin");
-                String mainPhoto = data.getString("mainPhoto");
+               // String mainPhoto = data.getString("mainPhoto");
                 JSONArray imgs = data.getJSONArray("imgs");
 
                 JSONObject features = data.getJSONObject("features");
@@ -79,7 +80,7 @@ public class JsonResolverSpeciesDetailed {
 
                 Amphibia speciesDetailed = new Amphibia();
 
-                speciesDetailed.setId(singl);
+                speciesDetailed.setSingal(singl);
                 speciesDetailed.setChineseName(chineseName);
                 speciesDetailed.setLatinName(latinName);
                 speciesDetailed.setOrder(order);
@@ -88,11 +89,11 @@ public class JsonResolverSpeciesDetailed {
                 speciesDetailed.setFamilyLatin(familyLatin);
                 speciesDetailed.setGenus(genus);
                 speciesDetailed.setGenusLatin(genusLatin);
-                speciesDetailed.setMainPhoto(mainPhoto);
+               // speciesDetailed.setMainPhoto(mainPhoto);
                 ArrayList<String> imgsList = new ArrayList<>();
 
                 for (int i = 0; i < imgs.length(); i++) {
-                    imgsList.add(imgs.getString(i));
+                    imgsList.add(imgs.getJSONObject(i).getString("url"));
                     Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 speciesDetailed.setImgs(imgsList);
@@ -119,7 +120,7 @@ public class JsonResolverSpeciesDetailed {
 
                 Bird bird = new Bird();
                 JSONObject data = jsonObject.getJSONObject("data");
-                bird.setId(data.getInt("id"));
+                bird.setSingal(data.getInt("id"));
                 bird.setChineseName(data.getString("chineseName"));
                 bird.setEnglishName(data.getString("englishName"));
                 bird.setLatinName(data.getString("latinName"));
@@ -128,11 +129,11 @@ public class JsonResolverSpeciesDetailed {
                 bird.setFamily(data.getString("family"));
                 bird.setFamilyLatin(data.getString("familyLatin"));
                 bird.setGenusLatin(data.getString("genusLatin"));
-                bird.setMainPhoto(data.getString("mainPhoto"));
+               // bird.setMainPhoto(data.getString("mainPhoto"));
                 JSONArray imgs = data.getJSONArray("imgs");
                 ArrayList<String> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgs.length(); i++) {
-                    imgsList.add(imgs.getString(i));
+                    imgsList.add(imgs.getJSONObject(i).getString("url"));
                     Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 bird.setImgs(imgsList);
@@ -158,16 +159,16 @@ public class JsonResolverSpeciesDetailed {
 
                 Insect insect = new Insect();
                 JSONObject data = jsonObject.getJSONObject("data");
-                insect.setId(data.getInt("id"));
+                insect.setSingal(data.getInt("id"));
                 insect.setChineseName(data.getString("chineseName"));
                 insect.setLatinName(data.getString("latinName"));
                 insect.setOrder(data.getString("order"));
                 insect.setOrderLatin(data.getString("orderLatin"));
-                insect.setMainPhoto(data.getString("mainPhoto"));
+                //insect.setMainPhoto(data.getString("mainPhoto"));
                 JSONArray imgs = data.getJSONArray("imgs");
                 ArrayList<String> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgs.length(); i++) {
-                    imgsList.add(imgs.getString(i));
+                    imgsList.add(imgs.getJSONObject(i).getString("url"));
                     Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 insect.setImgs(imgsList);
@@ -195,7 +196,7 @@ public class JsonResolverSpeciesDetailed {
 
                 Reptiles reptiles = new Reptiles();
                 JSONObject data = jsonObject.getJSONObject("data");
-                reptiles.setId(data.getInt("id"));
+                reptiles.setSingal(data.getInt("id"));
                 reptiles.setChineseName(data.getString("chineseName"));
                 reptiles.setLatinName(data.getString("latinName"));
                 reptiles.setOrder(data.getString("order"));
@@ -204,11 +205,12 @@ public class JsonResolverSpeciesDetailed {
                 reptiles.setFamilyLatin(data.getString("familyLatin"));
                 reptiles.setGenus(data.getString("genus"));
                 reptiles.setGenusLatin(data.getString("genusLatin"));
-                reptiles.setMainPhoto(data.getString("mainPhoto"));
+               // reptiles.setMainPhoto(data.getString("mainPhoto"));
                 JSONArray imgs = data.getJSONArray("imgs");
                 ArrayList<String> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgs.length(); i++) {
-                    imgsList.add(imgs.getString(i));
+
+                    imgsList.add(imgs.getJSONObject(i).getString("url"));
                     Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 reptiles.setImgs(imgsList);

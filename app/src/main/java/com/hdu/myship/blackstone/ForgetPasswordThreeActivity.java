@@ -10,11 +10,23 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-public class ForgetPasswordThreeActivity extends AppCompatActivity implements View.OnClickListener{
+import org.json.JSONException;
+import org.json.JSONObject;
 
+public class ForgetPasswordThreeActivity extends AppCompatActivity implements View.OnClickListener{
+    private String resetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/setPwd";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest resetPasswordRequest;
     private ImageView actionBack;
     private ImageView showPassword;
 
@@ -24,15 +36,21 @@ public class ForgetPasswordThreeActivity extends AppCompatActivity implements Vi
 
     private BootstrapButton completed;
 
+    private String phoneNumber;
+    private String code;
     private Boolean isShowed=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_forget_password_three);
-
+        initData();
         initViews();
         initEvents();
+    }
+
+    private void initData() {
+
     }
 
     private void initViews() {
@@ -113,5 +131,49 @@ public class ForgetPasswordThreeActivity extends AppCompatActivity implements Vi
         {
             message.setText("密码为6~16位字母、数字或符号");
         }
+        else
+        {
+            resetPassword();
+        }
+    }
+
+    private void resetPassword()
+    {
+        requestQueue= Volley.newRequestQueue(this);
+        phoneNumber=getIntent().getStringExtra("phoneNumber");
+        code=getIntent().getStringExtra("code");
+        JSONObject object=new JSONObject();
+        try {
+            object.put("mobile",phoneNumber);
+            object.put("pwd",inputPassword.getText().toString());
+            object.put("verifyCode",code);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        resetPasswordRequest=new JsonObjectRequest(Request.Method.POST, resetPasswordURL, object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        Toast.makeText(ForgetPasswordThreeActivity.this,"密码设定成功",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        String message=jsonObject.getString("message");
+                        Toast.makeText(ForgetPasswordThreeActivity.this,message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(ForgetPasswordThreeActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(resetPasswordRequest);
     }
 }

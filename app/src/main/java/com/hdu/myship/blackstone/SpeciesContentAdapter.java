@@ -112,7 +112,7 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 //        {
             MyHolder myHolder= (MyHolder) holder;
             myHolder.tv_englishName.setText(list.get(position).getLatinName());
-            Glide.with(context).load(list.get(position).getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
+            Glide.with(context).load(list.get(position).getMainPhoto()+dealPicure).placeholder(R.mipmap.loading_small).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
             myHolder.tv_chineseName.setText(list.get(position).getChineseName());
             myHolder.itemView.setTag(list.get(position));
        // }
@@ -171,14 +171,14 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static interface OnRecyclerViewItemClickeListener
     {
-        void onItemClick(View view, result data);
+        void onItemClick(View view, Species data);
     }
 
     @Override
     public void onClick(View v) {
         if (onRecyclerViewItemClickeListener != null) {
             //注意这里使用getTag方法获取数据
-            onRecyclerViewItemClickeListener.onItemClick(v,(result) v.getTag());
+            onRecyclerViewItemClickeListener.onItemClick(v,(Species) v.getTag());
         }
     }
 

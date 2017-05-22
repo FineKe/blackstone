@@ -93,6 +93,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     }
 
     private void initData() {
+        requestQueue= Volley.newRequestQueue(this);//创建请求队列
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
         editor=sharedPreferences.edit();
         List<Species> speciesList=DataSupport.findAll(Species.class);
@@ -119,8 +120,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
                 }
             });
-
+            requestQueue.add(speciesDetailedRequest);
         }
+
         records=new ArrayList<>();
         createBasicRecords();
 
@@ -129,7 +131,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private void initView() {
         fragmentManager=getSupportFragmentManager();
         transaction=fragmentManager.beginTransaction();//开启一个事物
-        requestQueue= Volley.newRequestQueue(this);//创建请求队列
+
         tab_species= (LinearLayout) findViewById(R.id.tab_species);
         tab_guide= (LinearLayout) findViewById(R.id.tab_guide);
         tab_add_record= (LinearLayout) findViewById(R.id.tab_add_record);

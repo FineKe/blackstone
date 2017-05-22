@@ -153,7 +153,7 @@ public class SpeciesDetailedFragment extends Fragment {
         ImageView imgView=new ImageView(getContext());
         imgView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         imgView.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(getContext()).load(picture).placeholder(R.mipmap.loading).into(imgView);
+        Glide.with(getContext()).load(picture).placeholder(R.mipmap.loading_small).into(imgView);
         return imgView;
     }
 

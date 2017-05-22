@@ -105,12 +105,12 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesContent.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
-            public void onItemClick(View view, SpeciesContentAdapter.result data) {//添加点击事件
-                Log.d(TAG, "onItemClick: "+data.getSpecies().getSingal());
+            public void onItemClick(View view, Species data) {//添加点击事件
+                Log.d(TAG, "onItemClick: "+data.getSingal());
                 Intent intent=new Intent(SpeciesClassActivity.this,SpeciesDeatailedActivity.class);
-                intent.putExtra("id",data.getSpecies().getSingal());
-                intent.putExtra("speciesType",data.getSpecies().getSpeciesType());
-                intent.putExtra("speciesTypeChineseName",typeTitle[position]);
+                intent.putExtra("singal",data.getSingal());
+                intent.putExtra("speciesType",data.getSpeciesType());
+                //intent.putExtra("speciesTypeChineseName",typeTitle[position]);
                 startActivity(intent);
             }
         });

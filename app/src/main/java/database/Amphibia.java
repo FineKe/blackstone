@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class Amphibia extends DataSupport {
-    private int id;//id
+    private int singal;
     private String chineseName;//中文名
     private String latinName;//拉丁名
     private String order;//
@@ -43,12 +43,12 @@ public class Amphibia extends DataSupport {
     private String digitalFormula;//
     private String nuptial;
 
-    public int getId() {
-        return id;
+    public int getSingal() {
+        return singal;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSingal(int singal) {
+        this.singal = singal;
     }
 
     public String getOrder() {

@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,11 +11,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-public class ResetPasswordThreeActivity extends AppCompatActivity implements View.OnClickListener{
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+public class ResetPasswordThreeActivity extends AppCompatActivity implements View.OnClickListener{
+    private String ResetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/pwd";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest resetPasswordRequest;
     private ImageView actionBack;
     private ImageView showPassword;
 
@@ -25,6 +42,10 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     private BootstrapButton completed;
 
     private Boolean isShowed=false;
+
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,5 +135,53 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
         {
             message.setText("密码为6~16位字母、数字或符号");
         }
+        else
+        {
+            resetPassword();
+        }
+    }
+
+    private void resetPassword()
+    {   userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
+        userInformationEditor=userInformationSharedPreferences.edit();
+        String oldPassword=userInformationSharedPreferences.getString("password","");
+        final String token=userInformationSharedPreferences.getString("token","");
+        requestQueue = Volley.newRequestQueue(this);
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("originPwd",oldPassword);
+            jsonObject.put("newPwd",inputPassword.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        resetPasswordRequest=new JsonObjectRequest(Request.Method.POST, ResetPasswordURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        Toast.makeText(ResetPasswordThreeActivity.this, "密码修改成功", Toast.LENGTH_SHORT).show();
+                        userInformationEditor.putString("password",inputPassword.getText().toString()).apply();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(ResetPasswordThreeActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers=new HashMap();
+                headers.put("token",token);
+                return headers;
+            }
+        };
+
+        requestQueue.add(resetPasswordRequest);
     }
 }

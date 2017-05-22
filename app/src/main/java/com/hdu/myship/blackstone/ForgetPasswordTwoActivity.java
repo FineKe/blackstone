@@ -29,8 +29,6 @@ import java.util.TimerTask;
 
 public class ForgetPasswordTwoActivity extends AppCompatActivity implements View.OnClickListener{
     private String getCodeURL="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/verifyCode/mobile";
-    private String resetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/setPwd";
-
     private RequestQueue requestQueue;
 
     private TextView messagePhone;
@@ -160,7 +158,8 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
 
 
     private void sure() {
-        startActivity(new Intent(this,ForgetPasswordThreeActivity.class));
+
+        startActivity(new Intent(this,ForgetPasswordThreeActivity.class).putExtra("code",code.getText().toString()).putExtra("phoneNumber",phoneNumber));
     }
 
     private void startCount()

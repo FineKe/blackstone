@@ -18,31 +18,16 @@ import android.widget.TextView;
 
 public class ItemRemoveRecordRecycle extends RecyclerView {
     private Context mContext;
-
-    //上一次的触摸点
-    private int mLastX, mLastY;
-    //当前触摸的item的位置
-    private int mPosition;
-
-    //item对应的布局
-    private LinearLayout mItemLayout;
-    //删除按钮
-    private TextView mDelete;
-
-    //最大滑动距离(即删除按钮的宽度)
-    private int mMaxLength;
-    //是否在垂直滑动列表
-    private boolean isDragging;
-    //item是在否跟随手指移动
-    private boolean isItemMoving;
-
-    //item是否开始自动滑动
-    private boolean isStartScroll;
-    //删除按钮状态   0：关闭 1：将要关闭 2：将要打开 3：打开
-    private int mDeleteBtnState;
-
-    //检测手指在滑动过程中的速度
-    private VelocityTracker mVelocityTracker;
+    private int mLastX, mLastY;//上一次的触摸点
+    private int mPosition;//当前触摸的item的位置
+    private LinearLayout mItemLayout;//item对应的布局
+    private TextView mDelete; //删除按钮
+    private int mMaxLength;//最大滑动距离(即删除按钮的宽度)
+    private boolean isDragging;  //是否在垂直滑动列表
+    private boolean isItemMoving;//item是在否跟随手指移动
+    private boolean isStartScroll;//item是否开始自动滑动
+    private int mDeleteBtnState; //删除按钮状态   0：关闭 1：将要关闭 2：将要打开 3：打开
+    private VelocityTracker mVelocityTracker; //检测手指在滑动过程中的速度
     private Scroller mScroller;
     private OnItemRemoveRecord mListener;
 
@@ -57,7 +42,6 @@ public class ItemRemoveRecordRecycle extends RecyclerView {
     public ItemRemoveRecordRecycle(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-
         mScroller = new Scroller(context, new LinearInterpolator());
         mVelocityTracker = VelocityTracker.obtain();
     }
@@ -65,7 +49,6 @@ public class ItemRemoveRecordRecycle extends RecyclerView {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         mVelocityTracker.addMovement(e);
-
         int x = (int) e.getX();
         int y = (int) e.getY();
         switch (e.getAction()) {
@@ -76,12 +59,13 @@ public class ItemRemoveRecordRecycle extends RecyclerView {
                         return false;
                     }
 
-                    RecordViewHolder viewHolder = (RecordViewHolder) getChildViewHolder(view);
+                    ItemRemoveRcordAdapter.ViewHolder viewHolder = (ItemRemoveRcordAdapter.ViewHolder) getChildViewHolder(view);
 
                     mItemLayout = viewHolder.recordLayout;
                     mPosition = viewHolder.getAdapterPosition();
 
-                    mDelete = (TextView) mItemLayout.findViewById(R.id.activity_my_records_list_view_item_text_view_record_delete);
+                    mDelete = viewHolder.delete;
+                            //(TextView) mItemLayout.findViewById(R.id.activity_my_records_list_view_item_text_view_record_delete);
                     mMaxLength = mDelete.getWidth();
                     mDelete.setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -25,26 +25,46 @@
             <include layout="@layout/species_detailed_title_bar" />
 
             <TextView
+
+                android:id="@+id/activity_species_deatailed_text_view_order_famly_of"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
                 android:text="鹳形目>鹭科>白鹭属" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="6dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/activity_species_deatailed_text_view_latin_order_famly_of"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ciconiiformes>Ardeidae>" />
 
                 <TextView
+                    android:id="@+id/activity_species_deatailed_text_view_latin_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Egretta garzetta"
                     android:textColor="@color/font_color" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/activity_species_deatailed_text_view_english_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Litte Egret" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -72,10 +92,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="9dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginRight="9dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:src="@mipmap/copyright"
@@ -107,18 +127,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
                     android:text="体型"
                     android:textColor="@color/font_color" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="9dp"
                     android:text="大" />
             </LinearLayout>
 
@@ -130,18 +154,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
                     android:text="栖息地"
                     android:textColor="@color/font_color" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="9dp"
                     android:text="河湖及池塘，湿地" />
             </LinearLayout>
 
@@ -153,6 +181,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -182,6 +212,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -192,6 +224,7 @@
                     android:textColor="@color/font_color" />
 
                 <TextView
+                    android:id="@+id/activity_species_deatailed_text_view_latin order_famly_of"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="匕首，比较" />
@@ -204,16 +237,11 @@
                 android:background="#9000" />  <!--分割线-->
 
 
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -239,6 +267,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -263,6 +293,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -287,6 +319,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -311,6 +345,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -334,6 +370,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="245dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 

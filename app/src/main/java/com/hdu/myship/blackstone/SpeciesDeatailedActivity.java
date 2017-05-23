@@ -1,11 +1,13 @@
 package com.hdu.myship.blackstone;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,6 +38,8 @@ import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -50,8 +55,11 @@ import static com.hdu.myship.blackstone.R.color.bootstrap_brand_primary;
 
 public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener{
     private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
+    private String collectedURL="http://api.blackstone.ebirdnote.cn/v1/species/addToCollection";
     private RequestQueue requestQueue;
     private JsonObjectRequest request;
+    private JsonObjectRequest  collectionRequest;
+    private JsonObjectRequest cancelCollectionRequest;
     private int singal;//物种id
     private String speciesType;
     private ViewPager viewPager;
@@ -67,11 +75,21 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private ImageView copyRight;
     private ImageButton actionBack;
     private LinearLayout tab_pointers;
-
+    private ImageView collection;
     private boolean start=false;
     private int oldPosition=0;
     private int currentIndex;
     private int a;
+
+    private TextView orderFamilyOf;
+    private TextView latinOrderFamily;
+    private TextView latinName;
+    private TextView englishName;
+
+    private SharedPreferences userInformationSharedPreferences;
+    private SharedPreferences.Editor userInformationEditor;
+    private String userInformation="UesrInformation";
+    private String token;
     private ScheduledExecutorService scheduledExecutorService;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -85,8 +103,13 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         Log.d(TAG, "onCreate: "+singal);
         initData();
         initViews();
+        initEvents();
 
 
+    }
+
+    private void initEvents() {
+        collection.setOnClickListener(this);
     }
 
     private void initData() {
@@ -95,6 +118,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         pointers=new ArrayList<>();
         requestQueue= Volley.newRequestQueue(this);
         scheduledExecutorService= Executors.newSingleThreadScheduledExecutor();
+        userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
 
     }
 
@@ -107,9 +131,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         speciesName= (TextView) findViewById(R.id.species_detailed_title_bar_textView_speciesNameAndOrder);
         actionBack= (ImageButton) findViewById(R.id.species_detailed_title_bar_img_btn_back);
         speciesClassName.setText(speciesTypeChineseName);
-        speciesName.setText(SpeciesChineseName);
 
-
+        collection= (ImageView) findViewById(R.id.species_detailed_title_bar_image_view_collection);
+        orderFamilyOf= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_order_famly_of);
+        latinOrderFamily= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_order_famly_of);
+        latinName= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_name);
+        englishName= (TextView) findViewById(R.id.activity_species_deatailed_text_view_english_name);
         switch (speciesType)
         {
             case "reptiles":speciesDetailed=DataSupport.where("singal=?",singal+"").find(Reptiles.class).get(0);
@@ -117,7 +144,14 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 {
                     views.add(createView(picture));
                     pointers.add(createPointer());
+
                 }
+                Reptiles reptile= (Reptiles) speciesDetailed;
+                speciesName.setText("#"+reptile.getSingal()+reptile.getChineseName());
+                orderFamilyOf.setText(reptile.getOrder()+">"+reptile.getFamily()+">"+reptile.getGenus());
+                latinOrderFamily.setText(reptile.getOrderLatin()+">"+reptile.getFamilyLatin()+">");
+                latinName.setText(reptile.getGenusLatin());
+                englishName.setText(reptile.getLatinName());
                 break;
             case "bird":;speciesDetailed=DataSupport.where("singal=?",singal+"").find(Bird.class).get(0);
                 for(String picture:((Bird)speciesDetailed).getImgs())
@@ -125,6 +159,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
+                Bird bird= (Bird) speciesDetailed;
+                speciesName.setText("#"+bird.getSingal()+bird.getChineseName());
+                orderFamilyOf.setText(bird.getOrder()+">"+bird.getFamily()+">");
+                latinName.setText(bird.getLatinName());
+                englishName.setText(bird.getEnglishName());
                 break;
             case "amphibia":speciesDetailed=DataSupport.where("singal=?",singal+"").find(Amphibia.class).get(0);
                 for(String picture:((Amphibia)speciesDetailed).getImgs())
@@ -132,6 +171,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
+                Amphibia amphibia= (Amphibia) speciesDetailed;
+                speciesName.setText("#"+singal+amphibia.getChineseName());
+                orderFamilyOf.setText(amphibia.getOrder()+">"+amphibia.getFamily()+">"+amphibia.getGenus());
+                latinOrderFamily.setText(amphibia.getOrderLatin()+">"+amphibia.getFamilyLatin()+">");
+                latinName.setText(amphibia.getGenusLatin());
+                englishName.setText(amphibia.getLatinName());
                 break;
             case "insect":;speciesDetailed=DataSupport.where("singal=?",singal+"").find(Insect.class).get(0);
                 for(String picture:((Insect)speciesDetailed).getImgs())
@@ -139,6 +184,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
+                Insect insect= (Insect) speciesDetailed;
+                speciesName.setText("#"+singal+insect.getChineseName());
+                orderFamilyOf.setText(insect.getOrder()+">");
+                latinOrderFamily.setText(insect.getOrderLatin()+">");
+                englishName.setText(insect.getLatinName());
                 break;
 
         }
@@ -182,7 +232,47 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     @Override
     public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.species_detailed_title_bar_image_view_collection:
+                collection();
+                break;
+        }
+    }
 
+    private void collection() {
+        token=userInformationSharedPreferences.getString("token","");
+        Map<String,Integer> map=new HashMap<>();
+        map.put("speciesId",singal);
+        JSONObject object=new JSONObject(map);
+        collectionRequest=new JsonObjectRequest(Request.Method.POST, collectedURL, object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        collection.setImageResource(R.mipmap.heart_pressed);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+               HashMap<String,String> headers=new HashMap<>();
+                headers.put("token",token);
+                return headers;
+            }
+        };
+
+        requestQueue.add(collectionRequest);
     }
 
     class MyViewPagerAdapter extends PagerAdapter

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -201,6 +202,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                                 userInformationEditor.putString("token",data.getString("token"));
                                 userInformationEditor.putLong("expireAt",data.getLong("expireAt"));
                                 userInformationEditor.putString("password",inputPassword.getText().toString());
+                              //  userInformationEditor.putString("avatar",data.getString("avatar"));
                                 userInformationEditor.commit();
                                 transaction.replace(R.id.frame_layout,new LoginedFragment()).commit();
 

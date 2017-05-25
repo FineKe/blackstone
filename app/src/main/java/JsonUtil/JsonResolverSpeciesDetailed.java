@@ -64,7 +64,7 @@ public class JsonResolverSpeciesDetailed {
 
                 JSONObject features = data.getJSONObject("features");
                 String shape = features.getString("shape");
-                String sub_color = features.getString("sub_color");
+                //String sub_color = features.getString("sub_color");
                 String population_status = features.getString("population_status");
                 String major_color = features.getString("major_color");
                 String tweet = features.getString("tweet");
@@ -98,7 +98,7 @@ public class JsonResolverSpeciesDetailed {
                 }
                 speciesDetailed.setImgs(imgsList);
                 speciesDetailed.setShape(shape);
-                speciesDetailed.setSubColor(sub_color);
+                //speciesDetailed.setSubColor(sub_color);
                 speciesDetailed.setPopulationStatus(population_status);
                 speciesDetailed.setMajorColor(major_color);
                 speciesDetailed.setTweet(tweet);
@@ -138,15 +138,20 @@ public class JsonResolverSpeciesDetailed {
                 }
                 bird.setImgs(imgsList);
                 JSONObject features = data.getJSONObject("features");
+                bird.setTail_shape(features.getString("tail_shape"));
                 bird.setHabitat(features.getString("habitat"));
+                bird.setBody_long(features.getString("body_long"));
                 bird.setShape(features.getString("shape"));
                 bird.setBeak_shape(features.getString("beak_shape"));
                 bird.setEating_pattern(features.getString("eating_pattern"));
-                //bird.setSub_color(features.getString("sub_pattern"));
-                bird.setMajor_color(features.getString("major_color"));
+                bird.setTone(features.getString("tone"));
+                bird.setTweet_name(features.getString("tweet_name"));
+                bird.setVague_feature(features.getString("vague_feature"));
                 bird.setTweet(features.getString("tweet"));
                 bird.setFly_pattern(features.getString("fly_pattern"));
                 bird.setSpeciesType(data.getString("speciesType"));
+                bird.setAudio(features.getString("tweet_sound"));
+                bird.setAudioPicture(features.getString("tweet_image"));
                 bird.save();
         } catch (JSONException e) {
             e.printStackTrace();

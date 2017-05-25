@@ -17,6 +17,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
+            android:id="@+id/species_deatailed_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -25,32 +26,30 @@
             <include layout="@layout/species_detailed_title_bar" />
 
             <TextView
-
-                android:id="@+id/activity_species_deatailed_text_view_order_famly_of"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:id="@+id/activity_species_deatailed_text_view_order_family_genus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginTop="10dp"
                 android:text="鹳形目>鹭科>白鹭属" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="6dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/activity_species_deatailed_text_view_latin_order_famly_of"
+                    android:id="@+id/activity_species_deatailed_text_view_latin_order_family"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ciconiiformes>Ardeidae>" />
 
                 <TextView
-                    android:id="@+id/activity_species_deatailed_text_view_latin_name"
+                    android:id="@+id/activity_species_deatailed_text_view_latin_genus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Egretta garzetta"
@@ -64,13 +63,14 @@
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Litte Egret" />
+                android:layout_marginTop="6dp" />
 
             <android.support.constraint.ConstraintLayout
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="236dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp">
+                >
 
                 <android.support.v4.view.ViewPager
 
@@ -93,16 +93,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
                     android:layout_marginBottom="9dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginRight="9dp"
-                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:src="@mipmap/copyright"
                     app:layout_constraintBottom_toBottomOf="@+id/species_detailed_viewpager"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintLeft_toLeftOf="@+id/species_detailed_viewpager"
-                    app:layout_constraintRight_toRightOf="@+id/species_detailed_viewpager" />
+                    app:layout_constraintRight_toRightOf="@+id/species_detailed_viewpager"
+                    tools:ignore="RtlHardcoded" />
 
 
             </android.support.constraint.ConstraintLayout>
@@ -119,288 +117,23 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
+            <!--分割线-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
-                    android:text="体型"
-                    android:textColor="@color/font_color" />
+            <!--分割线-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="9dp"
-                    android:text="大" />
-            </LinearLayout>
 
+            <!--分割线-->
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
-                    android:text="栖息地"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="9dp"
-                    android:text="河湖及池塘，湿地" />
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="色调"
-                    android:textColor="@color/font_color" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="喙型喙长"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:id="@+id/activity_species_deatailed_text_view_latin order_famly_of"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="匕首，比较" />
-
-            </LinearLayout>
-
-            <View
+                android:id="@+id/fengexian"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="#9000" />  <!--分割线-->
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="飞行类型"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="振翅频率相对较慢" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="尾型"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="尾短打开呈扇形" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="食性"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="以小鱼、虾、水生无脊椎动物、软体动物和蝌蚪为食" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="模糊特征"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="白，脚黑" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="鸣声描述"
-                    android:textColor="@color/font_color" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="呱呱叫声，平调" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#9000" />  <!--分割线-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="245dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="鸣声"
-                        android:textColor="@color/font_color"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="9dp"
-                        android:background="#ffff"
-                        android:src="@mipmap/play_audio_normal" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

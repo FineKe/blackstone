@@ -54,11 +54,13 @@ public class SpeciesFragment extends Fragment{
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
     private String speciesType[]={"amphibia","reptiles","bird"};
+    private ImageView searchView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.species,container,false);
         speciesClassListView= (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
+        searchView= (ImageView) view.findViewById(R.id.species_title_image_view_search_view);
         speciesClassListView.setAdapter(new StickyListViewAdapter(speciesClassesList,getContext()));
         speciesClassListView.setDivider(null);
         speciesClassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,6 +73,12 @@ public class SpeciesFragment extends Fragment{
                 {
                     startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesClassName",speciesClassesList.get(position).getClassName()).putExtra("position",position));
                 }
+            }
+        });
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),SearchActivity.class));
             }
         });
         return view;

@@ -90,6 +90,18 @@
         <item>双翅目</item>
         <item>膜翅目</item>
     </array>
+
+    <array name="birdTablesName">
+        <item>体型</item>
+        <item>栖息地</item>
+        <item>色调</item>
+        <item>喙型喙长</item>
+        <item>飞行类型</item>
+        <item>尾型</item>
+        <item>食性</item>
+        <item>模糊特征</item>
+        <item>鸣声描述</item>
+    </array>
     <string name="alert_menu_textView">请选择一种查阅类型</string>
     <string name="alert_menu_button1">按目浏览</string>
     <string name="alert_menu_button2">按科浏览</string>

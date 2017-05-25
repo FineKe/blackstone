@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class MyRecordsActivity extends AppCompatActivity {
     private void initData() {
         userInformationSharedPreferences=getSharedPreferences(userInformation, MODE_PRIVATE);
         token=userInformationSharedPreferences.getString("token","");//从用户信息文件中从读取token
-        userId=userInformationSharedPreferences.getLong("id",0);//从用户信息文件中读取用户手机号
+        userId=userInformationSharedPreferences.getLong("id",0);//从用户信息文件中读取用户id不是手机号码
         requestQueue= Volley.newRequestQueue(this);
         recordList=new ArrayList<>();
         initRecordList();
@@ -77,8 +78,8 @@ public class MyRecordsActivity extends AppCompatActivity {
 
     private void initRecordList()
     {
-
-        getRecordListRequest = new JsonObjectRequest(Request.Method.GET, RecordListURL + userId, null,
+        UserInformationUtil userInformationUtil=new UserInformationUtil(this);
+        getRecordListRequest = new JsonObjectRequest(Request.Method.GET, RecordListURL + userInformationUtil.getId(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -120,7 +121,9 @@ public class MyRecordsActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
+                Map<String,String> headers=new HashMap<>();
+                headers.put("token",userInformationSharedPreferences.getString("token",""));
+                return headers;
             }
         };
 

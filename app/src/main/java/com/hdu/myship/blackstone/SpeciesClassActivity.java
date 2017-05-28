@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -138,8 +140,15 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 break;
 
             case R.id.species_class_imageButton_alert_pick:
+                showScreenDialog(this);
                 break;
         }
+    }
+
+    private void showScreenDialog(Context context) {
+        screenDialog dialog=new screenDialog(this,R.style.screen);
+        dialog.setContentView(R.layout.screen);
+        dialog.show();
     }
 
     public void back()
@@ -177,5 +186,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             }
         });
         dialogAlertMenu.show();
+    }
+
+    public class screenDialog extends Dialog
+    {
+
+        public screenDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context,android.R.style.Theme);
+        }
     }
 }

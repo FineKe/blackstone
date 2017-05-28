@@ -5,11 +5,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SuggestionsActivity extends AppCompatActivity implements View.OnClickListener{
-
-    private ImageButton actionBack;
+    private String feedBackURL="http://api.blackstone.ebirdnote.cn/v1/feedback/new";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest suggestionRequest;
+    private UserInformationUtil userInformation;
+    private LinearLayout actionBack;
 
     private TextView send;
 
@@ -20,12 +39,19 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().hide();
         setContentView(R.layout.activity_suggestions);
 
+        initDatas();
         initViews();
         initEvents();
     }
 
+    private void initDatas() {
+        requestQueue= Volley.newRequestQueue(this);
+        userInformation=new UserInformationUtil(this);
+
+    }
+
     private void initViews() {
-        actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
+        actionBack= (LinearLayout) findViewById(R.id.activity_suggestion_linear_layout_action_back);
         send= (TextView) findViewById(R.id.activity_suggestion_text_view_send);
         write= (EditText) findViewById(R.id.activity_suggestion_edit_text_write_suggestions);
     }
@@ -55,5 +81,51 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void send() {
+        final String token=userInformation.getToken();
+        if(token.equals(""))
+        {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+        }else
+        {
+            JSONObject jsonObject=new JSONObject();
+            try {
+                jsonObject.put("content",write.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            suggestionRequest=new JsonObjectRequest(Request.Method.POST, feedBackURL, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    try {
+                        int code=jsonObject.getInt("code");
+                        if(code==88)
+                        {
+                            Toast.makeText(SuggestionsActivity.this, "感谢你的建议", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            String message=jsonObject.getString("message");
+                            Toast.makeText(SuggestionsActivity.this,message, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(SuggestionsActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers=new HashMap<>();
+                    headers.put("token",token);
+                    return headers;
+                }
+            };
+        }
+        requestQueue.add(suggestionRequest);
+
     }
 }

@@ -14,19 +14,18 @@ public class Insect extends DataSupport{
     private String latinName;
     private String order;
     private String orderLatin;
-    private String mainPhoto;
     private ArrayList<String> imgs;
-    private String description;
-    private String rough_feature;
-    private String tentacle;
-    private String life_cycle;
-    private String mouthparts;
-    private String common_family;
-    private String ognathus;
-    private String wing;
-    private String young_feature;
-    private String leg;
+    private String rough_feature;//大体特征
+    private String mouthparts;//口器
+    private String ognathus;//口式
+    private String tentacle;//触角
+    private String wing;//翅
+    private String leg;//足
+    private String life_cycle;//生活史
+    private String young_feature;//低龄虫态特征
+    private String common_family;//黑石顶常见科
     private String speciesType;
+    private ArrayList<String> viewTables;//动态创建视图的字符信息
 
     public int getSingal() {
         return singal;
@@ -65,30 +64,6 @@ public class Insect extends DataSupport{
 
     public void setOrderLatin(String orderLatin) {
         this.orderLatin = orderLatin;
-    }
-
-    public String getMainPhoto() {
-        return mainPhoto;
-    }
-
-    public void setMainPhoto(String mainPhoto) {
-        this.mainPhoto = mainPhoto;
-    }
-
-    public ArrayList<String> getImgs() {
-        return imgs;
-    }
-
-    public void setImgs(ArrayList<String> imgs) {
-        this.imgs = imgs;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getRough_feature() {
@@ -169,5 +144,35 @@ public class Insect extends DataSupport{
 
     public void setSpeciesType(String speciesType) {
         this.speciesType = speciesType;
+    }
+
+    public ArrayList<String> getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(ArrayList<String> imgs) {
+        this.imgs = imgs;
+    }
+
+    public ArrayList<String> getViewTables() {
+        return viewTables;
+    }
+
+    public void setViewTables(ArrayList<String> viewTables) {
+        this.viewTables = viewTables;
+    }
+
+    public void setViewTables()
+    {
+        viewTables=new ArrayList<>();
+        viewTables.add(rough_feature);
+        viewTables.add(mouthparts);
+        viewTables.add(ognathus);
+        viewTables.add(tentacle);
+        viewTables.add(wing);
+        viewTables.add(leg);
+        viewTables.add(life_cycle);
+        viewTables.add(young_feature);
+        viewTables.add(common_family);
     }
 }

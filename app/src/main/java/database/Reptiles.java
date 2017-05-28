@@ -18,18 +18,16 @@ public class Reptiles extends DataSupport {
     private String familyLatin;
     private String genus;
     private String genusLatin;
-    private String mainPhoto;
     private ArrayList<String> imgs;
-    private String has_bigscale;
-    private String habitat;
-    private String shape;
-    private String resolution_feature;
-    private String vague_feature;
-    private String sub_color;
-    private String eating_pattern;
-    private String major_color;
-    private String speciesType;
-
+    private String resolution_feature;//辨识特征
+    private String shape;//体型
+    private String habitat;//栖息地
+    private String major_color;//主色
+    private String sub_color;//次色
+    private String eating_pattern;//食性
+    private String has_bigscale;//头顶有无大鳞
+    private String vague_feature;//模糊特征
+    private ArrayList<String> viewTables;//动态创建视图的字符信息
     public int getSingal() {
         return singal;
     }
@@ -70,6 +68,15 @@ public class Reptiles extends DataSupport {
         this.orderLatin = orderLatin;
     }
 
+
+    public ArrayList<String> getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(ArrayList<String> imgs) {
+        this.imgs = imgs;
+    }
+
     public String getFamily() {
         return family;
     }
@@ -102,36 +109,12 @@ public class Reptiles extends DataSupport {
         this.genusLatin = genusLatin;
     }
 
-    public String getMainPhoto() {
-        return mainPhoto;
+    public String getResolution_feature() {
+        return resolution_feature;
     }
 
-    public void setMainPhoto(String mainPhoto) {
-        this.mainPhoto = mainPhoto;
-    }
-
-    public ArrayList<String> getImgs() {
-        return imgs;
-    }
-
-    public void setImgs(ArrayList<String> imgs) {
-        this.imgs = imgs;
-    }
-
-    public String getHas_bigscale() {
-        return has_bigscale;
-    }
-
-    public void setHas_bigscale(String has_bigscale) {
-        this.has_bigscale = has_bigscale;
-    }
-
-    public String getHabitat() {
-        return habitat;
-    }
-
-    public void setHabitat(String habitat) {
-        this.habitat = habitat;
+    public void setResolution_feature(String resolution_feature) {
+        this.resolution_feature = resolution_feature;
     }
 
     public String getShape() {
@@ -142,20 +125,20 @@ public class Reptiles extends DataSupport {
         this.shape = shape;
     }
 
-    public String getResolution_feature() {
-        return resolution_feature;
+    public String getHabitat() {
+        return habitat;
     }
 
-    public void setResolution_feature(String resolution_feature) {
-        this.resolution_feature = resolution_feature;
+    public void setHabitat(String habitat) {
+        this.habitat = habitat;
     }
 
-    public String getVague_feature() {
-        return vague_feature;
+    public String getMajor_color() {
+        return major_color;
     }
 
-    public void setVague_feature(String vague_feature) {
-        this.vague_feature = vague_feature;
+    public void setMajor_color(String major_color) {
+        this.major_color = major_color;
     }
 
     public String getSub_color() {
@@ -174,19 +157,42 @@ public class Reptiles extends DataSupport {
         this.eating_pattern = eating_pattern;
     }
 
-    public String getMajor_color() {
-        return major_color;
+    public String getHas_bigscale() {
+        return has_bigscale;
     }
 
-    public void setMajor_color(String major_color) {
-        this.major_color = major_color;
+    public void setHas_bigscale(String has_bigscale) {
+        this.has_bigscale = has_bigscale;
     }
 
-    public String getSpeciesType() {
-        return speciesType;
+    public String getVague_feature() {
+        return vague_feature;
     }
 
-    public void setSpeciesType(String speciesType) {
-        this.speciesType = speciesType;
+    public void setVague_feature(String vague_feature) {
+        this.vague_feature = vague_feature;
+    }
+
+    public ArrayList<String> getViewTables() {
+        return viewTables;
+    }
+
+    public void setViewTables(ArrayList<String> viewTables) {
+        this.viewTables = viewTables;
+    }
+
+    public void setViewTables()
+    {
+        viewTables=new ArrayList<>();
+        viewTables.add(resolution_feature);
+        viewTables.add(shape);
+        viewTables.add(habitat);
+        viewTables.add(major_color);
+        viewTables.add(sub_color);
+        viewTables.add(eating_pattern);
+        viewTables.add(has_bigscale);
+        viewTables.add(vague_feature);
     }
 }
+
+

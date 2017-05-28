@@ -102,6 +102,43 @@
         <item>模糊特征</item>
         <item>鸣声描述</item>
     </array>
+
+    <array name="insectTablesName">
+        <item>体型</item>
+        <item>大体特征</item>
+        <item>口器</item>
+        <item>口式</item>
+        <item>触角</item>
+        <item>翅</item>
+        <item>足</item>
+        <item>生活史</item>
+        <item>低龄虫态特征</item>
+        <item>黑石顶常见科</item>
+    </array>
+
+    <array name="reptilesTblesName">
+        <item>体型</item>
+        <item>栖息地</item>
+        <item>色调</item>
+        <item>食性</item>
+        <item>头顶有无大鳞</item>
+        <item>模糊特征</item>
+    </array>
+
+    <array name="aphibiaTablesName">
+        <item>辨识特征</item>
+        <item>体型</item>
+        <item>色调</item>
+        <item>声囊</item>
+        <item>婚垫婚刺</item>
+        <item>指序与趾序</item>
+        <item>蹼与吸盘</item>
+        <!--<item>鸣声描述</item>-->
+        <item>模糊特征</item>
+        <item>生境与习性</item>
+        <item>分布范围</item>
+        <item>种群状况</item>
+    </array>
     <string name="alert_menu_textView">请选择一种查阅类型</string>
     <string name="alert_menu_button1">按目浏览</string>
     <string name="alert_menu_button2">按科浏览</string>

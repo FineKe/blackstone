@@ -108,7 +108,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                         {
                             JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
                             speciesDetailed.ResolveSpeciesDetailed();
-                            Log.d(TAG, "onResponse: "+code);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

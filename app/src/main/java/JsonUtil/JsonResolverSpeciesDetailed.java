@@ -19,11 +19,9 @@ import database.Reptiles;
 
 public class JsonResolverSpeciesDetailed {
     private JSONObject jsonObject;
-
     public JsonResolverSpeciesDetailed(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
     }
-
     public void ResolveSpeciesDetailed(){
         try {
             int code=jsonObject.getInt("code");
@@ -46,69 +44,68 @@ public class JsonResolverSpeciesDetailed {
             e.printStackTrace();
         }
     }
+
     private void ResolveAmphibia(JSONObject jsonObject) {
         try {
+            Amphibia amphibia = new Amphibia();
+            JSONObject data = jsonObject.getJSONObject("data");
+            amphibia.setSingal(data.getInt("id"));
+            amphibia.setChineseName(data.getString("chineseName"));
+            amphibia.setLatinName(data.getString("latinName"));
+            amphibia.setOrder(data.getString("order"));
+            amphibia.setOrderLatin(data.getString("orderLatin"));
+            amphibia.setFamily(data.getString("family"));
+            amphibia.setFamilyLatin(data.getString("familyLatin"));
+            amphibia.setGenus(data.getString("genus"));
+            amphibia.setGenusLatin(data.getString("genusLatin"));
+            JSONArray imgs = data.getJSONArray("imgs");
+            ArrayList<String> imgsList = new ArrayList<>();
+            for (int i = 0; i < imgs.length(); i++) {
+                imgsList.add(imgs.getJSONObject(i).getString("url"));
+            }
+            amphibia.setImgs(imgsList);
+            JSONObject features=data.getJSONObject("features");
+            if(features.has("resolution_feature"))
+            {
+                amphibia.setResolution_feature(features.getString("resolution_feature"));
+            }else
+            {
+                amphibia.setResolution_feature("");
+            }
 
-                JSONObject data = jsonObject.getJSONObject("data");
-                int singl = data.getInt("id");
-                String chineseName = data.getString("chineseName");
-                String latinName = data.getString("latinName");
-                String order = data.getString("order");
-                String orderLatin = data.getString("orderLatin");
-                String family = data.getString("family");
-                String familyLatin = data.getString("familyLatin");
-                String genus = data.getString("genus");
-                String genusLatin = data.getString("genusLatin");
-               // String mainPhoto = data.getString("mainPhoto");
-                JSONArray imgs = data.getJSONArray("imgs");
+            amphibia.setShape(features.getString("shape"));
+            amphibia.setTone(features.getString("tone"));
+            if (features.has("vocal_sac"))
+            {
+                amphibia.setVocal_sac(features.getString("vocal_sac"));
+            }
+            else
+            {
+                amphibia.setVocal_sac("");
+            }
 
-                JSONObject features = data.getJSONObject("features");
-                String shape = features.getString("shape");
-                //String sub_color = features.getString("sub_color");
-                String population_status = features.getString("population_status");
-                String major_color = features.getString("major_color");
-                String tweet = features.getString("tweet");
-                String distribution = features.getString("distribution");
-                String vocal_sac = features.getString("vocal_sac");
-                String web = features.getString("web");
-                String vague_feature = features.getString("vague_feature");
-                String biotope = features.getString("biotope");
-                String digital_formula = features.getString("digital_formula");
-                String nuptial = features.getString("nuptial");
-
-                String speciesType = data.getString("speciesType");
-
-                Amphibia speciesDetailed = new Amphibia();
-
-                speciesDetailed.setSingal(singl);
-                speciesDetailed.setChineseName(chineseName);
-                speciesDetailed.setLatinName(latinName);
-                speciesDetailed.setOrder(order);
-                speciesDetailed.setOrderLatin(orderLatin);
-                speciesDetailed.setFamily(family);
-                speciesDetailed.setFamilyLatin(familyLatin);
-                speciesDetailed.setGenus(genus);
-                speciesDetailed.setGenusLatin(genusLatin);
-               // speciesDetailed.setMainPhoto(mainPhoto);
-                ArrayList<String> imgsList = new ArrayList<>();
-
-                for (int i = 0; i < imgs.length(); i++) {
-                    imgsList.add(imgs.getJSONObject(i).getString("url"));
-                    Log.d("TAG", "onResponse: " + imgs.getString(i));
-                }
-                speciesDetailed.setImgs(imgsList);
-                speciesDetailed.setShape(shape);
-                //speciesDetailed.setSubColor(sub_color);
-                speciesDetailed.setPopulationStatus(population_status);
-                speciesDetailed.setMajorColor(major_color);
-                speciesDetailed.setTweet(tweet);
-                speciesDetailed.setDistribution(distribution);
-                speciesDetailed.setVocalSac(vocal_sac);
-                speciesDetailed.setBiotope(biotope);
-                speciesDetailed.setDigitalFormula(digital_formula);
-                speciesDetailed.setNuptial(nuptial);
-                speciesDetailed.setSpeciesType(speciesType);
-                speciesDetailed.save();
+            if(features.has("nuptial"))
+            {
+                amphibia.setNuptial(features.getString("nuptial"));
+            }
+            else
+            {
+                amphibia.setNuptial("");
+            }
+            if(features.has("digital_formula"))
+            {
+                amphibia.setDigital_formula(features.getString("digital_formula"));
+            }else
+            {
+                amphibia.setDigital_formula("");
+            }
+            amphibia.setWeb(features.getString("web"));
+            amphibia.setVague_feature(features.getString("vague_feature"));
+            amphibia.setBiotope(features.getString("biotope"));
+            amphibia.setDistribution(features.getString("distribution"));
+            amphibia.setPopulation_status(features.getString("population_status"));
+            amphibia.setSpeciesType(data.getString("speciesType"));
+            amphibia.save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -129,12 +126,10 @@ public class JsonResolverSpeciesDetailed {
                 bird.setFamily(data.getString("family"));
                 bird.setFamilyLatin(data.getString("familyLatin"));
                 bird.setGenusLatin(data.getString("genusLatin"));
-               // bird.setMainPhoto(data.getString("mainPhoto"));
                 JSONArray imgs = data.getJSONArray("imgs");
                 ArrayList<String> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgs.length(); i++) {
                     imgsList.add(imgs.getJSONObject(i).getString("url"));
-                    Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 bird.setImgs(imgsList);
                 JSONObject features = data.getJSONObject("features");
@@ -169,15 +164,12 @@ public class JsonResolverSpeciesDetailed {
                 insect.setLatinName(data.getString("latinName"));
                 insect.setOrder(data.getString("order"));
                 insect.setOrderLatin(data.getString("orderLatin"));
-                //insect.setMainPhoto(data.getString("mainPhoto"));
                 JSONArray imgs = data.getJSONArray("imgs");
                 ArrayList<String> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgs.length(); i++) {
                     imgsList.add(imgs.getJSONObject(i).getString("url"));
-                    Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 insect.setImgs(imgsList);
-                insect.setDescription(data.getString("description"));
                 JSONObject features = data.getJSONObject("features");
                 insect.setRough_feature(features.getString("rough_feature"));
                 insect.setTentacle(features.getString("tentacle"));
@@ -210,13 +202,10 @@ public class JsonResolverSpeciesDetailed {
                 reptiles.setFamilyLatin(data.getString("familyLatin"));
                 reptiles.setGenus(data.getString("genus"));
                 reptiles.setGenusLatin(data.getString("genusLatin"));
-               // reptiles.setMainPhoto(data.getString("mainPhoto"));
                 JSONArray imgs = data.getJSONArray("imgs");
                 ArrayList<String> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgs.length(); i++) {
-
                     imgsList.add(imgs.getJSONObject(i).getString("url"));
-                    Log.d("TAG", "onResponse: " + imgs.getString(i));
                 }
                 reptiles.setImgs(imgsList);
                 JSONObject features = data.getJSONObject("features");
@@ -228,7 +217,6 @@ public class JsonResolverSpeciesDetailed {
                 reptiles.setSub_color(features.getString("sub_color"));
                 reptiles.setEating_pattern(features.getString("eating_pattern"));
                 reptiles.setMajor_color(features.getString("major_color"));
-                reptiles.setSpeciesType(data.getString("speciesType"));
                 reptiles.save();
         } catch (JSONException e) {
             e.printStackTrace();

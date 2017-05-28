@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -224,33 +226,107 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
     private void createInsectView(Insect speciesDetailed) {
+        speciesDetailed.setViewTables();
         actionBackText.setText(speciesDetailed.getChineseName());
         titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
-        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+ speciesDetailed.getChineseName()+"属");
-        latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">");
+        orderFamilyGenus.setText(speciesDetailed.getOrder());
+        latinOrderFamily.setText(speciesDetailed.getOrderLatin());
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
 //        englishName.setText(speciesDetailed.getEnglishName());
         englishName.setVisibility(View.GONE);
+        String[] tables= getResources().getStringArray(R.array.insectTablesName);
+        int i=0;
+        for(String s:speciesDetailed.getViewTables()){
+            if(!s.equals("")) {
+                LinearLayout tableView = new LinearLayout(this);
+                tableView.setGravity(Gravity.CENTER_VERTICAL);
+                tableView.setOrientation(LinearLayout.VERTICAL);
+                TextView title = new TextView(this);
+                title.setText(tables[i]);
+                title.setTextColor(getResources().getColor(R.color.mycolor));
+                TextView content = new TextView(this);
+                content.setText(s);
+                tableView.addView(title);
+                tableView.addView(content);
+                View view1 = linearLayout.getChildAt(1);
+                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+                linearLayout.addView(tableView);
+            }
+            i++;
+        }
+        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
     }
 
     private void createAmphibiaView(Amphibia speciesDetailed) {
+        speciesDetailed.setViewTables();
         actionBackText.setText("两栖类");
         titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
-        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+speciesDetailed.getFamily()+">"+speciesDetailed.getChineseName()+"属");
+        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+speciesDetailed.getFamily()+">"+speciesDetailed.getGenus());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">"+speciesDetailed.getFamilyLatin()+">");
-        latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
-        //        englishName.setText(speciesDetailed.getEnglishName());
-        englishName.setVisibility(View.GONE);
+        latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
+        englishName.setText(speciesDetailed.getLatinName());
+//        englishName.setVisibility(View.GONE)
+        String[] tables= getResources().getStringArray(R.array.aphibiaTablesName);
+        int i=0;
+        for(String s:speciesDetailed.getViewTables())
+        {   if(!s.equals("")) {
+            LinearLayout tableView = new LinearLayout(this);
+            tableView.setGravity(Gravity.CENTER_VERTICAL);
+            tableView.setOrientation(LinearLayout.VERTICAL);
+            TextView title = new TextView(this);
+            title.setText(tables[i]);
+            title.setTextColor(getResources().getColor(R.color.mycolor));
+            TextView content = new TextView(this);
+            content.setText(speciesDetailed.getViewTables().get(i));
+            tableView.addView(title);
+            tableView.addView(content);
+
+            View view1 = linearLayout.getChildAt(1);
+            tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+            View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+            linearLayout.addView(tableView);
+            System.out.println(tables[i] + ":");
+             }
+             i++;
+        }
+        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
+
     }
 
     private void createReptilesView(Reptiles speciesDetailed) {
+        speciesDetailed.setViewTables();
         actionBackText.setText("爬行类");
         titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
-        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+ speciesDetailed.getFamily()+">"+ speciesDetailed.getChineseName()+"属");
+        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+ speciesDetailed.getFamily()+">"+ speciesDetailed.getGenus());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">"+ speciesDetailed.getFamilyLatin()+">");
-        latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
-//        englishName.setText(speciesDetailed.getEnglishName());
-        englishName.setVisibility(View.GONE);
+        latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
+        englishName.setText(speciesDetailed.getLatinName());
+//        englishName.setVisibility(View.GONE);
+        String[] tables= getResources().getStringArray(R.array.reptilesTblesName);
+        int i=0;
+        for(String s:speciesDetailed.getViewTables())
+        {   if(!s.equals("")) {
+            LinearLayout tableView = new LinearLayout(this);
+            tableView.setGravity(Gravity.CENTER_VERTICAL);
+            tableView.setOrientation(LinearLayout.VERTICAL);
+            TextView title = new TextView(this);
+            title.setText(tables[i]);
+            title.setTextColor(getResources().getColor(R.color.mycolor));
+            TextView content = new TextView(this);
+            content.setText(speciesDetailed.getViewTables().get(i));
+            tableView.addView(title);
+            tableView.addView(content);
+
+            View view1 = linearLayout.getChildAt(1);
+            tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+            View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+            linearLayout.addView(tableView);
+            System.out.println(tables[i] + ":");
+        }
+            i++;
+        }
+        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
     }
 
     private void createBirdView(final Bird speciesDetailed) {
@@ -259,33 +335,32 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
         orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+speciesDetailed.getFamily()+">"+speciesDetailed.getChineseName()+"属");
         latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">"+speciesDetailed.getFamilyLatin()+">");
-        latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
+        latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
         englishName.setText(speciesDetailed.getEnglishName());
         String[] tables= getResources().getStringArray(R.array.birdTablesName);
         int i=0;
-
         for(String s:speciesDetailed.getViewTables())
-        {
-            LinearLayout tableView=new LinearLayout(this);
+        {   if(!s.equals("")) {
+            LinearLayout tableView = new LinearLayout(this);
             tableView.setGravity(Gravity.CENTER_VERTICAL);
             tableView.setOrientation(LinearLayout.VERTICAL);
-            TextView title=new TextView(this);
+            TextView title = new TextView(this);
             title.setText(tables[i]);
             title.setTextColor(getResources().getColor(R.color.mycolor));
-            TextView content=new TextView(this);
-            content.setText(s);
+            TextView content = new TextView(this);
+            content.setText(speciesDetailed.getViewTables().get(i));
             tableView.addView(title);
             tableView.addView(content);
 
-            View view1=linearLayout.getChildAt(1);
-            tableView.setPadding(view1.getPaddingLeft(),0,view1.getPaddingRight(),0);
-            View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
+            View view1 = linearLayout.getChildAt(1);
+            tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+            View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
             linearLayout.addView(tableView);
-            System.out.println(tables[i]+":"+s);
+            System.out.println(tables[i] + ":");
+        }
             i++;
         }
         View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
-
 
 
         View v=LayoutInflater.from(this).inflate(R.layout.bird_audio_picture,linearLayout);
@@ -328,7 +403,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
     private void collection() {
-        System.out.println("saedasdasfsdfasdf");
         addCollection(singal);
     }
 
@@ -438,4 +512,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         };
         requestQueue.add(collectionRequest);
     }
+
+
 }

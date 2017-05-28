@@ -49,6 +49,8 @@ public class UserInformationUtil {
 
     public void setId(int id) {
         this.id = id;
+        editor.putInt("id",id);
+        editor.apply();
     }
 
     public String getUserName() {
@@ -57,6 +59,8 @@ public class UserInformationUtil {
 
     public void setUserName(String userName) {
         this.userName = userName;
+        editor.putString("mobile",userName);
+        editor.apply();
     }
 
     public String getUserPwd() {
@@ -65,6 +69,8 @@ public class UserInformationUtil {
 
     public void setUserPwd(String userPwd) {
         this.userPwd = userPwd;
+        editor.putString("password",userPwd);
+        editor.apply();
     }
 
     public String getStudentId() {
@@ -73,6 +79,8 @@ public class UserInformationUtil {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+        editor.putString("studentId",studentId);
+        editor.apply();
     }
 
     public String getName() {
@@ -81,6 +89,8 @@ public class UserInformationUtil {
 
     public void setName(String name) {
         this.name = name;
+        editor.putString("name",name);
+        editor.apply();
     }
 
     public String getGender() {
@@ -89,6 +99,8 @@ public class UserInformationUtil {
 
     public void setGender(String gender) {
         this.gender = gender;
+        editor.putString("gender",gender);
+        editor.apply();
     }
 
     public String getToken() {
@@ -97,6 +109,8 @@ public class UserInformationUtil {
 
     public void setToken(String token) {
         this.token = token;
+        editor.putString("token",token);
+        editor.apply();
     }
 
     public String getAvatar() {
@@ -105,6 +119,8 @@ public class UserInformationUtil {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+        editor.putString("avatar",avatar);
+        editor.apply();
     }
 
     public Long getExpireAt() {
@@ -113,5 +129,7 @@ public class UserInformationUtil {
 
     public void setExpireAt(Long expireAt) {
         this.expireAt = expireAt;
+        editor.putLong("expireAt",expireAt);
+        editor.apply();
     }
 }

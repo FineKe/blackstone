@@ -9,21 +9,35 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-public class ResetPhoneActivity extends AppCompatActivity implements View.OnClickListener{
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+public class ResetPhoneActivity extends AppCompatActivity implements View.OnClickListener{
+    private String getCodeURL="http://api.blackstone.ebirdnote.cn/v1/user/verifyCode/changeMobile";
+    private String submitURL="http://api.blackstone.ebirdnote.cn/v1/user/changeMobile";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest getCodeRequest;
+    private JsonObjectRequest submitRquest;
+    private UserInformationUtil userInformation;
     private TextView phone;
     private BootstrapButton update;
-
-    private ImageButton actionBack;
-
-    private SharedPreferences userInformationSharedPreferences;
-    private SharedPreferences.Editor userInformationEditor;
-    private String userInformation="UesrInformation";
-
+    private LinearLayout actionBack;
     private String phoneNumber;
     private String phoneCode;
     @Override
@@ -38,11 +52,11 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initData() {
-        userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
-        userInformationEditor=userInformationSharedPreferences.edit();
-
-        phoneNumber=userInformationSharedPreferences.getString("mobile","");
+        userInformation=new UserInformationUtil(this);
+        phoneNumber=userInformation.getUserName();
         phoneCode=phoneNumber.substring(0,3)+"****"+phoneNumber.substring(7);
+        requestQueue= Volley.newRequestQueue(this);
+
     }
 
     private void initView() {
@@ -50,7 +64,7 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
 
         update= (BootstrapButton) findViewById(R.id.activity_reset_phone_boot_strap_button_update_phone_number);
 
-        actionBack= (ImageButton) findViewById(R.id.activity_reset_phone_image_button_action_back);
+        actionBack= (LinearLayout) findViewById(R.id.activity_reset_phone_linear_layout_action_back);
 
         phone.setText(phoneCode);
     }
@@ -89,9 +103,9 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
         updatePhoneNumberDialog.show();
 
         ImageView actionCancel= (ImageView) updatePhoneNumberDialog.findViewById(R.id.update_phone_number_dialog_imageView_actionCancel);
-        EditText inputPhone= (EditText) updatePhoneNumberDialog.findViewById(R.id.update_phone_numbe_dialog_editText_account);
-        EditText inputCode= (EditText) updatePhoneNumberDialog.findViewById(R.id.update_phone_number_dialog_editText_code);
-        TextView getCode= (TextView) updatePhoneNumberDialog.findViewById(R.id.update_phone_number_text_view_get_code);
+        final EditText inputPhone= (EditText) updatePhoneNumberDialog.findViewById(R.id.update_phone_numbe_dialog_editText_account);
+        final EditText inputCode= (EditText) updatePhoneNumberDialog.findViewById(R.id.update_phone_number_dialog_editText_code);
+        final TextView getCode= (TextView) updatePhoneNumberDialog.findViewById(R.id.update_phone_number_text_view_get_code);
         TextView Ok= (TextView) updatePhoneNumberDialog.findViewById(R.id.update_phone_number_dialog_textView_Ok);
 
         actionCancel.setOnClickListener(new View.OnClickListener() {
@@ -104,13 +118,106 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
         getCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (inputPhone.getText().toString().length()!=11)
+                {
+                    Toast.makeText(ResetPhoneActivity.this, "请输入有效的11位手机号码", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    JSONObject jsonObject=new JSONObject();
+                    try {
+                        jsonObject.put("number",inputPhone.getText().toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    getCodeRequest=new JsonObjectRequest(Request.Method.POST, getCodeURL, jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                int code=jsonObject.getInt("code");
+                                if(code==88)
+                                {
+                                    Toast.makeText(ResetPhoneActivity.this, "获取验证码成功", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    String message=jsonObject.getString("message");
+                                    Toast.makeText(ResetPhoneActivity.this, message, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
 
+                        }
+                    }){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String,String> headers=new HashMap<String, String>();
+                            headers.put("token",userInformation.getToken());
+                            return headers;
+                        }
+                    };
+                    requestQueue.add(getCodeRequest);
+                }
             }
+
         });
 
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(inputCode.getText().toString().length()!=6)
+                {
+                    Toast.makeText(ResetPhoneActivity.this, "请输入有效的验证码", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    JSONObject jsonObject=new JSONObject();
+                    try {
+                        jsonObject.put("mobile",inputPhone.getText().toString());
+                        jsonObject.put("verifyCode",inputCode.getText().toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    submitRquest=new JsonObjectRequest(Request.Method.POST, submitURL, jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                int code=jsonObject.getInt("code");
+                                if(code==88)
+                                {
+                                    updatePhoneNumberDialog.dismiss();
+                                    userInformation.setUserName(inputPhone.getText().toString());
+                                    phone.setText(inputPhone.getText().toString().substring(0,3)+"****"+inputPhone.getText().toString().substring(7));
+                                }
+                                else
+                                {
+                                    String message=jsonObject.getString("message");
+                                    Toast.makeText(ResetPhoneActivity.this, message, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(ResetPhoneActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String,String> headers=new HashMap<String, String>();
+                            headers.put("token",userInformation.getToken());
+                            return headers;
+                        }
+                    };
+                    requestQueue.add(submitRquest);
+                }
 
             }
         });

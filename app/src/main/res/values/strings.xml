@@ -117,9 +117,11 @@
     </array>
 
     <array name="reptilesTblesName">
+        <item>辨识特征</item>
         <item>体型</item>
         <item>栖息地</item>
-        <item>色调</item>
+        <item>主色</item>
+        <item>次色</item>
         <item>食性</item>
         <item>头顶有无大鳞</item>
         <item>模糊特征</item>

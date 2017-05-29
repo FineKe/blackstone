@@ -1,6 +1,8 @@
 package com.hdu.myship.blackstone;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.database.Cursor;
 import android.media.DrmInitData;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -79,16 +82,35 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                Toast.makeText(SearchActivity.this, "00000000", Toast.LENGTH_SHORT).show();
                 updateAdapter(input.getText().toString());
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Species species=myList.get(position);
+                Intent intent=new Intent(SearchActivity.this,SpeciesDeatailedActivity.class);
+                intent.putExtra("singal",species.getSingal());
+                intent.putExtra("speciesType",species.getSpeciesType());
+                //intent.putExtra("speciesTypeChineseName",typeTitle[position]);
+                startActivity(intent);
             }
         });
     }
 
     private void updateAdapter(String s) {
-        List<Species> l= DataSupport.where("chineseName=?",s).find(Species.class);
-        myListViewAdapter.list=l;
-        myListViewAdapter.notifyDataSetChanged();
+        if(s.equals(""))
+        {
+            myListViewAdapter.list.clear();
+            myListViewAdapter.notifyDataSetChanged();
+            history.setVisibility(View.VISIBLE);
+        }else
+        {
+            myList= DataSupport.where("chineseName like ?","%"+s+"%").find(Species.class);
+            myListViewAdapter.list=myList;
+            myListViewAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override

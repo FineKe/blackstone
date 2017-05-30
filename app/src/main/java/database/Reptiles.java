@@ -28,6 +28,8 @@ public class Reptiles extends DataSupport {
     private String has_bigscale;//头顶有无大鳞
     private String vague_feature;//模糊特征
     private ArrayList<String> viewTables;//动态创建视图的字符信息
+    private boolean collected;//是否收藏
+
     public int getSingal() {
         return singal;
     }
@@ -67,7 +69,6 @@ public class Reptiles extends DataSupport {
     public void setOrderLatin(String orderLatin) {
         this.orderLatin = orderLatin;
     }
-
 
     public ArrayList<String> getImgs() {
         return imgs;
@@ -179,6 +180,14 @@ public class Reptiles extends DataSupport {
 
     public void setViewTables(ArrayList<String> viewTables) {
         this.viewTables = viewTables;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 
     public void setViewTables()

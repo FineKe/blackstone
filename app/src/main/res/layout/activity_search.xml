@@ -46,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#f0f0f0"
+                android:maxLines="1"
                 android:hint="请输入搜索内容"
                 android:textColorHint="#9d9d9d"
                 android:textSize="20sp"

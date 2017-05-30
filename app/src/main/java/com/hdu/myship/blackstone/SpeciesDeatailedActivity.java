@@ -1,32 +1,18 @@
 package com.hdu.myship.blackstone;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.media.SoundPool;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.annotation.VisibleForTesting;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,9 +47,6 @@ import database.Bird;
 import database.Insect;
 import database.Reptiles;
 
-import static com.hdu.myship.blackstone.R.color.bootstrap_brand_primary;
-import static com.hdu.myship.blackstone.R.color.mycolor;
-
 public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener{
     private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
     private String collectionURL="http://api.blackstone.ebirdnote.cn/v1/species/addToCollection";
@@ -78,7 +61,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private ViewPager viewPager;
     private ArrayList<View> views;
     private ArrayList<ImageView> pointers;//点
-    private Object speciesDetailed;
+    private Object speciesDetaileds;
     private MyViewPagerAdapter adapter;
     String TAG="TEST";
     private String speciesTypeChineseName;
@@ -107,6 +90,10 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private LinearLayout actionBack;
 
     private boolean isCollected=false;
+
+    private UserInformationUtil userInformation;
+    private IsLoginUtil isLoginUtil;
+    private UpdateToken updateToken;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +123,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         pointers=new ArrayList<>();
         requestQueue= Volley.newRequestQueue(this);
         scheduledExecutorService= Executors.newSingleThreadScheduledExecutor();
+        userInformation=new UserInformationUtil(this);
+        isLoginUtil=new IsLoginUtil(this);
+        updateToken=new UpdateToken(this);
+
+
 
     }
 
@@ -154,40 +146,82 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         latinOrderFamily= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_order_family);
         latinGenus= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_genus);
         englishName= (TextView) findViewById(R.id.activity_species_deatailed_text_view_english_name);
-
-
         linearLayout= (LinearLayout) findViewById(R.id.species_deatailed_linear_layout);
+        loadDeatailed(this);
 
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void createAllView() {
         switch (speciesType)
         {
-            case "reptiles":speciesDetailed=DataSupport.where("singal=?",singal+"").find(Reptiles.class).get(0);
-                createReptilesView((Reptiles)speciesDetailed);
-                for(String picture:((Reptiles)speciesDetailed).getImgs())
+            case "reptiles":
+                Reptiles reptiles=(Reptiles) speciesDetaileds;
+                isCollected=reptiles.isCollected();
+                if(reptiles.isCollected())
+                {
+                    collection.setImageResource(R.mipmap.heart_pressed);
+                }
+                else
+                {
+                    collection.setImageResource(R.mipmap.heart_normal);
+                }
+                createReptilesView(reptiles);
+                for(String picture:(reptiles).getImgs())
                 {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
-            case "bird":;speciesDetailed=DataSupport.where("singal=?",singal+"").find(Bird.class).get(0);
-                createBirdView((Bird)speciesDetailed);
-                for(String picture:((Bird)speciesDetailed).getImgs())
+            case "bird":;
+                Bird bird=(Bird) speciesDetaileds;
+                isCollected=bird.isCollected();
+                if(bird.isCollected())
+                {
+                    collection.setImageResource(R.mipmap.heart_pressed);
+                }
+                else
+                {
+                    collection.setImageResource(R.mipmap.heart_normal);
+                }
+                createBirdView((Bird) speciesDetaileds);
+                for(String picture:((Bird) speciesDetaileds).getImgs())
                 {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
-            case "amphibia":speciesDetailed=DataSupport.where("singal=?",singal+"").find(Amphibia.class).get(0);
-                createAmphibiaView((Amphibia)speciesDetailed);
-                for(String picture:((Amphibia)speciesDetailed).getImgs())
+            case "amphibia":
+                Amphibia amphibia=(Amphibia) speciesDetaileds;
+                isCollected=amphibia.isCollected();
+                if(amphibia.isCollected())
+                {
+                    collection.setImageResource(R.mipmap.heart_pressed);
+                }
+                else
+                {
+                    collection.setImageResource(R.mipmap.heart_normal);
+                }
+                createAmphibiaView((Amphibia) speciesDetaileds);
+                for(String picture:((Amphibia) speciesDetaileds).getImgs())
                 {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
-            case "insect":;speciesDetailed=DataSupport.where("singal=?",singal+"").find(Insect.class).get(0);
-                createInsectView((Insect)speciesDetailed);
-                for(String picture:((Insect)speciesDetailed).getImgs())
+            case "insect":;
+                Insect insect=(Insect) speciesDetaileds;
+                isCollected=insect.isCollected();
+                if(insect.isCollected())
+                {
+                    collection.setImageResource(R.mipmap.heart_pressed);
+                }
+                else
+                {
+                    collection.setImageResource(R.mipmap.heart_normal);
+                }
+                createInsectView((Insect) speciesDetaileds);
+                for(String picture:((Insect) speciesDetaileds).getImgs())
                 {
                     views.add(createView(picture));
                     pointers.add(createPointer());
@@ -232,7 +266,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         orderFamilyGenus.setText(speciesDetailed.getOrder());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin());
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
-//        englishName.setText(speciesDetailed.getEnglishName());
+//        englishName.setText(speciesDetaileds.getEnglishName());
         englishName.setVisibility(View.GONE);
         String[] tables= getResources().getStringArray(R.array.insectTablesName);
         int i=0;
@@ -397,7 +431,15 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 break;
 
             case R.id.species_detailed_title_bar_image_view_collection:
-                collection();
+                if(!isCollected)
+                {
+                    addCollection(singal);
+                }
+                else
+                {
+                    cancelCollection(singal);
+                }
+
                 break;
         }
     }
@@ -486,6 +528,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                     if (code==88)
                     {
                         collection.setImageResource(R.mipmap.heart_pressed);
+                        isCollected=true;
                     }
                     else
                     {
@@ -513,5 +556,139 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         requestQueue.add(collectionRequest);
     }
 
+    public void cancelCollection(int speciesId)
+    {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("speciesId",speciesId);
+        JSONObject object=new JSONObject(map);
+        canelCollcetionRequest=new JsonObjectRequest(Request.Method.POST, cancelCollectionURL, object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if (code==88)
+                    {
+                        collection.setImageResource(R.mipmap.heart_normal);
+                        isCollected=false;
+                    }
+                    else
+                    {
+                        String message=jsonObject.getString("message");
+                        Toast.makeText(SpeciesDeatailedActivity.this,message,Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers=new HashMap<>();
+                UserInformationUtil userInformationUtil=new UserInformationUtil(SpeciesDeatailedActivity.this);
+                headers.put("token",userInformationUtil.getToken());
+                return headers;
+            }
+        };
+        requestQueue.add(canelCollcetionRequest);
+    }
+    public void loadDeatailed(Context context)
+    {   boolean speciesDeatailedIsExist=false;
+        switch (speciesType)//判断物种信息是否已经存在
+        {
+            case "reptiles": speciesDeatailedIsExist=DataSupport.isExist(Reptiles.class,"singal=?",singal+"");
+                break;
+            case "bird":speciesDeatailedIsExist=DataSupport.isExist(Bird.class,"singal=?",singal+"");
+                break;
+            case "amphibia":speciesDeatailedIsExist=DataSupport.isExist(Amphibia.class,"singal=?",singal+"");
+                break;
+            case "insect":speciesDeatailedIsExist=DataSupport.isExist(Insect.class,"singal=?",singal+"");
+                break;
+        }
+        if(!speciesDeatailedIsExist)
+        {
+            if(isLoginUtil.getLogined())//如果登录了
+            {
+                if(updateToken.isOutOfDate())
+                {
+                    updateToken.updateToken();//判断token是否过期，过期则更新
+                }
+                JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL +singal, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            int code=jsonObject.getInt("code");
+                            if(code==88)
+                            {
+                                JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
+                                speciesDetailed.ResolveSpeciesDetailed();
+                                speciesDetaileds=speciesDetailed.getResultObject();
+                                runOnUiThread(new Runnable() {
+                                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                    @Override
+                                    public void run() {
+                                        createAllView();
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String,String> headers=new HashMap<>();
+                        headers.put("token",userInformation.getToken());
+                        return headers;
+                    }
+                };
+                requestQueue.add(speciesDetailedRequest);
+            }
+            else
+            {
+                JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL +singal, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            int code=jsonObject.getInt("code");
+                            if(code==88)
+                            {
+                                final JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
+                                speciesDetailed.ResolveSpeciesDetailed();
+                                speciesDetaileds=speciesDetailed.getResultObject();
+                                runOnUiThread(new Runnable() {
+                                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                    @Override
+                                    public void run() {
+                                        createAllView();
+                                    }
+                                });
 
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                requestQueue.add(speciesDetailedRequest);
+            }
+
+        }
+
+    }
 }

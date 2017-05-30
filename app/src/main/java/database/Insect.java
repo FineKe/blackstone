@@ -26,6 +26,7 @@ public class Insect extends DataSupport{
     private String common_family;//黑石顶常见科
     private String speciesType;
     private ArrayList<String> viewTables;//动态创建视图的字符信息
+    private boolean collected;//是否收藏
 
     public int getSingal() {
         return singal;
@@ -156,6 +157,14 @@ public class Insect extends DataSupport{
 
     public ArrayList<String> getViewTables() {
         return viewTables;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 
     public void setViewTables(ArrayList<String> viewTables) {

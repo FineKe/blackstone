@@ -19,16 +19,34 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import JsonUtil.JsonResolverSpeciesDetailed;
+import database.Amphibia;
+import database.Bird;
+import database.Insect;
+import database.Reptiles;
 import database.Species;
 
 public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnClickListener{
+    private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
+    private RequestQueue requestQueue;
     private static final String TAG ="SpeciesClassActivity";
     private ImageButton actionBack;
     private ImageButton alertMenu;
@@ -51,6 +69,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private LinearLayoutManager linearLayoutManager;
     private String typeTitle[]={"两栖类","爬行类","鸟类"};
     private List<String> indexList;
+
+    private UserInformationUtil userInformation;
+    private IsLoginUtil isLoginUtil;
+    private UpdateToken updateToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +110,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
     private void initData() {
+        requestQueue= Volley.newRequestQueue(this);
         position=getIntent().getIntExtra("position",0);
         if(position<=2)
         {
@@ -112,6 +136,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 Intent intent=new Intent(SpeciesClassActivity.this,SpeciesDeatailedActivity.class);
                 intent.putExtra("singal",data.getSingal());
                 intent.putExtra("speciesType",data.getSpeciesType());
+//                loadDeatailed(getApplicationContext(),data.getSpeciesType(),data.getSingal());
                 //intent.putExtra("speciesTypeChineseName",typeTitle[position]);
                 startActivity(intent);
             }

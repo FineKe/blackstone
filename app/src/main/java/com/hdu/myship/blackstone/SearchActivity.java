@@ -25,15 +25,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import database.Species;
 
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
+    private String searchURL="http://api.blackstone.ebirdnote.cn/v1/species/search";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest searchRequest;
     private EditText input;
     private TextView cancel;
     private LinearLayout history;
@@ -53,6 +68,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initData() {
+        requestQueue= Volley.newRequestQueue(this);
         myList=new ArrayList<>();
         myListViewAdapter=new MyListViewAdapter(myList);
     }
@@ -106,9 +122,61 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             history.setVisibility(View.VISIBLE);
         }else
         {
-            myList= DataSupport.where("chineseName like ?","%"+s+"%").find(Species.class);
-            myListViewAdapter.list=myList;
-            myListViewAdapter.notifyDataSetChanged();
+            Map<String,String> map=new HashMap<>();
+            map.put("key",input.getText().toString());
+            JSONObject jsonObject=new JSONObject(map);
+            searchRequest=new JsonObjectRequest(Request.Method.POST, searchURL, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    try {
+                        int code=jsonObject.getInt("code");
+                        if(code==88)
+                        {   myList.clear();
+                            JSONArray data=jsonObject.getJSONArray("data");
+                            for(int i=0;i<data.length();i++)
+                            {
+                                Species species= new Species();
+                                species.setSingal(data.getJSONObject(i).getInt("id"));
+                                species.setChineseName(data.getJSONObject(i).getString("chineseName"));
+                                species.setLatinName(data.getJSONObject(i).getString("latinName"));
+                                species.setOrder(data.getJSONObject(i).getString("order"));
+                                if(data.getJSONObject(i).has("family"))
+                                {
+                                    species.setFamily(data.getJSONObject(i).getString("family"));
+                                }
+                                else
+                                {
+                                    species.setFamily("");
+                                }
+                                species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
+                                species.setMainPhoto(data.getJSONObject(i).getString("mainPhoto"));
+                                myList.add(species);
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myListViewAdapter.list=myList;
+                                    myListViewAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        }else
+                        {
+                            String message=jsonObject.getString("message");
+                            Toast.makeText(SearchActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(SearchActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                }
+            });
+            requestQueue.add(searchRequest);
+           // myList= DataSupport.where("chineseName like ?","%"+s+"%").find(Species.class);
+
         }
 
     }

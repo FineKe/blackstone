@@ -32,6 +32,7 @@ public class Amphibia extends DataSupport {
     private String distribution;//分布范围
     private String population_status;//种群状况
     private ArrayList<String> viewTables;//动态创建视图的字符信息
+    private boolean collected;//是否收藏
     private String speciesType;
     public int getSingal() {
         return singal;
@@ -199,6 +200,14 @@ public class Amphibia extends DataSupport {
 
     public void setPopulation_status(String population_status) {
         this.population_status = population_status;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 
     public String getSpeciesType() {

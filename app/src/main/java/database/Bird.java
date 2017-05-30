@@ -38,6 +38,7 @@ public class Bird extends DataSupport{
     private String vague_feature;
     private String audioPicture;
     private ArrayList<String> viewTables;//动态创建视图的字符信息
+    private boolean collected;//是否收藏
 
     public int getSingal() {
         return singal;
@@ -240,6 +241,14 @@ public class Bird extends DataSupport{
 
     public void setVague_feature(String vague_feature) {
         this.vague_feature = vague_feature;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 
     public void setViewTables() {

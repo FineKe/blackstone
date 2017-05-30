@@ -88,43 +88,46 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         setContentView(R.layout.activity_main);
         initView();//初始化控件
         initEvents();//添加逻辑事件控制
-
-
     }
 
     private void initData() {
         requestQueue= Volley.newRequestQueue(this);//创建请求队列
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
+        boolean isLoaded=false;
+        isLoaded=sharedPreferences.getBoolean("isLoaded",false);
         editor=sharedPreferences.edit();
-        List<Species> speciesList=DataSupport.findAll(Species.class);
-        for(Species s:speciesList)
+       /** if(!isLoaded)
         {
-            JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getSingal(), null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject jsonObject) {
-                    try {
-                        int code=jsonObject.getInt("code");
-                        if(code==88)
-                        {
-                            JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
-                            speciesDetailed.ResolveSpeciesDetailed();
+            List<Species> speciesList=DataSupport.findAll(Species.class);
+            for(Species s:speciesList)
+            {
+                JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, SpeciesDetailedUrl + s.getSingal(), null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            int code=jsonObject.getInt("code");
+                            if(code==88)
+                            {
+                                JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
+                                speciesDetailed.ResolveSpeciesDetailed();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
 
-                }
-            });
-            requestQueue.add(speciesDetailedRequest);
+                    }
+                });
+                requestQueue.add(speciesDetailedRequest);
+            }
+            editor.putBoolean("isLoaded",true).apply();
         }
-
+        */
         records=new ArrayList<>();
         createBasicRecords();
-
     }
 
     private void initView() {
@@ -162,7 +165,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         tab_species.setOnClickListener(this);
         tab_personal_center.setOnClickListener(this);
         tab_add_record.setOnClickListener(this);
-
     }
 
 

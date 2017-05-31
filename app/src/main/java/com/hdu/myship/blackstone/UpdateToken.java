@@ -57,7 +57,7 @@ public class UpdateToken {
                         {
                             JSONObject data=jsonObject.getJSONObject("data");
                             JSONObject user=jsonObject.getJSONObject("user");
-                            information.setId(user.getInt("id"));
+                            information.setId(user.getLong("id"));
                             information.setUserName(user.getString("mobile"));
                             information.setStudentId(user.getString("studentId"));
                             information.setName(user.getString("name"));

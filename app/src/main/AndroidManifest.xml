@@ -78,16 +78,16 @@
             android:name=".ForgetPasswordTwoActivity"
             android:launchMode="singleInstance" />
         <activity android:name=".SuggestionsActivity" />
-        <activity
-            android:name=".SearchActivity"
-            />
+        <activity android:name=".SearchActivity" />
         <activity
             android:name=".ResetPasswordThreeActivity"
             android:launchMode="singleInstance" />
         <activity
             android:name=".ForgetPasswordThreeActivity"
             android:launchMode="singleInstance" />
-        <activity android:name=".MyCollectionsTwoActivity"></activity>
+        <activity android:name=".MyCollectionsTwoActivity" />
+        <activity android:name=".MyRecordTwoActivity" />
+        <activity android:name=".RecordAlterActivity"></activity>
     </application>
 
 </manifest>

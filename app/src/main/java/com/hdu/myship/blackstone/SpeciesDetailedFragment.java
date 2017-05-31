@@ -28,6 +28,7 @@ import database.Amphibia;
  */
 
 public class SpeciesDetailedFragment extends Fragment {
+    private String getSpeciesClassesURL= "api.blackstone.ebirdnote.cn/v1/species/categories";
     private String TAG="SpeciesDetailedFragment";
 
 

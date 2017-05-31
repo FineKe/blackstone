@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="7dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/activity_myrecord_two_expand_list_view_item_text_view_chineseName"
+            android:text="黑蟾蜍"
+            android:textSize="14sp"
+            android:textColor="@color/mycolor"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/activity_myrecord_two_expand_list_view_item_text_view_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="蟾蜍科"
+            android:textSize="14sp"
+            android:textColor="#000"
+            />
+    </LinearLayout>
+   <TextView
+       android:id="@+id/activity_myrecord_two_expand_list_view_item_text_view_remark"
+       android:text="有宝宝"
+       android:layout_marginTop="7dp"
+       android:layout_marginBottom="7dp"
+       android:layout_marginRight="16dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:visibility="gone"/>
+</LinearLayout>

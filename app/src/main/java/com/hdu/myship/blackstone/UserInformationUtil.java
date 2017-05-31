@@ -27,7 +27,7 @@ public class UserInformationUtil {
     private static SharedPreferences.Editor editor;
     private static Context context;
     private String fileName;
-    private int id;
+    private Long id;
     private String userName;//账户
     private String userPwd;//密码
     private String studentId;//学生id
@@ -43,13 +43,13 @@ public class UserInformationUtil {
         editor=sharedPreferences.edit();
     }
 
-    public int getId() {
-        return sharedPreferences.getInt("id",0);
+    public Long getId() {
+        return sharedPreferences.getLong("id",0);
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
-        editor.putInt("id",id);
+        editor.putLong("id",id);
         editor.apply();
     }
 

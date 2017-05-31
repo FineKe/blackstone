@@ -1,13 +1,20 @@
 package com.hdu.myship.blackstone;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MY SHIP on 2017/5/20.
@@ -15,7 +22,10 @@ import java.util.List;
 
 public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcordAdapter.ViewHolder>{
     private List<MyRecordsActivity.Record> recordList;
-    public ItemRemoveRcordAdapter(List<MyRecordsActivity.Record>recordList){
+    private Context context;
+    private String TAG="ItemRemoveRcordAdapter";
+    public ItemRemoveRcordAdapter(Context context,List<MyRecordsActivity.Record>recordList){
+        this.context=context;
         this.recordList = recordList;
     }
     @Override
@@ -27,13 +37,37 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-
-//        MyRecordsActivity.Record record=recordList.get(position);
-//        holder.date.setText(record.getDate());
-//        holder.amphibia.setText(record.getAmphibia());
-//        holder.reptile.setText(record.getReptile());
-//        holder.bird.setText(record.getBird());
-//        holder.insect.setText(record.getInsect());
+        if(recordList.size()!=0)
+        {
+            Log.d(TAG, "onBindViewHolder: "+recordList.size());
+            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getId());
+            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getUserId());
+            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getTime());
+            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getNoteCountses().get(0).getSpeciesType());
+            MyRecordsActivity.Record record=recordList.get(position);
+            Date da=new Date(record.getTime());
+            SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+            String mdate=format.format(da);
+            Log.d(TAG, "onBindViewHolder:"+da.toString() );
+            holder.date.setText(mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日");
+            for(MyRecordsActivity.NoteCounts noteCounts:record.getNoteCountses())
+            {
+                switch (noteCounts.getSpeciesType())
+                {
+                    case "amphibia":holder.amphibia.setText("两栖类"+noteCounts.getCount()+"种");
+                        holder.amphibia.setVisibility(View.VISIBLE);
+                        break;
+                    case "bird":holder.bird.setText("鸟类"+noteCounts.getCount()+"种");
+                        holder.bird.setVisibility(View.VISIBLE);
+                        break;
+                    case "reptiles":holder.reptile.setText("爬行类"+noteCounts.getCount()+"种");
+                        holder.reptile.setVisibility(View.VISIBLE);
+                        break;
+                    case "insect":holder.insect.setText("昆虫"+noteCounts.getCount()+"个目");
+                        holder.insect.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
     @Override
     public int getItemCount(){
@@ -56,7 +90,5 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
     }
 
     public void removeItem(int position) {
-        recordList.remove(position);
-        notifyDataSetChanged();
     }
 }

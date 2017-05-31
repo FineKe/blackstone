@@ -641,7 +641,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             jsonObject.put("addToObservedList", true);
             jsonObject.put("observationPalName", "");
             JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i <4; i++) {
                 for (Record record : MainActivity.records.get(i)) {
                     if (record.isRemarkIsNull() == false && record.isChecked()) {
                         JSONObject js = new JSONObject();

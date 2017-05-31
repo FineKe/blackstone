@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,9 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MyRecordsActivity extends AppCompatActivity {
-    private String RecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/personalStat/";//记录列表接口
+    private String getRecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/user/";
+    private String removeRecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRecordListRequest;
+    private JsonObjectRequest deleteRecordListRequest;
     private ItemRemoveRecordRecycle removeRecordRecycleView;
     private List<Record> recordList;
     private ItemRemoveRcordAdapter itemRemoveRcordAdapter;
@@ -46,7 +49,6 @@ public class MyRecordsActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_my_records);
         initData();
-        initView();
     }
 
     private void initData() {
@@ -56,54 +58,102 @@ public class MyRecordsActivity extends AppCompatActivity {
         requestQueue= Volley.newRequestQueue(this);
         recordList=new ArrayList<>();
         initRecordList();
-        itemRemoveRcordAdapter=new ItemRemoveRcordAdapter(recordList);
     }
 
     private void initView() {
         removeRecordRecycleView= (ItemRemoveRecordRecycle) findViewById(R.id.activity_my_records_item_remove_recycler_view);
         removeRecordRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        itemRemoveRcordAdapter=new ItemRemoveRcordAdapter(this,recordList);
         removeRecordRecycleView.setAdapter(itemRemoveRcordAdapter);
         removeRecordRecycleView.setOnItemClickListener(new OnItemRemoveRecord() {
             @Override
             public void onItemClick(View view, int position) {
-
+                Intent intent=new Intent(MyRecordsActivity.this,MyRecordTwoActivity.class);
+                intent.putExtra("recordId",recordList.get(position).getId());
+                intent.putExtra("time",recordList.get(position).getTime());
+                startActivity(intent);
             }
 
             @Override
             public void onDeleteClick(int position) {
                 itemRemoveRcordAdapter.removeItem(position);
+                removeRecordList(position);
             }
         });
+    }
+
+    private void removeRecordList(final int position) {
+       Record record= recordList.get(position);
+        final UserInformationUtil userInformationUtil=new UserInformationUtil(this);
+        deleteRecordListRequest=new JsonObjectRequest(Request.Method.DELETE, removeRecordListURL + record.getId(), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        recordList.remove(position);
+                        itemRemoveRcordAdapter.notifyDataSetChanged();
+                    }else
+                    {
+                        String message=jsonObject.getString("message");
+                        Toast.makeText(MyRecordsActivity.this,message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(MyRecordsActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String>headers=new HashMap<>();
+                headers.put("token",userInformationUtil.getToken());
+                return  headers;
+            }
+        };
+        requestQueue.add(deleteRecordListRequest);
     }
 
     private void initRecordList()
     {
         UserInformationUtil userInformationUtil=new UserInformationUtil(this);
-        getRecordListRequest = new JsonObjectRequest(Request.Method.GET, RecordListURL + userInformationUtil.getId(), null,
+        getRecordListRequest = new JsonObjectRequest(Request.Method.GET, getRecordListURL + userInformationUtil.getId(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             int code = jsonObject.getInt("code");
                             if (code == 88) {
-                                int id;
-                                int userId;
-                                Long time;//时间：毫秒数
-                                double lat;
-                                double lon;
-                                String observationPalName;//观察伙伴
-                                int noteCount;//笔记数量
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < data.length(); i++) {
-                                    id = data.getJSONObject(i).getInt("id");
-                                    userId = data.getJSONObject(i).getInt("userId");
-                                    time=data.getJSONObject(i).getLong("time");
-                                    lat=data.getJSONObject(i).getDouble("lat");
-                                    lon=data.getJSONObject(i).getDouble("lon");
-                                    noteCount=data.getJSONObject(i).getInt("noteCount");
-                                    Record record=new Record(id,userId,time,lat,lon,noteCount);
+                                JSONArray data=jsonObject.getJSONArray("data");
+                                for(int i=0;i<data.length();i++)
+                                {
+                                    Record record=new Record();
+                                    record.setId(data.getJSONObject(i).getInt("id"));
+                                    record.setUserId(data.getJSONObject(i).getInt("userId"));
+                                    record.setTime(data.getJSONObject(i).getLong("time"));
+                                    ArrayList<NoteCounts> noteCountses=new ArrayList<>();
+                                    JSONArray notecounts=data.getJSONObject(i).getJSONArray("noteCounts");
+                                    for(int j=0;j<notecounts.length();j++)
+                                    {
+                                        NoteCounts noteC=new NoteCounts();
+                                        noteC.setSpeciesType(notecounts.getJSONObject(j).getString("speciesType"));
+                                        noteC.setCount(notecounts.getJSONObject(j).getInt("count"));
+                                        noteCountses.add(noteC);
+                                    }
+                                    record.setNoteCountses(noteCountses);
                                     recordList.add(record);
                                 }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initView();
+                                    }
+                                });
 
                             } else {
                                 String message = jsonObject.getString("message");
@@ -131,22 +181,10 @@ public class MyRecordsActivity extends AppCompatActivity {
     }
 
     public class Record {
-        private int id;
-        private int userId;
+        private int id;//记录id
+        private int userId;//用户id
         private Long time;//时间：毫秒数
-        private double lat;
-        private double lon;
-        private String observationPalName;//观察伙伴
-        private int noteCount;//笔记数量
-
-        public Record(int id, int userId, Long time, double lat, double lon,int noteCount) {
-            this.id = id;
-            this.userId = userId;
-            this.time = time;
-            this.lat = lat;
-            this.lon = lon;
-            this.noteCount = noteCount;
-        }
+        private List<NoteCounts> noteCountses;
 
         public int getId() {
             return id;
@@ -172,36 +210,33 @@ public class MyRecordsActivity extends AppCompatActivity {
             this.time = time;
         }
 
-        public double getLat() {
-            return lat;
+        public List<NoteCounts> getNoteCountses() {
+            return noteCountses;
         }
 
-        public void setLat(double lat) {
-            this.lat = lat;
+        public void setNoteCountses(List<NoteCounts> noteCountses) {
+            this.noteCountses = noteCountses;
+        }
+    }
+    public class NoteCounts
+    {
+        String speciesType;
+        int count;
+
+        public String getSpeciesType() {
+            return speciesType;
         }
 
-        public double getLon() {
-            return lon;
+        public void setSpeciesType(String speciesType) {
+            this.speciesType = speciesType;
         }
 
-        public void setLon(double lon) {
-            this.lon = lon;
+        public int getCount() {
+            return count;
         }
 
-        public String getObservationPalName() {
-            return observationPalName;
-        }
-
-        public void setObservationPalName(String observationPalName) {
-            this.observationPalName = observationPalName;
-        }
-
-        public int getNoteCount() {
-            return noteCount;
-        }
-
-        public void setNoteCount(int noteCount) {
-            this.noteCount = noteCount;
+        public void setCount(int count) {
+            this.count = count;
         }
     }
 

@@ -47,10 +47,10 @@ import database.Bird;
 import database.Insect;
 import database.Reptiles;
 
-public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener{
-    private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
-    private String collectionURL="http://api.blackstone.ebirdnote.cn/v1/species/addToCollection";
-    private String cancelCollectionURL="http://api.blackstone.ebirdnote.cn/v1/collection/";
+public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener {
+    private String getSpeciesDetailedURL = "http://api.blackstone.ebirdnote.cn/v1/species/";
+    private String collectionURL = "http://api.blackstone.ebirdnote.cn/v1/species/addToCollection";
+    private String cancelCollectionURL = "http://api.blackstone.ebirdnote.cn/v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest request;
     private JsonObjectRequest collectionRequest;
@@ -63,7 +63,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private ArrayList<ImageView> pointers;//点
     private Object speciesDetaileds;
     private MyViewPagerAdapter adapter;
-    String TAG="TEST";
+    String TAG = "TEST";
     private String speciesTypeChineseName;
     private String SpeciesChineseName;
     private TextView speciesClassName;
@@ -71,8 +71,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private ImageView copyRight;
     private LinearLayout tab_pointers;
 
-    private boolean start=false;
-    private int oldPosition=0;
+    private boolean start = false;
+    private int oldPosition = 0;
     private int currentIndex;
     private int a;
     private ScheduledExecutorService scheduledExecutorService;
@@ -89,21 +89,22 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private LinearLayout linearLayout;
     private LinearLayout actionBack;
 
-    private boolean isCollected=false;
+    private boolean isCollected;
 
     private UserInformationUtil userInformation;
     private IsLoginUtil isLoginUtil;
     private UpdateToken updateToken;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        singal=getIntent().getIntExtra("singal",1);
-        speciesType=getIntent().getStringExtra("speciesType");
+        singal = getIntent().getIntExtra("singal", 1);
+        speciesType = getIntent().getStringExtra("speciesType");
         //speciesTypeChineseName=getIntent().getStringExtra("speciesTypeChineseName");
         setContentView(R.layout.activity_species_deatailed);
-        Log.d(TAG, "onCreate: "+singal);
+        Log.d(TAG, "onCreate: " + singal);
         initData();
         initViews();
         initEvents();
@@ -119,127 +120,110 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     private void initData() {
 
-        views=new ArrayList<>();
-        pointers=new ArrayList<>();
-        requestQueue= Volley.newRequestQueue(this);
-        scheduledExecutorService= Executors.newSingleThreadScheduledExecutor();
-        userInformation=new UserInformationUtil(this);
-        isLoginUtil=new IsLoginUtil(this);
-        updateToken=new UpdateToken(this);
-
+        views = new ArrayList<>();
+        pointers = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(this);
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        userInformation = new UserInformationUtil(this);
+        isLoginUtil = new IsLoginUtil(this);
+        updateToken = new UpdateToken(this);
 
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initViews() {
-        tab_pointers= (LinearLayout) findViewById(R.id.activity_species_deatailed_linear_layout_pointers);
-        copyRight= (ImageView) findViewById(R.id.activity_species_deatailed_image_view_copy_right);
+        tab_pointers = (LinearLayout) findViewById(R.id.activity_species_deatailed_linear_layout_pointers);
+        copyRight = (ImageView) findViewById(R.id.activity_species_deatailed_image_view_copy_right);
         viewPager = (ViewPager) findViewById(R.id.species_detailed_viewpager);
 
-        actionBack= (LinearLayout) findViewById(R.id.species_deatailed_title_bar_linear_layout_action_back);
-        actionBackText= (TextView) findViewById(R.id.species_detailed_title_bar_textView_action_back_text);
-        titleText= (TextView) findViewById(R.id.species_detailed_title_bar_textView_title);
-        collection= (ImageView) findViewById(R.id.species_detailed_title_bar_image_view_collection);
+        actionBack = (LinearLayout) findViewById(R.id.species_deatailed_title_bar_linear_layout_action_back);
+        actionBackText = (TextView) findViewById(R.id.species_detailed_title_bar_textView_action_back_text);
+        titleText = (TextView) findViewById(R.id.species_detailed_title_bar_textView_title);
+        collection = (ImageView) findViewById(R.id.species_detailed_title_bar_image_view_collection);
 
-        orderFamilyGenus= (TextView) findViewById(R.id.activity_species_deatailed_text_view_order_family_genus);
-        latinOrderFamily= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_order_family);
-        latinGenus= (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_genus);
-        englishName= (TextView) findViewById(R.id.activity_species_deatailed_text_view_english_name);
-        linearLayout= (LinearLayout) findViewById(R.id.species_deatailed_linear_layout);
+        orderFamilyGenus = (TextView) findViewById(R.id.activity_species_deatailed_text_view_order_family_genus);
+        latinOrderFamily = (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_order_family);
+        latinGenus = (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_genus);
+        englishName = (TextView) findViewById(R.id.activity_species_deatailed_text_view_english_name);
+        linearLayout = (LinearLayout) findViewById(R.id.species_deatailed_linear_layout);
         loadDeatailed(this);
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void createAllView() {
-        switch (speciesType)
-        {
+        switch (speciesType) {
             case "reptiles":
-                Reptiles reptiles=(Reptiles) speciesDetaileds;
-                isCollected=reptiles.isCollected();
-                if(reptiles.isCollected())
-                {
+                Reptiles reptiles = (Reptiles) speciesDetaileds;
+                isCollected = reptiles.isCollected();
+                if (reptiles.isCollected()) {
                     collection.setImageResource(R.mipmap.heart_pressed);
-                }
-                else
-                {
+                } else {
                     collection.setImageResource(R.mipmap.heart_normal);
                 }
                 createReptilesView(reptiles);
-                for(String picture:(reptiles).getImgs())
-                {
+                for (String picture : (reptiles).getImgs()) {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
-            case "bird":;
-                Bird bird=(Bird) speciesDetaileds;
-                isCollected=bird.isCollected();
-                if(bird.isCollected())
-                {
+            case "bird":
+                ;
+                Bird bird = (Bird) speciesDetaileds;
+                isCollected = bird.isCollected();
+                if (bird.isCollected()) {
                     collection.setImageResource(R.mipmap.heart_pressed);
-                }
-                else
-                {
+                } else {
                     collection.setImageResource(R.mipmap.heart_normal);
                 }
                 createBirdView((Bird) speciesDetaileds);
-                for(String picture:((Bird) speciesDetaileds).getImgs())
-                {
+                for (String picture : ((Bird) speciesDetaileds).getImgs()) {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
             case "amphibia":
-                Amphibia amphibia=(Amphibia) speciesDetaileds;
-                isCollected=amphibia.isCollected();
-                if(amphibia.isCollected())
-                {
+                Amphibia amphibia = (Amphibia) speciesDetaileds;
+                isCollected = amphibia.isCollected();
+                if (amphibia.isCollected()) {
                     collection.setImageResource(R.mipmap.heart_pressed);
-                }
-                else
-                {
+                } else {
                     collection.setImageResource(R.mipmap.heart_normal);
                 }
                 createAmphibiaView((Amphibia) speciesDetaileds);
-                for(String picture:((Amphibia) speciesDetaileds).getImgs())
-                {
+                for (String picture : ((Amphibia) speciesDetaileds).getImgs()) {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
-            case "insect":;
-                Insect insect=(Insect) speciesDetaileds;
-                isCollected=insect.isCollected();
-                if(insect.isCollected())
-                {
+            case "insect":
+                ;
+                Insect insect = (Insect) speciesDetaileds;
+                isCollected = insect.isCollected();
+                if (insect.isCollected()) {
                     collection.setImageResource(R.mipmap.heart_pressed);
-                }
-                else
-                {
+                } else {
                     collection.setImageResource(R.mipmap.heart_normal);
                 }
                 createInsectView((Insect) speciesDetaileds);
-                for(String picture:((Insect) speciesDetaileds).getImgs())
-                {
+                for (String picture : ((Insect) speciesDetaileds).getImgs()) {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
                 break;
 
         }
-        for(ImageView imageView:pointers)
-        {
+        for (ImageView imageView : pointers) {
             tab_pointers.addView(imageView);
         }
 
-        currentIndex=0;
+        currentIndex = 0;
         pointers.get(currentIndex).setImageResource(R.mipmap.pointer_pressed);
-        adapter=new MyViewPagerAdapter();
+        adapter = new MyViewPagerAdapter();
         viewPager.setAdapter(adapter);
 
-        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(),3,3, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(), 3, 3, TimeUnit.SECONDS);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -248,7 +232,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
             @Override
             public void onPageSelected(int position) {
-                a=position;
+                a = position;
                 setCurrentPoint(position);
             }
 
@@ -262,16 +246,16 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private void createInsectView(Insect speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText(speciesDetailed.getChineseName());
-        titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
+        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
         orderFamilyGenus.setText(speciesDetailed.getOrder());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin());
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
 //        englishName.setText(speciesDetaileds.getEnglishName());
         englishName.setVisibility(View.GONE);
-        String[] tables= getResources().getStringArray(R.array.insectTablesName);
-        int i=0;
-        for(String s:speciesDetailed.getViewTables()){
-            if(!s.equals("")) {
+        String[] tables = getResources().getStringArray(R.array.insectTablesName);
+        int i = 0;
+        for (String s : speciesDetailed.getViewTables()) {
+            if (!s.equals("")) {
                 LinearLayout tableView = new LinearLayout(this);
                 tableView.setGravity(Gravity.CENTER_VERTICAL);
                 tableView.setOrientation(LinearLayout.VERTICAL);
@@ -289,123 +273,122 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             }
             i++;
         }
-        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
+        View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
     }
 
     private void createAmphibiaView(Amphibia speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("两栖类");
-        titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
-        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+speciesDetailed.getFamily()+">"+speciesDetailed.getGenus());
-        latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">"+speciesDetailed.getFamilyLatin()+">");
+        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getGenus());
+        latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
         latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
         englishName.setText(speciesDetailed.getLatinName());
 //        englishName.setVisibility(View.GONE)
-        String[] tables= getResources().getStringArray(R.array.aphibiaTablesName);
-        int i=0;
-        for(String s:speciesDetailed.getViewTables())
-        {   if(!s.equals("")) {
-            LinearLayout tableView = new LinearLayout(this);
-            tableView.setGravity(Gravity.CENTER_VERTICAL);
-            tableView.setOrientation(LinearLayout.VERTICAL);
-            TextView title = new TextView(this);
-            title.setText(tables[i]);
-            title.setTextColor(getResources().getColor(R.color.mycolor));
-            TextView content = new TextView(this);
-            content.setText(speciesDetailed.getViewTables().get(i));
-            tableView.addView(title);
-            tableView.addView(content);
+        String[] tables = getResources().getStringArray(R.array.aphibiaTablesName);
+        int i = 0;
+        for (String s : speciesDetailed.getViewTables()) {
+            if (!s.equals("")) {
+                LinearLayout tableView = new LinearLayout(this);
+                tableView.setGravity(Gravity.CENTER_VERTICAL);
+                tableView.setOrientation(LinearLayout.VERTICAL);
+                TextView title = new TextView(this);
+                title.setText(tables[i]);
+                title.setTextColor(getResources().getColor(R.color.mycolor));
+                TextView content = new TextView(this);
+                content.setText(speciesDetailed.getViewTables().get(i));
+                tableView.addView(title);
+                tableView.addView(content);
 
-            View view1 = linearLayout.getChildAt(1);
-            tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
-            View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
-            linearLayout.addView(tableView);
-            System.out.println(tables[i] + ":");
-             }
-             i++;
+                View view1 = linearLayout.getChildAt(1);
+                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+                linearLayout.addView(tableView);
+                System.out.println(tables[i] + ":");
+            }
+            i++;
         }
-        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
+        View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
 
     }
 
     private void createReptilesView(Reptiles speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("爬行类");
-        titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
-        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+ speciesDetailed.getFamily()+">"+ speciesDetailed.getGenus());
-        latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">"+ speciesDetailed.getFamilyLatin()+">");
+        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getGenus());
+        latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
         latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
         englishName.setText(speciesDetailed.getLatinName());
 //        englishName.setVisibility(View.GONE);
-        String[] tables= getResources().getStringArray(R.array.reptilesTblesName);
-        int i=0;
-        for(String s:speciesDetailed.getViewTables())
-        {   if(!s.equals("")) {
-            LinearLayout tableView = new LinearLayout(this);
-            tableView.setGravity(Gravity.CENTER_VERTICAL);
-            tableView.setOrientation(LinearLayout.VERTICAL);
-            TextView title = new TextView(this);
-            title.setText(tables[i]);
-            title.setTextColor(getResources().getColor(R.color.mycolor));
-            TextView content = new TextView(this);
-            content.setText(speciesDetailed.getViewTables().get(i));
-            tableView.addView(title);
-            tableView.addView(content);
-
-            View view1 = linearLayout.getChildAt(1);
-            tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
-            View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
-            linearLayout.addView(tableView);
-            System.out.println(tables[i] + ":");
-        }
+        String[] tables = getResources().getStringArray(R.array.reptilesTblesName);
+        int i = 0;
+        for (String s : speciesDetailed.getViewTables()) {
+            if (!s.equals("")) {
+                LinearLayout tableView = new LinearLayout(this);
+                tableView.setGravity(Gravity.CENTER_VERTICAL);
+                tableView.setOrientation(LinearLayout.VERTICAL);
+                TextView title = new TextView(this);
+                title.setText(tables[i]);
+                title.setTextColor(getResources().getColor(R.color.mycolor));
+                TextView content = new TextView(this);
+                content.setText(speciesDetailed.getViewTables().get(i));
+                tableView.addView(title);
+                tableView.addView(content);
+                View view1 = linearLayout.getChildAt(1);
+                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+                linearLayout.addView(tableView);
+                System.out.println(tables[i] + ":");
+            }
             i++;
         }
-        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
+        View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
     }
 
     private void createBirdView(final Bird speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("鸟类");
-        titleText.setText("#"+speciesDetailed.getSingal()+speciesDetailed.getChineseName());
-        orderFamilyGenus.setText(speciesDetailed.getOrder()+">"+speciesDetailed.getFamily()+">"+speciesDetailed.getChineseName()+"属");
-        latinOrderFamily.setText(speciesDetailed.getOrderLatin()+">"+speciesDetailed.getFamilyLatin()+">");
+        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getChineseName() + "属");
+        latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
         latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
         englishName.setText(speciesDetailed.getEnglishName());
-        String[] tables= getResources().getStringArray(R.array.birdTablesName);
-        int i=0;
-        for(String s:speciesDetailed.getViewTables())
-        {   if(!s.equals("")) {
-            LinearLayout tableView = new LinearLayout(this);
-            tableView.setGravity(Gravity.CENTER_VERTICAL);
-            tableView.setOrientation(LinearLayout.VERTICAL);
-            TextView title = new TextView(this);
-            title.setText(tables[i]);
-            title.setTextColor(getResources().getColor(R.color.mycolor));
-            TextView content = new TextView(this);
-            content.setText(speciesDetailed.getViewTables().get(i));
-            tableView.addView(title);
-            tableView.addView(content);
+        String[] tables = getResources().getStringArray(R.array.birdTablesName);
+        int i = 0;
+        for (String s : speciesDetailed.getViewTables()) {
+            if (!s.equals("")) {
+                LinearLayout tableView = new LinearLayout(this);
+                tableView.setGravity(Gravity.CENTER_VERTICAL);
+                tableView.setOrientation(LinearLayout.VERTICAL);
+                TextView title = new TextView(this);
+                title.setText(tables[i]);
+                title.setTextColor(getResources().getColor(R.color.mycolor));
+                TextView content = new TextView(this);
+                content.setText(speciesDetailed.getViewTables().get(i));
+                tableView.addView(title);
+                tableView.addView(content);
 
-            View view1 = linearLayout.getChildAt(1);
-            tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
-            View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
-            linearLayout.addView(tableView);
-            System.out.println(tables[i] + ":");
-        }
+                View view1 = linearLayout.getChildAt(1);
+                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+                linearLayout.addView(tableView);
+                System.out.println(tables[i] + ":");
+            }
             i++;
         }
-        View view=LayoutInflater.from(this).inflate(R.layout.split_line,linearLayout);
+        View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
 
 
-        View v=LayoutInflater.from(this).inflate(R.layout.bird_audio_picture,linearLayout);
-        ImageView audioPicture= (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_audio_picture);
-        final ImageView playAudio= (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_play_audio);
+        View v = LayoutInflater.from(this).inflate(R.layout.bird_audio_picture, linearLayout);
+        ImageView audioPicture = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_audio_picture);
+        final ImageView playAudio = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_play_audio);
         audioPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this).load(speciesDetailed.getAudioPicture()).placeholder(R.mipmap.loading_big).into(audioPicture);
         playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              PlayAudio audio=new PlayAudio(speciesDetailed.getAudio(),SpeciesDeatailedActivity.this);
+                PlayAudio audio = new PlayAudio(speciesDetailed.getAudio(), SpeciesDeatailedActivity.this);
 
             }
         });
@@ -413,33 +396,34 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
 
-
-    private void setCurrentPoint(int position){
+    private void setCurrentPoint(int position) {
         pointers.get(oldPosition).setImageResource(R.mipmap.pointer_normal);
         pointers.get(position).setImageResource(R.mipmap.pointer_pressed);
         currentIndex = position;
-        oldPosition=position;
+        oldPosition = position;
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.species_deatailed_title_bar_linear_layout_action_back:
                 actionBack();
                 break;
 
             case R.id.species_detailed_title_bar_image_view_collection:
-                if(!isCollected)
+                if (isLoginUtil.getLogined())//判断是否登录
                 {
-                    addCollection(singal);
+                    updateToken.updateToken();
+                    Log.d(TAG, "onClick: "+isCollected);
+                    if (!isCollected) {
+                        addCollection(singal);
+                    } else {
+                        cancelCollection(singal);
+                    }
+                } else {
+                    Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    cancelCollection(singal);
-                }
-
                 break;
         }
     }
@@ -452,8 +436,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         this.finish();
     }
 
-    class MyViewPagerAdapter extends PagerAdapter
-    {
+    class MyViewPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -462,7 +445,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            View v=views.get(position);
+            View v = views.get(position);
             container.addView(v);
             return v;
         }
@@ -474,40 +457,40 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view==object;
+            return view == object;
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private View createView(String picture)
-    {
-        RoundedImageView imgView=new RoundedImageView(this);
+    private View createView(String picture) {
+        RoundedImageView imgView = new RoundedImageView(this);
         imgView.setBackground(getDrawable(R.drawable.view_pager_background));
         imgView.setCornerRadius(6);
         imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(this).load(picture+"?imageslim").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this,6)).into(imgView);
+        Glide.with(this).load(picture + "?imageslim?imageView2/0/w/400/h/300").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this, 6)).into(imgView);
         return imgView;
     }
 
-    private ImageView createPointer()
-    {
-        ImageView pointer=new ImageView(this);
+    private ImageView createPointer() {
+        ImageView pointer = new ImageView(this);
         pointer.setImageResource(R.mipmap.pointer_normal);
         pointer.setAdjustViewBounds(true);
-        pointer.setPadding(8,0,8,0);
+        pointer.setPadding(8, 0, 8, 0);
         return pointer;
     }
+
     private class ViewPagerTask implements Runnable {
         @Override
         public void run() {
-            if(start==true){
-                currentIndex = (currentIndex +1) % views.size();
+            if (start == true) {
+                currentIndex = (currentIndex + 1) % views.size();
                 //更新界面
                 handler.obtainMessage().sendToTarget();
             }
         }
     }
-    private Handler handler = new Handler(){
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             //设置当前页面
@@ -515,25 +498,21 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         }
     };
 
-    public void addCollection(int speciesId)
-    {
-        Map<String,Integer> map=new HashMap<>();
-        map.put("speciesId",speciesId);
-        JSONObject object=new JSONObject(map);
-        collectionRequest=new JsonObjectRequest(Request.Method.POST, collectionURL, object, new Response.Listener<JSONObject>() {
+    public void addCollection(int speciesId) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("speciesId", speciesId);
+        JSONObject object = new JSONObject(map);
+        collectionRequest = new JsonObjectRequest(Request.Method.POST, collectionURL, object, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    int code=jsonObject.getInt("code");
-                    if (code==88)
-                    {
+                    int code = jsonObject.getInt("code");
+                    if (code == 88) {
                         collection.setImageResource(R.mipmap.heart_pressed);
-                        isCollected=true;
-                    }
-                    else
-                    {
-                        String message=jsonObject.getString("message");
-                        Toast.makeText(SpeciesDeatailedActivity.this,message,Toast.LENGTH_SHORT).show();
+                        isCollected = true;
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(SpeciesDeatailedActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -544,37 +523,30 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers=new HashMap<>();
-                UserInformationUtil userInformationUtil=new UserInformationUtil(SpeciesDeatailedActivity.this);
-                headers.put("token",userInformationUtil.getToken());
+                Map<String, String> headers = new HashMap<>();
+                UserInformationUtil userInformationUtil = new UserInformationUtil(SpeciesDeatailedActivity.this);
+                headers.put("token", userInformationUtil.getToken());
                 return headers;
             }
         };
         requestQueue.add(collectionRequest);
     }
 
-    public void cancelCollection(int speciesId)
-    {
-        Map<String,Integer> map=new HashMap<>();
-        map.put("speciesId",speciesId);
-        JSONObject object=new JSONObject(map);
-        canelCollcetionRequest=new JsonObjectRequest(Request.Method.POST, cancelCollectionURL, object, new Response.Listener<JSONObject>() {
+    public void cancelCollection(int speciesId) {
+        canelCollcetionRequest = new JsonObjectRequest(Request.Method.DELETE, cancelCollectionURL+singal,null , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    int code=jsonObject.getInt("code");
-                    if (code==88)
-                    {
+                    int code = jsonObject.getInt("code");
+                    if (code == 88) {
                         collection.setImageResource(R.mipmap.heart_normal);
-                        isCollected=false;
-                    }
-                    else
-                    {
-                        String message=jsonObject.getString("message");
-                        Toast.makeText(SpeciesDeatailedActivity.this,message,Toast.LENGTH_SHORT).show();
+                        isCollected = false;
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(SpeciesDeatailedActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -585,109 +557,86 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers=new HashMap<>();
-                UserInformationUtil userInformationUtil=new UserInformationUtil(SpeciesDeatailedActivity.this);
-                headers.put("token",userInformationUtil.getToken());
+                Map<String, String> headers = new HashMap<>();
+                UserInformationUtil userInformationUtil = new UserInformationUtil(SpeciesDeatailedActivity.this);
+                headers.put("token", userInformationUtil.getToken());
                 return headers;
             }
         };
         requestQueue.add(canelCollcetionRequest);
     }
-    public void loadDeatailed(Context context)
-    {   boolean speciesDeatailedIsExist=false;
-        switch (speciesType)//判断物种信息是否已经存在
+
+    public void loadDeatailed(Context context) {
+        if (isLoginUtil.getLogined())//如果登录了
         {
-            case "reptiles": speciesDeatailedIsExist=DataSupport.isExist(Reptiles.class,"singal=?",singal+"");
-                break;
-            case "bird":speciesDeatailedIsExist=DataSupport.isExist(Bird.class,"singal=?",singal+"");
-                break;
-            case "amphibia":speciesDeatailedIsExist=DataSupport.isExist(Amphibia.class,"singal=?",singal+"");
-                break;
-            case "insect":speciesDeatailedIsExist=DataSupport.isExist(Insect.class,"singal=?",singal+"");
-                break;
-        }
-        if(!speciesDeatailedIsExist)
-        {
-            if(isLoginUtil.getLogined())//如果登录了
-            {
-                if(updateToken.isOutOfDate())
-                {
-                    updateToken.updateToken();//判断token是否过期，过期则更新
+            updateToken.updateToken();//判断token是否过期，过期则更新
+            JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    try {
+                        int code = jsonObject.getInt("code");
+                        if (code == 88) {
+                            JsonResolverSpeciesDetailed speciesDetailed = new JsonResolverSpeciesDetailed(jsonObject);
+                            speciesDetailed.ResolveSpeciesDetailed();
+                            speciesDetaileds = speciesDetailed.getResultObject();
+                            runOnUiThread(new Runnable() {
+                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                @Override
+                                public void run() {
+                                    createAllView();
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-                JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL +singal, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            int code=jsonObject.getInt("code");
-                            if(code==88)
-                            {
-                                JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
-                                speciesDetailed.ResolveSpeciesDetailed();
-                                speciesDetaileds=speciesDetailed.getResultObject();
-                                runOnUiThread(new Runnable() {
-                                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                                    @Override
-                                    public void run() {
-                                        createAllView();
-                                    }
-                                });
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("token", userInformation.getToken());
+                    return headers;
+                }
+            };
+            requestQueue.add(speciesDetailedRequest);
+        } else {
+            JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    try {
+                        int code = jsonObject.getInt("code");
+                        if (code == 88) {
+                            final JsonResolverSpeciesDetailed speciesDetailed = new JsonResolverSpeciesDetailed(jsonObject);
+                            speciesDetailed.ResolveSpeciesDetailed();
+                            speciesDetaileds = speciesDetailed.getResultObject();
+                            runOnUiThread(new Runnable() {
+                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                @Override
+                                public void run() {
+                                    createAllView();
+                                }
+                            });
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
-                    }
-                }){
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String,String> headers=new HashMap<>();
-                        headers.put("token",userInformation.getToken());
-                        return headers;
-                    }
-                };
-                requestQueue.add(speciesDetailedRequest);
-            }
-            else
-            {
-                JsonObjectRequest speciesDetailedRequest=new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL +singal, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            int code=jsonObject.getInt("code");
-                            if(code==88)
-                            {
-                                final JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
-                                speciesDetailed.ResolveSpeciesDetailed();
-                                speciesDetaileds=speciesDetailed.getResultObject();
-                                runOnUiThread(new Runnable() {
-                                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                                    @Override
-                                    public void run() {
-                                        createAllView();
-                                    }
-                                });
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                requestQueue.add(speciesDetailedRequest);
-            }
-
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                }
+            });
+            requestQueue.add(speciesDetailedRequest);
         }
 
     }

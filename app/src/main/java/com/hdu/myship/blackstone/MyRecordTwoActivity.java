@@ -50,7 +50,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
     private TextView alter;
     private LinearLayout actionBack;
     private ExpandableListView expandableListView;
-    private List<List<Note>> noteList;
+    public static List<List<Note>> noteList;
     private List<String>father;
     private RecordDeatailedAdapter recordDeatailedAdapter;
     @Override
@@ -60,6 +60,12 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_my_record_two);
         initData();
         initViews();
+        initEvents();
+    }
+
+    private void initEvents() {
+        actionBack.setOnClickListener(this);
+        alter.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -104,6 +110,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
 
     private void alter() {
         Intent intent=new Intent(this,RecordAlterActivity.class);
+        intent.putExtra("time",getIntent().getLongExtra("time",0));
         startActivity(intent);
     }
 
@@ -335,7 +342,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
                                 }
                                 if(birdNotes.size()>0)
                                 {
-                                    father.add("鸟类类"+birdNotes.size()+"种");
+                                    father.add("鸟类"+birdNotes.size()+"种");
                                 }
                                 if(insectNotes.size()>0)
                                 {

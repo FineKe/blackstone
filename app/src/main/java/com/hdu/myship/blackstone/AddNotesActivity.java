@@ -50,7 +50,7 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
     private void initView() {
         notes= (EditText) findViewById(R.id.add_notes_editText_notes);
         actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
-        notes.setText(MainActivity.records.get(groupPosition).get(childPosition).getRemark());
+        notes.setText(RecordAlterActivity.recordList.get(groupPosition).get(childPosition).getRemark());
         notes.setSelection(notes.getText().length());
     }
 
@@ -77,16 +77,16 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
         Log.d(TAG, "actionBack: "+notesContent);
         if(!notesContent.equals(""))
         {
-            MainActivity.records.get(groupPosition).get(childPosition).setRemark(notesContent);
-            MainActivity.records.get(groupPosition).get(childPosition).setRemarkIsNull(false);
+            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemark(notesContent);
+            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemarkIsNull(false);
            // data.putExtra("Remark",notesContent);
             //data.putExtra("isNull",false);
             //this.setResult(2,data);
             this.finish();
         }else
         {
-            MainActivity.records.get(groupPosition).get(childPosition).setRemark(notesContent);
-            MainActivity.records.get(groupPosition).get(childPosition).setRemarkIsNull(true);
+            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemark(notesContent);
+            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemarkIsNull(true);
             //data.putExtra("isNull",true);
             //this.setResult(2,data);
             this.finish();

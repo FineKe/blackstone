@@ -83,7 +83,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="杭州"
+            android:text="杭州电子科技大学（史本云、邱洪君、周遥、柯帆、章天浩、黄伟）"
             android:textColor="#4a4a4a"
             android:textSize="16sp" />
     </LinearLayout>

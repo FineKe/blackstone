@@ -1,6 +1,7 @@
 package com.hdu.myship.blackstone;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -44,9 +45,11 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
 
     public static List<List<Record>> recordList;
     private MyExpandListViewAdapter adapter;
-
+    private ProgressDialog progressDialog;
     private boolean datePickerShow = false;
     private Long time;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,9 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
         time=getIntent().getLongExtra("time",0);
         recordList=new ArrayList<>();
         adapter=new MyExpandListViewAdapter(this,recordList);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("请稍后...");
+        progressDialog.setCancelable(false);
         createBaseRecord();
     }
 
@@ -69,6 +75,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
         save= (TextView) findViewById(R.id.activity_record_alter_text_view_save);
         actionBack= (LinearLayout) findViewById(R.id.activity_record_alter_linear_layout_action_back);
         datePicker= (DatePicker) findViewById(R.id.activity_record_alter_datepicker);
+
         expandableListView= (ExpandableListView) findViewById(R.id.activity_record_alter_expandListView);
         expandableListView.setAdapter(adapter);
 
@@ -252,7 +259,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
 
 
     public void createBaseRecord()
-    {
+    {   progressDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -307,6 +314,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
             {
                 case CREATE_OK:
                     adapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
                     break;
             }
         }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,7 +38,7 @@ public class MyRecordsActivity extends AppCompatActivity {
     private ItemRemoveRecordRecycle removeRecordRecycleView;
     private List<Record> recordList;
     private ItemRemoveRcordAdapter itemRemoveRcordAdapter;
-
+    private LinearLayout actionBack;
     private SharedPreferences userInformationSharedPreferences;
     private SharedPreferences.Editor userInformationEditor;
     private String userInformation="UesrInformation";
@@ -61,6 +62,7 @@ public class MyRecordsActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        actionBack= (LinearLayout) findViewById(R.id.activity_my_record_linear_layout_action_back);
         removeRecordRecycleView= (ItemRemoveRecordRecycle) findViewById(R.id.activity_my_records_item_remove_recycler_view);
         removeRecordRecycleView.setLayoutManager(new LinearLayoutManager(this));
         itemRemoveRcordAdapter=new ItemRemoveRcordAdapter(this,recordList);
@@ -78,6 +80,13 @@ public class MyRecordsActivity extends AppCompatActivity {
             public void onDeleteClick(int position) {
                 itemRemoveRcordAdapter.removeItem(position);
                 removeRecordList(position);
+            }
+        });
+
+        actionBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    黑石顶有4种龟鳖目动物，分别是中华鳖 Pelodiscus sinensis、平胸龟 Platysternon megacephalum、地龟和眼斑水龟，均具有鲜明的识别特征，详见第三篇的 2.1 部分。
+\n本节主要介绍有鳞目。有鳞目包含2大类群，即蜥蜴亚目和蛇亚目。仅从识别角度而言，二者有如下区别：
+\n（1）蜥蜴类通常有耳孔和鼓膜，鼓膜通常下陷形成外耳道，个别种类没有耳孔，但也有鼓膜，可以感知由空气传导的声波；蛇类无耳孔，也无鼓膜，只能感受由地面传导的震动波。
+\n（2）除壁虎科外，蜥蜴类大多种类均有活动眼睑；蛇类没有活动眼睑，而是眼外罩有一层透明膜，该膜在蜕皮时会一并蜕掉，所以在蜕皮过程中会变得朦胧模糊，此时蛇的视觉很差。
+\n（3）蜥蜴类的口不能张得很大，蛇的口可以张得很大，大多数蛇类的口可以张大到上下颌间夹角成130°。
+\n（4）蜥蜴类尾长，原生尾至少等长于头体长，有时可达头体长的2–3倍。蛇的尾巴通常较短，很少有尾长超过头体长1/2的种类。
+\n（5）蜥蜴类通常有发育完整的四肢，或至少有肩带和腰带或其残余结构。
+\n（6）蜥蜴类大多种类舌不呈分叉状（除巨蜥舌分叉外），蛇类的舌呈分叉状。
+\n（7）蜥蜴蜕皮是以碎片形式逐步脱落完成，蛇蜕皮则是像脱袜子一样整条蜕掉，蜕掉的蛇皮是完整的1条。
+\n（8）蜥蜴类通常进食时有咬断和咀嚼动作，以舌舔水方式饮水；蛇类则是整个吞掉食物，喝水是以上下唇吸水。
+\n2.1 有鳞目动物分类常用的形态术语
+\n有鳞目分类常用的形态和结构特征有鳞被（身体覆盖的鳞片总称）特征、指趾形态结构以及其他外部形态特征。
+\n2.1.1 头背侧部鳞被及相关结构
+\n    头背及侧部鳞片的大小、形状和组成是爬行纲有鳞目的重要分类鉴别特征。比如，以头顶鳞为主，结合其他2-3个特征，就可以对蜥蜴亚目分科了。我国蜥蜴亚目共包含9科，头顶有大型对称鳞的有4科，分别是蛇蜥科、双足蜥科、草蜥科和石龙子科，其中，蛇蜥科体型似蛇、四肢退化，尾较长且极易断成多节；双足蜥科形似蚯蚓，眼隐于皮下，只有雄性头有鳍状后肢，尾极短，易断；草蜥科尾多甚长，不易断，有股孔或鼠蹊孔；石龙子科尾短粗，易断，无股孔、鼠蹊孔或肛前孔。头顶被颗粒鳞的有3科，分别是睑虎科、壁虎科和巨蜥科，睑虎科有活动眼睑，壁虎科没有活动眼睑，巨蜥科体型大，舌分叉。头顶鳞非大型对称鳞也非颗粒鳞的有2科，分别是鳄蜥科和鬣蜥科，前者尾有2行纵脊鳞，后者颈部或背部有鬣鳞，无鬣鳞时有股孔或鼠蹊孔，尾背无纵脊鳞或只有1行纵脊鳞。
+\n吻鳞 (rostral): 吻最端部正中的口缘鳞片，单枚，与两侧的第1枚上唇鳞相切。吻鳞通常较上唇鳞高，侧视和背视均圆弧形，通常背视可见。睑虎科和壁虎科某些种类吻鳞上缘正中有1个垂直凹沟(图2.13)。蛇类吻鳞下缘一般有1个缺凹，口闭合时舌可经此缺凹伸出（图2.19）。
+\n吻后鳞 (posttostral)：与吻鳞上缘相接的1枚或多枚小鳞。（图2.13）
+\n鼻鳞 (nasal)：鼻孔开口其上的鳞片。在壁虎科和睑虎科鼻孔通常被一组鳞片包围，鼻鳞不显(图2.13)。鬣蜥科、石龙子科以及蛇类鼻鳞显著，有的种类鼻鳞有鳞沟，将鼻鳞局部或完全分成前后2部分（图2.16, 2.17）。
+\n前鼻鳞 (prenasal)：背鳞前方、吻鳞后方的1枚或多枚小鳞。英德睑虎Goniurosaurus yingdeensis有2枚前鼻鳞，上方的1枚弯向鼻孔的上方，下方的1枚弯向鼻孔下方。鼻孔周围的小鳞视其围绕鼻孔的方位，可分为前鼻鳞、后鼻鳞 (postnasal)、上鼻鳞 (supranasal)和下鼻鳞 (subnasal)。（图2.13）
+\n鼻间鳞 (internasal)：头背两鼻鳞或上鼻鳞之间的鳞片，头顶非大型对称鳞的种类鼻间鳞可能有也可能没有，可能是1枚，也可能多枚。在草蜥科、石龙子科和蛇亚目等头顶有大型对称鳞的种类鼻间鳞通常1对，也可能单枚或没有。
+\n上鼻鳞 (supranasal)：与鼻鳞上缘相切的1枚或数枚小鳞。在草蜥类，通常上鼻鳞较大，左右可在吻背相接，将吻鳞与额鼻鳞分开（见南草蜥图 2b）。石龙子科和蛇类没有上鼻鳞（图2.14, 2.15, 2.16）。
+\n额鼻鳞 (frontonasal)：石龙子科、草蜥科和蛇类等头顶为大型对称鳞的种类，额鼻鳞是介于鼻间鳞和前额鳞之间的鳞片，通常单枚（图2.14, 2.5, 2.16），但中国棱蜥2枚（见中国棱蜥图22a）。
+\n前额鳞 (prefrontal)：鼻间鳞后方的大鳞，通常1对，相接或被额鼻鳞和额鳞分隔。但在后棱蛇属等蛇类是单枚(见侧条后棱蛇图 34a，黄斑后棱蛇图 35a)。
+\n额鳞 (frontal)：位于左右眶上鳞之间、前额鳞后方的1枚大鳞，通常呈六边形或五边形。（图2.14–2.16）
+\n额顶鳞 (frontoparietal)：介于额鳞和顶鳞之间的鳞片，通常1对，彼此相接（图2.14）。蛇类没有额顶鳞（图2.15, 2.16）。
+\n顶间鳞 (interparietal)：额顶鳞之后正中、通常被1对额顶鳞和1对顶鳞所包围的1枚鳞片（图2.14）。通常其上有1个凹坑或1个白斑点，即为顶眼 (parietal eyespot)（见光蜥图13b，印度蜓蜥图 20b和20c）。蛇类通常没有顶间鳞（图2.15, 2.16, 2.17），仅闪鳞蛇科有顶间鳞，被4枚顶鳞所包围。
+\n顶鳞 (parietal)：额顶鳞之后、顶间鳞两侧的鳞片，1对，在顶间鳞后相切或不相切（图2.14）。蛇类由于没有额顶鳞和顶间鳞，顶鳞是位于额鳞后的大鳞（图2.15, 2.16），闪鳞蛇科蛇类为前后2对。
+\n枕鳞 (occipital)：在某些蜥蜴类的某些个体，顶间鳞正后方还有较小鳞片，使顶鳞在顶间鳞后不能相切，这些小鳞即为枕鳞，如崇安草蜥 Takydromus sylvaticus的某些个体(Yang and Wang, 2010)；眼镜王蛇 Ophiophagus hannah顶鳞正后方有1对大鳞，也为枕鳞，是其区别眼镜蛇Naja atra Cantor, 1842的重要特征。
+
+\n眶上鳞 (supraocular)：位于额鳞两侧或额鳞和额顶鳞两侧的、组成眼眶上缘的大鳞，一般每侧2–4枚（图2.14），个别5枚，如斑蜓蜥 Spenomorphus maculatus。蛇类通常每侧只有1枚，较大（图2.15, 2.16, 2.17）。
+\n上睫鳞 (superciliaris)：眼眶上方、眶上鳞外侧的一列小鳞，构成头背部眶上方两侧的上睫嵴。（图2.14）
+\n颈鳞 (nuchal)：顶鳞之后的较大鳞片，通常大于其后鳞片。（图2.14）
+\n颊鳞 (loreal)： 位于眶前鳞和鼻鳞或后鼻鳞之间，吻棱下方、上唇鳞上方的1枚、2枚或多枚小鳞。（图2.14–2.17）
+\n眶前鳞 (preocular)：眼眶前缘的小鳞，1枚或几枚。有时颊鳞或前额鳞也会参与进入眶前区域，当眶前鳞消失时，则完全构成眶前的鳞片。（图2.14–2.17）
+\n眶后鳞 (postocular)：眼眶后缘的小鳞，1枚后几枚。有时颞鳞会参与进入眶后区域，当眶后鳞没有时，颞鳞完全占据眶后区域。（图2.14–2.17）
+\n眶下鳞 (subocular)：眼眶下缘的小鳞。当眶下鳞完全构成眼眶下缘时，上唇鳞不入眶；当眶下鳞很小而成为眶前下鳞或眶后下鳞时（图2.14），甚至没有时，上唇鳞入眶（图2.15, 2.16）。
+\n眼睑鳞 (palpebral)：被覆在活动眼睑上的鳞（图2.18–2）。滑蜥下眼睑部分鳞片愈合成为一个几近透明的睑窗（eyelid window）（图2.18–1）。蛇类和壁虎没有活动眼睑，没有眼睑鳞。
+\n睑缘鳞 （eyelid fringe scales）：眼睑边缘的鳞片。（图2.13, 2.14）
+\n上唇鳞 (supralabial)：上唇边缘除吻鳞以外的鳞。（图2.13–2.20）
+\n颞鳞 (temporal)：眼眶之后，顶鳞和上唇鳞之间的鳞片，一般分成2–3列，分别是前颞鳞 （anterior temporal）和后颞鳞 ( posterior temporal)。一般用阿拉伯数字表示，如图2.14的颞鳞 3+2，即前颞鳞3枚，后颞鳞2枚。
+\n鼓膜 (tympanum)：图2.13，2.14和2.18。蛇类没有。
+\n颊窝 (loreal pit)：蝰蛇科蝮蛇亚科在鼻孔和眼间的凹窝，是热感受器。通常由窝上鳞（通常是下眶前鳞延长而成）、窝下鳞等鳞片围绕，有时第2枚上唇鳞深入颊窝，成为窝前鳞。（图2.17）"/>
+        <ImageView
+            android:id="@+id/im1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four21"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.13睑虎科英德睑虎头顶被颗粒鳞。"/>
+        <ImageView
+            android:id="@+id/im2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four22"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.14石龙子科的四线石龙子头顶被大型对称鳞"/>
+        <ImageView
+            android:id="@+id/im3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four23"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.15 游蛇科绿瘦蛇 Ahaetulla prasina头部鳞片"/>
+        <ImageView
+            android:id="@+id/im4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.16 游蛇科红脖颈槽蛇头部鳞片"/>
+        <ImageView
+            android:id="@+id/im5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four25"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.17 蝰蛇科原矛头蝮 Protobothrops mucrosquamatus 头顶被颗粒鳞而非大型对称鳞"/>
+        <ImageView
+            android:id="@+id/im6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four26"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.18 示眼睑窗和眼睑鳞。1.南滑蜥的眼睑鳞和眼睑窗；2.股鳞蜓蜥 Sphenomorphus incognitus的眼睑鳞没有眼睑窗"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.1.2 头腹面鳞被及相关结构
+\n颏鳞 (mantal)：下颌最前端的鳞片，单枚。其形状大小有较多变化。（图2.19, 2.20）
+\n后颏鳞 (postmental)：颏鳞之后沿腹中线的鳞片，成对或不成对（图2.19: 2, 3）。蛇类没有后颏鳞。
+\n颔片 (chin-shield)：颏鳞或后颏鳞之后成对的较大鳞片，不同物种颏片数量和形状有所不同，见图2.19, 2.20。
+\n下唇鳞 (infralabial)：下颌边缘除最前端颏鳞以外的构成下颌边缘的大鳞。(图2.19, 2.20)
+\n喉鳞 (gular)：头腹面至胸部的所有小鳞片统称喉鳞。
+\n围领 (collar)：颈腹面的皮肤褶。（图2.19: 4）"/>
+        <ImageView
+            android:id="@+id/im7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four28"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图2.19 蜥蜴类头腹面鳞的主要类型。1. 原尾蜥虎 Hemidactylus bowringii的头部颏鳞大，三角形；没有后颏鳞，前颔片1对，较大；后颔片1对，稍小。2. 变色树蜥颏鳞三角形，其后1枚小的后颏鳞，颔片2对。3. 股鳞蜓蜥颏鳞半圆形，较大；后颏鳞较大，连接两侧第1和第2下唇鳞；其后颔片3对。4. 崇安草蜥颏鳞半圆形，很大；其后有颔片5对。"/>
+        <ImageView
+            android:id="@+id/im8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four29"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图2.20 蛇类头颔片的主要类型。1. 坡普腹链蛇的颏鳞很小，三角形；左右第1对下唇鳞在其后彼此相切；其后为2对狭长的颔片。2.台湾钝头蛇的3对颔片中，第1对颔片非常大，彼此相切成半圆形，构成喉部前半部分，其后2对交错相切。3.棕脊蛇2对颔片，近方形，彼此于喉部中线相切，构成喉的前部分。4.原矛头蝮的左右颔片之间形成颔沟 (mental groove)."/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.1.3 躯干、四肢和尾部鳞被及相关结构
+\n背鳞 (dorsal): 除腹鳞外，蛇类的肛鳞亦除外，覆盖躯体背面的鳞片统称背鳞。
+\n脊鳞 (vertebral)：背鳞背部正中央1行鳞称为脊鳞。
+\n鬣鳞 (crestal)：鬣蜥科颈部和背部纵行尖出的锥刺状鳞，分颈鬣和背鬣。
+\n腹鳞 (ventral)：躯干腹面自后颏鳞或后颔片始，至肛鳞之前的鳞。蛇类腹鳞仅为腹面正中的1行宽大鳞片。在蛇类，腹鳞是最重要的运动器官，因此蛇类的腹鳞随栖息类型的不同而有较大变化，如树栖蛇类腹鳞中央较平，甚至内凹，两端向背侧翘起，形成侧棱；适应洞穴生活的盲蛇类腹鳞几乎没有分化，与周围鳞片几乎一致；蟒蛇和闪鳞蛇等蛇的腹鳞仅仅略宽于背鳞；海蛇腹鳞有不同程度的退化，甚至缺失，有的纵裂为二。蜥蜴类腹鳞变化也很大，草蜥类腹鳞为几行大型棱鳞，石龙子腹鳞为覆瓦状排列的光滑鳞片。
+\n肛前鳞 (preanal)：蜥蜴类泄殖孔前方几枚较大鳞片，通常2枚或4枚，两侧为略小鳞片。
+\n肛鳞 (anal)：最后1枚腹鳞之后，紧覆于泄殖孔上方的鳞片。通常是1片完整的鳞，称之为肛鳞完整（anal entire），或纵裂为二，称之为肛鳞对分（anal divided）。
+\n尾下鳞 (subcaudal)：尾部腹面的鳞片，一般横向扩大，蜥蜴类通常只有1行；蛇类尾下鳞单行或双行，通常尾尖最后一枚是特化的圆锥形刺（见菱斑小头蛇图33c）。
+\n尾环 (whorl)：某些种类尾部鳞片有规律地分节排列，每1节即为一个尾环。睑虎科、壁虎科物种原生尾均可见尾环，如原生尾的英德睑虎尾前段大约有8个尾环，每个尾环有7–8行鳞片。
+\n指（趾）下瓣 (subdigital lamellae)：指和趾腹面的扩大的鳞片。指（趾）下瓣是蜥蜴类最重要的运动、攀附器官，因此适应不同栖息类型，蜥蜴亚纲动物各类群的指趾结构和长度有所不同。许多壁虎科动物的指和趾均扩展，腹面的指（趾）下瓣也扩展成为攀瓣（scansor），其上有微毛垫，可以吸附在光滑的物体上。攀瓣在壁虎科蜥虎属Hemidactylus的攀瓣覆盖指趾远端部分超过整个指趾的一半，攀瓣对分（图2.21:1）；半叶趾虎攀瓣只覆盖指趾远端，不超过指趾长度的一半，攀瓣对分（图2.21:2）；壁虎属 Gekko是攀瓣不对分，覆盖几乎整个指趾（图2.21:3）。树蜥类适应于在植物上攀爬生活，指趾延长，趾下瓣窄而单列，不对分，其两侧有与指趾下瓣垂直的三角形鳞片，鳞片的尖角在指趾下瓣两侧形成向前下方钩刺，有助于攀爬抓握（图2.21:4）。石龙子科的指趾下瓣光滑，单列，手掌鳞和蹠下鳞突起浮雕状，适应于地面或岩石上活动（图2.21:5）。草蜥科的指趾下瓣与石龙子相似，但指趾更长，因此指趾下瓣数量更多（图2.21:6）。
+\n指趾背鳞 (supradigital lamellae)：指趾背面的鳞片，此特征蜓蜥类分类较常用。（图2.22）
+\n肛前孔 (precloacal pores)：泄殖腔前方一排鳞片上的小孔。有些种类肛前孔延伸到大腿内侧而成为股孔，如壁虎科和睑虎科动物。（图2.23:1, 2, 3）
+\n鼠蹊孔 (inguinal pores)：鼠蹊部鳞片上的小孔，如草蜥科动物。(图2.23:4）
+\n股孔 (femoral pores)：大腿腹内侧一排鳞片上的小孔，如鬣蜥科蜡皮蜥。（图2.23:2）
+\n肛疣 (postcloacal tubercles)：尾基部肿大处两侧的疣粒。
+"/>
+        <ImageView
+            android:id="@+id/im9"
+            android:layout_marginBottom="-80dp"
+            android:layout_marginTop="-80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four210"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图2.21 蜥蜴亚纲主要类群的趾下瓣。1. 壁虎科 原尾蜥虎：攀瓣对分，攀瓣扩展部覆盖指趾远端部分，远超过整个指趾的一半。 2. 壁虎科 云南半叶趾虎：攀瓣对分，攀瓣扩展部只覆盖指趾远端，不超过指趾长度的一半。3. 壁虎科 阿德勒壁虎 Gekko adleri：攀瓣不对分，覆盖几乎整个指趾。4. 鬣蜥科 细鳞树蜥：指趾延长，趾下瓣窄而单列，不对分，其两侧有与指（趾）下瓣垂直的三角形鳞片，鳞片的尖角在指趾下瓣两侧形成向前下方钩刺。5. 石龙子科 海南棱蜥：指趾下瓣光滑，单列，手掌鳞和蹠下鳞突起浮雕状。6. 草蜥科 崇安草蜥：指趾下瓣与石龙子相似，但指趾更长，因此指趾下瓣数量更多。"/>
+        <ImageView
+            android:id="@+id/im10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four212"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图 2.22 蜥蜴亚纲华南常见类群指（趾）背。1.壁虎科 大壁虎：攀瓣宽，末节指骨也有攀瓣。2.壁虎科 原尾蜥虎：攀瓣略窄，末节指骨没有攀瓣，成为独立于攀瓣扩展部的1节。3.睑虎科 英德睑虎：指长，背部被均匀颗粒鳞，末端4枚鳞片包围爪基部，左右2枚较大，形成爪鞘。4.鬣蜥科 变色树蜥：指背3行鳞起强棱，亮色三角形鳞尖端突出于指腹表面，形成伸向前下方的钩刺，有助于攀爬抓握。"/>
+        <ImageView
+            android:id="@+id/im11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/four213"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图2.23 黑石顶4种蜥蜴亚纲动物的肛前孔、股孔和鼠蹊孔。1.云南半叶趾虎雌性有13个肛前孔；2.原尾蜥虎肛前孔（黑色）延伸至大腿内侧成为股孔（白色），两侧的肛前孔被4枚腹鳞隔开，共有28个孔；3.大壁虎的肛前孔很小，共15个，中间被1枚鳞隔开；4.南草蜥的鼠蹊孔左右各1个，位于鼠蹊部。"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.2 有鳞目动物的外形量度和主要鳞片计数
+\n2.2.1 主要量度
+\n全长（total length, TL）：吻端至尾末端的长度。
+\n头体长 (snout-vent length, SVL)：吻端至泄殖腔的长度。
+\n尾长 (tail length, TaL) ：泄殖腔至尾末端的长度。
+\n吻长 (snout to eye distance, SE)：眼前角至吻端的距离。
+\n眼耳距 (eye to ear distance, EE)：眼后缘至耳孔后缘的距离。蛇类没有耳孔，没有该量度。
+\n头宽 (maximum head width, HW)：头部最宽处的量度。
+\n头长 (head length, HL)：蜥蜴类是吻端至耳孔后缘距离，蛇类是吻端至顶鳞后缘的距离。
+\n腋胯距 (axilla-groin length, AG)：前肢基部后缘至后肢基部前缘的距离。蛇类没有此项量度。
+\n2.2.2蜥蜴亚目鳞片计数
+\n上唇鳞 (supralabials, SPL)：上唇鳞数量。
+\n下唇鳞 (infralabials, IFL)：下唇鳞数量。
+\n鼻鳞 (nasal scales surrounding nare, N)：环鼻孔鳞数量。
+\n鼻间鳞 (internasals, IN)：鼻间鳞数量。
+\n睑缘鳞 (eyelid fringe scales or ciliaria, CIL)：眼睑边缘鳞数量。
+\n环体疣鳞行数 (dorsal tubercle rows at midbody, DTR)：体中段环体一周疣鳞数。
+\n脊疣鳞数 (paravertebral tubercles between limb insertions, PTL)：四肢之间沿脊柱一纵行疣鳞数。该项只用于壁虎科和睑虎科。
+\n环体中段鳞 (scales around midbody, MB)：体中段环体一周鳞行数。
+\n指下瓣 （subdigital lamellae under the first finger, LF1 and the fourth finger, LF4)：通常只计数第1指和第4指指下瓣的数量。
+\n趾下瓣（subdigital lamellae under the first toe, LT1 and the fourth toe, LT4)：通常只计数第1趾和第4趾趾下瓣的数量。
+\n肛前孔 (precloacal pores, PP)：肛前孔数量。
+\n鼠蹊孔 (inguinal pores, IP)：鼠蹊孔数量。
+\n股孔 (femoral pores, FP)：股孔数量
+\n肛疣 (postcloacal tubercles, PAT)：肛疣数量
+\n2.2.3 蛇亚目鳞片计数
+\n背鳞 (dorsal scale rews, DSR)：分前中后三段计数，前段是指头后（顶鳞后）第15行，中段选择头体中段部位，后段选取肛前第15行计数。一般用背鳞式表示，如17–19–15，即是指体前段背鳞17行，中段19行，后段15行。
+\n腹鳞 (ventral scales, V)：腹鳞数。
+\n尾下鳞 (subcaudal scales, SC)：单行尾下鳞指鳞片数，成对尾下鳞指鳞的对数。
+\上唇鳞 (supralabials, SPL)：上唇鳞数量。
+\n下唇鳞 (infralabials, IFL)：下唇鳞数量。
+\n颞鳞 （temporal, T）：通常用阿拉伯数字和“+”来表示前颞鳞和后颞鳞的数目。如1+2，表示前颞鳞1枚，后颞鳞2枚；有时还有第3列颞鳞，继续通过“+”和数字表示。
+  \n  此外，蛇亚目鳞片计数通常还包括颈颊鳞、眶前鳞、眶后鳞、眶下鳞、颈鳞等。"/>
+
+    </LinearLayout>
+</LinearLayout>

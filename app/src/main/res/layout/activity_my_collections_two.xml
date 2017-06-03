@@ -16,36 +16,35 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/activity_make_team_image_view_action_back"
+        <LinearLayout
+            android:id="@+id/activity_my_collection_two_linear_layout_action_back"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/mycolor"
-            android:contentDescription=""
-            android:src="@mipmap/action_back"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="13dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/activity_make_team_image_view_action_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/mycolor"
+                android:contentDescription=""
+                android:src="@mipmap/action_back"
+               />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="个人中心"
-            android:textColor="#ffff"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/activity_make_team_image_view_action_back"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText,RtlHardcoded" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="返回"
+                android:textColor="#ffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,4 +63,19 @@
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="HardcodedText" />
     </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_my_collection_two_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

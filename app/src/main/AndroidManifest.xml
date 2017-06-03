@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hdu.myship.blackstone">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:name=".MyApplication"
@@ -88,8 +90,14 @@
             android:launchMode="singleInstance" />
         <activity android:name=".MyCollectionsTwoActivity" />
         <activity android:name=".MyRecordTwoActivity" />
-        <activity android:name=".RecordAlterActivity"></activity>
-        <activity android:name=".ClipActivity"></activity>
+        <activity android:name=".RecordAlterActivity" />
+        <activity android:name=".ClipActivity" />
+        <activity android:name=".AlterNotesActivity" />
+        <activity android:name=".GuideTabOneActivity" />
+        <activity android:name=".ShowImageActivity" />
+        <activity android:name=".GuideTableTwoActivity" />
+        <activity android:name=".GuideTableThreeActivity" />
+        <activity android:name=".GuideTableFourActivity"></activity>
     </application>
 
 </manifest>

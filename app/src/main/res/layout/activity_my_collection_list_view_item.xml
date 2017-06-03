@@ -6,9 +6,10 @@
     android:layout_height="40dp">
 
     <LinearLayout
+        android:gravity="center"
         android:id="@+id/activity_my_collection_list_view_item_linear_layout_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
 
@@ -19,7 +20,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="两栖类"
-            android:textColor="#000"
+            android:textColor="#4A4A4A"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
@@ -31,7 +32,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:text="共0种"
-            android:textColor="#000"
+            android:textColor="#4a4a4a"
             android:textSize="16sp"
             tools:ignore="HardcodedText,RtlHardcoded" />
 

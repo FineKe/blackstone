@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -22,9 +25,15 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Scroller;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.yanzhenjie.recyclerview.swipe.Closeable;
 import com.yanzhenjie.recyclerview.swipe.OnSwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
@@ -33,43 +42,44 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.Inflater;
 
 import database.Species;
 
 public class MyCollectionsActivity extends AppCompatActivity {
-
+    private final int LOAD_DATA_OK=0;
+    private final int JUMP_OK=1;
+    private String getCollectionURL="http://api.blackstone.ebirdnote.cn/v1/species/collection/";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest getCollectionRequest;
     private ListView listView;
-    private ListAdapter listAdapter;
-    public static List<SpeciesClass> list;//该list声明为静态，是为了与下一级界面共享该数据
-    private String[] speciesType={"amphibia","reptiles","bird","insect"};
-    private String[] speciesTypeChineseName={"两栖类","爬行类","鸟类","昆虫"};
+    private MyAdapter listAdapter;
+    public static List<SpeciesClass> speciesClassList;//该list声明为静态，是为了与下一级界面共享该数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_my_collections);
-
         initData();
         initViews();
         initEvents();
     }
 
     private void initData() {
-        list=new ArrayList<>();
-        for(String s:speciesType)
-        {
-            List<Species> temp=DataSupport.where("speciesType=?",s).find(Species.class);
-            list.add(new SpeciesClass(s,temp));
-        }
-
-        listAdapter=new MyAdapter(this,list);
+        speciesClassList=new ArrayList<>();
+        listAdapter=new MyAdapter(this,speciesClassList);
+        getCollection();
     }
 
     private void initViews() {
@@ -113,19 +123,27 @@ public class MyCollectionsActivity extends AppCompatActivity {
             LinearLayout item= (LinearLayout) convertView.findViewById(R.id.activity_my_collection_list_view_item_linear_layout_item);
             TextView speciesClassName= (TextView) convertView.findViewById(R.id.activity_my_collection_list_view_item_text_view_species_class_name);
             TextView speciesClassCount= (TextView) convertView.findViewById(R.id.activity_my_collection_list_view_item_text_view_species_count);
-
-            speciesClassName.setText(speciesTypeChineseName[position]);
             speciesClassCount.setText("共"+list.get(position).getCount()+"种");
-
+            speciesClassName.setText(list.get(position).getName());
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(context,MyCollectionsTwoActivity.class).putExtra("position",position));//跳转到下一级界面，并夹带参数position
+                    startActivityForResult(new Intent(context,MyCollectionsTwoActivity.class).putExtra("position",position),JUMP_OK);//跳转到下一级界面，并夹带参数position
                 }
             });
 
             return convertView;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+                speciesClassList.clear();
+                getCollection();
+                listAdapter.notifyDataSetChanged();
+
+
     }
 
     /**
@@ -138,10 +156,10 @@ public class MyCollectionsActivity extends AppCompatActivity {
         private String speciesType;
         private List<Species> list;//这个是主要数据，下一级界面用的就是这个list
 
-        public SpeciesClass(String speciesType,List<Species> list) {
+        public SpeciesClass(String speciesType,List<Species> list,int count) {
             this.speciesType = speciesType;
             this.list = list;
-            count=list.size();
+            this.count=count;
 
         }
 
@@ -178,4 +196,124 @@ public class MyCollectionsActivity extends AppCompatActivity {
         }
     }
 
+    public void getCollection()
+    {
+        requestQueue= Volley.newRequestQueue(this);
+        UpdateToken updateToken=new UpdateToken(this);
+        updateToken.updateToken();
+        final UserInformationUtil userInformationUtil=new UserInformationUtil(this);
+        getCollectionRequest=new JsonObjectRequest(Request.Method.GET, getCollectionURL + userInformationUtil.getId(), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        List<Species> amphibia=new ArrayList<>();
+                        List<Species> reptiles=new ArrayList<>();
+                        List<Species> bird=new ArrayList<>();
+                        List<Species> insect=new ArrayList<>();
+
+                        int acount=0;
+                        int bcount=0;
+                        int rcount=0;
+                        int icount=0;
+                        JSONArray data=jsonObject.getJSONArray("data");
+                        for(int i=0;i<data.length();i++)
+                        {
+                            JSONObject object=data.getJSONObject(i);
+                            switch (object.getString("speciesType"))
+                            {
+                                case "amphibia":
+                                    acount++;
+                                    Species aspecies=new Species();
+                                    aspecies.setSingal(object.getInt("id"));
+                                    amphibia.add(aspecies);
+                                    break;
+                                case "reptiles":
+                                    rcount++;
+                                    Species rspecies=new Species();
+                                    rspecies.setSingal(object.getInt("id"));
+                                    reptiles.add(rspecies);
+                                    break;
+                                case "bird":
+                                    bcount++;
+                                    Species bspecies=new Species();
+                                    bspecies.setSingal(object.getInt("id"));
+                                    bird.add(bspecies);
+                                    break;
+                                case "insect":
+                                    icount++;
+                                    Log.d("sssssssssssss", "onResponse: "+icount);
+                                    Species ispecies=new Species();
+                                    ispecies.setSingal(object.getInt("id"));
+                                    insect.add(ispecies);
+                                    break;
+                            }
+                        }
+                        if(acount!=0)
+                        {
+                            SpeciesClass a=new SpeciesClass("amphibia",amphibia,acount);
+                            a.setName("两栖类");
+                            speciesClassList.add(a);
+                        }
+                        if(rcount!=0)
+                        {
+                            SpeciesClass r=new SpeciesClass("reptiles",reptiles,rcount);
+                            r.setName("爬行类");
+                            speciesClassList.add(r);
+                        }
+                        if(bcount!=0)
+                        {
+                            SpeciesClass b=new SpeciesClass("bird",bird,bcount);
+                            b.setName("鸟类");
+                            speciesClassList.add(b);
+                        }
+                        Log.d("zx", "onResponse: "+icount);
+                        if(icount!=0)
+                        {
+                            Log.d("zx", "onResponse: "+icount);
+                            SpeciesClass in=new SpeciesClass("insect",insect,icount);
+                            Log.d("zx", "onResponse: "+icount);
+                            in.setName("昆虫目");
+                            speciesClassList.add(in);
+                        }
+                        Log.d("list", "onResponse: "+speciesClassList.size());
+                        Message message=new Message();
+                        message.what=LOAD_DATA_OK;
+                        handler.sendMessage(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(MyCollectionsActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> hearder=new HashMap<>();
+                hearder.put("token",userInformationUtil.getToken());
+                return hearder;
+            }
+        };
+        requestQueue.add(getCollectionRequest);
+    }
+
+    private Handler handler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+                case LOAD_DATA_OK:
+                    listAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 }

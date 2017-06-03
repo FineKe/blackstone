@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import org.litepal.crud.DataSupport;
 
@@ -19,7 +21,7 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
 
     private EditText notes;
 
-    private ImageButton actionBack;
+    private LinearLayout actionBack;
     private int speciesId;
 
     private List<Record> records;
@@ -49,8 +51,8 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
 
     private void initView() {
         notes= (EditText) findViewById(R.id.add_notes_editText_notes);
-        actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
-        notes.setText(RecordAlterActivity.recordList.get(groupPosition).get(childPosition).getRemark());
+        actionBack= (LinearLayout) findViewById(R.id.activity_add_notes_linear_layout_action_back);
+        notes.setText(MainActivity.records.get(groupPosition).get(childPosition).getRemark());
         notes.setSelection(notes.getText().length());
     }
 
@@ -65,7 +67,7 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
             case R.id.add_notes_editText_notes:
                 break;
 
-            case R.id.activity_suggestion_image_button_action_back:actionBack();
+            case R.id.activity_add_notes_linear_layout_action_back:actionBack();
                 break;
         }
     }
@@ -77,19 +79,28 @@ public class AddNotesActivity extends AppCompatActivity implements View.OnClickL
         Log.d(TAG, "actionBack: "+notesContent);
         if(!notesContent.equals(""))
         {
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemark(notesContent);
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemarkIsNull(false);
+            MainActivity.records.get(groupPosition).get(childPosition).setRemark(notesContent);
+            MainActivity.records.get(groupPosition).get(childPosition).setRemarkIsNull(false);
            // data.putExtra("Remark",notesContent);
             //data.putExtra("isNull",false);
             //this.setResult(2,data);
             this.finish();
         }else
         {
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemark(notesContent);
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemarkIsNull(true);
+            MainActivity.records.get(groupPosition).get(childPosition).setRemark(notesContent);
+            MainActivity.records.get(groupPosition).get(childPosition).setRemarkIsNull(true);
             //data.putExtra("isNull",true);
             //this.setResult(2,data);
             this.finish();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(event.getKeyCode()==KeyEvent.KEYCODE_BACK)
+        {
+            actionBack();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

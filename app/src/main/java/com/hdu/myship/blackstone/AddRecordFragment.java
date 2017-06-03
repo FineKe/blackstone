@@ -3,20 +3,15 @@ package com.hdu.myship.blackstone;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.audiofx.Visualizer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -42,14 +37,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +51,6 @@ import database.Record;
 import database.Species;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.hdu.myship.blackstone.R.mipmap.right_arrow;
 
 /**
  * Created by MY SHIP on 2017/3/18.
@@ -82,9 +74,9 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private String TAG = "AddRecordFragment";
 
     private LocationManager locationManager;
-    private Location location;
+    private Location mlocation;
     private String privoder;
-
+    private LocationListener locationListener;
     private TextView save;
 
 
@@ -190,11 +182,34 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         initData();
         myExpandListViewAdapter = new MyExpandListViewAdapter(records);
+        locationListener=new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mlocation = location;
+                Log.d(TAG, "onLocationChanged: "+location.toString());
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Toast.makeText(getContext(),provider, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                Toast.makeText(getContext(),provider+"打开", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Toast.makeText(getContext(),provider+"关闭", Toast.LENGTH_SHORT).show();
+            }
+
+        };
     }
 
 
-    private void getLocation() {
-
+    public void getLocation()
+    {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         } else {
@@ -208,31 +223,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                 Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
             }
 
-            location = locationManager.getLastKnownLocation(privoder);
-            locationManager.requestLocationUpdates(privoder, 100, 0, new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location_) {
-                    location = location_;
-                }
 
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            });
+            locationManager.requestLocationUpdates(privoder,100,0,locationListener);
+            mlocation=locationManager.getLastKnownLocation(privoder);
         }
-
     }
+
 
 
     private void initData() {
@@ -268,7 +264,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                 } else {
                     save();
                 }
-
                 break;
         }
     }
@@ -277,13 +272,13 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      * 保存
      */
     private void save() {
-        getLocation();
         isLogined = sharedPreferences.getBoolean("islogined", false);
+        getLocation();
         if (isLogined == false) {//判断是否登录了
             showLoginDialog();//如果没有则弹出登录框
-        } else {
-
-            if (location != null) {
+        } else
+        {
+            if (mlocation != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     Long second = format.parse(year + "-" + month + "-" + day).getTime();
@@ -292,13 +287,9 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-//                        Intent intent=new Intent(getContext(),UploadIntentService.class);
-//                        intent.putExtra("lat",location.getLatitude());
-//                        intent.putExtra("lon",location.getLongitude());
-//                        intent.putExtra("milliseconds",millisecond);
-//                        getContext().startService(intent);
                 DecimalFormat d = new DecimalFormat("0.0000");
-                upLoadData(millisecond, Double.parseDouble(d.format(location.getLatitude())), Double.parseDouble(d.format(location.getLongitude())));
+                upLoadData(millisecond, Double.parseDouble(d.format(mlocation.getLatitude())), Double.parseDouble(d.format(mlocation.getLongitude())));
+                locationManager.removeUpdates(locationListener);
             } else {
                 Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
             }

@@ -467,7 +467,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         imgView.setBackground(getDrawable(R.drawable.view_pager_background));
         imgView.setCornerRadius(6);
         imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(this).load(picture + "imageView2/0/w/400/h/300").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this, 6)).into(imgView);
+        Glide.with(this).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this, 6)).into(imgView);
         return imgView;
     }
 

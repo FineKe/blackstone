@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,19 +43,23 @@ public class GuideFragment extends Fragment implements View.OnClickListener{
         switch (v.getId())
         {
             case R.id.guideFragment_linearlayout_tab1:
-                Toast.makeText(getContext(), "tab1", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),GuideTabOneActivity.class));
+//                Toast.makeText(getContext(), "tab1", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.guideFragment_linearlayout_tab2:
-                Toast.makeText(getContext(), "tab2", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "tab2", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),GuideTableTwoActivity.class));
                 break;
 
             case R.id.guideFragment_linearlayout_tab3:
-                Toast.makeText(getContext(), "tab3", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "tab3", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),GuideTableThreeActivity.class));
                 break;
 
             case R.id.guideFragment_linearlayout_tab4:
-                Toast.makeText(getContext(), "tab4", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "tab4", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),GuideTableFourActivity.class));
                 break;
         }
     }

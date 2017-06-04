@@ -154,6 +154,7 @@ public class ClipActivity extends Activity {
         RequestQueue requestQueue=Volley.newRequestQueue(getContext());
         Map<String,String>map=new HashMap<>();
         map.put("avatar",imageKey);
+
         JSONObject jsonObject=new JSONObject(map);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, upLoadImageURL, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -189,6 +190,7 @@ public class ClipActivity extends Activity {
                 UpdateToken updateToken=new UpdateToken(getContext());
                 updateToken.updateToken();
                 UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
+                userInformationUtil.setAvatar("http://img.blackstone.ebirdnote.cn/"+imageKey);
                 headers.put("token",userInformationUtil.getToken());
                 return headers;
             }

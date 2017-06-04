@@ -64,6 +64,10 @@ public class UpdateToken {
                             information.setGender(user.getString("gender"));
                             information.setToken(data.getString("token"));
                             information.setExpireAt(data.getLong("expireAt"));
+                            if(user.has("avatar"))
+                            {
+                                information.setAvatar(user.getString("avatar"));
+                            }
                         }
                         else
                         {

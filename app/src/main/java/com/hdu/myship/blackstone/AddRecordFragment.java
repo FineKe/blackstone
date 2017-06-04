@@ -186,7 +186,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onLocationChanged(Location location) {
                 mlocation = location;
-                Log.d(TAG, "onLocationChanged: "+location.toString());
+                Toast.makeText(getContext(),location.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

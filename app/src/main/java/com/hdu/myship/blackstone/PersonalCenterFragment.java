@@ -40,6 +40,7 @@ import java.util.Map;
 
 public class PersonalCenterFragment extends Fragment implements View.OnClickListener{
     private String loginURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
     private RequestQueue requestQueue;
 
     private FragmentManager fragmentManager;//fragment 管理者
@@ -204,7 +205,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                                 userInformationEditor.putString("password",inputPassword.getText().toString());
                                 if(user.has("avatar"))
                                 {
-
+                                    userInformationEditor.putString("avatar",user.getString("avatar"));
                                 }
                               //  userInformationEditor.putString("avatar",data.getString("avatar"));
                                 userInformationEditor.commit();
@@ -262,5 +263,4 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
             }
         });
     }
-
 }

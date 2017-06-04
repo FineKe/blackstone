@@ -38,6 +38,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -52,6 +53,8 @@ import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.hdu.myship.blackstone.MyApplication.getContext;
+
 /**
  * Created by MY SHIP on 2017/5/7.
  */
@@ -59,6 +62,7 @@ import java.util.Map;
 public class LoginedFragment extends Fragment implements View.OnClickListener{
     private String getUpLoadTokenURL="http://api.blackstone.ebirdnote.cn/v1/upload/token";
     private String upLoadImageURL="http://api.blackstone.ebirdnote.cn/v1/user/avatar";
+    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
 
     private String TAG="LoginedFragment";
     private final int CHOOSE_PICTURE=1;
@@ -89,6 +93,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
     private String uploadtoken;
     private String imageKey;
     private String path;
+    private UserInformationUtil userInformationUtil;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -96,6 +101,15 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         myCollections= (ImageView) view.findViewById(R.id.logined_fragment_my_collections);
         myRecords= (ImageView) view.findViewById(R.id.logined_fragment_my_records);
         picture= (ImageView) view.findViewById(R.id.logined_fragment_image_view_picture);
+
+        if(userInformationUtil.getAvatar()!=null)
+        {
+            Glide.with(getContext()).load(userInformationUtil.getAvatar()).placeholder(R.mipmap.person_center).into(picture);
+        }else
+        {
+            Glide.with(getContext()).load(R.mipmap.person_center).into(picture);
+        }
+
         name= (TextView) view.findViewById(R.id.logined_frgment_textView_name);
 
 
@@ -119,7 +133,9 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
     private void initData() {
         userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,Context.MODE_PRIVATE);
         userInformationEditor=userInformationSharedPreferences.edit();
+        userInformationUtil=new UserInformationUtil(getContext());
     }
+
 
 
     @Override
@@ -142,9 +158,21 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(userInformationUtil.getAvatar()!=null)
+        {
+            Glide.with(getContext()).load(userInformationUtil.getAvatar()).placeholder(R.mipmap.person_center).into(picture);
+        }else
+        {
+            Glide.with(getContext()).load(R.mipmap.person_center).into(picture);
+        }
+    }
+
     private void alterPicture() {
 
-        TextView deletePicture;
+        final TextView deletePicture;
         TextView choosePicture;
         final TextView takePhoto;
         TextView actionCancel;
@@ -155,6 +183,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_actionsheet, null);
         view.setMinimumWidth(display.getWidth());
         dialog.setContentView(view);
+        dialog.setCancelable(false);
         Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -172,13 +201,18 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                deletePicture();
+                Glide.with(getContext()).load(R.mipmap.person_center).into(picture);
+
             }
         });
 
         choosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 choosePictures();
+
             }
         });
 
@@ -187,6 +221,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
             public void onClick(View v) {
                 dialog.dismiss();
                 takePhoto();
+
             }
         });
 
@@ -197,6 +232,12 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+    }
+
+    private void deletePicture() {
+        upLoadImage();
+        UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
+        userInformationUtil.setAvatar(null);
     }
 
     private void takePhoto() {
@@ -221,7 +262,52 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         startActivityForResult(choosePictureIntent,CHOOSE_PICTURE);
     }
 
-
+    public void upLoadImage()
+    {
+        RequestQueue requestQueue=Volley.newRequestQueue(getContext());
+        Map<String,String>map=new HashMap<>();
+        map.put("avatar",null);
+        JSONObject jsonObject=new JSONObject(map);
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, upLoadImageURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        Log.d(TAG, "onResponse:上传成功 ");
+                        Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
+//                        Message message=new Message();
+//                        message.what=UPLOAD_IMAGE_OK;
+//                        handler.sendMessage(message);
+                    }
+                    else
+                    {
+                        String message=jsonObject.getString("message");
+                        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String>headers=new HashMap<>();
+                UpdateToken updateToken=new UpdateToken(getContext());
+                updateToken.updateToken();
+                UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
+                headers.put("token",userInformationUtil.getToken());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -231,36 +317,58 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         switch (requestCode) {
             case CHOOSE_PICTURE://相册
                 System.out.println("1");
-                choosePictureUri = data.getData();
-                String[] proj = { MediaStore.Images.Media.DATA };
-                Cursor cursor =getActivity().managedQuery(choosePictureUri, proj, null, null,null);
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                choosePicturePath = cursor.getString(column_index);// 图片在的路径
-                Intent intent3=new Intent(getContext(), ClipActivity.class);
-                intent3.putExtra("path", choosePicturePath);
-                startActivityForResult(intent3, CHOOSE_PICTURE_RESULT);
+                if(data.getData()!=null)
+                {
+                    choosePictureUri = data.getData();
+                    String[] proj = { MediaStore.Images.Media.DATA };
+//                    Cursor cursor =getActivity().managedQuery(choosePictureUri, proj, null, null,null);
+                    Cursor cursor=getActivity().getContentResolver().query(choosePictureUri,proj,null,null,null);
+                    if(cursor!=null)
+                    {
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        choosePicturePath = cursor.getString(column_index);// 图片在的路径
+                    }
+                    else
+                    {
+                        choosePicturePath=choosePictureUri.getPath();
+                    }
+                    if(choosePicturePath!=null)
+                    {
+                        Intent intent3=new Intent(getContext(), ClipActivity.class);
+                        intent3.putExtra("path", choosePicturePath);
+                        startActivityForResult(intent3, CHOOSE_PICTURE_RESULT);
+                    }
+                }
                 break;
             case CHOOSE_PICTURE_RESULT:
                 Toast.makeText(getContext(), "111111", Toast.LENGTH_SHORT).show();
                 System.out.println("2");
-                final String temppath = data.getStringExtra("path");
-                picture.setImageBitmap(getLoacalBitmap(temppath));
-                Log.d(TAG, "getLoacalBitmap: "+"null");
+                if(data!=null)
+                {
+                    final String temppath = data.getStringExtra("path");
+                    picture.setImageBitmap(getLoacalBitmap(temppath));
+                    Log.d(TAG, "getLoacalBitmap: "+"null");
 
+                }
                 break;
             case TAKE_PHOTO:
                 takePhotoPath=takePhotoSavePath+takePhotoSaveName;
-                takePhotoimageUri = Uri.fromFile(new File(takePhotoPath));
-                Intent intent2=new Intent(getContext(), ClipActivity.class);
-                intent2.putExtra("path", takePhotoPath);
-                startActivityForResult(intent2, TAKE_PHOTO_RESULT);
+                if(takePhotoPath!=null)
+                {
+                    takePhotoimageUri = Uri.fromFile(new File(takePhotoPath));
+                    Intent intent2=new Intent(getContext(), ClipActivity.class);
+                    intent2.putExtra("path", takePhotoPath);
+                    startActivityForResult(intent2, TAKE_PHOTO_RESULT);
+                }
                 break;
 
             case TAKE_PHOTO_RESULT:
-                final String tempath = data.getStringExtra("path");
-                picture.setImageBitmap(getLoacalBitmap(tempath));
-
+                if(data!=null)
+                {
+                    final String tempath = data.getStringExtra("path");
+                    picture.setImageBitmap(getLoacalBitmap(tempath));
+                }
                 break;
 
         }
@@ -275,5 +383,64 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
             return null;
         }
 
+    }
+
+    public void updateUserInformation(Context context)
+    {
+
+        RequestQueue requestQueue= Volley.newRequestQueue(context);
+        Map<String,String> map=new HashMap<>();
+        map.put("username",userInformationUtil.getUserName());
+        map.put("pwd",userInformationUtil.getUserPwd());
+        JSONObject jsonObject=new JSONObject(map);
+        JsonObjectRequest updateRquest=new JsonObjectRequest(Request.Method.POST, updateURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        JSONObject data=jsonObject.getJSONObject("data");
+                        JSONObject user=jsonObject.getJSONObject("user");
+                        userInformationUtil.setId(user.getLong("id"));
+                        userInformationUtil.setUserName(user.getString("mobile"));
+                        userInformationUtil.setStudentId(user.getString("studentId"));
+                        userInformationUtil.setName(user.getString("name"));
+                        userInformationUtil.setGender(user.getString("gender"));
+                        userInformationUtil.setToken(data.getString("token"));
+                        userInformationUtil.setExpireAt(data.getLong("expireAt"));
+                        if(user.has("avatar"))
+                        {
+                            userInformationUtil.setAvatar(user.getString("avatar"));
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(userInformationUtil.getAvatar()!=null)
+                                {
+                                    Glide.with(getContext()).load(userInformationUtil.getAvatar()).placeholder(R.mipmap.person_center).into(picture);
+                                }else
+                                {
+                                    Glide.with(getContext()).load(R.mipmap.person_center).into(picture);
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        String message=jsonObject.getString("message");
+                        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(updateRquest);
     }
 }

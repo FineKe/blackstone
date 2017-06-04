@@ -23,6 +23,7 @@ import java.util.Map;
  */
 
 public class UserInformationUtil {
+    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
     private SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static Context context;
@@ -132,4 +133,51 @@ public class UserInformationUtil {
         editor.putLong("expireAt",expireAt);
         editor.apply();
     }
+
+    public void updateUserInfomation()
+    {   final UserInformationUtil information=new UserInformationUtil(context);
+        RequestQueue requestQueue= Volley.newRequestQueue(context);
+        Map<String,String> map=new HashMap<>();
+        map.put("username",information.getUserName());
+        map.put("pwd",information.getUserPwd());
+        JSONObject jsonObject=new JSONObject(map);
+        JsonObjectRequest updateRquest=new JsonObjectRequest(Request.Method.POST, updateURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        JSONObject data=jsonObject.getJSONObject("data");
+                        JSONObject user=jsonObject.getJSONObject("user");
+                        information.setId(user.getLong("id"));
+                        information.setUserName(user.getString("mobile"));
+                        information.setStudentId(user.getString("studentId"));
+                        information.setName(user.getString("name"));
+                        information.setGender(user.getString("gender"));
+                        information.setToken(data.getString("token"));
+                        information.setExpireAt(data.getLong("expireAt"));
+                        if(user.has("avatar"))
+                        {
+                            information.setAvatar(user.getString("avatar"));
+                        }
+                    }
+                    else
+                    {
+                        String message=jsonObject.getString("message");
+                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(context, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(updateRquest);
+    }
+
 }

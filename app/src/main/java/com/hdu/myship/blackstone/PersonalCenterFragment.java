@@ -101,7 +101,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     private void initData() {
         fragmentManager=getActivity().getSupportFragmentManager();
         transaction=fragmentManager.beginTransaction();
-        sharedPreferences=getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
+        sharedPreferences=getContext().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
         editor=sharedPreferences.edit();
 
         userInformationSharedPreferences=getActivity().getSharedPreferences(userInformation,Context.MODE_PRIVATE);
@@ -199,7 +199,6 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                                 userInformationEditor.putString("studentId",user.getString("studentId"));
                                 userInformationEditor.putString("name",user.getString("name"));
                                 userInformationEditor.putString("gender",user.getString("gender"));
-                                userInformationEditor.putString("mail",user.getString("mail"));
                                 userInformationEditor.putString("token",data.getString("token"));
                                 userInformationEditor.putLong("expireAt",data.getLong("expireAt"));
                                 userInformationEditor.putString("password",inputPassword.getText().toString());
@@ -207,8 +206,12 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                                 {
                                     userInformationEditor.putString("avatar",user.getString("avatar"));
                                 }
+                                else
+                                {
+                                    userInformationEditor.putString("avatar",null);
+                                }
                               //  userInformationEditor.putString("avatar",data.getString("avatar"));
-                                userInformationEditor.commit();
+                                userInformationEditor.apply();
                                 transaction.replace(R.id.frame_layout,new LoginedFragment()).commit();
 
                             }

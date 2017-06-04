@@ -36,6 +36,8 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -223,7 +225,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         adapter = new MyViewPagerAdapter();
         viewPager.setAdapter(adapter);
 
-        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(), 3, 3, TimeUnit.SECONDS);
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -479,22 +481,50 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         return pointer;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(), 3, 3, TimeUnit.SECONDS);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(scheduledExecutorService!=null)
+        {
+            scheduledExecutorService.shutdown();
+        }
+    }
+
     private class ViewPagerTask implements Runnable {
         @Override
         public void run() {
-            if (start == true) {
-                currentIndex = (currentIndex + 1) % views.size();
-                //更新界面
-                handler.obtainMessage().sendToTarget();
-            }
+            System.out.println(currentIndex);
+            currentIndex = (currentIndex + 1) %views.size();
+            //更新界面
+            Message message=new Message();
+            message.what=0;
+            handler.sendMessage(message);
         }
     }
 
     private Handler handler = new Handler() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void handleMessage(Message msg) {
             //设置当前页面
-            viewPager.setCurrentItem(currentIndex);
+            switch (msg.what)
+            {
+                case 0: viewPager.setCurrentItem(currentIndex);
+                    break;
+                case 1:
+                    createAllView();
+                    start=true;
+                    System.out.println(1);
+
+                    break;
+            }
+
         }
     };
 
@@ -582,13 +612,9 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                             JsonResolverSpeciesDetailed speciesDetailed = new JsonResolverSpeciesDetailed(jsonObject);
                             speciesDetailed.ResolveSpeciesDetailed();
                             speciesDetaileds = speciesDetailed.getResultObject();
-                            runOnUiThread(new Runnable() {
-                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                                @Override
-                                public void run() {
-                                    createAllView();
-                                }
-                            });
+                            Message message=new Message();
+                            message.what=1;
+                            handler.sendMessage(message);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

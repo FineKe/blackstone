@@ -143,19 +143,12 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     Log.d(TAG, "onResponse: "+jsonObject.toString());
-                    try {
-                        int code=jsonObject.getInt("code");
-                        if(code==88)
-                        {
+
                             editor.putBoolean("islogined",false).apply();//将用户登录设为false
                             resetUserInfomation();
                             finish();
                             overridePendingTransition(R.anim.in,R.anim.out);
-                            Log.d(TAG, "onResponse: "+code);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
                 }
             }, new Response.ErrorListener() {
                 @Override

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -212,22 +214,58 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            ActivityCompat.OnRequestPermissionsResultCallback requestPermissionsResultCallback=new ActivityCompat.OnRequestPermissionsResultCallback() {
+                @Override
+                public void onRequestPermissionsResult(int i, @NonNull String[] strings, @NonNull int[] ints) {
+                    switch (i)
+                    {
+                        case 1:
+                            if(ints.length>0&&ints[0]==PackageManager.PERMISSION_GRANTED&&ints[1]==PackageManager.PERMISSION_GRANTED)
+                            {
+                                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                                Criteria criteria = new Criteria();
+                                List<String> list = locationManager.getProviders(true);
+                                if (list.contains(LocationManager.GPS_PROVIDER)) {
+                                    privoder = LocationManager.NETWORK_PROVIDER;
+                                } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                                    privoder = LocationManager.GPS_PROVIDER;
+                                } else {
+                                    Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }else
+                            {
+                                Toast.makeText(getContext(), "你拒绝了权限", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                    }
+                }
+            };
+
         } else {
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             List<String> list = locationManager.getProviders(true);
             if (list.contains(LocationManager.GPS_PROVIDER)) {
-                privoder = LocationManager.GPS_PROVIDER;
-            } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
                 privoder = LocationManager.NETWORK_PROVIDER;
+            } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                privoder = LocationManager.GPS_PROVIDER;
             } else {
                 Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
             }
-
-
+        }
+        if(privoder!=null)
+        {
             locationManager.requestLocationUpdates(privoder,100,0,locationListener);
             mlocation=locationManager.getLastKnownLocation(privoder);
+        }else
+        {
+            Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
         }
+
     }
+
+
+
 
 
 
@@ -295,6 +333,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
         }
     }
+
 
 
     class MyExpandListViewAdapter extends BaseExpandableListAdapter {

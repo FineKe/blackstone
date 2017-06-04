@@ -62,14 +62,15 @@ public class ClipActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         loadingDialog=new ProgressDialog(this);
         loadingDialog.setTitle("请稍后...");
+        loadingDialog.setCancelable(false);
         path=getIntent().getStringExtra("path");
         if(TextUtils.isEmpty(path)||!(new File(path).exists())){
-            Toast.makeText(this, "图片加载失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "图片加载失败1",Toast.LENGTH_SHORT).show();
             return;
         }
         Bitmap bitmap= ImageTools.convertToBitmap(path, 600,600);
         if(bitmap==null){
-            Toast.makeText(this, "图片加载失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "图片加载失败2",Toast.LENGTH_SHORT).show();
             return;
         }
         mClipImageLayout = (ClipImageLayout) findViewById(R.id.id_clipImageLayout);

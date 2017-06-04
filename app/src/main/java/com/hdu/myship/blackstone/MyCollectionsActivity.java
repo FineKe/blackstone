@@ -63,6 +63,7 @@ public class MyCollectionsActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private JsonObjectRequest getCollectionRequest;
     private ListView listView;
+    private LinearLayout actionBack;
     private MyAdapter listAdapter;
     public static List<SpeciesClass> speciesClassList;//该list声明为静态，是为了与下一级界面共享该数据
 
@@ -84,9 +85,15 @@ public class MyCollectionsActivity extends AppCompatActivity {
 
     private void initViews() {
         listView= (ListView) findViewById(R.id.activity_my_collection_list_view);
+        actionBack= (LinearLayout) findViewById(R.id.activity_my_collection_linear_layout_action_back);
         listView.setAdapter(listAdapter);
 
-
+        actionBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initEvents() {

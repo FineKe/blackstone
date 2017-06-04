@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -317,7 +318,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         switch (requestCode) {
             case CHOOSE_PICTURE://相册
                 System.out.println("1");
-                if(data.getData()!=null)
+                if(data!=null)
                 {
                     choosePictureUri = data.getData();
                     String[] proj = { MediaStore.Images.Media.DATA };
@@ -353,13 +354,19 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
                 }
                 break;
             case TAKE_PHOTO:
-                takePhotoPath=takePhotoSavePath+takePhotoSaveName;
-                if(takePhotoPath!=null)
-                {
-                    takePhotoimageUri = Uri.fromFile(new File(takePhotoPath));
-                    Intent intent2=new Intent(getContext(), ClipActivity.class);
-                    intent2.putExtra("path", takePhotoPath);
-                    startActivityForResult(intent2, TAKE_PHOTO_RESULT);
+                takePhotoPath = takePhotoSavePath + takePhotoSaveName;
+                if (takePhotoPath!=null) {
+                    if (takePhotoimageUri != null) {
+                        takePhotoimageUri = Uri.fromFile(new File(takePhotoPath));
+                        if((new File(takePhotoPath)).exists())
+                        {
+                            Intent intent2 = new Intent(getContext(), ClipActivity.class);
+                            intent2.putExtra("path", takePhotoPath);
+                            startActivityForResult(intent2, TAKE_PHOTO_RESULT);
+                        }
+
+                    }
+
                 }
                 break;
 

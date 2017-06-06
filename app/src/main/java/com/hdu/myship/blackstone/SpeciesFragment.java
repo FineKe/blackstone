@@ -32,10 +32,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.FileDescriptorBitmapDataLoadProvider;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
@@ -51,9 +60,12 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  */
 
 public class SpeciesFragment extends Fragment{
+    private String getCategoryURL="http://api.blackstone.ebirdnote.cn/v1/species/categories";
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
+    private StickyListViewAdapter stickyListViewAdapter;
     private String speciesType[]={"amphibia","reptiles","bird"};
+    boolean flag=true;
     private ImageView searchView;
     @Nullable
     @Override
@@ -61,7 +73,8 @@ public class SpeciesFragment extends Fragment{
         View view=inflater.inflate(R.layout.species,container,false);
         speciesClassListView= (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
         searchView= (ImageView) view.findViewById(R.id.species_title_image_view_search_view);
-        speciesClassListView.setAdapter(new StickyListViewAdapter(speciesClassesList,getContext()));
+        stickyListViewAdapter=new StickyListViewAdapter(speciesClassesList,getContext());
+        speciesClassListView.setAdapter(stickyListViewAdapter);
         speciesClassListView.setDivider(null);
         speciesClassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,28 +105,30 @@ public class SpeciesFragment extends Fragment{
 
     private void createClassList() {
         speciesClassesList=new ArrayList<>();
-        /**
-         * 将R.mipmap.species的图片ID封装到数组
-         */
-        int []speciesPicturesId={R.mipmap.species1,R.mipmap.species2,R.mipmap.species3,R.mipmap.species4,R.mipmap.species5,R.mipmap.species6,
-                R.mipmap.species7,R.mipmap.species8,R.mipmap.species9,R.mipmap.species10,R.mipmap.species11,R.mipmap.species12,
-                R.mipmap.species13,R.mipmap.species14,R.mipmap.species15,R.mipmap.species16,R.mipmap.species17,R.mipmap.species18,R.mipmap.species19};
-        int i=0;
-        for(String string:getResources().getStringArray(R.array.vertebrate))//创建脊椎动物类列表
-        {
+//        /**
+//         * 将R.mipmap.species的图片ID封装到数组
+//         */
+//        int []speciesPicturesId={R.mipmap.species1,R.mipmap.species2,R.mipmap.species3,R.mipmap.species4,R.mipmap.species5,R.mipmap.species6,
+//                R.mipmap.species7,R.mipmap.species8,R.mipmap.species9,R.mipmap.species10,R.mipmap.species11,R.mipmap.species12,
+//                R.mipmap.species13,R.mipmap.species14,R.mipmap.species15,R.mipmap.species16,R.mipmap.species17,R.mipmap.species18,R.mipmap.species19};
+//        int i=0;
+//        for(String string:getResources().getStringArray(R.array.vertebrate))//创建脊椎动物类列表
+//        {
+//
+//            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",string,speciesPicturesId[i]);
+//            speciesClassesList.add(speciesClasses);
+//            i++;
+//        }
+//
+//        for(String string:getResources().getStringArray(R.array.invertebrate))//创建无脊椎动物类列表
+//        {
+//
+//            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",string,speciesPicturesId[i]);
+//            speciesClassesList.add(speciesClasses);
+//            i++;
+//        }
+            GetCategory();
 
-            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",string,speciesPicturesId[i]);
-            speciesClassesList.add(speciesClasses);
-            i++;
-        }
-
-        for(String string:getResources().getStringArray(R.array.invertebrate))//创建无脊椎动物类列表
-        {
-
-            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",string,speciesPicturesId[i]);
-            speciesClassesList.add(speciesClasses);
-            i++;
-        }
     }
 
     private class StickyListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter
@@ -159,11 +174,55 @@ public class SpeciesFragment extends Fragment{
             convertView=inflater.inflate(R.layout.species_classes_list_view_item,parent,false);
             ImageView picture= (ImageView) convertView.findViewById(R.id.species_classes_item_image_view_class_picture);
             TextView className= (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
-            picture.setImageResource(list.get(position).getPictureId());
+            Glide.with(getContext()).load(list.get(position).getMainPhoto()).into(picture);
             className.setText(list.get(position).getClassName());
             return convertView;
         }
     }
 
+    public void GetCategory()
+    {
+        RequestQueue requestQueue= Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, getCategoryURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        JSONObject data=jsonObject.getJSONObject("data");
+                        JSONArray invertebrate=data.getJSONArray("无脊椎动物");
+                        JSONArray vertebrate=data.getJSONArray("脊椎动物");
 
+                        for(int i=0;i<vertebrate.length();i++)
+                        {   JSONObject object=vertebrate.getJSONObject(i);
+                            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",object.getString("name"),object.getString("img"));
+                            speciesClassesList.add(speciesClasses);
+                        }
+
+                        for(int i=0;i<invertebrate.length();i++)
+                        {   JSONObject object=invertebrate.getJSONObject(i);
+                            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",object.getString("name"),object.getString("img"));
+                            speciesClassesList.add(speciesClasses);
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                stickyListViewAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
 }

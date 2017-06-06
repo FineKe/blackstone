@@ -257,10 +257,13 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
 
     public void choosePictures()
     {
-        Intent choosePictureIntent=new Intent(Intent.ACTION_GET_CONTENT);
-        choosePictureIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+        Intent choosePictureIntent=new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //choosePictureIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         dialog.dismiss();
         startActivityForResult(choosePictureIntent,CHOOSE_PICTURE);
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("image/*");//相片类型
+//        startActivityForResult(intent, CHOOSE_PICTURE);
     }
 
     public void upLoadImage()
@@ -318,29 +321,20 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         switch (requestCode) {
             case CHOOSE_PICTURE://相册
                 System.out.println("1");
-                if(data!=null)
-                {
+                if (data != null) {
                     choosePictureUri = data.getData();
-                    String[] proj = { MediaStore.Images.Media.DATA };
-//                    Cursor cursor =getActivity().managedQuery(choosePictureUri, proj, null, null,null);
-                    Cursor cursor=getActivity().getContentResolver().query(choosePictureUri,proj,null,null,null);
-                    if(cursor!=null)
-                    {
-                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                        cursor.moveToFirst();
-                        choosePicturePath = cursor.getString(column_index);// 图片在的路径
-                    }
-                    else
-                    {
-                        choosePicturePath=choosePictureUri.getPath();
-                    }
-                    if(choosePicturePath!=null)
-                    {
-                        Intent intent3=new Intent(getContext(), ClipActivity.class);
-                        intent3.putExtra("path", choosePicturePath);
-                        startActivityForResult(intent3, CHOOSE_PICTURE_RESULT);
-                    }
+                    choosePicturePath = choosePictureUri.getPath();
+                    String[] proj = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(choosePictureUri, proj, null, null, null);
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    choosePicturePath = cursor.getString(column_index);// 图片在的路径
+                    Intent intent3 = new Intent(getContext(), ClipActivity.class);
+                    intent3.putExtra("path", choosePicturePath);
+                    startActivityForResult(intent3, CHOOSE_PICTURE_RESULT);
+
                 }
+
                 break;
             case CHOOSE_PICTURE_RESULT:
                 Toast.makeText(getContext(), "111111", Toast.LENGTH_SHORT).show();

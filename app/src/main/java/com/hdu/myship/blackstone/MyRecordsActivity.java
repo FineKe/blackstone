@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import database.Record;
+
 public class MyRecordsActivity extends AppCompatActivity {
     private String getRecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/user/";
     private String removeRecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/";
@@ -65,6 +67,23 @@ public class MyRecordsActivity extends AppCompatActivity {
         actionBack= (LinearLayout) findViewById(R.id.activity_my_record_linear_layout_action_back);
         removeRecordRecycleView= (ItemRemoveRecordRecycle) findViewById(R.id.activity_my_records_item_remove_recycler_view);
         removeRecordRecycleView.setLayoutManager(new LinearLayoutManager(this));
+
+        /**if(recordList.size()>1)
+        {    Record temp=new Record();
+            temp.setTime(0l);
+            for(int i=0;i<recordList.size();i++)
+                for(int j=i;j<recordList.size()-i;j++)
+                {
+                    if(recordList.get(j).getTime()>recordList.get(j+1).getTime())
+                    {
+                        temp=recordList.get(j);
+                        recordList.add(j,recordList.get(j+1));
+                        recordList.add(j+1,temp);
+
+                    }
+                }
+        }*/
+
         itemRemoveRcordAdapter=new ItemRemoveRcordAdapter(this,recordList);
         removeRecordRecycleView.setAdapter(itemRemoveRcordAdapter);
         removeRecordRecycleView.setOnItemClickListener(new OnItemRemoveRecord() {
@@ -144,7 +163,14 @@ public class MyRecordsActivity extends AppCompatActivity {
                                     Record record=new Record();
                                     record.setId(data.getJSONObject(i).getInt("id"));
                                     record.setUserId(data.getJSONObject(i).getInt("userId"));
-                                    record.setTime(data.getJSONObject(i).getLong("time"));
+                                    if(data.getJSONObject(i).has("time"))
+                                    {
+                                        record.setTime(data.getJSONObject(i).getLong("time"));
+                                    }
+                                    else
+                                    {
+                                        record.setTime(0l);
+                                    }
                                     ArrayList<NoteCounts> noteCountses=new ArrayList<>();
                                     JSONArray notecounts=data.getJSONObject(i).getJSONArray("noteCounts");
                                     for(int j=0;j<notecounts.length();j++)
@@ -248,5 +274,4 @@ public class MyRecordsActivity extends AppCompatActivity {
             this.count = count;
         }
     }
-
 }

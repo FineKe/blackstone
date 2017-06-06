@@ -9,13 +9,13 @@ public class SpeciesClasses {
     private int id;//用于区分是否处于同一header下
     private String title;
     private String className;//类别名称
-    private int pictureId;
+    private String mainPhoto;
 
-    public SpeciesClasses(int id, String title, String className, int pictureId) {
+    public SpeciesClasses(int id, String title, String className, String mainPhoto) {
         this.id = id;
         this.title = title;
         this.className = className;
-        this.pictureId = pictureId;
+        this.mainPhoto=mainPhoto;
     }
 
     public int getId() {
@@ -42,11 +42,11 @@ public class SpeciesClasses {
         this.className = className;
     }
 
-    public int getPictureId() {
-        return pictureId;
+    public String getMainPhoto() {
+        return mainPhoto;
     }
 
-    public void setPictureId(int pictureId) {
-        this.pictureId = pictureId;
+    public void setMainPhoto(String mainPhoto) {
+        this.mainPhoto = mainPhoto;
     }
 }

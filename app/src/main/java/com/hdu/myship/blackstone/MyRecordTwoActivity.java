@@ -43,7 +43,6 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
     private String getRecordDeatailedURL="http://api.blackstone.ebirdnote.cn/v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRcordDeatailedRquest;
-    private int recordId;
     private String TAG="MyRecordTwoActivity";
 
     private TextView date;
@@ -53,6 +52,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
     public static List<List<Note>> noteList;
     private List<String>father;
     private RecordDeatailedAdapter recordDeatailedAdapter;
+    private  int recordId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +85,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
         recordId=getIntent().getIntExtra("recordId",0);
         requestQueue= Volley.newRequestQueue(this);
         noteList=new ArrayList<>();
+
         father=new ArrayList<>();
         loadingNotes();
         recordDeatailedAdapter=new RecordDeatailedAdapter(this, (ArrayList<String>) father,noteList);
@@ -111,6 +112,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
     private void alter() {
         Intent intent=new Intent(this,RecordAlterActivity.class);
         intent.putExtra("time",getIntent().getLongExtra("time",0));
+        intent.putExtra("recordId",recordId);
         startActivity(intent);
     }
 
@@ -227,6 +229,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
                             {
                                 JSONObject data=jsonObject.getJSONObject("data");
                                 JSONArray notes=data.getJSONArray("notes");
+                                recordId=data.getInt("id");
                                 for(int i=0;i<notes.length();i++)
                                 {
                                     JSONObject object=notes.getJSONObject(i);
@@ -328,25 +331,26 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
                                             break;
                                     }
                                 }
-                                noteList.add(amphibiaNotes);
-                                noteList.add(reptilesNotes);
-                                noteList.add(birdNotes);
-                                noteList.add(insectNotes);
+
                                 if(amphibiaNotes.size()>0)
                                 {
                                     father.add("两栖类"+amphibiaNotes.size()+"种");
+                                    noteList.add(amphibiaNotes);
                                 }
                                 if(reptilesNotes.size()>0)
                                 {
                                     father.add("爬行类"+reptilesNotes.size()+"种");
+                                    noteList.add(reptilesNotes);
                                 }
                                 if(birdNotes.size()>0)
                                 {
                                     father.add("鸟类"+birdNotes.size()+"种");
+                                    noteList.add(birdNotes);
                                 }
                                 if(insectNotes.size()>0)
                                 {
                                     father.add("昆虫"+insectNotes.size()+"个目");
+                                    noteList.add(insectNotes);
                                 }
                                 recordDeatailedAdapter.notifyDataSetChanged();
                                 runOnUiThread(new Runnable() {

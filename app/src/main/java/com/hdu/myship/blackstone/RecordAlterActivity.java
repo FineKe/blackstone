@@ -21,20 +21,38 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import database.Record;
 import database.Species;
 
+import static com.hdu.myship.blackstone.MyApplication.getContext;
 import static com.hdu.myship.blackstone.MyRecordTwoActivity.noteList;
 
 public class RecordAlterActivity extends AppCompatActivity implements View.OnClickListener{
+    private String alterRecordURL="http://api.blackstone.ebirdnote.cn/v1/record/edit";
     private String TAG="RecordAlterActivity";
     private static final int CREATE_OK = 1;
     private TextView date;
@@ -49,7 +67,13 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
     private boolean datePickerShow = false;
     private Long time;
 
+    private int year_;
+    private int month_;
+    private int day_;
+    private Long millisecond;
 
+
+    private List<List<MyRecordTwoActivity.Note>> noteList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +87,15 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
     private void initData() {
         time=getIntent().getLongExtra("time",0);
         recordList=new ArrayList<>();
+        noteList=MyRecordTwoActivity.noteList;
         adapter=new MyExpandListViewAdapter(this,recordList);
         progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("请稍后...");
         progressDialog.setCancelable(false);
         createBaseRecord();
     }
+
+
 
     private void initViews() {
         date= (TextView) findViewById(R.id.activity_record_alter_text_view_date);
@@ -78,15 +105,22 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
 
         expandableListView= (ExpandableListView) findViewById(R.id.activity_record_alter_expandListView);
         expandableListView.setAdapter(adapter);
+        expandableListView.setGroupIndicator(null);
 
         Date da=new Date(getIntent().getLongExtra("time",0));
         SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
         String mdate=format.format(da);
         Log.d(TAG, "onBindViewHolder:"+da.toString() );
         date.setText(mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日");
+        year_=Integer.parseInt(mdate.substring(0, 4));
+        month_=Integer.parseInt(mdate.substring(5, 7));
+        day_=Integer.parseInt(mdate.substring(8, 10));
         datePicker.init(Integer.parseInt(mdate.substring(0, 4)), Integer.parseInt(mdate.substring(5, 7))-1, Integer.parseInt(mdate.substring(8, 10)), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                year_=year;
+                month_=monthOfYear;
+                day_=dayOfMonth;
                 date.setText(year+"年"+(monthOfYear+1)+"月"+dayOfMonth+"日");
             }
         });
@@ -95,7 +129,10 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
     private void initEvents() {
         date.setOnClickListener(this);
         actionBack.setOnClickListener(this);
+        save.setOnClickListener(this);
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -107,13 +144,45 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
             case R.id.activity_record_alter_linear_layout_action_back:
                 actionBack();
                 break;
+            case R.id.activity_record_alter_text_view_save:
+                save();
+                break;
         }
+    }
+
+    private void save() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Long second = format.parse(year_ + "-" + month_ + "-" + day_).getTime();
+            System.out.println(second);
+            millisecond = second;
+            Log.d(TAG, "save: "+millisecond);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        upLoadData(millisecond);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         adapter.notifyDataSetChanged();
+
+    }
+
+    public void resetRecords() {//重置记录
+
+        for(List<Record> records:recordList)
+        {
+            for(Record record:records)
+            {
+                record.setChecked(false);
+                record.setRemarkIsNull(true);
+                record.setRemark("");
+            }
+        }
+        adapter.notifyDataSetChanged();
+
     }
 
     private void actionBack() {
@@ -222,9 +291,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
             addNotes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // GROUPPOSITION = groupPosition;
-                    //CHILDPOSITION = childPosition;
-                    startActivityForResult(new Intent(context, AddNotesActivity.class)
+                    startActivityForResult(new Intent(context, AlterNotesActivity.class)
                             .putExtra("groupPosition", groupPosition).putExtra("childPosition", childPosition), 1);
                 }
             });
@@ -279,6 +346,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
                                 record.setChecked(true);
                                 record.setRemark(note.getRemark());
                                 System.out.println(note.getRemark());
+
                             }
                         }
                     }
@@ -319,4 +387,65 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
             }
         }
     };
+
+
+    private void upLoadData(Long milliseconds) {
+       RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id",getIntent().getIntExtra("recordId",0) );
+            jsonObject.put("time",milliseconds);
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i <4; i++) {
+                for (Record record :recordList.get(i)) {
+                    if (record.isRemarkIsNull() == false && record.isChecked()) {
+                        JSONObject js = new JSONObject();
+                        js.put("speciesId", record.getSpeciesId());
+                        js.put("remark", record.getRemark());
+                        jsonArray.put(js);
+                    }
+                }
+            }
+            jsonObject.put("notes", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, alterRecordURL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code = jsonObject.getInt("code");
+                    if (code == 88) {
+                        System.out.println(code);
+                        Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        resetRecords();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        System.out.println(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                UpdateToken updateToken=new UpdateToken(getContext());
+                updateToken.updateToken();
+                UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
+                headers.put("token", userInformationUtil.getToken());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
 }

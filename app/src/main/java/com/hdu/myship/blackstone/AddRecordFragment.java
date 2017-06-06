@@ -120,12 +120,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private long millisecond;
 
     private MyExpandListViewAdapter myExpandListViewAdapter;
-
-    private int GROUPPOSITION;
-    private int CHILDPOSITION;
-
-    private List<UpdateRecordPosition> updateRecordPositionList;
-
     private String token;
 
     @Nullable
@@ -229,6 +223,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                                     privoder = LocationManager.NETWORK_PROVIDER;
                                 } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
                                     privoder = LocationManager.GPS_PROVIDER;
+
                                 } else {
                                     Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
                                 }
@@ -286,8 +281,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         createBasicRecordsEditor.putBoolean("isCreated", true).apply();
         records = MainActivity.records;
 
-        updateRecordPositionList = new ArrayList<>();
-
         sharedPreferences = getActivity().getSharedPreferences(isLoginedFile, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         isLogined = sharedPreferences.getBoolean("islogined", false);
@@ -297,11 +290,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_record_titleBar_textView_save:
-                if (updateRecordPositionList.isEmpty()) {
-                    Toast.makeText(getContext(), "你还没有添加记录", Toast.LENGTH_SHORT).show();
-                } else {
                     save();
-                }
                 break;
         }
     }
@@ -430,8 +419,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             addNotes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GROUPPOSITION = groupPosition;
-                    CHILDPOSITION = childPosition;
                     startActivityForResult(new Intent(getContext(), AddNotesActivity.class)
                             .putExtra("groupPosition", groupPosition).putExtra("childPosition", childPosition), 1);
                 }
@@ -468,19 +455,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Boolean isNull=data.getBooleanExtra("isNull",true);
-//        if(!isNull)
-//        {
-//            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(false);
-//            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemark(data.getStringExtra("Remark"));
         myExpandListViewAdapter.notifyDataSetChanged();
-//        }else
-//        {
-//            records.get(GROUPPOSITION).get(CHILDPOSITION).setRemarkIsNull(true);
-//            myExpandListViewAdapter.notifyDataSetChanged();
-//        }
-        updateRecordPositionList.add(new UpdateRecordPosition(GROUPPOSITION, CHILDPOSITION));
-        Log.d(TAG, "onActivityResult: " + GROUPPOSITION + ":" + CHILDPOSITION);
     }
 
     /**
@@ -621,15 +596,17 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void resetRecords() {
         int GROUP;
         int CHILD;
-        for (UpdateRecordPosition updateRecordPosition : updateRecordPositionList) {
-            GROUP = updateRecordPosition.getGroup();
-            CHILD = updateRecordPosition.getChild();
-            records.get(GROUP).get(CHILD).setRemark("");
-            records.get(GROUP).get(CHILD).setRemarkIsNull(true);
-            records.get(GROUP).get(CHILD).setChecked(false);
+        for(List<Record> recordls:records)
+        {
+            for(Record record:recordls)
+            {
+                record.setChecked(false);
+                record.setRemarkIsNull(true);
+                record.setRemark("");
+            }
         }
         myExpandListViewAdapter.notifyDataSetChanged();
-        updateRecordPositionList.clear();
+
     }
 
     private class UpdateRecordPosition {

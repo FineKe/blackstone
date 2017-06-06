@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
 import database.Record;
 
 public class AlterNotesActivity extends AppCompatActivity implements View.OnClickListener{
+
     private String TAG="AlterNotesActivity";
     private EditText notes;
     private LinearLayout actionBack;
@@ -27,7 +29,11 @@ public class AlterNotesActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_alter_notes);
+        initData();
+        initView();
+        initEvents();
     }
 
     private void initData() {

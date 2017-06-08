@@ -73,13 +73,14 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             {
                 HeadHolder headHolder= (HeadHolder) viewHolder;
                 headHolder.orderOrFamilyChinaeseName.setText(resultList.get(i).getHead());
-               // headHolder.orderOrFamilyLatinName.setText(resultList.get(i).getSpecies().getLatinName());
+                headHolder.orderOrFamilyLatinName.setText(resultList.get(i).getLatinHead());
             }else if(viewHolder instanceof MyHolder)
             {
                 MyHolder myHolder= (MyHolder) viewHolder;
                 myHolder.tv_englishName.setText(resultList.get(i).getSpecies().getLatinName());
                 Glide.with(context).load(resultList.get(i).getSpecies().getMainPhoto()+dealPicure).placeholder(R.mipmap.loading_small).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
                 myHolder.tv_chineseName.setText(resultList.get(i).getSpecies().getChineseName());
+                myHolder.tv_latinName.setText(resultList.get(i).getSpecies().getEnglishName());
                 myHolder.itemView.setTag(resultList.get(i).getSpecies());
             }
     }
@@ -105,8 +106,6 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tv_chineseName= (TextView) itemView.findViewById(R.id.tv_chineseName);
             tv_latinName= (TextView) itemView.findViewById(R.id.tv_latinName);
             tv_englishName= (TextView) itemView.findViewById(R.id.tv_englishName);
-
-
         }
     }
 

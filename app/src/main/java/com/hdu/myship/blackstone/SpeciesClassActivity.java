@@ -143,6 +143,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 Result result=new Result();
                 result.setHead(speciesList.get(i).getOrder());
                 result.setViewType(HEAD);
+                result.setLatinHead(speciesList.get(i).getLatinOrder());
                 resultList.add(result);
 
                 Result result1=new Result();
@@ -162,8 +163,9 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     indexList.add(speciesList.get(0).getOrder().substring(0, 1));
                     positionList.add(0);
                     Result result = new Result();
-                    result.setHead(speciesList.get(i).getOrder());
+                    result.setHead(speciesList.get(0).getOrder());
                     result.setViewType(HEAD);
+                    result.setLatinHead(speciesList.get(0).getLatinOrder());
                     resultList.add(result);
                 }
 
@@ -173,8 +175,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     Result result = new Result();
                     result.setHead(speciesList.get(i + 1).getOrder());
                     result.setViewType(HEAD);
-
-                    System.out.println(speciesList.get(i).getOrder());
+                    result.setLatinHead(speciesList.get(i+1).getLatinOrder());
+                    System.out.println(speciesList.get(i+1).getOrder());
                     Result result_ = new Result();
                     result_.setViewType(ITEM);
                     result_.setSpecies(speciesList.get(i));
@@ -217,6 +219,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                         if (k == 0) {
                             Result result = new Result();
                             result.setViewType(HEAD);
+                            result.setLatinHead(speciesList.get(i).getLatinFamily());
                             result.setHead(speciesList.get(i).getFamily());
                             resultList.add(result);
                             positionList.add(j);

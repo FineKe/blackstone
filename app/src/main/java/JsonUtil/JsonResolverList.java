@@ -44,8 +44,14 @@ public class JsonResolverList {
                         species.setSingal(object.getInt("id"));
                         species.setChineseName(object.getString("chineseName"));
                         species.setLatinName(object.getString("latinName"));
+                        if (object.has("englishName"))
+                        {
+                            species.setEnglishName(object.getString("englishName"));
+                        }
                         species.setOrder(object.getString("order"));
                         species.setFamily(object.getString("family"));
+                        species.setLatinOrder(object.getString("orderLatin"));
+                        species.setLatinFamily(object.getString("familyLatin"));
                         species.setSpeciesType(object.getString("speciesType"));
                         species.setMainPhoto(object.getString("mainPhoto"));
                         species.save();
@@ -70,7 +76,7 @@ public class JsonResolverList {
                     species.setChineseName(object.getString("chineseName"));
                     species.setLatinName(object.getString("latinName"));
                     species.setOrder(object.getString("order"));
-                    species.setFamily("无");
+                    species.setLatinOrder(object.getString("orderLatin"));
                     species.setSpeciesType(object.getString("speciesType"));
                     species.setMainPhoto(object.getString("mainPhoto"));
                     species.save();

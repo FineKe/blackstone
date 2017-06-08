@@ -6,11 +6,10 @@
 
     <TextView
         android:id="@+id/species_content_recyclerView_head_orderOrFamily_chineseName"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_weight="1"
-        android:gravity="clip_vertical|start"
+        android:layout_marginLeft="13dp"
+        android:gravity="center"
         android:text="目"
         android:textColor="@color/mycolor"
         android:textSize="17sp" />
@@ -18,9 +17,10 @@
     <TextView
         android:id="@+id/species_content_recyclerView_head_orderOrFamily_latinName"
         android:layout_width="0dp"
+        android:layout_marginLeft="11dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="clip_vertical|start"
+        android:layout_weight="1"
+        android:gravity="left"
         android:text="latinName"
         android:textColor="@color/mycolor"
         android:textSize="17sp" />

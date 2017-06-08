@@ -13,11 +13,22 @@ public class Species extends DataSupport{
 
     private int singal;
     private String chineseName;
+    private String englishName;
     private String latinName;
     private String order;
+    private String latinOrder;
     private String family;
+    private String latinFamily;
     private String mainPhoto;
     private String speciesType;
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
 
     public int getSingal() {
         return singal;
@@ -73,5 +84,21 @@ public class Species extends DataSupport{
 
     public void setSpeciesType(String speciesType) {
         this.speciesType = speciesType;
+    }
+
+    public String getLatinOrder() {
+        return latinOrder;
+    }
+
+    public void setLatinOrder(String latinOrder) {
+        this.latinOrder = latinOrder;
+    }
+
+    public String getLatinFamily() {
+        return latinFamily;
+    }
+
+    public void setLatinFamily(String latinFamily) {
+        this.latinFamily = latinFamily;
     }
 }

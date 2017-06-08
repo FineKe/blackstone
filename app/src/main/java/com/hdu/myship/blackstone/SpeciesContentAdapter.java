@@ -34,107 +34,64 @@ import ShapeUtil.GlideRoundTransform;
 import database.Species;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import static android.R.id.list;
+
 /**
  * Created by MY SHIP on 2017/3/24.
  */
 
 public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     private String dealPicure="?imageView2/0/w/400/h/400";//本平台的图片采用了cdn分发，为了节省流量，采用七牛云的api处理接口
-    private  List<Species>  list;
-  //  private  List<String> indexList;
-    //private  List<result> resultList;
+    private  List<SpeciesClassActivity.Result> resultList;
     private int HEAD=0;
     private int ITEM=1;
     private Context context;
 
     private OnRecyclerViewItemClickeListener onRecyclerViewItemClickeListener=null;
-    public SpeciesContentAdapter(List<Species> list, Context context ) {
-        this.list=list;
-        //this.indexList=indexList;
+    public SpeciesContentAdapter( Context context,List<SpeciesClassActivity.Result> resultList ) {
         this.context=context;
-        //resultList=hanleList();
+        this.resultList=resultList;
     }
 
-   /* private List<result>hanleList()
-    {
-        List<result> resultList=new ArrayList<>();
-        int count;
-        for(String index:indexList)
-        {
-            result mHresu=new result();
-            mHresu.setViewType(HEAD);
-            mHresu.setHead(index);
-            resultList.add(mHresu);
-            for(Species species:list)
-            {
-                if(species.getOrder().substring(0,1).equals(index))
-                {
-                    result r=new result();
-                    r.setViewType(ITEM);
-                    r.setSpecies(species);
-                    resultList.add(r);
-                }
-            }
-        }
-        for(result l:resultList)
-        {
-            System.out.println(l.getHead());
-        }
-
-        return resultList;
-    }*/
-
-
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       /* if(viewType==HEAD)
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        if(i==HEAD)
         {
-            return new HeadHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_head,parent,false));
+            return new HeadHolder(LayoutInflater.from(context).inflate(R.layout.species_content_recycler_view_head,viewGroup,false));
         }
-
-        else{*/
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.species_content_recycler_view_item, parent, false);
+        else {
+            View view = LayoutInflater.from(context).inflate(R.layout.species_content_recycler_view_item, viewGroup, false);
             view.setOnClickListener(this);
             MyHolder holder = new MyHolder(view);
             return holder;
-       // }
+        }
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        if(holder instanceof HeadHolder)
-//        {
-//            HeadHolder headHolder= (HeadHolder) holder;
-//            headHolder.orderOrFamilyChinaeseName.setText(resultList.get(position).getHead()+"形目");
-//            //headHolder.orderOrFamilyLatinName.setText(resultList.get(position+1).getSpecies().getLatinName());
-//        }else if(holder instanceof MyHolder)
-//        {
-            MyHolder myHolder= (MyHolder) holder;
-            myHolder.tv_englishName.setText(list.get(position).getLatinName());
-            Glide.with(context).load(list.get(position).getMainPhoto()+dealPicure).placeholder(R.mipmap.loading_small).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
-            myHolder.tv_chineseName.setText(list.get(position).getChineseName());
-            myHolder.itemView.setTag(list.get(position));
-       // }
-
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        if(viewHolder instanceof HeadHolder)
+            {
+                HeadHolder headHolder= (HeadHolder) viewHolder;
+                headHolder.orderOrFamilyChinaeseName.setText(resultList.get(i).getHead());
+               // headHolder.orderOrFamilyLatinName.setText(resultList.get(i).getSpecies().getLatinName());
+            }else if(viewHolder instanceof MyHolder)
+            {
+                MyHolder myHolder= (MyHolder) viewHolder;
+                myHolder.tv_englishName.setText(resultList.get(i).getSpecies().getLatinName());
+                Glide.with(context).load(resultList.get(i).getSpecies().getMainPhoto()+dealPicure).placeholder(R.mipmap.loading_small).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
+                myHolder.tv_chineseName.setText(resultList.get(i).getSpecies().getChineseName());
+                myHolder.itemView.setTag(resultList.get(i).getSpecies());
+            }
     }
-
-//   @Override
-//    public void onBindViewHolder(final MyHolder holder, int position) {
-//
-//        Species species=list.get(position);//从数据库中读取当前位置的物种信息
-//        Glide.with(context).load(species.getMainPhoto()+dealPicure).placeholder(R.mipmap.mainphoto_loading).transform(new GlideRoundTransform(context,8)).into(holder.imageView);//使用glide框架加载图片到imageview
-//        holder.tv_latinName.setText(species.getLatinName());
-//        holder.tv_chineseName.setText(species.getChineseName());
-//        holder.tv_englishName.setText(species.getFamily());
-//        holder.itemView.setTag(list.get(position));
-//
-//
-//    }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return resultList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return resultList.get(position).getViewType();
     }
 
     class MyHolder extends RecyclerView.ViewHolder
@@ -164,57 +121,24 @@ public class SpeciesContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
-    }
 
-    public static interface OnRecyclerViewItemClickeListener
-    {
-        void onItemClick(View view, Species data);
-    }
 
-    @Override
-    public void onClick(View v) {
-        if (onRecyclerViewItemClickeListener != null) {
-            //注意这里使用getTag方法获取数据
-            onRecyclerViewItemClickeListener.onItemClick(v,(Species) v.getTag());
-        }
-    }
 
     public void setOnRecyclerViewItemClickeListener(OnRecyclerViewItemClickeListener listener)
     {
         this.onRecyclerViewItemClickeListener=listener;
     }
 
-    class result
+    @Override
+    public void onClick(View v) {
+        if (onRecyclerViewItemClickeListener != null) {
+                //注意这里使用getTag方法获取数据
+                onRecyclerViewItemClickeListener.onItemClick(v,(Species) v.getTag());
+            }
+    }
+
+    public  interface OnRecyclerViewItemClickeListener
     {
-        int viewType;
-        String head;
-        Species species;
-
-        public int getViewType() {
-            return viewType;
-        }
-
-        public void setViewType(int viewType) {
-            this.viewType = viewType;
-        }
-
-        public String getHead() {
-            return head;
-        }
-
-        public void setHead(String head) {
-            this.head = head;
-        }
-
-        public Species getSpecies() {
-            return species;
-        }
-
-        public void setSpecies(Species species) {
-            this.species = species;
-        }
+        void onItemClick(View view, Species data);
     }
 }

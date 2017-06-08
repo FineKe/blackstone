@@ -3,12 +3,14 @@ package com.hdu.myship.blackstone;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,8 @@ import database.Reptiles;
 import database.Species;
 
 public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnClickListener{
+    private int HEAD=0;
+    private int ITEM=1;
     private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
     private RequestQueue requestQueue;
     private static final String TAG ="SpeciesClassActivity";
@@ -52,6 +56,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private ImageButton alertMenu;
     private ImageButton alertPick;
 
+    private SpeciesContentAdapter adapter;
     private TextView speciesClassName;
 
     private RecyclerView speciesContent;
@@ -61,7 +66,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private Dialog dialogAlertMenu;
 
     private List<Species> speciesList;
-
+    private List<Integer> positionList;
+    private List<Result> resultList;
     private String SpeciesType;
 
     private int position;
@@ -74,6 +80,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private IsLoginUtil isLoginUtil;
     private UpdateToken updateToken;
 
+
+    private SharedPreferences sortingSharedPreferences;
+    private SharedPreferences.Editor sortingEditor;
+    private String sortingValueFile="FamilyOROrder";
+    private boolean sortingByOrder=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,16 +121,117 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
     private void initData() {
+        sortingSharedPreferences=getSharedPreferences(sortingValueFile,MODE_PRIVATE);
+        sortingEditor=sortingSharedPreferences.edit();
+        sortingByOrder=sortingSharedPreferences.getBoolean("sortingWay",true);
         requestQueue= Volley.newRequestQueue(this);
+        indexList=new ArrayList<>();
+        positionList=new ArrayList<>();
+        resultList=new ArrayList<>();
         position=getIntent().getIntExtra("position",0);
         if(position<=2)
         {
             speciesList=DataSupport.where("speciesType=?",getIntent().getStringExtra("speciesType")).find(Species.class);
+            createIndexList(speciesList);
+
         }else
         {
             speciesList=DataSupport.where("chineseName=?",getIntent().getStringExtra("speciesClassName")).find(Species.class);
+            for (int i = 0, j = 0; i < speciesList.size(); i++, j++) {
+                indexList.add(speciesList.get(i).getOrder().substring(0,1));
+                positionList.add(i);
+                Result result=new Result();
+                result.setHead(speciesList.get(i).getOrder());
+                result.setViewType(HEAD);
+                resultList.add(result);
+
+                Result result1=new Result();
+                result1.setViewType(ITEM);
+                result1.setSpecies(speciesList.get(i));
+                resultList.add(result1);
+            }
         }
 
+    }
+
+    private void createIndexList(List<Species> speciesList) {
+        if (sortingByOrder) {
+
+            for (int i = 0, j = 0; i < speciesList.size() - 1; i++, j++) {
+                if (i == 0) {
+                    indexList.add(speciesList.get(0).getOrder().substring(0, 1));
+                    positionList.add(0);
+                    Result result = new Result();
+                    result.setHead(speciesList.get(i).getOrder());
+                    result.setViewType(HEAD);
+                    resultList.add(result);
+                }
+
+                if (!speciesList.get(i).getOrder().equals(speciesList.get(i + 1).getOrder())) {
+                    indexList.add(speciesList.get(i + 1).getOrder().substring(0, 1));
+                    positionList.add(j);
+                    Result result = new Result();
+                    result.setHead(speciesList.get(i + 1).getOrder());
+                    result.setViewType(HEAD);
+
+                    System.out.println(speciesList.get(i).getOrder());
+                    Result result_ = new Result();
+                    result_.setViewType(ITEM);
+                    result_.setSpecies(speciesList.get(i));
+                    resultList.add(result_);
+                    resultList.add(result);
+                    j++;
+                } else {
+
+                    Result result = new Result();
+                    result.setViewType(ITEM);
+                    result.setSpecies(speciesList.get(i));
+                    resultList.add(result);
+                }
+
+            }
+        } else {//按科
+
+            for (int i = 0; i < speciesList.size() - 1; i++) {
+                if (i == 0) {
+                    indexList.add(speciesList.get(0).getFamily().substring(0, 1));
+                }
+                if (!speciesList.get(i).getFamily().equals(speciesList.get(i + 1).getFamily())) {
+                    indexList.add(speciesList.get(i + 1).getFamily().substring(0, 1));
+                    System.out.println(speciesList.get(i).getFamily()+":"+speciesList.get(i+1).getFamily());
+
+                }else
+                {
+
+                }
+            }
+            for(String s:indexList)
+            {
+                System.out.println(s);
+            }
+            int j = 0;
+            for (String s : indexList) {
+                int k = 0;
+                for (int i = 0; i < speciesList.size(); i++) {
+                    if (s.equals(speciesList.get(i).getFamily().substring(0, 1))) {
+                        if (k == 0) {
+                            Result result = new Result();
+                            result.setViewType(HEAD);
+                            result.setHead(speciesList.get(i).getFamily());
+                            resultList.add(result);
+                            positionList.add(j);
+                            j++;
+                        }
+                        Result result = new Result();
+                        result.setViewType(ITEM);
+                        result.setSpecies(speciesList.get(i));
+                        resultList.add(result);
+                        j++;
+                        k++;
+                    }
+                }
+            }
+        }
     }
 
     private void initEvents() {
@@ -127,7 +239,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         alertMenu.setOnClickListener(this);
         alertPick.setOnClickListener(this);
 
-        SpeciesContentAdapter adapter=new SpeciesContentAdapter(speciesList,this);
+        adapter=new SpeciesContentAdapter(this,resultList);
         speciesContent.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
@@ -142,12 +254,18 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             }
         });
 
-        sliderBar.setData(getResources().getStringArray(R.array.sorting_by_order));//索引栏设置数据
+        sliderBar.setData(indexList,positionList);//索引栏设置数据
         sliderBar.setGravity(Gravity.CENTER_VERTICAL);//设置位置
+//        sliderBar.setCharacterListener(new SliderBar.CharacterClickListener() {
+//            @Override
+//            public void clickCharacter(int position) {
+//                linearLayoutManager.scrollToPositionWithOffset(position,0);
+//            }
+//        });
         sliderBar.setCharacterListener(new SliderBar.CharacterClickListener() {
             @Override
-            public void clickCharacter(int position) {
-                linearLayoutManager.scrollToPositionWithOffset(position,0);
+            public void clickCharacter(View view) {
+                linearLayoutManager.scrollToPositionWithOffset((Integer) view.getTag(),0);
             }
         });
     }
@@ -165,15 +283,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 break;
 
             case R.id.species_class_imageButton_alert_pick:
-                showScreenDialog(this);
                 break;
         }
-    }
-
-    private void showScreenDialog(Context context) {
-        screenDialog dialog=new screenDialog(this,R.style.screen);
-        dialog.setContentView(R.layout.screen);
-        dialog.show();
     }
 
     public void back()
@@ -183,41 +294,133 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     private void showAlertMenu(final Context context)
     {
-        dialogAlertMenu=new Dialog(context);
+        WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        Display display;
+        display = windowManager.getDefaultDisplay();
+        final Dialog dialog = new Dialog(this,R.style.ActionSheetDialogStyle);
         View  alertMenuView= LayoutInflater.from(context).inflate(R.layout.alert_menu,null);
-        Button button1= (Button) alertMenuView.findViewById(R.id.browse_by_section);
-        Button button2= (Button) alertMenuView.findViewById(R.id.browse_by_order);
+        TextView button2= (TextView) alertMenuView.findViewById(R.id.browse_by_section);
+        TextView button1= (TextView) alertMenuView.findViewById(R.id.browse_by_order);
 
-        dialogAlertMenu.setContentView(alertMenuView);
-        Window window=dialogAlertMenu.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        WindowManager.LayoutParams layoutParams=window.getAttributes();
-        layoutParams.x=0;
-        layoutParams.y=0;
-        layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height= WindowManager.LayoutParams.WRAP_CONTENT;
-        layoutParams.alpha=9f;
-        window.setAttributes(layoutParams);
+        alertMenuView.setMinimumWidth(display.getWidth());
+        dialog.setContentView(alertMenuView);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.x = 0;
+        lp.y = 0;
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"按目浏览",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                if(sortingByOrder!=true)
+                {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sortingByOrder=true;
+                            sortingEditor.putBoolean("sortingWay",true).apply();
+                            if(position<=2)
+                            {
+                                speciesList=DataSupport.where("speciesType=?",getIntent().getStringExtra("speciesType")).find(Species.class);
+                                resultList.clear();
+                                positionList.clear();
+                                indexList.clear();
+                                createIndexList(speciesList);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        adapter.notifyDataSetChanged();
+                                        sliderBar.setData(indexList,positionList);
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
+
+                }
+
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"按科浏览",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                if(sortingByOrder!=false)
+                {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sortingByOrder=false;
+                            sortingEditor.putBoolean("sortingWay",false).apply();
+                            if(position<=2)
+                            {
+                                speciesList=DataSupport.where("speciesType=?",getIntent().getStringExtra("speciesType")).find(Species.class);
+                                resultList.clear();
+                                positionList.clear();
+                                indexList.clear();
+                                createIndexList(speciesList);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        adapter.notifyDataSetChanged();
+                                        sliderBar.setData(indexList,positionList);
+                                    }
+                                });
+                            }else
+                            {
+                                speciesList=DataSupport.where("chineseName=?",getIntent().getStringExtra("speciesClassName")).find(Species.class);
+                            }
+                        }
+                    }).start();
+
+                }
+
             }
         });
-        dialogAlertMenu.show();
+
     }
 
-    public class screenDialog extends Dialog
+    class Result
     {
+        int viewType;
+        String head;
+        String latinHead;
+        Species species;
 
-        public screenDialog(@NonNull Context context, @StyleRes int themeResId) {
-            super(context,android.R.style.Theme);
+        public int getViewType() {
+            return viewType;
+        }
+
+        public void setViewType(int viewType) {
+            this.viewType = viewType;
+        }
+
+        public String getHead() {
+            return head;
+        }
+
+        public void setHead(String head) {
+            this.head = head;
+        }
+
+        public String getLatinHead() {
+            return latinHead;
+        }
+
+        public void setLatinHead(String latinHead) {
+            this.latinHead = latinHead;
+        }
+
+        public Species getSpecies() {
+            return species;
+        }
+
+        public void setSpecies(Species species) {
+            this.species = species;
         }
     }
 }

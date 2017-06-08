@@ -42,7 +42,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
         {
             speciesList.add(DataSupport.where("singal=?",species.getSingal()+"").find(Species.class).get(0));
         }
-        adapter=new SpeciesContentAdapter(speciesList,this);
+        adapter=new SpeciesContentAdapter(this,null);
     }
 
     private void initViews() {

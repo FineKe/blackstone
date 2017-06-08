@@ -28,40 +28,40 @@
 
 
         <LinearLayout
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:gravity="center_vertical"
                 android:id="@+id/tv_chineseName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
 
             <TextView
-                android:gravity="center_vertical"
                 android:id="@+id/tv_englishName"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:text="test"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="test" />
 
             <TextView
-                android:gravity="center_vertical"
                 android:id="@+id/tv_latinName"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
 
             <View
-                android:layout_gravity="bottom"
-                android:background="#c9cace"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="1px"
+                android:layout_gravity="bottom"
+                android:background="#c9cace" />
         </LinearLayout>
 
     </LinearLayout>

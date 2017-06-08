@@ -8,39 +8,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by MY SHIP on 2017/4/1.
  */
 
 public class SliderBar extends LinearLayout{
-        private String[] data=getResources().getStringArray(R.array.sorting_by_order);//获取数据
         private Context mContext;
         private CharacterClickListener mListener;//创建一个接口
-        private int position=0;
+        private List<String> indexList;
+        private List<Integer>positionList;
         public SliderBar(Context context, AttributeSet attrs) {
             super(context, attrs);
             mContext = context;
             setOrientation(VERTICAL);
-            initView(data);
+
         }
 
-        private void initView(String[] data) {
-//            addView(buildImageLayout());
-
-         /*  for (char i = 'A'; i <= 'Z'; i++) {
-                final String character = i + "";
-                TextView tv = buildTextLayout(character);
-
-                addView(tv);
-            }*/
-
-//            addView(buildTextLayout("#"));
-
-              for(String string:data)
+        private void initView(List<String> indexList,List<Integer> positionList) {
+            int i=0;
+              for(String string:indexList)
             {
                 TextView textView=buildTextLayout(string);//创建一个textview
+                textView.setTag(positionList.get(i));
                 addView(textView);//将textview添加至sliderbar中
-                position++;
+                i++;
             }
         }
 
@@ -62,45 +55,30 @@ public class SliderBar extends LinearLayout{
                 @Override
                 public void onClick(View v) {//设置点击事件
                     if (mListener != null) {
-                        mListener.clickCharacter(position);
+                        mListener.clickCharacter(v);
                     }
                 }
             });
             return tv;
         }
 
-//        private ImageView buildImageLayout() {
-//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
-//
-//            ImageView iv = new ImageView(mContext);
-//            iv.setLayoutParams(layoutParams);
-//
-//            iv.setBackgroundResource(R.mipmap.norrow);
-//
-//            iv.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mListener != null) {
-//                        mListener.clickArrow();
-//                    }
-//                }
-//            });
-//            return iv;
-//        }
 
         public void setCharacterListener(CharacterClickListener listener) {
             mListener = listener;
         }
 
         public interface CharacterClickListener {
-            void clickCharacter(int position);
+            void clickCharacter(View view);
         }
 
-    public String[] getData() {
-        return data;
+
+    public void setData(List<String> indexList,List<Integer> positionList)
+    {
+        this.indexList=indexList;
+        this.positionList=positionList;
+        this.removeAllViews();
+        initView(indexList,positionList);
+
     }
 
-    public void setData(String[] data) {
-        this.data = data;
-    }
 }

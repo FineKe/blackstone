@@ -56,7 +56,7 @@ public class UpdateToken {
                         if(code==88)
                         {
                             JSONObject data=jsonObject.getJSONObject("data");
-                            JSONObject user=jsonObject.getJSONObject("user");
+                            JSONObject user=data.getJSONObject("user");
                             information.setId(user.getLong("id"));
                             information.setUserName(user.getString("mobile"));
                             information.setStudentId(user.getString("studentId"));

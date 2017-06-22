@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -18,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +69,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     private Dialog dialogAlertMenu;
 
+    private View viewInclude;
     private List<Species> speciesList;
     private List<Integer> positionList;
     private List<Result> resultList;
@@ -85,6 +90,12 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private SharedPreferences.Editor sortingEditor;
     private String sortingValueFile="FamilyOROrder";
     private boolean sortingByOrder=true;
+
+    private int w;
+    private int h;
+    private int height;
+    private int width;
+    private int statusBarHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +117,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesContent= (RecyclerView) findViewById(R.id.species_class_recyclerView_speciesContent);
 
         sliderBar= (SliderBar) findViewById(R.id.species_class_sliderBar);
+
+        viewInclude=findViewById(R.id.species_class_view_include_head);
         if(position<=2)
         {
             speciesClassName.setText(typeTitle[position]);
@@ -118,6 +131,21 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesContent.setLayoutManager(linearLayoutManager);
         speciesContent.setHasFixedSize(true);
 
+//        w = View.MeasureSpec.makeMeasureSpec(0,
+//                View.MeasureSpec.UNSPECIFIED);
+//        h = View.MeasureSpec.makeMeasureSpec(0,
+//                View.MeasureSpec.UNSPECIFIED);
+//        viewInclude.measure(w,h);
+//
+//        width=viewInclude.getMeasuredWidth();
+//        height=viewInclude.getMeasuredHeight();
+
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android"); //状态栏高度
+        if (resourceId > 0) {
+            statusBarHeight= getResources().getDimensionPixelSize(resourceId);
+        }
+        height=statusBarHeight;
+        width= WindowManager.LayoutParams.MATCH_PARENT;
     }
 
     private void initData() {
@@ -273,6 +301,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -286,6 +315,12 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 break;
 
             case R.id.species_class_imageButton_alert_pick:
+//                Toast.makeText(SpeciesClassActivity.this, "sssss", Toast.LENGTH_SHORT).show();
+//                showBirdPick();
+                mydialog_bird dialog=new mydialog_bird(this,R.style.customDialog,width,height);
+                dialog.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
                 break;
         }
     }
@@ -387,7 +422,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     }
 
-    class Result
+    static class Result
     {
         int viewType;
         String head;
@@ -425,5 +460,118 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         public void setSpecies(Species species) {
             this.species = species;
         }
+    }
+
+    public class mydialog_bird extends Dialog {
+        boolean flag1=true,flag2=true,flag3=true,flag4=true,flag5=true;
+        private Context context;
+        private  int width,height;
+        public mydialog_bird(@NonNull Context context, @StyleRes int themeResId,int width,int height) {
+            super(context, themeResId);
+            this.context=context;
+            this.width=width;
+            this.height=height;
+
+        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            init();
+        }
+        public void show(){
+            super.show();
+            Window dialogWindow = getWindow();
+            WindowManager.LayoutParams params = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+            dialogWindow.setGravity(Gravity.BOTTOM);//设置对话框位置
+            DisplayMetrics metric = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metric);
+            params.alpha=0.8f;
+            params.width= metric.widthPixels;
+            params.height=metric.heightPixels-height;
+            dialogWindow.setAttributes(params);
+        }
+        private void init(){
+            View v=getLayoutInflater().inflate(R.layout.dialog_pick_bird,null);
+            setContentView(v);
+            TextView t1= (TextView)v. findViewById(R.id.t1);
+            t1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
+                    if(flag1==true) {
+                        l1.setVisibility(View.VISIBLE);
+                        flag1=false;
+                    }
+                    else if (flag1==false){
+                        l1.setVisibility(View.GONE);
+                        flag1=true;
+                    }
+                }
+            });
+            TextView t2= (TextView)v. findViewById(R.id.t2);
+            t2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l2= (LinearLayout)findViewById(R.id.l2);
+                    if(flag2==true) {
+                        l2.setVisibility(View.VISIBLE);
+                        flag2=false;
+                    }
+                    else if (flag2==false){
+                        l2.setVisibility(View.GONE);
+                        flag2=true;
+                    }
+                }
+            });
+            TextView t3= (TextView)v. findViewById(R.id.t3);
+            t3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l3= (LinearLayout)findViewById(R.id.l3);
+                    if(flag3==true) {
+                        l3.setVisibility(View.VISIBLE);
+                        flag3=false;
+                    }
+                    else if (flag3==false){
+                        l3.setVisibility(View.GONE);
+                        flag3=true;
+                    }
+                }
+            });
+            TextView t4= (TextView)v. findViewById(R.id.t4);
+            t4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l4= (LinearLayout)findViewById(R.id.l4);
+                    if(flag4==true) {
+                        l4.setVisibility(View.VISIBLE);
+                        flag4=false;
+                    }
+                    else if (flag4==false){
+                        l4.setVisibility(View.GONE);
+                        flag4=true;
+                    }
+                }
+            });
+        }
+    }
+
+    public void showBirdPick()
+    {
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        Display display;
+        display = windowManager.getDefaultDisplay();
+        Dialog dialog = new Dialog(this,R.style.customDialog);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_pick_bird, null);
+        view.setMinimumWidth(display.getWidth());
+        dialog.setContentView(view);
+        dialog.setCancelable(false);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.x = 0;
+        lp.y = 0;
+        dialogWindow.setAttributes(lp);
+        dialog.show();
     }
 }

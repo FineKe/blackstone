@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,13 +10,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ShowImageActivity extends AppCompatActivity {
+    private Dialog dialog;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,7 @@ public class ShowImageActivity extends AppCompatActivity {
         }
         Intent intent=getIntent();
         int im=intent.getIntExtra("title",0);
-        final ImageView imageView= (ImageView) findViewById(R.id.image);
+        imageView= (ImageView) findViewById(R.id.image);
         imageView.setImageResource(im);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,26 +51,46 @@ public class ShowImageActivity extends AppCompatActivity {
             }
         });
     }
-    private void Dialog(Context context){
-        final String[] x=new String[]{"保存","取消"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setItems(x, new DialogInterface.OnClickListener() {
+
+    private void saveImage(final ImageView imageView){
+        TextView savePicture;
+        TextView actionCancel;
+        WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        Display display;
+        display = windowManager.getDefaultDisplay();
+        dialog = new Dialog(this,R.style.ActionSheetDialogStyle);
+        View view = LayoutInflater.from(this).inflate(R.layout.guide_savepicture, null);
+        view.setMinimumWidth(display.getWidth());
+        dialog.setContentView(view);
+        dialog.setCancelable(false);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.x = 0;
+        lp.y = 0;
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+
+        savePicture = (TextView)view.findViewById(R.id.dialog_guide_savepicture_text_view_save_picture);
+        actionCancel = (TextView)view.findViewById(R.id.dialog_guide_savepicture_text_view_action_cancel);
+        savePicture.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                Toast.makeText(ShowImageActivity.this,x[which],Toast.LENGTH_SHORT).show();
+            public void onClick(View v){
+                dialog.dismiss();
+                imageView.setDrawingCacheEnabled(true);//开启catch，开启之后才能获取ImageView中的bitmap
+                Bitmap bitmap = imageView.getDrawingCache();//获取imageview中的图像
+                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,"123","456");
+                Toast.makeText(ShowImageActivity.this, "已保存到系统相册", Toast.LENGTH_SHORT).show();
+                imageView.setDrawingCacheEnabled(false);//关闭catch
             }
-        });
-        builder.show();
+        } );
+        actionCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                dialog.dismiss();
+            }
+        } );
 
     }
-    private void saveImage(ImageView imageView){
-        imageView.setDrawingCacheEnabled(true);//开启catch，开启之后才能获取ImageView中的bitmap
-        Bitmap bitmap = imageView.getDrawingCache();//获取imageview中的图像
-        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,"123","456");
-        Toast.makeText(ShowImageActivity.this, "图片已保存到"+getContentResolver().toString(), Toast.LENGTH_SHORT).show();
-        imageView.setDrawingCacheEnabled(false);//关闭catch
-    }
-
 
 }

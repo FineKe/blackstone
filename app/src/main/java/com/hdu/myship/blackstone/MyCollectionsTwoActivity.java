@@ -32,8 +32,11 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
     private TextView title;
     private List<Species> speciesList;
     private int position;
-    private MyAdapter adapter;
-
+   // private MyAdapter adapter;
+    private int HEAD=0;
+    private int ITEM=1;
+    private List<SpeciesClassActivity.Result>resultList;
+    private SpeciesContentAdapter speciesContentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +50,17 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
         position=getIntent().getIntExtra("position",0);//取出position
         List<Species> specieslist=MyCollectionsActivity.speciesClassList.get(position).getList();//这里从上一个activity中取list
         speciesList=new ArrayList<>();
+        resultList=new ArrayList<>();
         for(Species species:specieslist)
         {
+            System.out.println(species.getSingal());
             speciesList.add(DataSupport.where("singal=?",species.getSingal()+"").find(Species.class).get(0));
         }
+        for(Species species:speciesList)
+        {
+            System.out.println(species.toString());
+        }
+        createIndexlist(speciesList);
 
     }
 
@@ -58,11 +68,22 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
         actionBack= (LinearLayout) findViewById(R.id.activity_my_collection_two_linear_layout_action_back);
         recyclerView= (RecyclerView) findViewById(R.id.activity_my_collection_two_recycler_view);
         title= (TextView) findViewById(R.id.activity_my_collection_text_view_title);
-        adapter=new MyAdapter(this,speciesList);
-        recyclerView.setAdapter(adapter);
+        //adapter=new MyAdapter(this,speciesList);
+       // recyclerView.setAdapter(adapter);
+        speciesContentAdapter=new SpeciesContentAdapter(this,resultList);
+        recyclerView.setAdapter(speciesContentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        adapter.setOnRecyclerViewItemClickeListener(new onItemClickLisenter() {
+//        //adapter.setOnRecyclerViewItemClickeListener(new onItemClickLisenter() {
+//            @Override
+//            public void onItemClick(View view, Species data) {
+//                Intent intent=new Intent(MyCollectionsTwoActivity.this,SpeciesDeatailedActivity.class);
+//                intent.putExtra("singal",data.getSingal());
+//                intent.putExtra("speciesType",data.getSpeciesType());
+//                startActivity(intent);
+//            }
+//        });
+        speciesContentAdapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
             public void onItemClick(View view, Species data) {
                 Intent intent=new Intent(MyCollectionsTwoActivity.this,SpeciesDeatailedActivity.class);
@@ -84,9 +105,9 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
 
        @Override
        public MyHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-           View view = LayoutInflater.from(context).inflate(R.layout.species_content_recycler_view_item, viewGroup, false);
+           View view = LayoutInflater.from(context).inflate(R.layout.species_content_recycler_view_item, null, false);
            view.setOnClickListener(this);
-           MyHolder holder = new MyHolder(viewGroup);
+           MyHolder holder = new MyHolder(view);
            return holder;
        }
 
@@ -95,7 +116,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
            myHolder.tv_englishName.setText(speciesList.get(i).getLatinName());
            Glide.with(context).load(speciesList.get(i).getMainPhoto()+dealPicure).placeholder(R.mipmap.loading_small).transform(new GlideRoundTransform(context,8)).into(myHolder.imageView);
            myHolder.tv_chineseName.setText(speciesList.get(i).getChineseName());
-           myHolder.itemView.setTag(speciesList.get(i));
+           myHolder.itemView.setTag(speciesList.get(i).getEnglishName());
        }
 
        @Override
@@ -135,5 +156,53 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
     public interface onItemClickLisenter
     {
         void onItemClick(View view, Species data);
+    }
+
+    public void createIndexlist(List<Species> speciesList) {
+        if (speciesList.size() > 1) {
+            for (int i = 0, j = 0; i < speciesList.size() - 1; i++, j++) {
+                if (i == 0) {
+                    SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
+                    result.setHead(speciesList.get(0).getOrder());
+                    result.setViewType(HEAD);
+                    result.setLatinHead(speciesList.get(0).getLatinOrder());
+                    resultList.add(result);
+                }
+
+                if (!speciesList.get(i).getOrder().equals(speciesList.get(i + 1).getOrder())) {
+                    SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
+                    result.setHead(speciesList.get(i + 1).getOrder());
+                    result.setViewType(HEAD);
+                    result.setLatinHead(speciesList.get(i + 1).getLatinOrder());
+                    System.out.println(speciesList.get(i + 1).getOrder());
+                    SpeciesClassActivity.Result result_ = new SpeciesClassActivity.Result();
+                    result_.setViewType(ITEM);
+                    result_.setSpecies(speciesList.get(i));
+                    resultList.add(result_);
+                    resultList.add(result);
+                } else {
+
+                    SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
+                    result.setViewType(ITEM);
+                    result.setSpecies(speciesList.get(i));
+                    resultList.add(result);
+                }
+
+            }
+        }
+        else
+        {
+            for (int i = 0, j = 0; i < speciesList.size(); i++, j++) {
+                SpeciesClassActivity.Result result=new SpeciesClassActivity.Result();
+                result.setHead(speciesList.get(i).getOrder());
+                result.setViewType(HEAD);
+                result.setLatinHead(speciesList.get(i).getLatinOrder());
+                resultList.add(result);
+                SpeciesClassActivity.Result result1=new SpeciesClassActivity.Result();
+                result1.setViewType(ITEM);
+                result1.setSpecies(speciesList.get(i));
+                resultList.add(result1);
+            }
+        }
     }
 }

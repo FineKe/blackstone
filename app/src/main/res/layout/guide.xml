@@ -56,7 +56,7 @@
 
             android:clickable="false"
             android:gravity="center_vertical|start"
-            android:text="黑石顶陆生脊椎动物区系的主要特征"
+            android:text="黑石顶陆生脊椎动物区系"
             android:textColor="#f000"
             android:textSize="20sp" />
 

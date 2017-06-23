@@ -77,346 +77,749 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-    <TextView
-        android:id="@+id/t1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="体型"
-        android:gravity="center"/>
-    <LinearLayout
-        android:id="@+id/l1"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="26dp"
-        android:layout_marginRight="26dp">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="大"
-            />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="中"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="小"/>
-    </LinearLayout>
-    <include layout="@layout/line"/>
 
-    <TextView
-        android:id="@+id/t2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="羽色主色"
-        android:gravity="center"/>
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/l2"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
-        android:layout_marginRight="26dp">
+            <TextView
+                android:id="@+id/t1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="体型"
+                android:textColor="@android:color/background_light" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center">
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="白色"
-                />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="黑色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="褐色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="灰色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="蓝色"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center">
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="红褐色"
-                />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="红色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="橙色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="黄色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="紫色"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center">
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="绿色"
-                />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="橄榄色"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                />
-        </LinearLayout>
-    </LinearLayout>
-    <include layout="@layout/line"/>
+            <LinearLayout
+                android:id="@+id/l1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:visibility="visible">
 
-    <TextView
-        android:id="@+id/t3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="栖息地"
-        android:gravity="center"/>
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/l3"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
-        android:layout_marginRight="26dp">
+                <CheckBox
+                    android:id="@+id/dialog_pick_bird_shape_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="大"
+                    android:tag="shape"
+                    android:textColor="@drawable/button" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center">
-            <CheckBox
-                android:layout_width="wrap_content"
+                <CheckBox
+                    android:id="@+id/dialog_pick_bird_shape_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="中"
+                    android:tag="shape"
+                    android:textColor="@drawable/button" />
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_bird_shape_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:text="小"
+                    android:tag="shape"
+                    android:textColor="@drawable/button" />
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="羽色主色"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="河湖及池塘，湿地"
-                />
-            <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@null"
+                            android:text="白;黑"
+                            android:tag="tone"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:button="@null"
+                            android:text="红褐;黑"
+                            android:tag="tone"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:text="绿;灰"
+                            android:tag="tone"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@drawable/button"
+                            android:button="@null"
+                            android:tag="tone"
+                            android:text="红褐;白"/>
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@drawable/button"
+                            android:button="@null"
+                            android:tag="tone"
+                            android:text="绿;白"/>
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_26"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@drawable/button"
+                            android:button="@null"
+                            android:tag="tone"
+                            android:text="黑;黑"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@null"
+                            android:text="褐;白"
+                            android:tag="tone"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:button="@null"
+                            android:text="红色"
+                            android:tag="tone"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:button="@null"
+                            android:text="橄榄;白"
+                            android:tag="tone"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@drawable/button"
+                            android:button="@null"
+                            android:text="紫;白"/>
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_bird_tone_22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@drawable/button"
+                            android:button="@null"
+                            android:tag="tone"
+                            android:text="灰;红褐"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="褐;灰"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="灰;白"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="蓝;白"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="绿;红褐"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="黑;黄"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="黑;白"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="绿;橙"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="灰;黄"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="灰;黑"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="橄榄;绿"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="黑;绿"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="绿;蓝"
+                        android:tag="tone"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@drawable/button"
+                        android:button="@null"
+                        android:tag="tone"
+                        android:text="黑;红"/>
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@drawable/button"
+                        android:button="@null"
+                        android:tag="tone"
+                        android:text="褐;红"/>
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tone_25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@drawable/button"
+                        android:button="@null"
+                        android:tag="tone"
+                        android:text="红褐;灰"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="栖息地"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="森林，山地，城市"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center">
-            <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="农田、湿地、城市"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、林缘灌丛"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、林缘灌丛、农田"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、城市"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、湿地、农田、城市"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="林缘灌丛、农田、城市、湿地"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="湿地、农田、城市"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、林缘灌丛、城市"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、湿地、城市"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="山地森林、湿地"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_habit_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="山地森林、林缘灌丛、农田、城市"
+                        android:tag="habit"
+                        android:textColor="@drawable/button" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="尾型"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="草原/草地"
-                />
-        </LinearLayout>
-    </LinearLayout>
-    <include layout="@layout/line"/>
-    <TextView
-        android:id="@+id/t4"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="尾型"
-        android:gravity="center"/>
-    <LinearLayout
-        android:id="@+id/l4"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="26dp"
-        android:layout_marginRight="26dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="方尾"
-            />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="圆尾"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="凸尾"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:layout_weight="1"
-            android:text="楔性尾"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="凹尾"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="叉尾"
-            />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="尖尾"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="叉尾"
-            />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="长"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="适中"
-            />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:text="短"/>
-    </LinearLayout>
-    </LinearLayout>
-            <include layout="@layout/line"/>
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="圆尾、短"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:button="@null"
+                        android:text="圆尾、适中"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="圆尾、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="方尾、短"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:text="方尾、适中"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="方尾、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="凸尾、适中"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="凸尾、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="楔形、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="楔尾、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="楔尾、短"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="叉尾、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:text="凹尾、适中"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_bird_tail_shape_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="尖尾、长"
+                        android:tag="tail_shape"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

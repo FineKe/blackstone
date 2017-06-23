@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,14 +37,17 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import JsonUtil.JsonResolverSpeciesDetailed;
 import database.Amphibia;
@@ -462,8 +468,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         }
     }
 
-    public class mydialog_bird extends Dialog {
-        boolean flag1=true,flag2=true,flag3=true,flag4=true,flag5=true;
+    public class mydialog_bird extends Dialog implements CompoundButton.OnCheckedChangeListener{
+        boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
+        JSONObject jsonObject=new JSONObject();
+        JSONArray shape=new JSONArray();
+        JSONArray habit=new JSONArray();
+        JSONArray tone=new JSONArray();
+        JSONArray tailShape=new JSONArray();
         private Context context;
         private  int width,height;
         public mydialog_bird(@NonNull Context context, @StyleRes int themeResId,int width,int height) {
@@ -471,7 +482,6 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             this.context=context;
             this.width=width;
             this.height=height;
-
         }
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -492,6 +502,130 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         }
         private void init(){
             View v=getLayoutInflater().inflate(R.layout.dialog_pick_bird,null);
+
+            CheckBox shape1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_1);
+            CheckBox shape2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_2);
+            CheckBox shape3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_3);
+
+            CheckBox tone1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_1);
+            CheckBox tone2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_2);
+            CheckBox tone3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_3);
+            CheckBox tone4= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_4);
+            CheckBox tone5= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_5);
+            CheckBox tone6= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_6);
+            CheckBox tone7= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_7);
+            CheckBox tone8= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_8);
+            CheckBox tone9= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_9);
+            CheckBox tone10= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_10);
+            CheckBox tone11= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_11);
+            CheckBox tone12= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_12);
+            CheckBox tone13= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_13);
+            CheckBox tone14= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_14);
+            CheckBox tone15= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_15);
+            CheckBox tone16= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_16);
+            CheckBox tone17= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_17);
+            CheckBox tone18= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_18);
+            CheckBox tone19= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_19);
+            CheckBox tone20= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_20);
+            CheckBox tone21= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_21);
+            CheckBox tone22= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_22);
+            CheckBox tone23= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_23);
+            CheckBox tone24= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_24);
+            CheckBox tone25= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_25);
+            CheckBox tone26= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_26);
+
+
+
+            CheckBox habitat1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_1);
+            CheckBox habitat2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_2);
+            CheckBox habitat3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_3);
+            CheckBox habitat4= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_4);
+            CheckBox habitat5= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_5);
+            CheckBox habitat6= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_6);
+            CheckBox habitat7= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_7);
+            CheckBox habitat8= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_8);
+            CheckBox habitat9= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_9);
+            CheckBox habitat10= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_10);
+            CheckBox habitat11= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_11);
+            CheckBox habitat12= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_12);
+
+
+
+            CheckBox tail_shape1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_1);
+            CheckBox tail_shape2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_2);
+            CheckBox tail_shape3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_3);
+            CheckBox tail_shape4= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_4);
+            CheckBox tail_shape5= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_5);
+            CheckBox tail_shape6= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_6);
+            CheckBox tail_shape7= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_7);
+            CheckBox tail_shape8= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_8);
+            CheckBox tail_shape9= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_9);
+            CheckBox tail_shape10= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_10);
+            CheckBox tail_shape11= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_11);
+            CheckBox tail_shape12= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_12);
+            CheckBox tail_shape13= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_13);
+            CheckBox tail_shape14= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_14);
+
+
+            shape1.setOnCheckedChangeListener(this);
+            shape2.setOnCheckedChangeListener(this);
+            shape3.setOnCheckedChangeListener(this);
+
+            tone1.setOnCheckedChangeListener(this);
+            tone2.setOnCheckedChangeListener(this);
+            tone3.setOnCheckedChangeListener(this);
+            tone4.setOnCheckedChangeListener(this);
+            tone5.setOnCheckedChangeListener(this);
+            tone6.setOnCheckedChangeListener(this);
+            tone7.setOnCheckedChangeListener(this);
+            tone8.setOnCheckedChangeListener(this);
+            tone9.setOnCheckedChangeListener(this);
+            tone10.setOnCheckedChangeListener(this);
+            tone11.setOnCheckedChangeListener(this);
+            tone12.setOnCheckedChangeListener(this);
+            tone13.setOnCheckedChangeListener(this);
+            tone14.setOnCheckedChangeListener(this);
+            tone15.setOnCheckedChangeListener(this);
+            tone16.setOnCheckedChangeListener(this);
+            tone17.setOnCheckedChangeListener(this);
+            tone18.setOnCheckedChangeListener(this);
+            tone19.setOnCheckedChangeListener(this);
+            tone20.setOnCheckedChangeListener(this);
+            tone21.setOnCheckedChangeListener(this);
+            tone22.setOnCheckedChangeListener(this);
+            tone23.setOnCheckedChangeListener(this);
+            tone24.setOnCheckedChangeListener(this);
+            tone25.setOnCheckedChangeListener(this);
+            tone26.setOnCheckedChangeListener(this);
+
+            habitat1.setOnCheckedChangeListener(this);
+            habitat2.setOnCheckedChangeListener(this);
+            habitat3.setOnCheckedChangeListener(this);
+            habitat4.setOnCheckedChangeListener(this);
+            habitat5.setOnCheckedChangeListener(this);
+            habitat6.setOnCheckedChangeListener(this);
+            habitat7.setOnCheckedChangeListener(this);
+            habitat8.setOnCheckedChangeListener(this);
+            habitat9.setOnCheckedChangeListener(this);
+            habitat10.setOnCheckedChangeListener(this);
+            habitat11.setOnCheckedChangeListener(this);
+            habitat12.setOnCheckedChangeListener(this);
+
+            tail_shape1.setOnCheckedChangeListener(this);
+            tail_shape2.setOnCheckedChangeListener(this);
+            tail_shape3.setOnCheckedChangeListener(this);
+            tail_shape4.setOnCheckedChangeListener(this);
+            tail_shape5.setOnCheckedChangeListener(this);
+            tail_shape6.setOnCheckedChangeListener(this);
+            tail_shape7.setOnCheckedChangeListener(this);
+            tail_shape8.setOnCheckedChangeListener(this);
+            tail_shape9.setOnCheckedChangeListener(this);
+            tail_shape10.setOnCheckedChangeListener(this);
+            tail_shape11.setOnCheckedChangeListener(this);
+            tail_shape12.setOnCheckedChangeListener(this);
+            tail_shape13.setOnCheckedChangeListener(this);
+            tail_shape14.setOnCheckedChangeListener(this);
+
             setContentView(v);
             TextView t1= (TextView)v. findViewById(R.id.t1);
             t1.setOnClickListener(new View.OnClickListener(){
@@ -554,6 +688,51 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 }
             });
         }
+
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch ((String)buttonView.getTag())
+            {
+                case"shape":
+                    if(isChecked){
+                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                    }else
+                    {
+
+                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case "tone":
+                    if(isChecked){
+                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                    }else
+                    {
+
+                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case "habit":
+                    if(isChecked){
+                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                    }else
+                    {
+
+                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case "tail_shape":
+                    if(isChecked){
+                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                    }else
+                    {
+
+                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+
+        }
     }
 
     public void showBirdPick()
@@ -574,4 +753,5 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         dialogWindow.setAttributes(lp);
         dialog.show();
     }
+
 }

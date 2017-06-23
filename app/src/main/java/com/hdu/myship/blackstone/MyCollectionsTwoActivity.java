@@ -35,6 +35,8 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
    // private MyAdapter adapter;
     private int HEAD=0;
     private int ITEM=1;
+
+    private List<String> indexList;
     private List<SpeciesClassActivity.Result>resultList;
     private SpeciesContentAdapter speciesContentAdapter;
     @Override
@@ -51,6 +53,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
         List<Species> specieslist=MyCollectionsActivity.speciesClassList.get(position).getList();//这里从上一个activity中取list
         speciesList=new ArrayList<>();
         resultList=new ArrayList<>();
+        indexList=new ArrayList<>();
         for(Species species:specieslist)
         {
             System.out.println(species.getSingal());
@@ -159,6 +162,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
     }
 
     public void createIndexlist(List<Species> speciesList) {
+        /*
         if (speciesList.size() > 1) {
             for (int i = 0, j = 0; i < speciesList.size() - 1; i++, j++) {
                 if (i == 0) {
@@ -189,6 +193,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
                 }
 
             }
+
         }
         else
         {
@@ -203,6 +208,59 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
                 result1.setSpecies(speciesList.get(i));
                 resultList.add(result1);
             }
+        }*/
+
+        if (speciesList.size() > 1) {
+            for (int i = 0; i < speciesList.size() - 1; i++) {
+                if (i == 0) {
+                    indexList.add(speciesList.get(0).getOrder().substring(0, 1));
+                }
+                if (!speciesList.get(i).getOrder().equals(speciesList.get(i + 1).getOrder())) {
+                    indexList.add(speciesList.get(i + 1).getOrder().substring(0, 1));
+                    System.out.println(speciesList.get(i).getOrder() + ":" + speciesList.get(i + 1).getOrder());
+
+                } else {
+
+                }
+            }
+            for (String s : indexList) {
+                System.out.println(s);
+            }
+            int j = 0;
+            for (String s : indexList) {
+                int k = 0;
+                for (int i = 0; i < speciesList.size(); i++) {
+                    if (s.equals(speciesList.get(i).getOrder().substring(0, 1))) {
+                        if (k == 0) {
+                            SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
+                            result.setViewType(HEAD);
+                            result.setLatinHead(speciesList.get(i).getLatinOrder());
+                            result.setHead(speciesList.get(i).getOrder());
+                            resultList.add(result);
+//                            positionList.add(j);
+                            j++;
+                        }
+                        SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
+                        result.setViewType(ITEM);
+                        result.setSpecies(speciesList.get(i));
+                        resultList.add(result);
+                        j++;
+                        k++;
+                    }
+                }
+            }
+        }else
+        {
+            SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
+            result.setViewType(HEAD);
+            result.setLatinHead(speciesList.get(0).getLatinOrder());
+            result.setHead(speciesList.get(0).getOrder());
+            resultList.add(result);
+
+            SpeciesClassActivity.Result result1 = new SpeciesClassActivity.Result();
+            result1.setViewType(ITEM);
+            result1.setSpecies(speciesList.get(0));
+            resultList.add(result1);
         }
     }
 }

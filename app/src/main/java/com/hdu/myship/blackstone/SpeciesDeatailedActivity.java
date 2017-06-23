@@ -1,6 +1,8 @@
 package com.hdu.myship.blackstone;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,6 +100,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private IsLoginUtil isLoginUtil;
     private UpdateToken updateToken;
 
+    private boolean isPlay=false;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -387,10 +391,34 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         final ImageView playAudio = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_play_audio);
         audioPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this).load(speciesDetailed.getAudioPicture()).placeholder(R.mipmap.loading_big).into(audioPicture);
+
         playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlayAudio audio = new PlayAudio(speciesDetailed.getAudio(), SpeciesDeatailedActivity.this);
+                MediaPlayer mediaPlayer= new MediaPlayer();
+                Uri uri=Uri.parse(speciesDetailed.getAudio());
+                if(isPlay==false)
+                {   isPlay=true;
+                    playAudio.setImageResource(R.mipmap.play_audio_pressed);
+                    try {
+                        mediaPlayer.setDataSource(getApplicationContext(),uri);
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                if(mp.isPlaying()==false)
+                                {
+                                    playAudio.setImageResource(R.mipmap.play_audio_normal);
+                                    isPlay=false;
+                                }
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //PlayAudio audio = new PlayAudio(speciesDetailed.getAudio(), SpeciesDeatailedActivity.this);
 
             }
         });

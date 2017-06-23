@@ -48,7 +48,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="8dp"
-            android:text="黑石顶陆生脊椎动物区系的主要特征"
+            android:text="黑石顶陆生脊椎动物区系"
             android:textColor="#fff"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

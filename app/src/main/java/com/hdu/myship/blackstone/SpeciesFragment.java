@@ -176,8 +176,19 @@ public class SpeciesFragment extends Fragment{
             TextView className= (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
             Glide.with(getContext()).load(list.get(position).getMainPhoto()).into(picture);
             className.setText(list.get(position).getClassName());
+            View line=convertView.findViewById(R.id.fragment_species_recycler_view_item_line);
+            if(position==2)
+            {
+                line.setVisibility(View.GONE);
+            }
             return convertView;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetCategory();
     }
 
     public void GetCategory()

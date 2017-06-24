@@ -65,7 +65,7 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_suggestion_image_button_action_back:
+            case R.id.activity_suggestion_linear_layout_action_back:
                 actionBack();
                 break;
 
@@ -76,8 +76,8 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void actionBack() {
-        this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+        finish();
+       // overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void send() {

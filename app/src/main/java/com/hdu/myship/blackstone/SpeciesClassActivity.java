@@ -34,6 +34,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -62,7 +63,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
     private RequestQueue requestQueue;
     private static final String TAG ="SpeciesClassActivity";
-    private ImageButton actionBack;
+    private LinearLayout actionBack;
     private ImageButton alertMenu;
     private ImageButton alertPick;
 
@@ -114,11 +115,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
     private void initView() {
-        actionBack= (ImageButton) findViewById(R.id.species_class_imageButton_actionBack);
+        actionBack= (LinearLayout) findViewById(R.id.species_class_title_bar_linear_layout_actionBack);
         alertMenu= (ImageButton) findViewById(R.id.species_class_imageButton_alert_menu);
         alertPick= (ImageButton) findViewById(R.id.species_class_imageButton_alert_pick);
 
-        speciesClassName= (TextView) findViewById(R.id.species_class_textView_speciesClass_name);
+        speciesClassName= (TextView) findViewById(R.id.species_class_title_bar_species_class_name);
 
         speciesContent= (RecyclerView) findViewById(R.id.species_class_recyclerView_speciesContent);
 
@@ -312,10 +313,6 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.species_class_imageButton_actionBack:
-                back();
-                break;
-
             case R.id.species_class_imageButton_alert_menu:
                 showAlertMenu(this);
                 break;
@@ -323,15 +320,20 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             case R.id.species_class_imageButton_alert_pick:
 //                Toast.makeText(SpeciesClassActivity.this, "sssss", Toast.LENGTH_SHORT).show();
 //                showBirdPick();
+
                 mydialog_bird dialog=new mydialog_bird(this,R.style.customDialog,width,height);
                 dialog.create();
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
+                hideTitleBar();
+                break;
+            case R.id.species_class_title_bar_linear_layout_actionBack:
+                actionBack();
                 break;
         }
     }
 
-    public void back()
+    public void actionBack()
     {
         this.finish();
     }
@@ -471,10 +473,10 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     public class mydialog_bird extends Dialog implements CompoundButton.OnCheckedChangeListener{
         boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
         JSONObject jsonObject=new JSONObject();
-        JSONArray shape=new JSONArray();
-        JSONArray habit=new JSONArray();
-        JSONArray tone=new JSONArray();
-        JSONArray tailShape=new JSONArray();
+        List<String> shape=new ArrayList<>();
+        List<String> habit=new ArrayList<>();
+        List<String> tone=new ArrayList<>();
+        List<String> tailShape=new ArrayList<>();
         private Context context;
         private  int width,height;
         public mydialog_bird(@NonNull Context context, @StyleRes int themeResId,int width,int height) {
@@ -501,7 +503,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             dialogWindow.setAttributes(params);
         }
         private void init(){
+
+
+
             View v=getLayoutInflater().inflate(R.layout.dialog_pick_bird,null);
+
+            LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_bird_linear_layout_action_back);
+            TextView sure= (TextView) v.findViewById(R.id.dialog_pick_bird_text_view_sure);
 
             CheckBox shape1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_1);
             CheckBox shape2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_2);
@@ -566,6 +574,92 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             CheckBox tail_shape13= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_13);
             CheckBox tail_shape14= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_14);
 
+
+
+            actionBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    showTitleBar();
+                }
+            });
+
+            sure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url="http://api.blackstone.ebirdnote.cn/v1/species/query/";
+                    RequestQueue requestQueue=Volley.newRequestQueue(getContext());
+                    JSONArray shapeJsonArray=new JSONArray(shape);
+                    JSONArray toneJsonArray=new JSONArray(tone);
+                    JSONArray habitJsonArray=new JSONArray(habit);
+                    JSONArray tail_shapeJsonArray=new JSONArray(tailShape);
+                    Map<String,Object> map=new HashMap<>();
+                    if(tail_shapeJsonArray.length()!=0)
+                    map.put("tail_shape",tail_shapeJsonArray);
+                    if(habitJsonArray.length()!=0)
+                    map.put("habitat",habitJsonArray);
+                    if(shapeJsonArray.length()!=0)
+                    map.put("shape",shapeJsonArray);
+                    if(toneJsonArray.length()!=0)
+                    map.put("tone",toneJsonArray);
+                    JSONObject jsonObject=new JSONObject(map);
+                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+                    JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "bird", jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                int code=jsonObject.getInt("code");
+                                if (code==88)
+                                {   speciesList.clear();
+                                    JSONArray data=jsonObject.getJSONArray("data");
+                                    for(int i=0;i<data.length();i++)
+                                    {
+                                        Species species=new Species();
+                                        species.setSingal(data.getJSONObject(i).getInt("id"));
+                                        species.setChineseName(data.getJSONObject(i).getString("chineseName"));
+                                        species.setOrder(data.getJSONObject(i).getString("order"));
+                                        species.setFamily(data.getJSONObject(i).getString("family"));
+                                        species.setMainPhoto(data.getJSONObject(i).getString("mainPhoto"));
+                                        species.setEnglishName(data.getJSONObject(i).getString("englishName"));
+                                        species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
+                                        speciesList.add(species);
+                                    }
+                                    //createIndexList(speciesList);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexList(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList,positionList);
+                                            showTitleBar();
+                                        }
+                                    });
+                                    dismiss();
+                                }else
+                                {
+                                    String message=jsonObject.getString("message");
+                                    Toast.makeText(SpeciesClassActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    dismiss();
+                                    showTitleBar();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(SpeciesClassActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                            showTitleBar();
+                        }
+                    });
+                    requestQueue.add(request);
+                }
+            });
 
             shape1.setOnCheckedChangeListener(this);
             shape2.setOnCheckedChangeListener(this);
@@ -696,38 +790,34 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             {
                 case"shape":
                     if(isChecked){
-                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                        shape.add(buttonView.getText().toString());
                     }else
                     {
-
-                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                        shape.remove(buttonView.getText().toString());
                     }
                     break;
                 case "tone":
                     if(isChecked){
-                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                        tone.add(buttonView.getText().toString());
                     }else
                     {
-
-                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                        tone.remove(buttonView.getText().toString());
                     }
                     break;
                 case "habit":
                     if(isChecked){
-                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                        habit.add(buttonView.getText().toString());
                     }else
                     {
-
-                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                        habit.remove(buttonView.getText().toString());
                     }
                     break;
                 case "tail_shape":
                     if(isChecked){
-                        Toast.makeText(getContext(),buttonView.getText().toString(),Toast.LENGTH_SHORT).show();
+                        tailShape.add(buttonView.getText().toString());
                     }else
                     {
-
-                        Toast.makeText(getContext(),"false",Toast.LENGTH_SHORT).show();
+                        tailShape.remove(buttonView.getText().toString());
                     }
                     break;
             }
@@ -754,4 +844,19 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         dialog.show();
     }
 
+    public void hideTitleBar()
+    {
+        actionBack.setVisibility(View.INVISIBLE);
+        speciesClassName.setVisibility(View.INVISIBLE);
+        alertMenu.setVisibility(View.INVISIBLE);
+        alertPick.setVisibility(View.INVISIBLE);
+    }
+
+    public void  showTitleBar()
+    {
+        actionBack.setVisibility(View.VISIBLE);
+        speciesClassName.setVisibility(View.VISIBLE);
+        alertMenu.setVisibility(View.VISIBLE);
+        alertPick.setVisibility(View.VISIBLE);
+    }
 }

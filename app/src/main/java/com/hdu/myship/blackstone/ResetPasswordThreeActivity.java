@@ -10,6 +10,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     private String ResetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/pwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
-    private ImageView actionBack;
+    private LinearLayout actionBack;
     private ImageView showPassword;
 
     private EditText inputPassword;
@@ -57,7 +58,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     }
 
     private void initViews() {
-        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
+        actionBack= (LinearLayout) findViewById(R.id.activity_reset_password_three_linear_layout_action_back);
         showPassword= (ImageView) findViewById(R.id.activity_reset_password_three_image_view_show_password);
 
         inputPassword= (EditText) findViewById(R.id.activity_reset_password_three_edit_text_input_password);
@@ -95,7 +96,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_make_team_image_view_action_back:
+            case R.id.activity_reset_password_three_linear_layout_action_back:
                 actionBack();
                 break;
 
@@ -111,7 +112,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
 
     private void actionBack() {
         this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+      //  overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void showPassword() {

@@ -24,7 +24,7 @@ import java.util.List;
 import ShapeUtil.GlideRoundTransform;
 import database.Species;
 
-public class MyCollectionsTwoActivity extends AppCompatActivity {
+public class MyCollectionsTwoActivity extends AppCompatActivity implements View.OnClickListener{
     private String dealPicure="?imageView2/0/w/400/h/400";//本平台的图片采用了cdn分发，为了节省流量，采用七牛云的api处理接口
     private String TAG="MyCollectionsTwoActivity";
     private LinearLayout actionBack;
@@ -71,21 +71,10 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
         actionBack= (LinearLayout) findViewById(R.id.activity_my_collection_two_linear_layout_action_back);
         recyclerView= (RecyclerView) findViewById(R.id.activity_my_collection_two_recycler_view);
         title= (TextView) findViewById(R.id.activity_my_collection_text_view_title);
-        //adapter=new MyAdapter(this,speciesList);
-       // recyclerView.setAdapter(adapter);
         speciesContentAdapter=new SpeciesContentAdapter(this,resultList);
         recyclerView.setAdapter(speciesContentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-//        //adapter.setOnRecyclerViewItemClickeListener(new onItemClickLisenter() {
-//            @Override
-//            public void onItemClick(View view, Species data) {
-//                Intent intent=new Intent(MyCollectionsTwoActivity.this,SpeciesDeatailedActivity.class);
-//                intent.putExtra("singal",data.getSingal());
-//                intent.putExtra("speciesType",data.getSpeciesType());
-//                startActivity(intent);
-//            }
-//        });
         speciesContentAdapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
             public void onItemClick(View view, Species data) {
@@ -95,9 +84,25 @@ public class MyCollectionsTwoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        actionBack.setOnClickListener(this);
     }
 
-        class MyAdapter extends RecyclerView.Adapter<MyHolder>implements View.OnClickListener
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.activity_my_collection_two_linear_layout_action_back:
+                actionBack();
+                break;
+        }
+    }
+
+    private void actionBack() {
+        finish();
+    }
+
+    class MyAdapter extends RecyclerView.Adapter<MyHolder>implements View.OnClickListener
    {    List<Species> speciesList;
         Context context;
         onItemClickLisenter onItemClickLisenter=null;

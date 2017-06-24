@@ -13,33 +13,36 @@
         android:background="@color/mycolor"
        >
 
-        <ImageView
-            android:id="@+id/activity_make_team_image_view_action_back"
+        <LinearLayout
+            android:id="@+id/dialog_pick_bird_linear_layout_action_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/mycolor"
-            android:src="@mipmap/action_back"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="13dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="返回"
-            android:textColor="#ffff"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/activity_make_team_image_view_action_back"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/mycolor"
+                android:src="@mipmap/action_back"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:layout_marginLeft="6dp"
+                android:textColor="#ffff"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,6 +63,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/dialog_pick_bird_text_view_sure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确认"
@@ -70,7 +74,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -271,6 +276,7 @@
                             android:layout_marginBottom="10dp"
                             android:textColor="@drawable/button"
                             android:button="@null"
+                            android:tag="tone"
                             android:text="紫;白"/>
 
                         <CheckBox
@@ -342,6 +348,7 @@
                         android:layout_height="wrap_content"
                         android:button="@null"
                         android:text="黑;黄"
+                        android:tag="tone"
                         android:textColor="@drawable/button" />
 
                 </LinearLayout>
@@ -370,6 +377,7 @@
                         android:layout_marginBottom="10dp"
                         android:button="@null"
                         android:text="绿;橙"
+                        android:tag="tone"
                         android:textColor="@drawable/button" />
 
                     <CheckBox
@@ -526,6 +534,7 @@
                         android:layout_marginBottom="10dp"
                         android:button="@null"
                         android:text="山地森林、城市"
+                        android:tag="habit"
                         android:textColor="@drawable/button" />
 
                     <CheckBox
@@ -573,6 +582,7 @@
                         android:layout_marginBottom="10dp"
                         android:button="@null"
                         android:text="湿地、农田、城市"
+                        android:tag="habit"
                         android:textColor="@drawable/button" />
 
                     <CheckBox

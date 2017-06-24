@@ -145,12 +145,12 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         {
             case R.id.logined_fragment_my_collections:
                 startActivity(new Intent(getContext(),MyCollectionsActivity.class));
-                getActivity(). overridePendingTransition(R.anim.in,R.anim.out);
+//                getActivity(). overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.logined_fragment_my_records:
                 startActivity(new Intent(getContext(),MyRecordsActivity.class));
-                getActivity(). overridePendingTransition(R.anim.in,R.anim.out);
+//                getActivity(). overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.logined_fragment_image_view_picture:

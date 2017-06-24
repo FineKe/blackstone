@@ -78,7 +78,7 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_reset_phone_image_button_action_back:
+            case R.id.activity_reset_phone_linear_layout_action_back:
                 actionBack();
                 break;
 
@@ -90,7 +90,7 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
 
     private void actionBack() {
         this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+      //  overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void update() {

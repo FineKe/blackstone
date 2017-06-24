@@ -252,7 +252,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private void createInsectView(Insect speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText(speciesDetailed.getChineseName());
-        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        titleText.setText(speciesDetailed.getChineseName());
         orderFamilyGenus.setText(speciesDetailed.getOrder());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin());
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
@@ -270,10 +270,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(s);
+                content.setLineSpacing(8,1);
                 tableView.addView(title);
                 tableView.addView(content);
                 View view1 = linearLayout.getChildAt(1);
-                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                tableView.setPadding(view1.getPaddingLeft(), 10, view1.getPaddingRight(), 10);
                 View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
                 linearLayout.addView(tableView);
             }
@@ -285,12 +286,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private void createAmphibiaView(Amphibia speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("两栖类");
-        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        titleText.setText(speciesDetailed.getChineseName());
         orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getGenus());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
-        latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
-        englishName.setText(speciesDetailed.getLatinName());
-//        englishName.setVisibility(View.GONE)
+        latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
+      //  englishName.setText(speciesDetailed.getLatinName());
+        englishName.setVisibility(View.GONE);
         String[] tables = getResources().getStringArray(R.array.aphibiaTablesName);
         int i = 0;
         for (String s : speciesDetailed.getViewTables()) {
@@ -303,11 +304,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(speciesDetailed.getViewTables().get(i));
+                content.setLineSpacing(8,1);
                 tableView.addView(title);
                 tableView.addView(content);
 
                 View view1 = linearLayout.getChildAt(1);
-                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                tableView.setPadding(view1.getPaddingLeft(), 10, view1.getPaddingRight(), 10);
                 View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
                 linearLayout.addView(tableView);
                 System.out.println(tables[i] + ":");
@@ -321,12 +323,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private void createReptilesView(Reptiles speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("爬行类");
-        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        titleText.setText(speciesDetailed.getChineseName());
         orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getGenus());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
-        latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
-        englishName.setText(speciesDetailed.getLatinName());
-//        englishName.setVisibility(View.GONE);
+        latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
+//        englishName.setText(speciesDetailed.getLatinName());
+        englishName.setVisibility(View.GONE);
         String[] tables = getResources().getStringArray(R.array.reptilesTblesName);
         int i = 0;
         for (String s : speciesDetailed.getViewTables()) {
@@ -339,10 +341,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(speciesDetailed.getViewTables().get(i));
+                content.setLineSpacing(8,1);
                 tableView.addView(title);
                 tableView.addView(content);
                 View view1 = linearLayout.getChildAt(1);
-                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                tableView.setPadding(view1.getPaddingLeft(), 10, view1.getPaddingRight(), 10);
                 View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
                 linearLayout.addView(tableView);
                 System.out.println(tables[i] + ":");
@@ -355,10 +358,10 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private void createBirdView(final Bird speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("鸟类");
-        titleText.setText("#" + speciesDetailed.getSingal() + speciesDetailed.getChineseName());
+        titleText.setText(speciesDetailed.getChineseName());
         orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getChineseName() + "属");
         latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
-        latinGenus.setText(speciesDetailed.getGenusLatin());//生物圈这么干的，latinname
+        latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
         englishName.setText(speciesDetailed.getEnglishName());
         String[] tables = getResources().getStringArray(R.array.birdTablesName);
         int i = 0;
@@ -368,15 +371,17 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 tableView.setGravity(Gravity.CENTER_VERTICAL);
                 tableView.setOrientation(LinearLayout.VERTICAL);
                 TextView title = new TextView(this);
+                tableView.setGravity(Gravity.CENTER_VERTICAL);
                 title.setText(tables[i]);
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(speciesDetailed.getViewTables().get(i));
+                content.setLineSpacing(8,1);
                 tableView.addView(title);
                 tableView.addView(content);
 
                 View view1 = linearLayout.getChildAt(1);
-                tableView.setPadding(view1.getPaddingLeft(), 0, view1.getPaddingRight(), 0);
+                tableView.setPadding(view1.getPaddingLeft(), 10, view1.getPaddingRight(), 10);
                 View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
                 linearLayout.addView(tableView);
                 System.out.println(tables[i] + ":");
@@ -389,7 +394,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         View v = LayoutInflater.from(this).inflate(R.layout.bird_audio_picture, linearLayout);
         ImageView audioPicture = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_audio_picture);
         final ImageView playAudio = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_play_audio);
-        audioPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        audioPicture.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load(speciesDetailed.getAudioPicture()).placeholder(R.mipmap.loading_big).into(audioPicture);
 
         playAudio.setOnClickListener(new View.OnClickListener() {

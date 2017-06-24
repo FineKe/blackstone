@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -21,7 +22,7 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
 
     private EditText phone;
 
-    private ImageView actionBack;
+    private LinearLayout actionBack;
 
     private BootstrapButton sure;
 
@@ -53,7 +54,7 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
 
         phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);//密码
 
-        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
+        actionBack= (LinearLayout) findViewById(R.id.activity_reset_password_two_action_back);
 
         sure= (BootstrapButton) findViewById(R.id.activity_resetPasswordTwo_boot_strap_button_sue);
 
@@ -92,7 +93,7 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_make_team_image_view_action_back:actionBack();
+            case R.id.activity_reset_password_two_action_back:actionBack();
                 break;
 
             case R.id.activity_resetPasswordTwo_boot_strap_button_sue:sure();
@@ -107,14 +108,14 @@ public class ResetPasswordTwoActivity extends AppCompatActivity implements View.
 
     private void actionBack() {
         this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+       // overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void sure() {
         if(phone.getText().toString().equals(userInformationSharedPreferences.getString("password","")))
         {
             startActivity(new Intent(this,ResetPasswordThreeActivity.class));
-            overridePendingTransition(R.anim.in,R.anim.out);
+           // overridePendingTransition(R.anim.in,R.anim.out);
         }else
         {
             message.setText("密码有误，请重新输入");

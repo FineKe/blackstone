@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class PersonInformationActivity extends AppCompatActivity implements View.OnClickListener{
@@ -14,7 +15,7 @@ public class PersonInformationActivity extends AppCompatActivity implements View
     private TextView id;
     private TextView gender;
 
-    private ImageButton actionBack;
+    private LinearLayout actionBack;
 
     private SharedPreferences userInformationSharedPreferences;
     private SharedPreferences.Editor userInformationEditor;
@@ -41,7 +42,7 @@ public class PersonInformationActivity extends AppCompatActivity implements View
         id= (TextView) findViewById(R.id.person_information_textView_id);
         gender= (TextView) findViewById(R.id.person_information_textView_gender);
 
-        actionBack= (ImageButton) findViewById(R.id.person_information_imageButton_actionBack);
+        actionBack= (LinearLayout) findViewById(R.id.activity_person_information_linear_layout_action_back);
 
         name.setText(userInformationSharedPreferences.getString("name",""));
         id.setText(userInformationSharedPreferences.getString("studentId",""));
@@ -56,13 +57,13 @@ public class PersonInformationActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.person_information_imageButton_actionBack:actionBack();
+            case R.id.activity_person_information_linear_layout_action_back:actionBack();
                 break;
         }
     }
 
     private void actionBack() {
         this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+       // overridePendingTransition(R.anim.in,R.anim.out);
     }
 }

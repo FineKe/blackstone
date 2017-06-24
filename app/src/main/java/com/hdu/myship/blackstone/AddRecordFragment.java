@@ -52,6 +52,7 @@ import java.util.Map;
 import database.Record;
 import database.Species;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -201,6 +202,56 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
 
         };
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            ActivityCompat.OnRequestPermissionsResultCallback requestPermissionsResultCallback=new ActivityCompat.OnRequestPermissionsResultCallback() {
+                @Override
+                public void onRequestPermissionsResult(int i, @NonNull String[] strings, @NonNull int[] ints) {
+                    switch (i)
+                    {
+                        case 1:
+                            if(ints.length>0&&ints[0]==PackageManager.PERMISSION_GRANTED&&ints[1]==PackageManager.PERMISSION_GRANTED)
+                            {
+                                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                                Criteria criteria = new Criteria();
+                                List<String> list = locationManager.getProviders(true);
+                                if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                                    privoder = LocationManager.NETWORK_PROVIDER;
+                                } else if (list.contains(LocationManager.GPS_PROVIDER)) {
+                                    privoder = LocationManager.GPS_PROVIDER;
+                                } else {
+                                    Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+                                }
+                            }else
+                            {
+                                Toast.makeText(getContext(), "你拒绝了权限", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                    }
+                }
+            };
+
+        } else {
+            locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+            List<String> list = locationManager.getProviders(true);
+            if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                privoder = LocationManager.NETWORK_PROVIDER;
+            } else if (list.contains(LocationManager.GPS_PROVIDER)) {
+                privoder = LocationManager.GPS_PROVIDER;
+            } else {
+                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if(privoder!=null)
+        {
+            Toast.makeText(getContext(), "provier:"+privoder.toString(), Toast.LENGTH_SHORT).show();
+            locationManager.requestLocationUpdates(privoder,10000,1,locationListener);
+            mlocation=locationManager.getLastKnownLocation(privoder);
+        }else
+        {
+            Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -219,15 +270,13 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                                 locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                                 Criteria criteria = new Criteria();
                                 List<String> list = locationManager.getProviders(true);
-                                if (list.contains(LocationManager.GPS_PROVIDER)) {
+                                if (list.contains(LocationManager.NETWORK_PROVIDER)) {
                                     privoder = LocationManager.NETWORK_PROVIDER;
-                                } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+                                } else if (list.contains(LocationManager.GPS_PROVIDER)) {
                                     privoder = LocationManager.GPS_PROVIDER;
-
                                 } else {
                                     Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
                                 }
-
                             }else
                             {
                                 Toast.makeText(getContext(), "你拒绝了权限", Toast.LENGTH_SHORT).show();
@@ -238,11 +287,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             };
 
         } else {
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
             List<String> list = locationManager.getProviders(true);
-            if (list.contains(LocationManager.GPS_PROVIDER)) {
+            if (list.contains(LocationManager.NETWORK_PROVIDER)) {
                 privoder = LocationManager.NETWORK_PROVIDER;
-            } else if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+            } else if (list.contains(LocationManager.GPS_PROVIDER)) {
                 privoder = LocationManager.GPS_PROVIDER;
             } else {
                 Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
@@ -250,19 +300,74 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         }
         if(privoder!=null)
         {
-            locationManager.requestLocationUpdates(privoder,100,0,locationListener);
+            Toast.makeText(getContext(), "provier:"+privoder.toString(), Toast.LENGTH_SHORT).show();
+            locationManager.requestLocationUpdates(privoder,1000,100,locationListener);
             mlocation=locationManager.getLastKnownLocation(privoder);
         }else
         {
             Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
         }
 
+
+
+//        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//        }else
+//        {
+//            locationManager = (LocationManager)getContext(). getSystemService(Context.LOCATION_SERVICE);
+//            List<String> list = locationManager.getProviders(true);
+//            if (list.contains(LocationManager.NETWORK_PROVIDER)) {
+//                privoder = LocationManager.NETWORK_PROVIDER;
+//            } else if (list.contains(LocationManager.GPS_PROVIDER)) {
+//                privoder = LocationManager.GPS_PROVIDER;
+//            } else {
+//                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            locationManager.requestLocationUpdates(privoder, 10000, 0, new LocationListener() {
+//                @Override
+//                public void onLocationChanged(Location location) {
+//                    Toast.makeText(getContext(), location.getLatitude()+location.getLatitude()+"", Toast.LENGTH_SHORT).show();
+//                    mlocation=location;
+//                }
+//
+//                @Override
+//                public void onStatusChanged(String provider, int status, Bundle extras) {
+//                    Toast.makeText(getContext(), "statusCHanged", Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+//                @Override
+//                public void onProviderEnabled(String provider) {
+//                    Toast.makeText(getContext(), "gps开启", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onProviderDisabled(String provider) {
+//                    Toast.makeText(getContext(), "gps关闭", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//            Location location = locationManager.getLastKnownLocation(privoder);
+//            mlocation=locationManager.getLastKnownLocation(privoder);
+//            if(location!=null)
+//            {
+//                Toast.makeText(getContext(),location.toString(),Toast.LENGTH_SHORT).show();
+//            }
+//        }
+
     }
 
-
-
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     private void initData() {
         createBasicRecordsSharedPreferences = getActivity().getSharedPreferences(createBasicRecordsFile, MODE_PRIVATE);

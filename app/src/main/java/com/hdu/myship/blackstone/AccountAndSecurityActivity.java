@@ -37,7 +37,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
     private LinearLayout tab_resetPassword;
     private LinearLayout tab_resetPhone;
 
-    private ImageButton actionBack;
+    private LinearLayout actionBack;
 
     private BootstrapButton logOut;
 
@@ -87,7 +87,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         tab_resetPassword= (LinearLayout) findViewById(R.id.account_security_linearlayout_reset_password);
         tab_resetPhone= (LinearLayout) findViewById(R.id.account_security_linearlayout_reset_phone);
 
-        actionBack= (ImageButton) findViewById(R.id.activity_suggestion_image_button_action_back);
+        actionBack= (LinearLayout) findViewById(R.id.activity_account_security_linear_layout_action_back);
         logOut= (BootstrapButton) findViewById(R.id.account_and_security_bootStrap_button_logout);
     }
 
@@ -106,20 +106,20 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         {
             case R.id.account_security_linearlayout_person_information:
                 startActivity(new Intent(this,PersonInformationActivity.class));
-                overridePendingTransition(R.anim.in,R.anim.out);
+                //overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.account_security_linearlayout_reset_password:
                 startActivity(new Intent(this,ResetPasswordActivity.class));
-                overridePendingTransition(R.anim.in,R.anim.out);
+               // overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
             case R.id.account_security_linearlayout_reset_phone:
                 startActivity(new Intent(this,ResetPhoneActivity.class));
-                overridePendingTransition(R.anim.in,R.anim.out);
+                //overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
-            case R.id.activity_suggestion_image_button_action_back:
+            case R.id.activity_account_security_linear_layout_action_back:
                 actionBack();
                 break;
 
@@ -131,7 +131,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
 
     private void actionBack() {
         this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+      //  overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void logOut() {

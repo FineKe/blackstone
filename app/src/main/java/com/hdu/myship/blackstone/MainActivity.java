@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -167,7 +168,12 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         tab_add_record.setOnClickListener(this);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
 
+
+    }
 
     /**
      * 主要是实现各种fragment的切换

@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/mycolor"
+                android:clickable="false"
                 android:contentDescription=""
                 android:src="@mipmap/action_back"
                />
@@ -42,6 +43,7 @@
                 android:layout_marginLeft="6dp"
                 android:text="返回"
                 android:textColor="#ffff"
+                android:clickable="false"
                 android:textSize="20sp" />
         </LinearLayout>
 

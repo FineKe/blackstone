@@ -188,7 +188,9 @@ public class SpeciesFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        GetCategory();
+        Toast.makeText(getContext(),"Onresume",Toast.LENGTH_SHORT).show();
+//        speciesClassesList.clear();
+//        GetCategory();
     }
 
     public void GetCategory()

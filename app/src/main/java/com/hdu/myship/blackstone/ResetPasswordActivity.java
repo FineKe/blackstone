@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -21,14 +22,13 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
     private EditText phone;
 
-    private ImageView actionBack;
+    private LinearLayout actionBack;
 
     private BootstrapButton nextStep;
 
     private SharedPreferences userInformationSharedPreferences;
     private SharedPreferences.Editor userInformationEditor;
     private String userInformation="UesrInformation";
-
     private String phoneNumber;
     private String phoneCode;
     @Override
@@ -60,7 +60,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
         phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
 
-        actionBack= (ImageView) findViewById(R.id.activity_make_team_image_view_action_back);
+        actionBack= (LinearLayout) findViewById(R.id.activity_reset_password_linear_layout_action_back);
 
         nextStep= (BootstrapButton) findViewById(R.id.activity_resetPassword_boot_strap_button_next_step);
 
@@ -98,7 +98,8 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.activity_make_team_image_view_action_back:actionBack();
+            case R.id.activity_reset_password_linear_layout_action_back:
+                actionBack();
                 break;
 
             case R.id.activity_resetPassword_boot_strap_button_next_step:
@@ -110,7 +111,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
     private void actionBack() {
         this.finish();
-        overridePendingTransition(R.anim.in,R.anim.out);
+       // overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void nextStep() {
@@ -119,7 +120,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         if(phoneNumber.equals(phone.getText().toString()))
         {
             startActivity(new Intent(this,ResetPasswordTwoActivity.class));
-            overridePendingTransition(R.anim.in,R.anim.out);
+            //overridePendingTransition(R.anim.in,R.anim.out);
         }
         else
         {

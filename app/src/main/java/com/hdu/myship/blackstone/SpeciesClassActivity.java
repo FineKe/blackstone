@@ -318,19 +318,51 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 break;
 
             case R.id.species_class_imageButton_alert_pick:
-//                Toast.makeText(SpeciesClassActivity.this, "sssss", Toast.LENGTH_SHORT).show();
-//                showBirdPick();
-
-                mydialog_bird dialog=new mydialog_bird(this,R.style.customDialog,width,height);
-                dialog.create();
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+                if(position==0){showAmphibiaPickDialog();}
+                else if(position==2){showBirdPickDialog();}
+                else if(position==1){showReptilesPickDialog();}
+                else {showInsectPickDialog();}
                 hideTitleBar();
                 break;
             case R.id.species_class_title_bar_linear_layout_actionBack:
                 actionBack();
                 break;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void showBirdPickDialog()
+    {
+        mydialog_bird dialog=new mydialog_bird(this,R.style.customDialog,width,height);
+        dialog.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void showAmphibiaPickDialog()
+    {
+        mydialog_amphibia dialog=new mydialog_amphibia(this,R.style.customDialog,width,height);
+        dialog.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void showReptilesPickDialog()
+    {
+        mydialog_retile dialog= new mydialog_retile(this,R.style.customDialog,width,height);
+        dialog.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    public void showInsectPickDialog()
+    {
+        mydialog_insect dialog=new mydialog_insect(this,R.style.customDialog,width,height);
+        dialog.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     public void actionBack()
@@ -619,6 +651,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                                         species.setOrder(data.getJSONObject(i).getString("order"));
                                         species.setFamily(data.getJSONObject(i).getString("family"));
                                         species.setMainPhoto(data.getJSONObject(i).getString("mainPhoto"));
+                                        species.setLatinName(data.getJSONObject(i).getString("latinName"));
                                         species.setEnglishName(data.getJSONObject(i).getString("englishName"));
                                         species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
                                         speciesList.add(species);
@@ -821,6 +854,895 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     break;
             }
 
+        }
+    }
+
+    public class mydialog_amphibia extends Dialog implements CompoundButton.OnCheckedChangeListener{
+        boolean flag1=false,flag2=false,flag3=false,flag4=false;
+        List<String> fil_web=new ArrayList<>();//筛选字段的集合，用于将属性装该集合
+        List<String> fil_major_color=new ArrayList<>();
+        List<String> fil_vocal_sac=new ArrayList<>();
+        List<String> fil_biotope=new ArrayList<>();
+        private Context context;
+        private  int width,height;
+        public mydialog_amphibia(@NonNull Context context, @StyleRes int themeResId,int width,int height) {
+            super(context, themeResId);
+            this.context=context;
+            this.width=width;
+            this.height=height;
+        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            init();
+        }
+        public void show(){
+            super.show();
+            Window dialogWindow = getWindow();
+            WindowManager.LayoutParams params = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+            params.alpha=0.8f;
+            dialogWindow.setGravity(Gravity.BOTTOM);//设置对话框位置
+            DisplayMetrics metric = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metric);
+            params.width= metric.widthPixels;
+            params.height=metric.heightPixels-height;
+            dialogWindow.setAttributes(params);
+        }
+        private void init(){
+            int []webId={R.id.dialog_pick_amphibia_web_1,R.id.dialog_pick_amphibia_web_2,R.id.dialog_pick_amphibia_web_3,
+                    R.id.dialog_pick_amphibia_web_4,R.id.dialog_pick_amphibia_web_5,R.id.dialog_pick_amphibia_web_6,
+                    R.id.dialog_pick_amphibia_web_7,R.id.dialog_pick_amphibia_web_8,R.id.dialog_pick_amphibia_web_9,
+                    R.id.dialog_pick_amphibia_web_10,R.id.dialog_pick_amphibia_web_11,R.id.dialog_pick_amphibia_web_12,
+                    R.id.dialog_pick_amphibia_web_13,R.id.dialog_pick_amphibia_web_14};
+            List<CheckBox> webCheckBox=new ArrayList<>();
+
+            int []major_colorId={R.id.dialog_pick_amphibia_major_color_1,R.id.dialog_pick_amphibia_major_color_2,R.id.dialog_pick_amphibia_major_color_3,
+                    R.id.dialog_pick_amphibia_major_color_4,R.id.dialog_pick_amphibia_major_color_5,R.id.dialog_pick_amphibia_major_color_6,
+                    R.id.dialog_pick_amphibia_major_color_7,R.id.dialog_pick_amphibia_major_color_8,R.id.dialog_pick_amphibia_major_color_9,
+                    R.id.dialog_pick_amphibia_major_color_10,R.id.dialog_pick_amphibia_major_color_11,R.id.dialog_pick_amphibia_major_color_12,
+                    R.id.dialog_pick_amphibia_major_color_13,R.id.dialog_pick_amphibia_major_color_14,R.id.dialog_pick_amphibia_major_color_15,
+                    R.id.dialog_pick_amphibia_major_color_16};
+            List<CheckBox> major_color_CheckBox=new ArrayList<>();
+
+            int []sacId={R.id.dialog_pick_amphibia_sac_1,R.id.dialog_pick_amphibia_sac_2,R.id.dialog_pick_amphibia_sac_3};
+            List<CheckBox> sacCheckBox=new ArrayList<>();
+
+            int []habitId={R.id.dialog_pick_amphibia_habit_1,R.id.dialog_pick_amphibia_habit_2,R.id.dialog_pick_amphibia_habit_3,
+                    R.id.dialog_pick_amphibia_habit_4,R.id.dialog_pick_amphibia_habit_5,R.id.dialog_pick_amphibia_habit_6,
+                    R.id.dialog_pick_amphibia_habit_7,R.id.dialog_pick_amphibia_habit_8,R.id.dialog_pick_amphibia_habit_9,
+                    R.id.dialog_pick_amphibia_habit_10,R.id.dialog_pick_amphibia_habit_11};
+            List<CheckBox> habitCheckBox=new ArrayList<>();
+
+
+            View v=getLayoutInflater().inflate(R.layout.dialog_pick_amphibia,null);
+
+            for(int i:webId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+               // webCheckBox.add((CheckBox) v.findViewById(i));
+            }
+
+            for(int i:major_colorId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+               // major_color_CheckBox.add((CheckBox) v.findViewById(i));
+            }
+
+            for(int i:sacId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                //sacCheckBox.add((CheckBox) v.findViewById(i));
+            }
+
+            for (int i:habitId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                //habitCheckBox.add((CheckBox) v.findViewById(i));
+            }
+
+            LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_amphibia_linear_layout_action_back);
+            TextView sure=(TextView) v.findViewById(R.id.dialog_pick_amphibia_text_view_sure);
+            setContentView(v);
+            TextView t1= (TextView)v. findViewById(R.id.t1);
+            t1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
+                    if(flag1==true) {
+                        l1.setVisibility(View.VISIBLE);
+                        flag1=false;
+                    }
+                    else if (flag1==false){
+                        l1.setVisibility(View.GONE);
+                        flag1=true;
+                    }
+                }
+            });
+            TextView t2= (TextView)v. findViewById(R.id.t2);
+            t2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l2= (LinearLayout)findViewById(R.id.l2);
+                    if(flag2==true) {
+                        l2.setVisibility(View.VISIBLE);
+                        flag2=false;
+                    }
+                    else if (flag2==false){
+                        l2.setVisibility(View.GONE);
+                        flag2=true;
+                    }
+                }
+            });
+            TextView t3= (TextView)v. findViewById(R.id.t3);
+            t3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l3= (LinearLayout)findViewById(R.id.l3);
+                    if(flag3==true) {
+                        l3.setVisibility(View.VISIBLE);
+                        flag3=false;
+                    }
+                    else if (flag3==false){
+                        l3.setVisibility(View.GONE);
+                        flag3=true;
+                    }
+                }
+            });
+            TextView t4= (TextView)v. findViewById(R.id.t4);
+            t4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l4= (LinearLayout)findViewById(R.id.l4);
+                    if(flag4==true) {
+                        l4.setVisibility(View.VISIBLE);
+                        flag4=false;
+                    }
+                    else if (flag4==false){
+                        l4.setVisibility(View.GONE);
+                        flag4=true;
+                    }
+                }
+            });
+            actionBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    showTitleBar();
+                }
+            });
+
+            sure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url="http://api.blackstone.ebirdnote.cn/v1/species/query/";//特征检索请求url
+                    RequestQueue requestQueue=Volley.newRequestQueue(getContext());//创建一个请求队列
+                    JSONArray webJsonArray=new JSONArray(fil_web);//将集合生成jSONArray
+                    JSONArray majorColorJsonArray=new JSONArray(fil_major_color);
+                    JSONArray biotpeJsonArray=new JSONArray(fil_biotope);
+                    JSONArray socJsonArray=new JSONArray(fil_vocal_sac);
+                    Map<String,Object> map=new HashMap<>();//建一个map
+                    if(socJsonArray.length()!=0)//判断是否为空，不为空则将其装入map中
+                        map.put("fil_vocal_sac",socJsonArray);//map中的"tail_shape"必须从返回接口里拿，以key-value的形式存入map
+                    if(biotpeJsonArray.length()!=0)
+                        map.put("fil_biotope",biotpeJsonArray);
+                    if(webJsonArray.length()!=0)
+                        map.put("fil_web",webJsonArray);
+                    if(majorColorJsonArray.length()!=0)
+                        map.put("fil_major_color",majorColorJsonArray);
+                    JSONObject jsonObject=new JSONObject(map);//生成一个json对象
+                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+                    JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "amphibia", jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {//
+                            try {
+                                int code=jsonObject.getInt("code");
+                                if (code==88)
+                                {   speciesList.clear();
+                                    JSONArray data=jsonObject.getJSONArray("data");
+                                    for(int i=0;i<data.length();i++)
+                                    {
+                                        Species species=new Species();
+                                        species.setSingal(data.getJSONObject(i).getInt("id"));
+                                        species.setChineseName(data.getJSONObject(i).getString("chineseName"));
+                                        species.setOrder(data.getJSONObject(i).getString("order"));
+                                        species.setFamily(data.getJSONObject(i).getString("family"));
+                                        species.setMainPhoto(data.getJSONObject(i).getString("mainPhoto"));
+                                        species.setLatinName(data.getJSONObject(i).getString("latinName"));
+                                        //species.setEnglishName(data.getJSONObject(i).getString("englishName"));
+                                        species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
+                                        speciesList.add(species);
+                                    }
+                                    //createIndexList(speciesList);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexList(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList,positionList);
+                                            showTitleBar();
+                                        }
+                                    });
+                                    dismiss();
+                                }else
+                                {
+                                    String message=jsonObject.getString("message");
+                                    Toast.makeText(SpeciesClassActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    dismiss();
+                                    showTitleBar();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(SpeciesClassActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                            showTitleBar();
+                        }
+                    });
+                    requestQueue.add(request);
+                }
+            });
+        }
+
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch ((String) buttonView.getTag()) {
+                case "web":
+                    if (isChecked) {
+                        fil_web.add(buttonView.getText().toString());
+                    } else {
+                        fil_web.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "majorColor":
+                    if (isChecked) {
+                      fil_major_color.add(buttonView.getText().toString());
+                    } else {
+                        fil_major_color.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "sac":
+                    if (isChecked) {
+                       fil_vocal_sac.add(buttonView.getText().toString());
+                    } else {
+                       fil_vocal_sac.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "habit":
+                    if (isChecked) {
+                        fil_biotope.add(buttonView.getText().toString());
+                    } else {
+                        fil_biotope.remove(buttonView.getText().toString());
+                    }
+                    break;
+            }
+
+        }
+    }
+
+    public class mydialog_retile extends Dialog implements CompoundButton.OnCheckedChangeListener{
+        boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
+        List<String> shapeList=new ArrayList<>();
+        List<String> majorList=new ArrayList<>();
+        List<String> biotopeList=new ArrayList<>();
+        List<String> microBiotopeList=new ArrayList<>();
+        List<String> bigscaleList=new ArrayList<>();
+        private Context context;
+        private  int width,height;
+        public mydialog_retile(@NonNull Context context, @StyleRes int themeResId,int width,int height) {
+            super(context, themeResId);
+            this.context=context;
+            this.width=width;
+            this.height=height;
+
+        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            init();
+        }
+        public void show(){
+            super.show();
+            Window dialogWindow = getWindow();
+            WindowManager.LayoutParams params = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+            params.alpha=0.8f;
+            dialogWindow.setGravity(Gravity.BOTTOM);//设置对话框位置
+            DisplayMetrics metric = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metric);
+            params.width= metric.widthPixels;
+            params.height=metric.heightPixels-height;
+            dialogWindow.setAttributes(params);
+        }
+        private void init(){
+            int [] shape={R.id.dialog_pick_reptiles_fil_shape_1,R.id.dialog_pick_reptiles_fil_shape_2,R.id.dialog_pick_reptiles_fil_shape_3};//形状
+
+            int [] majorColor={R.id.dialog_pick_reptiles_fil_major_color_1,R.id.dialog_pick_reptiles_fil_major_color_2,R.id.dialog_pick_reptiles_fil_major_color_3,//主色
+                    R.id.dialog_pick_reptiles_fil_major_color_4,R.id.dialog_pick_reptiles_fil_major_color_5,R.id.dialog_pick_reptiles_fil_major_color_6,
+                    R.id.dialog_pick_reptiles_fil_major_color_7,R.id.dialog_pick_reptiles_fil_major_color_8,R.id.dialog_pick_reptiles_fil_major_color_9,
+                    R.id.dialog_pick_reptiles_fil_major_color_10,R.id.dialog_pick_reptiles_fil_major_color_11,R.id.dialog_pick_reptiles_fil_major_color_12,
+                    R.id.dialog_pick_reptiles_fil_major_color_13,R.id.dialog_pick_reptiles_fil_major_color_14,R.id.dialog_pick_reptiles_fil_major_color_15,
+                    R.id.dialog_pick_reptiles_fil_major_color_16,R.id.dialog_pick_reptiles_fil_major_color_17,R.id.dialog_pick_reptiles_fil_major_color_18,
+                    R.id.dialog_pick_reptiles_fil_major_color_19,R.id.dialog_pick_reptiles_fil_major_color_20,R.id.dialog_pick_reptiles_fil_major_color_21,
+                    R.id.dialog_pick_reptiles_fil_major_color_22,R.id.dialog_pick_reptiles_fil_major_color_23,R.id.dialog_pick_reptiles_fil_major_color_24,
+                    R.id.dialog_pick_reptiles_fil_major_color_25,R.id.dialog_pick_reptiles_fil_major_color_26,R.id.dialog_pick_reptiles_fil_major_color_27,
+                    R.id.dialog_pick_reptiles_fil_major_color_28,R.id.dialog_pick_reptiles_fil_major_color_29};
+
+            final int [] biotope={R.id.dialog_pick_reptiles_fil_biotope_1,R.id.dialog_pick_reptiles_fil_biotope_2,R.id.dialog_pick_reptiles_fil_biotope_3,//栖息地
+                    R.id.dialog_pick_reptiles_fil_biotope_4,R.id.dialog_pick_reptiles_fil_biotope_5,R.id.dialog_pick_reptiles_fil_biotope_6,
+                    R.id.dialog_pick_reptiles_fil_biotope_7,R.id.dialog_pick_reptiles_fil_biotope_8,R.id.dialog_pick_reptiles_fil_biotope_9,
+                    R.id.dialog_pick_reptiles_fil_biotope_10,R.id.dialog_pick_reptiles_fil_biotope_11,R.id.dialog_pick_reptiles_fil_biotope_12,
+                    R.id.dialog_pick_reptiles_fil_biotope_13};
+
+            int [] microBiotope={R.id.dialog_pick_reptiles_fil_micro_biotope_1,R.id.dialog_pick_reptiles_fil_micro_biotope_2,R.id.dialog_pick_reptiles_fil_micro_biotope_3,//生境
+                    R.id.dialog_pick_reptiles_fil_micro_biotope_4,R.id.dialog_pick_reptiles_fil_micro_biotope_5,R.id.dialog_pick_reptiles_fil_micro_biotope_6,
+                    R.id.dialog_pick_reptiles_fil_micro_biotope_7,R.id.dialog_pick_reptiles_fil_micro_biotope_8,R.id.dialog_pick_reptiles_fil_micro_biotope_9,
+                    R.id.dialog_pick_reptiles_fil_micro_biotope_10,R.id.dialog_pick_reptiles_fil_micro_biotope_11,R.id.dialog_pick_reptiles_fil_micro_biotope_12,
+                    R.id.dialog_pick_reptiles_fil_micro_biotope_13,R.id.dialog_pick_reptiles_fil_micro_biotope_14};
+
+            int [] bigscale={R.id.dialog_pick_reptiles_fil_has_bigscale_1,R.id.dialog_pick_reptiles_fil_has_bigscale_2};
+
+            View v=getLayoutInflater().inflate(R.layout.dialog_pick_reptiles,null);
+            setContentView(v);
+            for(int i:shape)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:majorColor)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:biotope)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:microBiotope)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:bigscale)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_reptiles_linear_layout_action_back);
+            TextView sure= (TextView) v.findViewById(R.id.dialog_pick_reptiles_text_view_sure);
+            actionBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    showTitleBar();
+                }
+            });
+
+            sure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url="http://api.blackstone.ebirdnote.cn/v1/species/query/";//特征检索请求url
+                    RequestQueue requestQueue=Volley.newRequestQueue(getContext());//创建一个请求队列
+                    JSONArray shapeJsonArray=new JSONArray(shapeList);//将集合生成jSONArray
+                    JSONArray majorColorJsonArray=new JSONArray(majorList);
+                    JSONArray biotpeJsonArray=new JSONArray(biotopeList);
+                    JSONArray microBiotopeJsonArray=new JSONArray(microBiotopeList);
+                    JSONArray bigscaleJsonArray=new JSONArray(bigscaleList);
+                    Map<String,Object> map=new HashMap<>();//建一个map
+                    if(shapeJsonArray.length()!=0)//判断是否为空，不为空则将其装入map中
+                        map.put("fil_shape",shapeJsonArray);//map中的"tail_shape"必须从返回接口里拿，以key-value的形式存入map
+                    if(majorColorJsonArray.length()!=0)
+                        map.put("fil_major_color",majorColorJsonArray);
+                    if(microBiotopeJsonArray.length()!=0)
+                        map.put("fil_micro_biotope",microBiotopeJsonArray);
+                    if(biotpeJsonArray.length()!=0)
+                        map.put("fil_biotope",biotpeJsonArray);
+                    if(bigscaleJsonArray.length()!=0)
+                        map.put("fil_has_bigscale",bigscaleJsonArray);
+                    JSONObject jsonObject=new JSONObject(map);//生成一个json对象
+                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+                    JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "reptiles", jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {//
+                            try {
+                                int code=jsonObject.getInt("code");
+                                if (code==88)
+                                {   speciesList.clear();
+                                    JSONArray data=jsonObject.getJSONArray("data");
+                                    for(int i=0;i<data.length();i++)
+                                    {
+                                        Species species=new Species();
+                                        species.setSingal(data.getJSONObject(i).getInt("id"));
+                                        species.setChineseName(data.getJSONObject(i).getString("chineseName"));
+                                        species.setOrder(data.getJSONObject(i).getString("order"));
+                                        species.setFamily(data.getJSONObject(i).getString("family"));
+                                        species.setMainPhoto(data.getJSONObject(i).getString("mainPhoto"));
+                                        species.setLatinName(data.getJSONObject(i).getString("latinName"));
+                                        //species.setEnglishName(data.getJSONObject(i).getString("englishName"));
+                                        species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
+                                        speciesList.add(species);
+                                    }
+                                    //createIndexList(speciesList);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexList(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList,positionList);
+                                            showTitleBar();
+                                        }
+                                    });
+                                    dismiss();
+                                }else
+                                {
+                                    String message=jsonObject.getString("message");
+                                    Toast.makeText(SpeciesClassActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    dismiss();
+                                    showTitleBar();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(SpeciesClassActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                            showTitleBar();
+                        }
+                    });
+                    requestQueue.add(request);
+                }
+            });
+
+
+            TextView t1= (TextView)v. findViewById(R.id.t1);
+            t1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
+                    if(flag1==true) {
+                        l1.setVisibility(View.VISIBLE);
+                        flag1=false;
+                    }
+                    else if (flag1==false){
+                        l1.setVisibility(View.GONE);
+                        flag1=true;
+                    }
+                }
+            });
+            TextView t2= (TextView)v. findViewById(R.id.t2);
+            t2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l2= (LinearLayout)findViewById(R.id.l2);
+                    if(flag2==true) {
+                        l2.setVisibility(View.VISIBLE);
+                        flag2=false;
+                    }
+                    else if (flag2==false){
+                        l2.setVisibility(View.GONE);
+                        flag2=true;
+                    }
+                }
+            });
+            TextView t3= (TextView)v. findViewById(R.id.t3);
+            t3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l3= (LinearLayout)findViewById(R.id.l3);
+                    if(flag3==true) {
+                        l3.setVisibility(View.VISIBLE);
+                        flag3=false;
+                    }
+                    else if (flag3==false){
+                        l3.setVisibility(View.GONE);
+                        flag3=true;
+                    }
+                }
+            });
+            TextView t4= (TextView)v. findViewById(R.id.t4);
+            t4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l4= (LinearLayout)findViewById(R.id.l4);
+                    if(flag4==true) {
+                        l4.setVisibility(View.VISIBLE);
+                        flag4=false;
+                    }
+                    else if (flag4==false){
+                        l4.setVisibility(View.GONE);
+                        flag4=true;
+                    }
+                }
+            });
+            TextView t5= (TextView)v. findViewById(R.id.t5);
+            t5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l5= (LinearLayout)findViewById(R.id.l5);
+                    if(flag5==true) {
+                        l5.setVisibility(View.VISIBLE);
+                        flag5=false;
+                    }
+                    else if (flag5==false){
+                        l5.setVisibility(View.GONE);
+                        flag5=true;
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch ((String)buttonView.getTag())
+            {
+                case "fil_shape":
+                    if(isChecked)
+                    {
+                        shapeList.add(buttonView.getText().toString());
+                    }else
+                    {
+                        shapeList.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_micro_biotope":
+                    if(isChecked)
+                    {
+                        microBiotopeList.add(buttonView.getText().toString());
+                    }else
+                    {
+                        microBiotopeList.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_biotope":
+                    if(isChecked)
+                    {
+                        biotopeList.add(buttonView.getText().toString());
+                    }else
+                    {
+                        biotopeList.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_has_bigscale":
+                    if(isChecked)
+                    {
+                        bigscaleList.add(buttonView.getText().toString());
+                    }else
+                    {
+                        bigscaleList.remove(buttonView.getText().toString());
+                    }
+                    break;
+                case "fil_major_color":
+                    if(isChecked)
+                    {
+                        majorList.add(buttonView.getText().toString());
+                    }else
+                    {
+                        majorList.remove(buttonView.getText().toString());
+                    }
+                    break;
+            }
+        }
+    }
+
+    public class mydialog_insect extends Dialog implements CompoundButton.OnCheckedChangeListener{
+        boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
+        List<String> tentacle=new ArrayList<>();
+        List<String> wing=new ArrayList<>();
+        List<String> mouthparts=new ArrayList<>();
+        List<String> life_cycle=new ArrayList<>();
+        List<String> leg=new ArrayList<>();
+        private Context context;
+        private  int width,height;
+        public mydialog_insect(@NonNull Context context, @StyleRes int themeResId,int width,int height) {
+            super(context, themeResId);
+            this.context=context;
+            this.width=width;
+            this.height=height;
+        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            init();
+        }
+        public void show(){
+            super.show();
+            Window dialogWindow = getWindow();
+            WindowManager.LayoutParams params = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+            params.alpha=0.8f;
+            dialogWindow.setGravity(Gravity.BOTTOM);//设置对话框位置
+            DisplayMetrics metric = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metric);
+            params.width= metric.widthPixels;
+            params.height=metric.heightPixels-height;
+            dialogWindow.setAttributes(params);
+        }
+        private void init(){
+            int []tentacleId={R.id.dialog_pick_insect_fil_tentacle_1,R.id.dialog_pick_insect_fil_tentacle_2,R.id.dialog_pick_insect_fil_tentacle_3,
+                    R.id.dialog_pick_insect_fil_tentacle_4,R.id.dialog_pick_insect_fil_tentacle_5,R.id.dialog_pick_insect_fil_tentacle_6,R.id.dialog_pick_insect_fil_tentacle_7,
+                    R.id.dialog_pick_insect_fil_tentacle_8,R.id.dialog_pick_insect_fil_tentacle_9};
+
+            int []wingId={R.id.dialog_pick_insect_fil_wing_1,R.id.dialog_pick_insect_fil_wing_2,R.id.dialog_pick_insect_fil_wing_3,R.id.dialog_pick_insect_fil_wing_4,
+                    R.id.dialog_pick_insect_fil_wing_5,R.id.dialog_pick_insect_fil_wing_6,R.id.dialog_pick_insect_fil_wing_7,R.id.dialog_pick_insect_fil_wing_8,
+                    R.id.dialog_pick_insect_fil_wing_9,R.id.dialog_pick_insect_fil_wing_10};
+
+            int []mouthpartsId={R.id.dialog_pick_insect_fil_mouthparts_1,R.id.dialog_pick_insect_fil_mouthparts_2,R.id.dialog_pick_insect_fil_mouthparts_3,
+                    R.id.dialog_pick_insect_fil_mouthparts_4,R.id.dialog_pick_insect_fil_mouthparts_5,R.id.dialog_pick_insect_fil_mouthparts_6};
+
+            int []life_cycleId={R.id.dialog_pick_insect_fil_life_cycle_1,R.id.dialog_pick_insect_fil_life_cycle_2,R.id.dialog_pick_insect_fil_life_cycle_3,
+                    R.id.dialog_pick_insect_fil_life_cycle_4,R.id.dialog_pick_insect_fil_life_cycle_5};
+
+            int []legId={R.id.dialog_pick_insect_fil_leg_1,R.id.dialog_pick_insect_fil_leg_2,R.id.dialog_pick_insect_fil_leg_3,R.id.dialog_pick_insect_fil_leg_4,
+                    R.id.dialog_pick_insect_fil_leg_5};
+
+            View v=getLayoutInflater().inflate(R.layout.dialog_pick_insect,null);
+            setContentView(v);
+            for(int i:tentacleId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:wingId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:mouthpartsId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:life_cycleId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            for(int i:legId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+            }
+
+            TextView sure= (TextView) v.findViewById(R.id.dialog_pick_insect_text_view_sure);
+            LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_insect_linear_layout_action_back);
+
+            actionBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    showTitleBar();
+                }
+            });
+
+            sure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url="http://api.blackstone.ebirdnote.cn/v1/species/query/";//特征检索请求url
+                    RequestQueue requestQueue=Volley.newRequestQueue(getContext());//创建一个请求队列
+                    JSONArray tentacleJsonArray=new JSONArray(tentacle);//将集合生成jSONArray
+                    JSONArray wingJsonArray=new JSONArray(wing);
+                    JSONArray mouthpartsJsonArray=new JSONArray(mouthparts);
+                    JSONArray lifeCycleJsonArray=new JSONArray(life_cycle);
+                    JSONArray legJsonArray=new JSONArray(leg);
+                    Map<String,Object> map=new HashMap<>();//建一个map
+                    if(tentacleJsonArray.length()!=0)//判断是否为空，不为空则将其装入map中
+                        map.put("fil_tentacle",tentacleJsonArray);//map中的"tail_shape"必须从返回接口里拿，以key-value的形式存入map
+                    if(wingJsonArray.length()!=0)
+                        map.put("fil_wing",wingJsonArray);
+                    if(lifeCycleJsonArray.length()!=0)
+                        map.put("fil_mouthparts",lifeCycleJsonArray);
+                    if(mouthpartsJsonArray.length()!=0)
+                        map.put("fil_life_cycle",mouthpartsJsonArray);
+                    if(legJsonArray.length()!=0)
+                        map.put("fil_leg",legJsonArray);
+                    JSONObject jsonObject=new JSONObject(map);//生成一个json对象
+                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+                    JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "insect", jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {//
+                            try {
+                                int code=jsonObject.getInt("code");
+                                if (code==88)
+                                {   speciesList.clear();
+                                    JSONArray data=jsonObject.getJSONArray("data");
+                                    for(int i=0;i<data.length();i++)
+                                    {
+                                        Species species=new Species();
+                                        species.setSingal(data.getJSONObject(i).getInt("id"));
+                                        species.setChineseName(data.getJSONObject(i).getString("chineseName"));
+                                        species.setOrder(data.getJSONObject(i).getString("order"));
+                                        species.setFamily(data.getJSONObject(i).getString("family"));
+                                        species.setMainPhoto(data.getJSONObject(i).getString("mainPhoto"));
+                                        species.setLatinName(data.getJSONObject(i).getString("latinName"));
+                                        //species.setEnglishName(data.getJSONObject(i).getString("englishName"));
+                                        species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
+                                        speciesList.add(species);
+                                    }
+                                    //createIndexList(speciesList);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexList(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList,positionList);
+                                            showTitleBar();
+                                        }
+                                    });
+                                    dismiss();
+                                }else
+                                {
+                                    String message=jsonObject.getString("message");
+                                    Toast.makeText(SpeciesClassActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    dismiss();
+                                    showTitleBar();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(SpeciesClassActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                            showTitleBar();
+                        }
+                    });
+                    requestQueue.add(request);
+                }
+            });
+
+            TextView t1= (TextView)v. findViewById(R.id.t1);
+            t1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
+                    if(flag1==true) {
+                        l1.setVisibility(View.VISIBLE);
+                        flag1=false;
+                    }
+                    else if (flag1==false){
+                        l1.setVisibility(View.GONE);
+                        flag1=true;
+                    }
+                }
+            });
+            TextView t2= (TextView)v. findViewById(R.id.t2);
+            t2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l2= (LinearLayout)findViewById(R.id.l2);
+                    if(flag2==true) {
+                        l2.setVisibility(View.VISIBLE);
+                        flag2=false;
+                    }
+                    else if (flag2==false){
+                        l2.setVisibility(View.GONE);
+                        flag2=true;
+                    }
+                }
+            });
+            TextView t3= (TextView)v. findViewById(R.id.t3);
+            t3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l3= (LinearLayout)findViewById(R.id.l3);
+                    if(flag3==true) {
+                        l3.setVisibility(View.VISIBLE);
+                        flag3=false;
+                    }
+                    else if (flag3==false){
+                        l3.setVisibility(View.GONE);
+                        flag3=true;
+                    }
+                }
+            });
+            TextView t4= (TextView)v. findViewById(R.id.t4);
+            t4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l4= (LinearLayout)findViewById(R.id.l4);
+                    if(flag4==true) {
+                        l4.setVisibility(View.VISIBLE);
+                        flag4=false;
+                    }
+                    else if (flag4==false){
+                        l4.setVisibility(View.GONE);
+                        flag4=true;
+                    }
+                }
+            });
+            TextView t5= (TextView)v. findViewById(R.id.t5);
+            t5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout l5= (LinearLayout)findViewById(R.id.l5);
+                    if(flag5==true) {
+                        l5.setVisibility(View.VISIBLE);
+                        flag5=false;
+                    }
+                    else if (flag5==false){
+                        l5.setVisibility(View.GONE);
+                        flag5=true;
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch ((String)buttonView.getTag())
+            {
+                case "fil_tentacle":
+                    if(isChecked)
+                    {
+                        tentacle.add(buttonView.getText().toString());
+                    }else
+                    {
+                        tentacle.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_wing":
+                    if(isChecked)
+                    {
+                        wing.add(buttonView.getText().toString());
+                    }else
+                    {
+                        wing.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_mouthparts":
+                    if(isChecked)
+                    {
+                        mouthparts.add(buttonView.getText().toString());
+                    }else
+                    {
+                        mouthparts.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_life_cycle":
+                    if(isChecked)
+                    {
+                        life_cycle.add(buttonView.getText().toString());
+                    }else
+                    {
+                        life_cycle.remove(buttonView.getText().toString());
+                    }
+                    break;
+
+                case "fil_leg":
+                    if(isChecked)
+                    {
+                        leg.add(buttonView.getText().toString());
+                    }else
+                    {
+                        leg.remove(buttonView.getText().toString());
+                    }
+                    break;
+            }
         }
     }
 

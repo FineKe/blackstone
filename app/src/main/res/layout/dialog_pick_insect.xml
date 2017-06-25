@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#323232"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mycolor">
+
+        <LinearLayout
+            android:id="@+id/dialog_pick_insect_linear_layout_action_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/mycolor"
+                android:src="@mipmap/action_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="返回"
+                android:textColor="#ffff"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="筛选"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dialog_pick_insect_text_view_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:text="确认"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/t1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="触手"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="丝状"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="念珠状"
+                            android:textColor="@drawable/button" />
+
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="丝状或刚毛状"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="丝状或环毛状或具芒状"
+                            android:textColor="@drawable/button" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="刚毛状"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="丝状或念珠状"
+                            android:textColor="@drawable/button" />
+
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginBottom="10dp"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="棍棒状或丝状或双栉状"
+                            android:textColor="@drawable/button" />
+
+                        <CheckBox
+                            android:id="@+id/dialog_pick_insect_fil_tentacle_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginBottom="10dp"
+                            android:button="@null"
+                            android:tag="fil_tentacle"
+                            android:text="丝状或念珠状或棍棒状或膝状"
+                            android:textColor="@drawable/button" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_insect_fil_tentacle_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:button="@null"
+                    android:gravity="center_horizontal"
+                    android:tag="fil_tentacle"
+                    android:text="丝状或念珠状或棍棒状或膝状"
+                    android:textColor="@drawable/button" />
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="翅膀"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="无翅"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="鳞翅"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="鞘翅或膜翅"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="无翅或覆翅或膜翅"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="半鞘翅或覆翅或膜翅"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="膜翅"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="膜翅或无翅"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="膜翅或棒翅"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="覆翅或膜翅或无翅"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_wing_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_wing"
+                        android:text="覆翅或鞘翅或膜翅或无翅"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="口器"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_mouthparts_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_mouthparts"
+                        android:text="咀嚼式"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_mouthparts_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_mouthparts"
+                        android:text="咀嚼式或退化"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_mouthparts_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_mouthparts"
+                        android:text="咀嚼式或嚼吸式"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_mouthparts_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_mouthparts"
+                        android:text="刺吸式"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_mouthparts_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_mouthparts"
+                        android:text="虹吸式或退化"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_mouthparts_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_mouthparts"
+                        android:text="刺吸式或舐吸式或退化"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="生命周期"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_life_cycle_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_life_cycle"
+                        android:text="表变态"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_life_cycle_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_life_cycle"
+                        android:text="原变态（稚虫）"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_life_cycle_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_life_cycle"
+                        android:text="半变态（稚虫）"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_life_cycle_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_life_cycle"
+                        android:text="渐变态（若虫）"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_life_cycle_5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_life_cycle"
+                        android:text="全变态（幼虫或蛹）"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t5"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="足"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_leg_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_leg"
+                        android:text="无特化"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_leg_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_leg"
+                        android:text="开掘足或跳跃足"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_leg_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_leg"
+                        android:text="捕捉足"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_leg"
+                        android:text=""
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_leg_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_leg"
+                        android:text="携粉足"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_insect_fil_leg_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_leg"
+                        android:text="开掘足或抱握足"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

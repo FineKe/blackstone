@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#323232"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mycolor">
+
+        <LinearLayout
+            android:id="@+id/dialog_pick_reptiles_linear_layout_action_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/mycolor"
+                android:src="@mipmap/action_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="返回"
+                android:textColor="#ffff"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="筛选"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dialog_pick_reptiles_text_view_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="确认"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/t1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="形状"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp">
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_reptiles_fil_shape_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:tag="fil_shape"
+                    android:text="龟鳖形"
+                    android:textColor="@drawable/button" />
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_reptiles_fil_shape_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:tag="fil_shape"
+                    android:text="蜥蜴形"
+                    android:textColor="@drawable/button" />
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_reptiles_fil_shape_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:tag="fil_shape"
+                    android:text="蛇形"
+                    android:textColor="@drawable/button" />
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="主色"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="绿色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="肉色、灰色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="蓝色、紫色、灰色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色、红色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="绿色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="古铜色、黄色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="黄色、棕褐色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="黄色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="紫色、灰色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="黑色、棕褐色、蓝色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="紫色、黑色、白色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="黑色、白色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色、红色、黄色"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="红色、绿色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="橘色、红色、黄色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色、灰色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="绿色、棕褐色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="黑色"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色、黄色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="古铜色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="黄色、棕褐色、黑色、红色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="绿色、黄色、蓝色、白色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="灰色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="灰色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="灰色、黑色、棕黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="棕褐色、绿色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_major_color_28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_major_color"
+                        android:text="灰色、棕褐色、黄色"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="生境"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="淡水"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="溪流、地表落叶层"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="平原丘陵"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="平原丘陵、溪流"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="平原丘陵、民宅"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="溪流"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="民宅"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="地表落叶层"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="平原丘陵、林下"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="低山、平原丘陵、民宅"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="低山、溪流"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="林下"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="低山、林下"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_micro_biotope_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="fil_micro_biotope"
+                        android:text="低山"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="大鳞"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l4"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp">
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_reptiles_fil_has_bigscale_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center_horizontal"
+                    android:tag="fil_has_bigscale"
+                    android:text="无"
+                    android:textColor="@drawable/button" />
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_reptiles_fil_has_bigscale_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center_horizontal"
+                    android:tag="fil_has_bigscale"
+                    android:text="有"
+                    android:textColor="@drawable/button" />
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t5"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="栖息地"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="湿地"
+                        android:textColor="@drawable/button" />
+
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、林缘灌丛、城市"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、林缘灌丛"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="湿地、农田"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、城市"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、湿地"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、林缘灌丛、农田、城市"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="城市"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="湿地、山地森林"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="林缘灌丛、农田"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、林缘灌丛、农田"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_reptiles_fil_biotope_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center_horizontal"
+                        android:tag="fil_biotope"
+                        android:text="山地森林、湿地、城市"
+                        android:textColor="@drawable/button" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

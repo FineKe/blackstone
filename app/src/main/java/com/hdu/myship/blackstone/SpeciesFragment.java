@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -60,6 +62,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  */
 
 public class SpeciesFragment extends Fragment{
+    private final int OK=1;
     private String getCategoryURL="http://api.blackstone.ebirdnote.cn/v1/species/categories";
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
@@ -218,12 +221,9 @@ public class SpeciesFragment extends Fragment{
                             SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",object.getString("name"),object.getString("img"));
                             speciesClassesList.add(speciesClasses);
                         }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                stickyListViewAdapter.notifyDataSetChanged();
-                            }
-                        });
+                       Message message=new Message();
+                        message.what=OK;
+                        handler.sendMessage(message);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -238,4 +238,16 @@ public class SpeciesFragment extends Fragment{
         });
         requestQueue.add(jsonObjectRequest);
     }
+
+    private Handler handler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+                case OK: stickyListViewAdapter.notifyDataSetChanged();
+            }
+        }
+    };
 }

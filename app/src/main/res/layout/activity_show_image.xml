@@ -12,5 +12,6 @@
         android:scaleType="fitCenter"
         android:src="@drawable/one"
         android:layout_gravity="center"
+        android:background="#fff"
         />
 </LinearLayout>

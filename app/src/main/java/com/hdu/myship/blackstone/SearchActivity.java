@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import database.HistoryRecord;
 import database.Species;
 
 
@@ -53,8 +54,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private TextView cancel;
     private LinearLayout history;
     private ListView listView;
+    private ListView listViewHistory;
     private MyListViewAdapter myListViewAdapter;
     private List<Species> myList;
+    private List<HistoryRecord> historyRecordList;
+    private HistoryRecordAdapter historyRecordAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +75,23 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         requestQueue= Volley.newRequestQueue(this);
         myList=new ArrayList<>();
         myListViewAdapter=new MyListViewAdapter(myList);
+        historyRecordList=DataSupport.limit(10).find(HistoryRecord.class);
+        historyRecordAdapter=new HistoryRecordAdapter(historyRecordList);
+
     }
 
     private void initEvents() {
         cancel.setOnClickListener(this);
+        listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HistoryRecord historyRecord= (HistoryRecord) view.getTag();
+                Intent intent=new Intent(SearchActivity.this,SpeciesDeatailedActivity.class);
+                intent.putExtra("singal",historyRecord.getSingal());
+                intent.putExtra("speciesType",historyRecord.getSpeciesType());
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -83,6 +100,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         cancel= (TextView) findViewById(R.id.activity_search_view_text_view_cancel);
         history= (LinearLayout) findViewById(R.id.activity_search_view_linear_layout_history);
         listView= (ListView) findViewById(R.id.activity_search_view_list_view);
+        listViewHistory= (ListView) findViewById(R.id.activity_search_list_view_history);
+        listViewHistory.setAdapter(historyRecordAdapter);
         listView.setAdapter(myListViewAdapter);
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,7 +111,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                listView.setVisibility(View.VISIBLE);
                 history.setVisibility(View.GONE);
+                if(s.length()==0)
+                {
+                    history.setVisibility(View.VISIBLE);
+                    listView.setVisibility(View.GONE);
+                }
 
             }
 
@@ -104,11 +129,18 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Species species=myList.get(position);
+
+                HistoryRecord historyRecord=new HistoryRecord();
+                historyRecord.setSingal(species.getSingal());
+                historyRecord.setChineseName(species.getChineseName());
+                historyRecord.setSpeciesType(species.getSpeciesType());
+                historyRecord.save();
+
                 Intent intent=new Intent(SearchActivity.this,SpeciesDeatailedActivity.class);
                 intent.putExtra("singal",species.getSingal());
                 intent.putExtra("speciesType",species.getSpeciesType());
-                //intent.putExtra("speciesTypeChineseName",typeTitle[position]);
                 startActivity(intent);
             }
         });
@@ -218,6 +250,39 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             convertView= LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_view_reseult_item,null);
             TextView textView= (TextView) convertView.findViewById(R.id.search_view_result_item_text_view);
             textView.setText(list.get(position).getChineseName());
+            return convertView;
+        }
+    }
+
+    public class HistoryRecordAdapter extends BaseAdapter
+    {
+        List<HistoryRecord> historyRecordList;
+
+        public HistoryRecordAdapter(List<HistoryRecord> historyRecordList) {
+            this.historyRecordList = historyRecordList;
+        }
+
+        @Override
+        public int getCount() {
+            return historyRecordList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return historyRecordList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView=LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_view_history_item,null);
+            TextView textView= (TextView) convertView.findViewById(R.id.search_view_history_item_text_view);
+            textView.setText(historyRecordList.get(position).getChineseName());
+            convertView.setTag(historyRecordList.get(position));
             return convertView;
         }
     }

@@ -471,9 +471,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
     public class mydialog_bird extends Dialog implements CompoundButton.OnCheckedChangeListener{
-        boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
-        JSONObject jsonObject=new JSONObject();
-        List<String> shape=new ArrayList<>();
+        boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;//
+        List<String> shape=new ArrayList<>();//筛选字段的集合，用于将属性装该集合
         List<String> habit=new ArrayList<>();
         List<String> tone=new ArrayList<>();
         List<String> tailShape=new ArrayList<>();
@@ -587,26 +586,26 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             sure.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String url="http://api.blackstone.ebirdnote.cn/v1/species/query/";
-                    RequestQueue requestQueue=Volley.newRequestQueue(getContext());
-                    JSONArray shapeJsonArray=new JSONArray(shape);
+                    String url="http://api.blackstone.ebirdnote.cn/v1/species/query/";//特征检索请求url
+                    RequestQueue requestQueue=Volley.newRequestQueue(getContext());//创建一个请求队列
+                    JSONArray shapeJsonArray=new JSONArray(shape);//将集合生成jSONArray
                     JSONArray toneJsonArray=new JSONArray(tone);
                     JSONArray habitJsonArray=new JSONArray(habit);
                     JSONArray tail_shapeJsonArray=new JSONArray(tailShape);
-                    Map<String,Object> map=new HashMap<>();
-                    if(tail_shapeJsonArray.length()!=0)
-                    map.put("tail_shape",tail_shapeJsonArray);
+                    Map<String,Object> map=new HashMap<>();//建一个map
+                    if(tail_shapeJsonArray.length()!=0)//判断是否为空，不为空则将其装入map中
+                    map.put("tail_shape",tail_shapeJsonArray);//map中的"tail_shape"必须从返回接口里拿，以key-value的形式存入map
                     if(habitJsonArray.length()!=0)
                     map.put("habitat",habitJsonArray);
                     if(shapeJsonArray.length()!=0)
                     map.put("shape",shapeJsonArray);
                     if(toneJsonArray.length()!=0)
                     map.put("tone",toneJsonArray);
-                    JSONObject jsonObject=new JSONObject(map);
+                    JSONObject jsonObject=new JSONObject(map);//生成一个json对象
                     Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
                     JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "bird", jsonObject, new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(JSONObject jsonObject) {
+                        public void onResponse(JSONObject jsonObject) {//
                             try {
                                 int code=jsonObject.getInt("code");
                                 if (code==88)
@@ -786,7 +785,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            switch ((String)buttonView.getTag())
+            switch ((String)buttonView.getTag())//根据标记可以知道按钮属于哪个筛选类别
             {
                 case"shape":
                     if(isChecked){
@@ -825,26 +824,26 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         }
     }
 
-    public void showBirdPick()
-    {
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        Display display;
-        display = windowManager.getDefaultDisplay();
-        Dialog dialog = new Dialog(this,R.style.customDialog);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_pick_bird, null);
-        view.setMinimumWidth(display.getWidth());
-        dialog.setContentView(view);
-        dialog.setCancelable(false);
-        Window dialogWindow = dialog.getWindow();
-        dialogWindow.setGravity(Gravity.BOTTOM);
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.x = 0;
-        lp.y = 0;
-        dialogWindow.setAttributes(lp);
-        dialog.show();
-    }
+//    public void showBirdPick()
+//    {
+//        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+//        Display display;
+//        display = windowManager.getDefaultDisplay();
+//        Dialog dialog = new Dialog(this,R.style.customDialog);
+//        View view = LayoutInflater.from(this).inflate(R.layout.dialog_pick_bird, null);
+//        view.setMinimumWidth(display.getWidth());
+//        dialog.setContentView(view);
+//        dialog.setCancelable(false);
+//        Window dialogWindow = dialog.getWindow();
+//        dialogWindow.setGravity(Gravity.BOTTOM);
+//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        lp.x = 0;
+//        lp.y = 0;
+//        dialogWindow.setAttributes(lp);
+//        dialog.show();
+//    }
 
-    public void hideTitleBar()
+    public void hideTitleBar()//隐藏物种界面头部的文字和功能图标
     {
         actionBack.setVisibility(View.INVISIBLE);
         speciesClassName.setVisibility(View.INVISIBLE);
@@ -852,7 +851,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         alertPick.setVisibility(View.INVISIBLE);
     }
 
-    public void  showTitleBar()
+    public void  showTitleBar()//显示物种界面头部的文字和功能图标
     {
         actionBack.setVisibility(View.VISIBLE);
         speciesClassName.setVisibility(View.VISIBLE);

@@ -45,7 +45,6 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initDatas() {
-        requestQueue= Volley.newRequestQueue(this);
         userInformation=new UserInformationUtil(this);
 
     }
@@ -81,6 +80,7 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void send() {
+        requestQueue= Volley.newRequestQueue(this);
         final String token=userInformation.getToken();
         if(token.equals(""))
         {
@@ -124,8 +124,9 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
                     return headers;
                 }
             };
+            requestQueue.add(suggestionRequest);
         }
-        requestQueue.add(suggestionRequest);
+
 
     }
 }

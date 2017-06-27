@@ -2,6 +2,8 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,6 +80,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
         Log.d(TAG, "onBindViewHolder:"+da.toString() );
         date.setText(mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日");
         expandableListView= (ExpandableListView) findViewById(R.id.activity_myrecord_two_expand_list_view);
+        expandableListView.setGroupIndicator(null);
         expandableListView.setAdapter(recordDeatailedAdapter);
     }
 
@@ -85,9 +88,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
         recordId=getIntent().getIntExtra("recordId",0);
         requestQueue= Volley.newRequestQueue(this);
         noteList=new ArrayList<>();
-
         father=new ArrayList<>();
-        loadingNotes();
         recordDeatailedAdapter=new RecordDeatailedAdapter(this, (ArrayList<String>) father,noteList);
         Log.d(TAG, "initData: "+recordId);
     }
@@ -105,6 +106,22 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+//    @Override
+//    public void startActivityForResult(Intent intent, int requestCode) {
+//        super.startActivityForResult(intent, requestCode);
+//        noteList.clear();
+//        father.clear();
+//        loadingNotes();
+//    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        noteList.clear();
+        father.clear();
+        loadingNotes();
+    }
+
     private void actionBack() {
         this.finish();
     }
@@ -113,7 +130,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
         Intent intent=new Intent(this,RecordAlterActivity.class);
         intent.putExtra("time",getIntent().getLongExtra("time",0));
         intent.putExtra("recordId",recordId);
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 
     public class RecordDeatailedAdapter extends BaseExpandableListAdapter
@@ -501,4 +518,5 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
             this.speciesType = speciesType;
         }
     }
+
 }

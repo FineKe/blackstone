@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener{
+import ActivityUtil.BaseActivity;
+
+public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener{
 
     private TextView messagePhone;
     private TextView message;

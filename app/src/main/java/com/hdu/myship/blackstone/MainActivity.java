@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -81,6 +82,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     public  int test;
 
     public static List<List<Record>> records;
+
+    private long exitTime = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,17 +171,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         tab_add_record.setOnClickListener(this);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
 
 
-    }
-
-    /**
-     * 主要是实现各种fragment的切换
-     * @param v
-     */
     @Override
     public void onClick(View v) {
         transaction=fragmentManager.beginTransaction();
@@ -328,4 +322,34 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(getApplicationContext(),"再按一次退出程序" , Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+
+        /**
+         * 主要是实现各种fragment的切换
+         * @param v
+         */
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        moveTaskToBack(true);
+    }
 }

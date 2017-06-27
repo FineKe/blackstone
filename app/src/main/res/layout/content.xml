@@ -14,11 +14,13 @@
         android:layout_height="match_parent">
 
         <TextView
+
             android:id="@+id/tx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="8sp"
-            android:text="dsagdhjgasjdgjashgjdghhjsahdjashhjashhjashashjhjashahsjdhjasggggggggggggggggggggggggggggggggggsdkahjjkasjkhjkkj" />
+            android:text="dsagdhjgasjdgjashgjdghhjsahdjashhjashhjashashjhjashahsjdhjasggggggggggggggggggggggggggggggggggsdkahjjkasjkhjkkj"
+            android:textAlignment="textStart" />
 
         <ImageView
             android:layout_marginTop="-50dp"

@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-public class ResetPasswordActivity extends AppCompatActivity implements View.OnClickListener{
+import ActivityUtil.BaseActivity;
+
+public class ResetPasswordActivity extends BaseActivity implements View.OnClickListener{
 
     private TextView messagePhone;
     private TextView message;

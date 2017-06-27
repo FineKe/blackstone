@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.hdu.myship.blackstone.MyCollectionsTwoActivity">
 
+    <com.hdu.myship.blackstone.SliderBar
+        android:id="@+id/activity_my_collection_two_slider_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_my_collection_two_recycler_view"
+        app:layout_constraintLeft_toRightOf="@+id/activity_my_collection_two_recycler_view"
+        app:layout_constraintTop_toTopOf="@+id/activity_my_collection_two_recycler_view"
+        android:layout_marginRight="24dp"
+        app:layout_constraintRight_toRightOf="parent"></com.hdu.myship.blackstone.SliderBar>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
@@ -72,9 +85,10 @@
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">

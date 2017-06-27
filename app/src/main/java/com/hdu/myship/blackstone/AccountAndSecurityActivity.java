@@ -147,7 +147,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
                             editor.putBoolean("islogined",false).apply();//将用户登录设为false
                             resetUserInfomation();
                             finish();
-                            overridePendingTransition(R.anim.in,R.anim.out);
+
 
                 }
             }, new Response.ErrorListener() {

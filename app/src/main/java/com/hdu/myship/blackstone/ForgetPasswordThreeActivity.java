@@ -23,7 +23,10 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ForgetPasswordThreeActivity extends AppCompatActivity implements View.OnClickListener{
+import ActivityUtil.ActivityCollector;
+import ActivityUtil.BaseActivity;
+
+public class ForgetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
     private String resetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/setPwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
@@ -158,6 +161,7 @@ public class ForgetPasswordThreeActivity extends AppCompatActivity implements Vi
                     if(code==88)
                     {
                         Toast.makeText(ForgetPasswordThreeActivity.this,"密码设定成功",Toast.LENGTH_SHORT).show();
+                        ActivityCollector.finishAll();
                     }
                     else
                     {

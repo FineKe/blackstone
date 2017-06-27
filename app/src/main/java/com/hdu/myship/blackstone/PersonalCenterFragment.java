@@ -139,6 +139,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
     {
         final LoginDialog loginDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.login_dialog);
         loginDialog.show();
+        loginDialog.setCancelable(false);
         iuputAccount= (EditText) loginDialog.findViewById(R.id.update_phone_numbe_dialog_editText_account);
         inputPassword= (EditText) loginDialog.findViewById(R.id.update_phone_number_dialog_editText_code);
         loginForget= (TextView) loginDialog.findViewById(R.id.update_phone_number_text_view_get_code);

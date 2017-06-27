@@ -2,6 +2,8 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,33 +14,57 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ShapeUtil.GlideRoundTransform;
 import database.Species;
 
 public class MyCollectionsTwoActivity extends AppCompatActivity implements View.OnClickListener{
+    private final int LOAD_DATA_OK=0;
+    private final int JUMP_OK=1;
     private String dealPicure="?imageView2/0/w/400/h/400";//本平台的图片采用了cdn分发，为了节省流量，采用七牛云的api处理接口
     private String TAG="MyCollectionsTwoActivity";
     private LinearLayout actionBack;
     private RecyclerView recyclerView;
     private TextView title;
-    private List<Species> speciesList;
     private int position;
+    private SliderBar sliderBar;
    // private MyAdapter adapter;
     private int HEAD=0;
     private int ITEM=1;
 
+    private String getCollectionURL="http://api.blackstone.ebirdnote.cn/v1/species/collection/";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest getCollectionRequest;
+    public  List<MyCollectionsActivity.SpeciesClass> speciesClassList;
     private List<String> indexList;
-    private List<SpeciesClassActivity.Result>resultList;
+
     private SpeciesContentAdapter speciesContentAdapter;
+    private List<Species> speciesList;
+    private List<Integer> positionList;
+    private List<SpeciesClassActivity.Result> resultList;
+    private int oldSize;
+    private int nowSize;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +77,12 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
     private void initData() {
         position=getIntent().getIntExtra("position",0);//取出position
         List<Species> specieslist=MyCollectionsActivity.speciesClassList.get(position).getList();//这里从上一个activity中取list
+        oldSize=MyCollectionsActivity.speciesClassList.size();
         speciesList=new ArrayList<>();
         resultList=new ArrayList<>();
         indexList=new ArrayList<>();
+        positionList=new ArrayList<>();
+        speciesClassList=new ArrayList<>();
         for(Species species:specieslist)
         {
             System.out.println(species.getSingal());
@@ -71,6 +100,8 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
         actionBack= (LinearLayout) findViewById(R.id.activity_my_collection_two_linear_layout_action_back);
         recyclerView= (RecyclerView) findViewById(R.id.activity_my_collection_two_recycler_view);
         title= (TextView) findViewById(R.id.activity_my_collection_text_view_title);
+        sliderBar= (SliderBar) findViewById(R.id.activity_my_collection_two_slider_bar);
+        sliderBar.setData(indexList,positionList);
         speciesContentAdapter=new SpeciesContentAdapter(this,resultList);
         recyclerView.setAdapter(speciesContentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -81,7 +112,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
                 Intent intent=new Intent(MyCollectionsTwoActivity.this,SpeciesDeatailedActivity.class);
                 intent.putExtra("singal",data.getSingal());
                 intent.putExtra("speciesType",data.getSpeciesType());
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -146,6 +177,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
        }
 
    }
+
     class MyHolder extends RecyclerView.ViewHolder
     {
         public TextView tv_latinName,tv_chineseName,tv_englishName;
@@ -166,55 +198,14 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
         void onItemClick(View view, Species data);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCollection();
+    }
+
     public void createIndexlist(List<Species> speciesList) {
-        /*
-        if (speciesList.size() > 1) {
-            for (int i = 0, j = 0; i < speciesList.size() - 1; i++, j++) {
-                if (i == 0) {
-                    SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
-                    result.setHead(speciesList.get(0).getOrder());
-                    result.setViewType(HEAD);
-                    result.setLatinHead(speciesList.get(0).getLatinOrder());
-                    resultList.add(result);
-                }
-
-                if (!speciesList.get(i).getOrder().equals(speciesList.get(i + 1).getOrder())) {
-                    SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
-                    result.setHead(speciesList.get(i + 1).getOrder());
-                    result.setViewType(HEAD);
-                    result.setLatinHead(speciesList.get(i + 1).getLatinOrder());
-                    System.out.println(speciesList.get(i + 1).getOrder());
-                    SpeciesClassActivity.Result result_ = new SpeciesClassActivity.Result();
-                    result_.setViewType(ITEM);
-                    result_.setSpecies(speciesList.get(i));
-                    resultList.add(result_);
-                    resultList.add(result);
-                } else {
-
-                    SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
-                    result.setViewType(ITEM);
-                    result.setSpecies(speciesList.get(i));
-                    resultList.add(result);
-                }
-
-            }
-
-        }
-        else
-        {
-            for (int i = 0, j = 0; i < speciesList.size(); i++, j++) {
-                SpeciesClassActivity.Result result=new SpeciesClassActivity.Result();
-                result.setHead(speciesList.get(i).getOrder());
-                result.setViewType(HEAD);
-                result.setLatinHead(speciesList.get(i).getLatinOrder());
-                resultList.add(result);
-                SpeciesClassActivity.Result result1=new SpeciesClassActivity.Result();
-                result1.setViewType(ITEM);
-                result1.setSpecies(speciesList.get(i));
-                resultList.add(result1);
-            }
-        }*/
-
         if (speciesList.size() > 1) {
             for (int i = 0; i < speciesList.size() - 1; i++) {
                 if (i == 0) {
@@ -223,8 +214,6 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
                 if (!speciesList.get(i).getOrder().equals(speciesList.get(i + 1).getOrder())) {
                     indexList.add(speciesList.get(i + 1).getOrder().substring(0, 1));
                     System.out.println(speciesList.get(i).getOrder() + ":" + speciesList.get(i + 1).getOrder());
-
-                } else {
 
                 }
             }
@@ -242,7 +231,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
                             result.setLatinHead(speciesList.get(i).getLatinOrder());
                             result.setHead(speciesList.get(i).getOrder());
                             resultList.add(result);
-//                            positionList.add(j);
+                            positionList.add(j);
                             j++;
                         }
                         SpeciesClassActivity.Result result = new SpeciesClassActivity.Result();
@@ -260,12 +249,158 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
             result.setViewType(HEAD);
             result.setLatinHead(speciesList.get(0).getLatinOrder());
             result.setHead(speciesList.get(0).getOrder());
+            positionList.add(0);
             resultList.add(result);
 
             SpeciesClassActivity.Result result1 = new SpeciesClassActivity.Result();
             result1.setViewType(ITEM);
             result1.setSpecies(speciesList.get(0));
             resultList.add(result1);
+            indexList.add(speciesList.get(0).getOrder().substring(0, 1));
         }
     }
+    public void getCollection()
+    {   speciesClassList.clear();
+        requestQueue= Volley.newRequestQueue(this);
+        UpdateToken updateToken=new UpdateToken(this);
+        updateToken.updateToken();
+        final UserInformationUtil userInformationUtil=new UserInformationUtil(this);
+        getCollectionRequest=new JsonObjectRequest(Request.Method.GET, getCollectionURL + userInformationUtil.getId(), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int code=jsonObject.getInt("code");
+                    if(code==88)
+                    {
+                        List<Species> amphibia=new ArrayList<>();
+                        List<Species> reptiles=new ArrayList<>();
+                        List<Species> bird=new ArrayList<>();
+                        List<Species> insect=new ArrayList<>();
+
+                        int acount=0;
+                        int bcount=0;
+                        int rcount=0;
+                        int icount=0;
+                        JSONArray data=jsonObject.getJSONArray("data");
+                        for(int i=0;i<data.length();i++)
+                        {
+                            JSONObject object=data.getJSONObject(i);
+                            switch (object.getString("speciesType"))
+                            {
+                                case "amphibia":
+                                    acount++;
+                                    Species aspecies=new Species();
+                                    aspecies.setSingal(object.getInt("id"));
+                                    amphibia.add(aspecies);
+                                    break;
+                                case "reptiles":
+                                    rcount++;
+                                    Species rspecies=new Species();
+                                    rspecies.setSingal(object.getInt("id"));
+                                    reptiles.add(rspecies);
+                                    break;
+                                case "bird":
+                                    bcount++;
+                                    Species bspecies=new Species();
+                                    bspecies.setSingal(object.getInt("id"));
+                                    bird.add(bspecies);
+                                    break;
+                                case "insect":
+                                    icount++;
+                                    Log.d("sssssssssssss", "onResponse: "+icount);
+                                    Species ispecies=new Species();
+                                    ispecies.setSingal(object.getInt("id"));
+                                    insect.add(ispecies);
+                                    break;
+                            }
+                        }
+                        if(acount!=0)
+                        {
+                            MyCollectionsActivity.SpeciesClass a=new MyCollectionsActivity.SpeciesClass("amphibia",amphibia,acount);
+                            a.setName("两栖类");
+                            speciesClassList.add(a);
+                        }
+                        if(rcount!=0)
+                        {
+                            MyCollectionsActivity.SpeciesClass r=new MyCollectionsActivity.SpeciesClass("reptiles",reptiles,rcount);
+                            r.setName("爬行类");
+                            speciesClassList.add(r);
+                        }
+                        if(bcount!=0)
+                        {
+                            MyCollectionsActivity.SpeciesClass b=new MyCollectionsActivity.SpeciesClass("bird",bird,bcount);
+                            b.setName("鸟类");
+                            speciesClassList.add(b);
+                        }
+                        Log.d("zx", "onResponse: "+icount);
+                        if(icount!=0)
+                        {
+                            Log.d("zx", "onResponse: "+icount);
+                            MyCollectionsActivity.SpeciesClass in=new MyCollectionsActivity.SpeciesClass("insect",insect,icount);
+                            Log.d("zx", "onResponse: "+icount);
+                            in.setName("昆虫目");
+                            speciesClassList.add(in);
+                        }
+                        nowSize=speciesClassList.size();
+                        if(oldSize>nowSize)
+                        {
+                            finish();
+                        }else
+                        {
+                            Log.d("list", "onResponse: "+speciesClassList.size());
+                            Message message=new Message();
+                            message.what=LOAD_DATA_OK;
+                            handler.sendMessage(message);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(MyCollectionsTwoActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> hearder=new HashMap<>();
+                hearder.put("token",userInformationUtil.getToken());
+                return hearder;
+            }
+        };
+        requestQueue.add(getCollectionRequest);
+    }
+
+    private Handler handler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+                case LOAD_DATA_OK:
+                    speciesList.clear();
+                    List<Species> specieslist=speciesClassList.get(position).getList();
+                    for(Species species:specieslist)
+                    {
+                        System.out.println(species.getSingal());
+                        speciesList.add(DataSupport.where("singal=?",species.getSingal()+"").find(Species.class).get(0));
+                    }
+                    for(Species species:speciesList)
+                    {
+                        System.out.println(species.toString());
+                    }
+
+                    resultList.clear();
+                    positionList.clear();
+                    indexList.clear();
+                    createIndexlist(speciesList);
+                    speciesContentAdapter.notifyDataSetChanged();
+                    sliderBar.setData(indexList,positionList);
+                    break;
+            }
+        }
+    };
 }

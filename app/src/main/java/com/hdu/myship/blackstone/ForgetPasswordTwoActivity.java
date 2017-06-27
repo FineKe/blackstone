@@ -27,7 +27,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ForgetPasswordTwoActivity extends AppCompatActivity implements View.OnClickListener{
+import ActivityUtil.BaseActivity;
+
+public class ForgetPasswordTwoActivity extends BaseActivity implements View.OnClickListener{
     private String getCodeURL="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/verifyCode/mobile";
     private RequestQueue requestQueue;
 
@@ -173,7 +175,7 @@ public class ForgetPasswordTwoActivity extends AppCompatActivity implements View
                     @Override
                     public void run() {
 
-                        getCode.setText(count+"s次后再次获取");
+                        getCode.setText(count+"s后再次获取");
                         if(count==0)
                         {
                             getCode.setText("获取验证码");

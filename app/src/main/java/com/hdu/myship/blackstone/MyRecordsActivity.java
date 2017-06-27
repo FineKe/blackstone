@@ -60,29 +60,12 @@ public class MyRecordsActivity extends AppCompatActivity {
         userId=userInformationSharedPreferences.getLong("id",0);//从用户信息文件中读取用户id不是手机号码
         requestQueue= Volley.newRequestQueue(this);
         recordList=new ArrayList<>();
-        initRecordList();
     }
 
     private void initView() {
         actionBack= (LinearLayout) findViewById(R.id.activity_my_record_linear_layout_action_back);
         removeRecordRecycleView= (ItemRemoveRecordRecycle) findViewById(R.id.activity_my_records_item_remove_recycler_view);
         removeRecordRecycleView.setLayoutManager(new LinearLayoutManager(this));
-
-        /**if(recordList.size()>1)
-        {    Record temp=new Record();
-            temp.setTime(0l);
-            for(int i=0;i<recordList.size();i++)
-                for(int j=i;j<recordList.size()-i;j++)
-                {
-                    if(recordList.get(j).getTime()>recordList.get(j+1).getTime())
-                    {
-                        temp=recordList.get(j);
-                        recordList.add(j,recordList.get(j+1));
-                        recordList.add(j+1,temp);
-
-                    }
-                }
-        }*/
 
         itemRemoveRcordAdapter=new ItemRemoveRcordAdapter(this,recordList);
         removeRecordRecycleView.setAdapter(itemRemoveRcordAdapter);
@@ -145,6 +128,13 @@ public class MyRecordsActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(deleteRecordListRequest);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recordList.clear();
+        initRecordList();
     }
 
     private void initRecordList()

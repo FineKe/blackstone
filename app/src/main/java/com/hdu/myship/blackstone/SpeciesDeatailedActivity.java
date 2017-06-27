@@ -101,6 +101,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private UpdateToken updateToken;
 
     private boolean isPlay=false;
+
+    private MediaPlayer mediaPlayer=null;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,7 +402,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MediaPlayer mediaPlayer= new MediaPlayer();
+                mediaPlayer= new MediaPlayer();
                 Uri uri=Uri.parse(speciesDetailed.getAudio());
                 if(isPlay==false)
                 {   isPlay=true;
@@ -436,6 +438,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         pointers.get(position).setImageResource(R.mipmap.pointer_pressed);
         currentIndex = position;
         oldPosition = position;
+
     }
 
 
@@ -698,5 +701,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             requestQueue.add(speciesDetailedRequest);
         }
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        mediaPlayer.stop();
     }
 }

@@ -192,6 +192,7 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
                                 {
                                     updatePhoneNumberDialog.dismiss();
                                     userInformation.setUserName(inputPhone.getText().toString());
+                                    finish();
                                     phone.setText(inputPhone.getText().toString().substring(0,3)+"****"+inputPhone.getText().toString().substring(7));
                                 }
                                 else

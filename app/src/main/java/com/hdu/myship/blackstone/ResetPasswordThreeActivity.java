@@ -29,7 +29,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResetPasswordThreeActivity extends AppCompatActivity implements View.OnClickListener{
+import ActivityUtil.ActivityCollector;
+import ActivityUtil.BaseActivity;
+
+public class ResetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
     private String ResetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/pwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
@@ -113,6 +116,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
     private void actionBack() {
         this.finish();
       //  overridePendingTransition(R.anim.in,R.anim.out);
+
     }
 
     private void showPassword() {
@@ -164,6 +168,7 @@ public class ResetPasswordThreeActivity extends AppCompatActivity implements Vie
                     {
                         Toast.makeText(ResetPasswordThreeActivity.this, "密码修改成功", Toast.LENGTH_SHORT).show();
                         userInformationEditor.putString("password",inputPassword.getText().toString()).apply();
+                        ActivityCollector.finishAll();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

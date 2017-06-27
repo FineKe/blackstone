@@ -1547,9 +1547,9 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     if(wingJsonArray.length()!=0)
                         map.put("fil_wing",wingJsonArray);
                     if(lifeCycleJsonArray.length()!=0)
-                        map.put("fil_mouthparts",lifeCycleJsonArray);
+                        map.put("fil_life_cycle",lifeCycleJsonArray);
                     if(mouthpartsJsonArray.length()!=0)
-                        map.put("fil_life_cycle",mouthpartsJsonArray);
+                        map.put("fil_mouthparts",mouthpartsJsonArray);
                     if(legJsonArray.length()!=0)
                         map.put("fil_leg",legJsonArray);
                     JSONObject jsonObject=new JSONObject(map);//生成一个json对象

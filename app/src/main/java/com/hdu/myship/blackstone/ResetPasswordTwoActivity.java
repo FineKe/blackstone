@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-public class ResetPasswordTwoActivity extends AppCompatActivity implements View.OnClickListener{
+import ActivityUtil.BaseActivity;
+
+public class ResetPasswordTwoActivity extends BaseActivity implements View.OnClickListener{
     private String TAG="ResetPasswordTwoActivity";
     private TextView messagePhone;
     private TextView message;

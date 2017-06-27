@@ -1,9 +1,13 @@
 package com.hdu.myship.blackstone;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -96,8 +100,17 @@ public class GuideTableThreeActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent)
         {
             convertView=getLayoutInflater().inflate(R.layout.content,parent,false);
+            Spannable spn = new SpannableString(list.get(position).getContent());
+            String te=list.get(position).getContent();
+            for(int i=0;i<te.length();i++){
+                char item=te.charAt(i);
+                if((item>='a'&&item<='z')||(item>='A'&&item<='Z')){
+                    StyleSpan ss = new StyleSpan(Typeface.ITALIC);
+                    spn.setSpan(ss, i, i+1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                }
+            }//英文斜体
             TextView textView= (TextView) convertView.findViewById(R.id.tx);
-            textView.setText(list.get(position).getContent());
+            textView.setText(spn);
             return convertView;
         }
     }

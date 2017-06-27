@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -28,6 +29,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationListener;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -77,7 +81,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private String TAG = "AddRecordFragment";
 
     private LocationManager locationManager;
-    private Location mlocation;
+    private AMapLocation mlocation;
     private String privoder;
     private LocationListener locationListener;
     private TextView save;
@@ -123,6 +127,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private MyExpandListViewAdapter myExpandListViewAdapter;
     private String token;
 
+    private AMapLocationClient mapLocationClient;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -179,189 +184,19 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         initData();
         myExpandListViewAdapter = new MyExpandListViewAdapter(records);
-        locationListener=new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                mlocation = location;
-                Toast.makeText(getContext(),location.toString(), Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-                Toast.makeText(getContext(),provider, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                Toast.makeText(getContext(),provider+"打开", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Toast.makeText(getContext(),provider+"关闭", Toast.LENGTH_SHORT).show();
-            }
-
-        };
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            ActivityCompat.OnRequestPermissionsResultCallback requestPermissionsResultCallback=new ActivityCompat.OnRequestPermissionsResultCallback() {
-                @Override
-                public void onRequestPermissionsResult(int i, @NonNull String[] strings, @NonNull int[] ints) {
-                    switch (i)
-                    {
-                        case 1:
-                            if(ints.length>0&&ints[0]==PackageManager.PERMISSION_GRANTED&&ints[1]==PackageManager.PERMISSION_GRANTED)
-                            {
-                                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                                Criteria criteria = new Criteria();
-                                List<String> list = locationManager.getProviders(true);
-                                if (list.contains(LocationManager.NETWORK_PROVIDER)) {
-                                    privoder = LocationManager.NETWORK_PROVIDER;
-                                } else if (list.contains(LocationManager.GPS_PROVIDER)) {
-                                    privoder = LocationManager.GPS_PROVIDER;
-                                } else {
-                                    Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-                                }
-                            }else
-                            {
-                                Toast.makeText(getContext(), "你拒绝了权限", Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                    }
-                }
-            };
-
-        } else {
-            locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-
-            List<String> list = locationManager.getProviders(true);
-            if (list.contains(LocationManager.NETWORK_PROVIDER)) {
-                privoder = LocationManager.NETWORK_PROVIDER;
-            } else if (list.contains(LocationManager.GPS_PROVIDER)) {
-                privoder = LocationManager.GPS_PROVIDER;
-            } else {
-                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if(privoder!=null)
-        {
-            Toast.makeText(getContext(), "provier:"+privoder.toString(), Toast.LENGTH_SHORT).show();
-            locationManager.requestLocationUpdates(privoder,10000,1,locationListener);
-            mlocation=locationManager.getLastKnownLocation(privoder);
-        }else
-        {
-            Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
     public void getLocation()
     {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            ActivityCompat.OnRequestPermissionsResultCallback requestPermissionsResultCallback=new ActivityCompat.OnRequestPermissionsResultCallback() {
-                @Override
-                public void onRequestPermissionsResult(int i, @NonNull String[] strings, @NonNull int[] ints) {
-                    switch (i)
-                    {
-                        case 1:
-                            if(ints.length>0&&ints[0]==PackageManager.PERMISSION_GRANTED&&ints[1]==PackageManager.PERMISSION_GRANTED)
-                            {
-                                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                                Criteria criteria = new Criteria();
-                                List<String> list = locationManager.getProviders(true);
-                                if (list.contains(LocationManager.NETWORK_PROVIDER)) {
-                                    privoder = LocationManager.NETWORK_PROVIDER;
-                                } else if (list.contains(LocationManager.GPS_PROVIDER)) {
-                                    privoder = LocationManager.GPS_PROVIDER;
-                                } else {
-                                    Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-                                }
-                            }else
-                            {
-                                Toast.makeText(getContext(), "你拒绝了权限", Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                    }
-                }
-            };
 
-        } else {
-            locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-
-            List<String> list = locationManager.getProviders(true);
-            if (list.contains(LocationManager.NETWORK_PROVIDER)) {
-                privoder = LocationManager.NETWORK_PROVIDER;
-            } else if (list.contains(LocationManager.GPS_PROVIDER)) {
-                privoder = LocationManager.GPS_PROVIDER;
-            } else {
-                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-            }
         }
-        if(privoder!=null)
-        {
-            Toast.makeText(getContext(), "provier:"+privoder.toString(), Toast.LENGTH_SHORT).show();
-            locationManager.requestLocationUpdates(privoder,1000,100,locationListener);
-            mlocation=locationManager.getLastKnownLocation(privoder);
-        }else
-        {
-            Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
-        }
-
-
-
-//        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//        }else
-//        {
-//            locationManager = (LocationManager)getContext(). getSystemService(Context.LOCATION_SERVICE);
-//            List<String> list = locationManager.getProviders(true);
-//            if (list.contains(LocationManager.NETWORK_PROVIDER)) {
-//                privoder = LocationManager.NETWORK_PROVIDER;
-//            } else if (list.contains(LocationManager.GPS_PROVIDER)) {
-//                privoder = LocationManager.GPS_PROVIDER;
-//            } else {
-//                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            locationManager.requestLocationUpdates(privoder, 10000, 0, new LocationListener() {
-//                @Override
-//                public void onLocationChanged(Location location) {
-//                    Toast.makeText(getContext(), location.getLatitude()+location.getLatitude()+"", Toast.LENGTH_SHORT).show();
-//                    mlocation=location;
-//                }
-//
-//                @Override
-//                public void onStatusChanged(String provider, int status, Bundle extras) {
-//                    Toast.makeText(getContext(), "statusCHanged", Toast.LENGTH_SHORT).show();
-//
-//                }
-//
-//                @Override
-//                public void onProviderEnabled(String provider) {
-//                    Toast.makeText(getContext(), "gps开启", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onProviderDisabled(String provider) {
-//                    Toast.makeText(getContext(), "gps关闭", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//            Location location = locationManager.getLastKnownLocation(privoder);
-//            mlocation=locationManager.getLastKnownLocation(privoder);
-//            if(location!=null)
-//            {
-//                Toast.makeText(getContext(),location.toString(),Toast.LENGTH_SHORT).show();
-//            }
-//        }
-
+        mapLocationClient=new AMapLocationClient(getContext());
+        mapLocationClient.setLocationListener(mapLocationListener);
+        mapLocationClient.startLocation();
     }
 
     @Override
@@ -404,8 +239,9 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
      * 保存
      */
     private void save() {
-        isLogined = sharedPreferences.getBoolean("islogined", false);
         getLocation();
+        isLogined = sharedPreferences.getBoolean("islogined", false);
+
         if (isLogined == false) {//判断是否登录了
             showLoginDialog();//如果没有则弹出登录框
         } else
@@ -420,8 +256,9 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                     e.printStackTrace();
                 }
                 DecimalFormat d = new DecimalFormat("0.0000");
+                Toast.makeText(getContext(),mlocation.toString(), Toast.LENGTH_SHORT).show();
                 upLoadData(millisecond, Double.parseDouble(d.format(mlocation.getLatitude())), Double.parseDouble(d.format(mlocation.getLongitude())));
-                locationManager.removeUpdates(locationListener);
+                mapLocationClient.stopLocation();
             } else {
                 Toast.makeText(getContext(), "获取位置失败", Toast.LENGTH_SHORT).show();
             }
@@ -678,7 +515,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         errorLoginForget.setOnClickListener(new View.OnClickListener() {//忘记密码处理逻辑
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
+                errorDialog.dismiss();
             }
         });
 
@@ -805,4 +643,14 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
     }
 
+    private AMapLocationListener mapLocationListener=new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            if(aMapLocation!=null)
+            {
+                mlocation=aMapLocation;
+
+            }
+        }
+    };
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#fff">
 
     <include
         android:id="@+id/include6"
@@ -47,10 +48,9 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#d9d9d9" />
+   <include layout="@layout/split_line"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
 
     <DatePicker
         android:id="@+id/add_record_datepicker"
@@ -65,7 +65,7 @@
         android:id="@+id/add_record_expandListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:childDivider="@color/bootstrap_gray_dark"
+        android:dividerHeight="0.3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

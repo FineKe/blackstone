@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,7 +98,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private SharedPreferences.Editor sortingEditor;
     private String sortingValueFile="FamilyOROrder";
     private boolean sortingByOrder=true;
-
+    private boolean sourceFromPick=false;
     private int w;
     private int h;
     private int height;
@@ -272,6 +273,121 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         }
     }
 
+    private void createIndexListc(List<Species> speciesList) {
+        if (sortingByOrder) {//按目
+//            if(speciesList.size()>1) {
+                for (int i = 0; i < speciesList.size() - 1; i++) {
+                    if (i == 0) {
+                        indexList.add(speciesList.get(0).getOrder().substring(0, 1));
+                    }
+                    if (!speciesList.get(i).getOrder().equals(speciesList.get(i + 1).getOrder())) {
+                        indexList.add(speciesList.get(i + 1).getOrder().substring(0, 1));
+                        System.out.println(speciesList.get(i).getOrder() + ":" + speciesList.get(i + 1).getOrder());
+
+                    } else {
+
+                    }
+                }
+                for (String s : indexList) {
+                    System.out.println(s);
+                }
+                int j = 0;
+                for (String s : indexList) {
+                    int k = 0;
+                    for (int i = 0; i < speciesList.size(); i++) {
+                        if (s.equals(speciesList.get(i).getOrder().substring(0, 1))) {
+                            if (k == 0) {
+                                Result result = new Result();
+                                result.setViewType(HEAD);
+                                result.setLatinHead(speciesList.get(i).getLatinOrder());
+                                result.setHead(speciesList.get(i).getOrder());
+                                resultList.add(result);
+                                positionList.add(j);
+                                j++;
+                            }
+                            Result result = new Result();
+                            result.setViewType(ITEM);
+                            result.setSpecies(speciesList.get(i));
+                            resultList.add(result);
+                            j++;
+                            k++;
+                        }
+                    }
+                }
+//            }else if(speciesList.size()==1)
+//            {
+//                positionList.add(0);
+//                indexList.add(speciesList.get(0).getLatinOrder().substring(0,1));
+//                Result result=new Result();
+//                result.setViewType(HEAD);
+//                result.setLatinHead(speciesList.get(0).getLatinOrder());
+//                result.setHead(speciesList.get(0).getOrder());
+//                resultList.add(result);
+//
+//                Result result1=new Result();
+//                result1.setViewType(ITEM);
+//                result1.setSpecies(speciesList.get(0));
+//                resultList.add(result1);
+//            }
+        } else {//按科
+
+//            if (speciesList.size() > 1) {
+                for (int i = 0; i < speciesList.size() - 1; i++) {
+                    if (i == 0) {
+                        indexList.add(speciesList.get(0).getFamily().substring(0, 1));
+                    }
+                    if (!speciesList.get(i).getFamily().equals(speciesList.get(i + 1).getFamily())) {
+                        indexList.add(speciesList.get(i + 1).getFamily().substring(0, 1));
+                        System.out.println(speciesList.get(i).getFamily() + ":" + speciesList.get(i + 1).getFamily());
+
+                    } else {
+
+                    }
+                }
+                for (String s : indexList) {
+                    System.out.println(s);
+                }
+                int j = 0;
+                for (String s : indexList) {
+                    int k = 0;
+                    for (int i = 0; i < speciesList.size(); i++) {
+                        if (s.equals(speciesList.get(i).getFamily().substring(0, 1))) {
+                            if (k == 0) {
+                                Result result = new Result();
+                                result.setViewType(HEAD);
+                                result.setLatinHead(speciesList.get(i).getLatinFamily());
+                                result.setHead(speciesList.get(i).getFamily());
+                                resultList.add(result);
+                                positionList.add(j);
+                                j++;
+                            }
+                            Result result = new Result();
+                            result.setViewType(ITEM);
+                            result.setSpecies(speciesList.get(i));
+                            resultList.add(result);
+                            j++;
+                            k++;
+                        }
+                    }
+                }
+//            }else if(speciesList.size()==1) {
+//                positionList.add(0);
+//                indexList.add(speciesList.get(0).getFamily().substring(0, 1));
+//                Result result = new Result();
+//                result.setViewType(HEAD);
+//                result.setLatinHead(speciesList.get(0).getLatinFamily());
+//                result.setHead(speciesList.get(0).getFamily());
+//                resultList.add(result);
+//
+//                Result result1 = new Result();
+//                result1.setViewType(ITEM);
+//                result1.setSpecies(speciesList.get(0));
+//                resultList.add(result1);
+//            }
+        }
+    }
+
+
     private void initEvents() {
         actionBack.setOnClickListener(this);
         alertMenu.setOnClickListener(this);
@@ -321,8 +437,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 if(position==0){showAmphibiaPickDialog();}
                 else if(position==2){showBirdPickDialog();}
                 else if(position==1){showReptilesPickDialog();}
-                else {showInsectPickDialog();}
-                hideTitleBar();
+                //else {showInsectPickDialog();}
+
                 break;
             case R.id.species_class_title_bar_linear_layout_actionBack:
                 actionBack();
@@ -332,7 +448,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showBirdPickDialog()
-    {
+    {   hideTitleBar();
         mydialog_bird dialog=new mydialog_bird(this,R.style.customDialog,width,height);
         dialog.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -341,7 +457,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showAmphibiaPickDialog()
-    {
+    {   hideTitleBar();
         mydialog_amphibia dialog=new mydialog_amphibia(this,R.style.customDialog,width,height);
         dialog.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -350,15 +466,16 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showReptilesPickDialog()
-    {
+    {   hideTitleBar();
         mydialog_retile dialog= new mydialog_retile(this,R.style.customDialog,width,height);
         dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showInsectPickDialog()
-    {
+    {   hideTitleBar();
         mydialog_insect dialog=new mydialog_insect(this,R.style.customDialog,width,height);
         dialog.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -392,74 +509,179 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//按目
                 dialog.dismiss();
-                if(sortingByOrder!=true)
-                {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            sortingByOrder=true;
-                            sortingEditor.putBoolean("sortingWay",true).apply();
-                            if(position<=2)
-                            {
-                                speciesList=DataSupport.where("speciesType=?",getIntent().getStringExtra("speciesType")).find(Species.class);
-                                resultList.clear();
-                                positionList.clear();
-                                indexList.clear();
-                                createIndexList(speciesList);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        adapter.notifyDataSetChanged();
-                                        sliderBar.setData(indexList,positionList);
-                                    }
-                                });
+                if (sourceFromPick == false) {
+                    if (sortingByOrder != true) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sortingByOrder = true;
+                                sortingEditor.putBoolean("sortingWay", true).apply();
+                                if (position <= 2) {
+                                    speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexList(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList, positionList);
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+
+                    }
+                }else
+                {
+                    if (sortingByOrder != true) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sortingByOrder = true;
+                                sortingEditor.putBoolean("sortingWay", true).apply();
+                                if (position <= 2) {
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexListc(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList, positionList);
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+
+                    }
 
                 }
 
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
+        button2.setOnClickListener(new View.OnClickListener() {//按科浏览
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if(sortingByOrder!=false)
-                {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            sortingByOrder=false;
-                            sortingEditor.putBoolean("sortingWay",false).apply();
-                            if(position<=2)
-                            {
-                                speciesList=DataSupport.where("speciesType=?",getIntent().getStringExtra("speciesType")).find(Species.class);
-                                resultList.clear();
-                                positionList.clear();
-                                indexList.clear();
-                                createIndexList(speciesList);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        adapter.notifyDataSetChanged();
-                                        sliderBar.setData(indexList,positionList);
-                                    }
-                                });
-                            }else
-                            {
-                                speciesList=DataSupport.where("chineseName=?",getIntent().getStringExtra("speciesClassName")).find(Species.class);
+                if (sourceFromPick == false) {
+                    if (sortingByOrder != false) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sortingByOrder = false;
+                                sortingEditor.putBoolean("sortingWay", false).apply();
+                                if (position <= 2) {
+                                    speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexList(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList, positionList);
+                                        }
+                                    });
+                                } else {
+                                    speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+
+                    }
+                }else
+                {
+                    if (sortingByOrder != false) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sortingByOrder = false;
+                                sortingEditor.putBoolean("sortingWay", false).apply();
+                                if (position <= 2) {
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    createIndexListc(speciesList);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList, positionList);
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+
+                    }
 
                 }
 
             }
         });
 
+    }
+
+
+    public void resetPick()
+    {
+        if (sortingByOrder != false) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+//                    sortingByOrder = false;
+//                    sortingEditor.putBoolean("sortingWay", false).apply();
+                    if (position <= 2) {
+                        speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+                        resultList.clear();
+                        positionList.clear();
+                        indexList.clear();
+                        createIndexList(speciesList);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                                sliderBar.setData(indexList, positionList);
+                            }
+                        });
+                    } else {
+                        speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
+                    }
+                }
+            }).start();
+
+        }else {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                sortingByOrder = true;
+//                sortingEditor.putBoolean("sortingWay", true).apply();
+                if (position <= 2) {
+                    speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+                    resultList.clear();
+                    positionList.clear();
+                    indexList.clear();
+                    createIndexList(speciesList);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                            sliderBar.setData(indexList, positionList);
+                        }
+                    });
+                }
+            }
+        }).start();
+
+    }
     }
 
     static class Result
@@ -541,6 +763,17 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_bird_linear_layout_action_back);
             TextView sure= (TextView) v.findViewById(R.id.dialog_pick_bird_text_view_sure);
+            final ImageView resetPick= (ImageView) v.findViewById(R.id.dialog_pick_bird_image_view_reset_pick);
+
+            resetPick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sourceFromPick=false;
+                    dismiss();
+                    showTitleBar();
+                    resetPick();
+                }
+            });
 
             CheckBox shape1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_1);
             CheckBox shape2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_2);
@@ -657,10 +890,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                                         speciesList.add(species);
                                     }
                                     //createIndexList(speciesList);
+                                    sourceFromPick=true;
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();
-                                    createIndexList(speciesList);
+                                    createIndexListc(speciesList);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -939,7 +1173,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
                 //habitCheckBox.add((CheckBox) v.findViewById(i));
             }
-
+            ImageView resetPick= (ImageView) v.findViewById(R.id.dialog_pick_amphibia_image_view_reset_pick);
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_amphibia_linear_layout_action_back);
             TextView sure=(TextView) v.findViewById(R.id.dialog_pick_amphibia_text_view_sure);
             setContentView(v);
@@ -1003,6 +1237,16 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     }
                 }
             });
+            resetPick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sourceFromPick=false;
+                    dismiss();
+                    showTitleBar();
+                    resetPick();
+                }
+            });
+
             actionBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1053,10 +1297,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                                         speciesList.add(species);
                                     }
                                     //createIndexList(speciesList);
+                                    sourceFromPick=true;
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();
-                                    createIndexList(speciesList);
+                                    createIndexListc(speciesList);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -1217,9 +1462,19 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
             }
-
+            ImageView resetPick= (ImageView) v.findViewById(R.id.dialog_pick_reptiles_image_view_reset_pick);
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_reptiles_linear_layout_action_back);
             TextView sure= (TextView) v.findViewById(R.id.dialog_pick_reptiles_text_view_sure);
+
+            resetPick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sourceFromPick=false;
+                    dismiss();
+                    showTitleBar();
+                    resetPick();
+                }
+            });
             actionBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1273,10 +1528,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                                         speciesList.add(species);
                                     }
                                     //createIndexList(speciesList);
+                                    sourceFromPick=true;
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();
-                                    createIndexList(speciesList);
+                                    createIndexListc(speciesList);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -1519,10 +1775,19 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
             }
-
+            ImageView resetPick= (ImageView) v.findViewById(R.id.dialog_pick_insect_image_view_reset_pick);
             TextView sure= (TextView) v.findViewById(R.id.dialog_pick_insect_text_view_sure);
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_insect_linear_layout_action_back);
 
+            resetPick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sourceFromPick=false;
+                    dismiss();
+                    showTitleBar();
+                    resetPick();
+                }
+            });
             actionBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1576,10 +1841,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                                         speciesList.add(species);
                                     }
                                     //createIndexList(speciesList);
+                                    sourceFromPick=true;
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();
-                                    createIndexList(speciesList);
+                                    createIndexListc(speciesList);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {

@@ -706,6 +706,10 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     @Override
     public void finish() {
         super.finish();
-        mediaPlayer.stop();
+        if(mediaPlayer!=null)
+        {
+            mediaPlayer.stop();
+        }
+
     }
 }

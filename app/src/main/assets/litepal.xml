@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="animal"></dbname>
-    <version value="2"></version>
+    <version value="3"></version>
     <list>
         <mapping class="database.Species"></mapping>
         <mapping class="database.User"></mapping>
@@ -11,5 +11,6 @@
         <mapping class="database.Insect"></mapping>
         <mapping class="database.Record"></mapping>
         <mapping class="database.HistoryRecord"></mapping>
+        <mapping class="JavaBean.SpeciesClasses"></mapping>
     </list>
 </litepal>

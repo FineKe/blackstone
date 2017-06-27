@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,7 +68,11 @@ public class SpeciesFragment extends Fragment{
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
     private StickyListViewAdapter stickyListViewAdapter;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String categoryFile="category";
     private String speciesType[]={"amphibia","reptiles","bird"};
+    private boolean isLoadedCategory=false;
     boolean flag=true;
     private ImageView searchView;
     @Nullable
@@ -76,6 +81,7 @@ public class SpeciesFragment extends Fragment{
         View view=inflater.inflate(R.layout.species,container,false);
         speciesClassListView= (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
         searchView= (ImageView) view.findViewById(R.id.species_title_image_view_search_view);
+        speciesClassesList=new ArrayList<>();
         stickyListViewAdapter=new StickyListViewAdapter(speciesClassesList,getContext());
         speciesClassListView.setAdapter(stickyListViewAdapter);
         speciesClassListView.setDivider(null);
@@ -87,7 +93,7 @@ public class SpeciesFragment extends Fragment{
                     startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesType",speciesType[position]).putExtra("position",position));
                 }else
                 {
-                    startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesClassName",speciesClassesList.get(position).getClassName()).putExtra("position",position));
+                    startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesClassName",speciesClassesList.get(position).getClassesName()).putExtra("position",position));
                 }
             }
         });
@@ -103,11 +109,26 @@ public class SpeciesFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createClassList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        speciesClassesList.addAll(DataSupport.findAll(SpeciesClasses.class));
+        stickyListViewAdapter.notifyDataSetChanged();
+//        Message message=new Message();
+//        message.what=OK;
+//        handler.sendMessage(message);
+        System.out.println("speciesFragment:"+speciesClassesList.size());
+        if(speciesClassesList.size()==0)
+        {
+            createClassList();
+        }
+
     }
 
     private void createClassList() {
-        speciesClassesList=new ArrayList<>();
+
 //        /**
 //         * 将R.mipmap.species的图片ID封装到数组
 //         */
@@ -154,7 +175,7 @@ public class SpeciesFragment extends Fragment{
 
         @Override
         public long getHeaderId(int position) {
-            return list.get(position).getId();
+            return list.get(position).getFlag();
         }
 
         @Override
@@ -178,7 +199,7 @@ public class SpeciesFragment extends Fragment{
             ImageView picture= (ImageView) convertView.findViewById(R.id.species_classes_item_image_view_class_picture);
             TextView className= (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
             Glide.with(getContext()).load(list.get(position).getMainPhoto()).into(picture);
-            className.setText(list.get(position).getClassName());
+            className.setText(list.get(position).getClassesName());
             View line=convertView.findViewById(R.id.fragment_species_recycler_view_item_line);
             if(position==2)
             {
@@ -190,7 +211,8 @@ public class SpeciesFragment extends Fragment{
 
 
     public void GetCategory()
-    {
+    {   speciesClassesList.clear();
+        DataSupport.deleteAll(SpeciesClasses.class);
         RequestQueue requestQueue= Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, getCategoryURL, null, new Response.Listener<JSONObject>() {
             @Override
@@ -205,13 +227,23 @@ public class SpeciesFragment extends Fragment{
 
                         for(int i=0;i<vertebrate.length();i++)
                         {   JSONObject object=vertebrate.getJSONObject(i);
-                            SpeciesClasses speciesClasses=new SpeciesClasses(0,"脊椎动物",object.getString("name"),object.getString("img"));
+                            SpeciesClasses speciesClasses=new SpeciesClasses();
+                            speciesClasses.setFlag(0);
+                            speciesClasses.setTitle("脊椎动物");
+                            speciesClasses.setClassesName(object.getString("name"));
+                            speciesClasses.setMainPhoto(object.getString("img"));
+                            speciesClasses.save();
                             speciesClassesList.add(speciesClasses);
                         }
 
                         for(int i=0;i<invertebrate.length();i++)
                         {   JSONObject object=invertebrate.getJSONObject(i);
-                            SpeciesClasses speciesClasses=new SpeciesClasses(1,"无脊椎动物",object.getString("name"),object.getString("img"));
+                            SpeciesClasses speciesClasses=new SpeciesClasses();
+                            speciesClasses.setFlag(1);
+                            speciesClasses.setTitle("无脊椎动物");
+                            speciesClasses.setClassesName(object.getString("name"));
+                            speciesClasses.setMainPhoto(object.getString("img"));
+                            speciesClasses.save();
                             speciesClassesList.add(speciesClasses);
                         }
                        Message message=new Message();
@@ -227,6 +259,7 @@ public class SpeciesFragment extends Fragment{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+
             }
         });
         requestQueue.add(jsonObjectRequest);

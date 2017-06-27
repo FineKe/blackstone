@@ -30,7 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import JsonUtil.JsonResolverSpeciesDetailed;
+import JsonUtil.JsonResolverSpeciesDetailedSave;
+import database.Amphibia;
+import database.Bird;
+import database.Insect;
 import database.Record;
+import database.Reptiles;
 import database.Species;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener{
@@ -95,13 +100,18 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     }
 
     private void initData() {
-        requestQueue= Volley.newRequestQueue(this);//创建请求队列
         sharedPreferences=getSharedPreferences(isLoginedFile,MODE_PRIVATE);
-        boolean isLoaded=false;
-        isLoaded=sharedPreferences.getBoolean("isLoaded",false);
         editor=sharedPreferences.edit();
-       /** if(!isLoaded)
+        int size=(DataSupport.findAll(Bird.class)).size()+(DataSupport.findAll(Amphibia.class)).size()+(DataSupport.findAll(Insect.class)).size()+(DataSupport.findAll(Reptiles.class)).size();
+        System.out.println("size"+size+":"+(DataSupport.findAll(Species.class)).size());
+        if(size!=(DataSupport.findAll(Species.class)).size())
         {
+            DataSupport.deleteAll(Bird.class);
+            DataSupport.deleteAll(Amphibia.class);
+            DataSupport.deleteAll(Reptiles.class);
+            DataSupport.deleteAll(Insect.class);
+            DataSupport.deleteAll(Record.class);
+            requestQueue= Volley.newRequestQueue(this);//创建请求队列
             List<Species> speciesList=DataSupport.findAll(Species.class);
             for(Species s:speciesList)
             {
@@ -112,7 +122,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                             int code=jsonObject.getInt("code");
                             if(code==88)
                             {
-                                JsonResolverSpeciesDetailed speciesDetailed=new JsonResolverSpeciesDetailed(jsonObject);
+                                JsonResolverSpeciesDetailedSave speciesDetailed=new JsonResolverSpeciesDetailedSave(jsonObject);
                                 speciesDetailed.ResolveSpeciesDetailed();
                             }
                         } catch (JSONException e) {
@@ -127,11 +137,16 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 });
                 requestQueue.add(speciesDetailedRequest);
             }
-            editor.putBoolean("isLoaded",true).apply();
+
+            for(Species species:DataSupport.findAll(Species.class))
+            {
+                Record record=new Record(species.getChineseName(),species.getSingal(),species.getSpeciesType());
+                record.save();
+                System.out.println(species.getSingal());
+            }
         }
-        */
-        records=new ArrayList<>();
-        createBasicRecords();
+//        records=new ArrayList<>();
+//        createBasicRecords();
     }
 
     private void initView() {
@@ -299,20 +314,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DataSupport.deleteAll(Record.class);
-                List<Species> list=DataSupport.findAll(Species.class);
-                for(Species species:list)
-                {
-                    Record record=new Record(species.getChineseName(),species.getSingal(),species.getSpeciesType());
-                    record.save();
-                    System.out.println(species.getSingal());
-                }
-
+//                DataSupport.deleteAll(Record.class);
                 List<Record>birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
                 List<Record>amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
                 List<Record>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
                 List<Record>insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
-
                 records.add(birdRecord);
                 records.add(amphibiaRecord);
                 records.add(reptilesRecord);

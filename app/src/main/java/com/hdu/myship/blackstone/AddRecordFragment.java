@@ -43,6 +43,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -72,7 +73,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private ExpandableListView expandableListView;
     private List<List<Species>> speciesList;
 
-    private List<List<Record>> records;
+    public static List<List<Record>> records;
     private List<Record> birdRecord;
     private List<Record> amphibiaRecord;
     private List<Record> reptilesRecord;
@@ -128,10 +129,11 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     private String token;
 
     private AMapLocationClient mapLocationClient;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_record, container, false);
+        View view = inflater.inflate(R.layout.add_record, null, false);
         textViewDate = (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
         datePicker = (DatePicker) view.findViewById(R.id.add_record_datepicker);
         expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
@@ -188,13 +190,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     }
 
 
-    public void getLocation()
-    {
+    public void getLocation() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
 
         }
-        mapLocationClient=new AMapLocationClient(getContext());
+        mapLocationClient = new AMapLocationClient(getContext());
         mapLocationClient.setLocationListener(mapLocationListener);
         mapLocationClient.startLocation();
     }
@@ -219,7 +220,14 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         reptilesRecord = new ArrayList<>();
         insectRecord = new ArrayList<>();
         createBasicRecordsEditor.putBoolean("isCreated", true).apply();
-        records = MainActivity.records;
+        List<Record> birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
+        List<Record> amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
+        List<Record> reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
+        List<Record> insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
+        records.add(birdRecord);
+        records.add(amphibiaRecord);
+        records.add(reptilesRecord);
+        records.add(insectRecord);
 
         sharedPreferences = getActivity().getSharedPreferences(isLoginedFile, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -230,7 +238,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_record_titleBar_textView_save:
-                    save();
+                save();
                 break;
         }
     }
@@ -244,8 +252,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
         if (isLogined == false) {//判断是否登录了
             showLoginDialog();//如果没有则弹出登录框
-        } else
-        {
+        } else {
             if (mlocation != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 try {
@@ -256,7 +263,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                     e.printStackTrace();
                 }
                 DecimalFormat d = new DecimalFormat("0.0000");
-                Toast.makeText(getContext(),mlocation.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), mlocation.toString(), Toast.LENGTH_SHORT).show();
                 upLoadData(millisecond, Double.parseDouble(d.format(mlocation.getLatitude())), Double.parseDouble(d.format(mlocation.getLongitude())));
                 mapLocationClient.stopLocation();
             } else {
@@ -264,7 +271,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
         }
     }
-
 
 
     class MyExpandListViewAdapter extends BaseExpandableListAdapter {
@@ -515,7 +521,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         errorLoginForget.setOnClickListener(new View.OnClickListener() {//忘记密码处理逻辑
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
+                startActivity(new Intent(getContext(), ForgetPasswordActivity.class));
                 errorDialog.dismiss();
             }
         });
@@ -539,13 +545,12 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     public void resetRecords() {
         int GROUP;
         int CHILD;
-        for(List<Record> recordls:records)
-        {
-            for(Record record:recordls)
-            {
+        for (List<Record> recordls : records) {
+            for (Record record : recordls) {
                 record.setChecked(false);
                 record.setRemarkIsNull(true);
                 record.setRemark("");
+                record.save();
             }
         }
         myExpandListViewAdapter.notifyDataSetChanged();
@@ -591,8 +596,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             jsonObject.put("addToObservedList", true);
             jsonObject.put("observationPalName", "");
             JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i <4; i++) {
-                for (Record record : MainActivity.records.get(i)) {
+            for (int i = 0; i < 4; i++) {
+                for (Record record : AddRecordFragment.records.get(i)) {
                     if (record.isRemarkIsNull() == false && record.isChecked()) {
                         JSONObject js = new JSONObject();
                         js.put("speciesId", record.getSpeciesId());
@@ -643,12 +648,11 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
     }
 
-    private AMapLocationListener mapLocationListener=new AMapLocationListener() {
+    private AMapLocationListener mapLocationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
-            if(aMapLocation!=null)
-            {
-                mlocation=aMapLocation;
+            if (aMapLocation != null) {
+                mlocation = aMapLocation;
 
             }
         }

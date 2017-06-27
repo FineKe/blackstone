@@ -101,6 +101,7 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
                         if(code==88)
                         {
                             Toast.makeText(SuggestionsActivity.this, "感谢你的建议", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                         else
                         {

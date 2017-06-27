@@ -1,29 +1,32 @@
 package JavaBean;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by MY SHIP on 2017/5/17.
  * javaBean 物种类别
  */
 
-public class SpeciesClasses {
-    private int id;//用于区分是否处于同一header下
+public class SpeciesClasses extends DataSupport{
+    private int flag;//用于区分是否处于同一header下
     private String title;
-    private String className;//类别名称
+    private String classesName;//类别名称
     private String mainPhoto;
 
-    public SpeciesClasses(int id, String title, String className, String mainPhoto) {
-        this.id = id;
-        this.title = title;
-        this.className = className;
-        this.mainPhoto=mainPhoto;
+//    public SpeciesClasses(int id, String title, String className, String mainPhoto) {
+//        this.id = id;
+//        this.title = title;
+//        this.className = className;
+//        this.mainPhoto=mainPhoto;
+//    }
+
+
+    public int getFlag() {
+        return flag;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     public String getTitle() {
@@ -34,12 +37,12 @@ public class SpeciesClasses {
         this.title = title;
     }
 
-    public String getClassName() {
-        return className;
+    public String getClassesName() {
+        return classesName;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClassesName(String classesName) {
+        this.classesName = classesName;
     }
 
     public String getMainPhoto() {

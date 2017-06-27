@@ -19,50 +19,7 @@
     <string name="title_bar_add_record">添加记录</string>
     <string name="title_bar_person_cneter">个人中心</string>
     <string name="title_bar_setting">设置</string>
-    <array name="sorting_by_order">
-        <item>鹳</item>
-        <item>鹰</item>
-        <item>鸡</item>
-        <item>鹤</item>
-        <item>鸽</item>
-        <item>鹃</item>
-        <item>鸮</item>
-        <item>雨</item>
-        <item>佛</item>
-        <item>鴷</item>
-        <item>雀</item>
-    </array>
-
-    <array name="soting_by_section">
-        <item>鹭</item>
-        <item>鹰</item>
-        <item>雉</item>
-        <item>秧</item>
-        <item>鸠</item>
-        <item>杜</item>
-        <item>鸱</item>
-        <item>雨</item>
-        <item>翠</item>
-        <item>蜂</item>
-        <item>拟</item>
-        <item>啄</item>
-        <item>鶺</item>
-        <item>叶</item>
-        <item>鹃</item>
-        <item>鹎</item>
-        <item>鹟</item>
-        <item>扇</item>
-        <item>噪</item>
-        <item>鹛</item>
-        <item>幽</item>
-        <item>绣</item>
-        <item>山</item>
-        <item>太</item>
-        <item>伯</item>
-        <item>鸦</item>
-        <item>梅</item>
-        <item>雀</item>
-    </array>
+    <string name="root_doname">https://prod.api.blackstone.ebirdnote.cn/v1/</string>
 
     <!--脊椎动物列表-->
     <array name="vertebrate">

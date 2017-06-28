@@ -11,6 +11,6 @@
         <mapping class="database.Insect"></mapping>
         <mapping class="database.Record"></mapping>
         <mapping class="database.HistoryRecord"></mapping>
-        <mapping class="JavaBean.SpeciesClasses"></mapping>
+        <mapping class="database.SpeciesClasses"></mapping>
     </list>
 </litepal>

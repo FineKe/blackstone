@@ -263,7 +263,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                     e.printStackTrace();
                 }
                 DecimalFormat d = new DecimalFormat("0.0000");
-                Toast.makeText(getContext(), mlocation.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), mlocation.toString(), Toast.LENGTH_SHORT).show();
                 upLoadData(millisecond, Double.parseDouble(d.format(mlocation.getLatitude())), Double.parseDouble(d.format(mlocation.getLongitude())));
                 mapLocationClient.stopLocation();
             } else {
@@ -471,7 +471,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                                 userInformationEditor.putString("studentId", user.getString("studentId"));
                                 userInformationEditor.putString("name", user.getString("name"));
                                 userInformationEditor.putString("gender", user.getString("gender"));
-                                userInformationEditor.putString("mail", user.getString("mail"));
+//                                userInformationEditor.putString("mail", user.getString("mail"));
                                 userInformationEditor.putString("token", data.getString("token"));
                                 userInformationEditor.putLong("expireAt", data.getLong("expireAt"));
                                 userInformationEditor.commit();

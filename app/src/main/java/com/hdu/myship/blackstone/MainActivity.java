@@ -2,6 +2,7 @@ package com.hdu.myship.blackstone;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
@@ -37,11 +39,13 @@ import database.Insect;
 import database.Record;
 import database.Reptiles;
 import database.Species;
+import database.SpeciesClasses;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener{
     private String TAG="MainActivity";
     private int textColor=Color.argb(100,74,144,226);
     private String SpeciesDetailedUrl="http://api.blackstone.ebirdnote.cn/v1/species/";
+    private String getCategoryURL="http://api.blackstone.ebirdnote.cn/v1/species/categories";
     private RequestQueue requestQueue;//请求队列
 
     private FragmentManager fragmentManager;//fragment 管理者
@@ -144,6 +148,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 record.save();
                 System.out.println(species.getSingal());
             }
+
         }
 //        records=new ArrayList<>();
 //        createBasicRecords();

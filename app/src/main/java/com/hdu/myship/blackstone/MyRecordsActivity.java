@@ -52,6 +52,7 @@ public class MyRecordsActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_my_records);
         initData();
+        initView();
     }
 
     private void initData() {
@@ -176,7 +177,8 @@ public class MyRecordsActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        initView();
+//                                        initView();
+                                        itemRemoveRcordAdapter.notifyDataSetChanged();
                                     }
                                 });
 

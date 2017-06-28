@@ -104,6 +104,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private int height;
     private int width;
     private int statusBarHeight;
+    private boolean titleBarIsHide=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -631,57 +632,63 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
 
-    public void resetPick()
+    public void resetPick(List<CheckBox> checkBoxList)
     {
-        if (sortingByOrder != false) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-//                    sortingByOrder = false;
-//                    sortingEditor.putBoolean("sortingWay", false).apply();
-                    if (position <= 2) {
-                        speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
-                        resultList.clear();
-                        positionList.clear();
-                        indexList.clear();
-                        createIndexList(speciesList);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                                sliderBar.setData(indexList, positionList);
-                            }
-                        });
-                    } else {
-                        speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
-                    }
-                }
-            }).start();
+        for(CheckBox checkBox:checkBoxList)
+        {
+            checkBox.setChecked(false);
+        }
 
-        }else {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                sortingByOrder = true;
-//                sortingEditor.putBoolean("sortingWay", true).apply();
-                if (position <= 2) {
-                    speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
-                    resultList.clear();
-                    positionList.clear();
-                    indexList.clear();
-                    createIndexList(speciesList);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                            sliderBar.setData(indexList, positionList);
-                        }
-                    });
-                }
-            }
-        }).start();
-
-    }
+//    {
+//        if (sortingByOrder != false) {
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+////                    sortingByOrder = false;
+////                    sortingEditor.putBoolean("sortingWay", false).apply();
+//                    if (position <= 2) {
+//                        speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+//                        resultList.clear();
+//                        positionList.clear();
+//                        indexList.clear();
+//                        createIndexList(speciesList);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                adapter.notifyDataSetChanged();
+//                                sliderBar.setData(indexList, positionList);
+//                            }
+//                        });
+//                    } else {
+//                        speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
+//                    }
+//                }
+//            }).start();
+//
+//        }else {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+////                sortingByOrder = true;
+////                sortingEditor.putBoolean("sortingWay", true).apply();
+//                if (position <= 2) {
+//                    speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+//                    resultList.clear();
+//                    positionList.clear();
+//                    indexList.clear();
+//                    createIndexList(speciesList);
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            adapter.notifyDataSetChanged();
+//                            sliderBar.setData(indexList, positionList);
+//                        }
+//                    });
+//                }
+//            }
+//        }).start();
+//
+//    }
     }
 
     static class Result
@@ -743,6 +750,20 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             super.onCreate(savedInstanceState);
             init();
         }
+
+        @Override
+        public void onBackPressed() {
+
+            if(titleBarIsHide==true)
+            {
+                showTitleBar();
+                dismiss();
+            }else
+            {
+                super.onBackPressed();
+                dismiss();
+            }
+        }
         public void show(){
             super.show();
             Window dialogWindow = getWindow();
@@ -760,6 +781,49 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
 
             View v=getLayoutInflater().inflate(R.layout.dialog_pick_bird,null);
+            int[] shapeId={R.id.dialog_pick_bird_shape_1,R.id.dialog_pick_bird_shape_2,R.id.dialog_pick_bird_shape_3};
+
+            int[] toneId={R.id.dialog_pick_bird_tone_1,R.id.dialog_pick_bird_tone_2,R.id.dialog_pick_bird_tone_3,R.id.dialog_pick_bird_tone_4,
+                    R.id.dialog_pick_bird_tone_5,R.id.dialog_pick_bird_tone_6,R.id.dialog_pick_bird_tone_7,R.id.dialog_pick_bird_tone_8,
+                    R.id.dialog_pick_bird_tone_9,R.id.dialog_pick_bird_tone_10,R.id.dialog_pick_bird_tone_11,R.id.dialog_pick_bird_tone_12,
+                    R.id.dialog_pick_bird_tone_13,R.id.dialog_pick_bird_tone_14,R.id.dialog_pick_bird_tone_15,R.id.dialog_pick_bird_tone_16,
+                    R.id.dialog_pick_bird_tone_17,R.id.dialog_pick_bird_tone_18,R.id.dialog_pick_bird_tone_19,R.id.dialog_pick_bird_tone_20,
+                    R.id.dialog_pick_bird_tone_21,R.id.dialog_pick_bird_tone_22,R.id.dialog_pick_bird_tone_23,R.id.dialog_pick_bird_tone_24,
+                    R.id.dialog_pick_bird_tone_25,R.id.dialog_pick_bird_tone_26,};
+
+            int[] habitatId={R.id.dialog_pick_bird_habit_1,R.id.dialog_pick_bird_habit_2,R.id.dialog_pick_bird_habit_3,R.id.dialog_pick_bird_habit_4,
+                    R.id.dialog_pick_bird_habit_5,R.id.dialog_pick_bird_habit_6,R.id.dialog_pick_bird_habit_7,R.id.dialog_pick_bird_habit_8,
+                    R.id.dialog_pick_bird_habit_9,R.id.dialog_pick_bird_habit_10,R.id.dialog_pick_bird_habit_11,R.id.dialog_pick_bird_habit_12};
+
+            int[] tail_shapeId={R.id.dialog_pick_bird_tail_shape_1,R.id.dialog_pick_bird_tail_shape_2,R.id.dialog_pick_bird_tail_shape_3,R.id.dialog_pick_bird_tail_shape_4,
+                    R.id.dialog_pick_bird_tail_shape_5,R.id.dialog_pick_bird_tail_shape_6,R.id.dialog_pick_bird_tail_shape_7,R.id.dialog_pick_bird_tail_shape_8,
+                    R.id.dialog_pick_bird_tail_shape_9,R.id.dialog_pick_bird_tail_shape_10,R.id.dialog_pick_bird_tail_shape_11,R.id.dialog_pick_bird_tail_shape_12,
+                    R.id.dialog_pick_bird_tail_shape_13,R.id.dialog_pick_bird_tail_shape_14};
+            final List<CheckBox> checkBoxList=new ArrayList<>();
+
+            for(int i:shapeId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
+            }
+
+            for(int i:toneId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
+            }
+
+            for(int i:habitatId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
+            }
+
+            for(int i:tail_shapeId)
+            {
+                ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
+            }
 
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_bird_linear_layout_action_back);
             TextView sure= (TextView) v.findViewById(R.id.dialog_pick_bird_text_view_sure);
@@ -769,75 +833,11 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 @Override
                 public void onClick(View v) {
                     sourceFromPick=false;
-                    dismiss();
-                    showTitleBar();
-                    resetPick();
+//                    dismiss();
+//                    showTitleBar();
+                    resetPick(checkBoxList);
                 }
             });
-
-            CheckBox shape1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_1);
-            CheckBox shape2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_2);
-            CheckBox shape3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_shape_3);
-
-            CheckBox tone1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_1);
-            CheckBox tone2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_2);
-            CheckBox tone3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_3);
-            CheckBox tone4= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_4);
-            CheckBox tone5= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_5);
-            CheckBox tone6= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_6);
-            CheckBox tone7= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_7);
-            CheckBox tone8= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_8);
-            CheckBox tone9= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_9);
-            CheckBox tone10= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_10);
-            CheckBox tone11= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_11);
-            CheckBox tone12= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_12);
-            CheckBox tone13= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_13);
-            CheckBox tone14= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_14);
-            CheckBox tone15= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_15);
-            CheckBox tone16= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_16);
-            CheckBox tone17= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_17);
-            CheckBox tone18= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_18);
-            CheckBox tone19= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_19);
-            CheckBox tone20= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_20);
-            CheckBox tone21= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_21);
-            CheckBox tone22= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_22);
-            CheckBox tone23= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_23);
-            CheckBox tone24= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_24);
-            CheckBox tone25= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_25);
-            CheckBox tone26= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tone_26);
-
-
-
-            CheckBox habitat1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_1);
-            CheckBox habitat2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_2);
-            CheckBox habitat3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_3);
-            CheckBox habitat4= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_4);
-            CheckBox habitat5= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_5);
-            CheckBox habitat6= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_6);
-            CheckBox habitat7= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_7);
-            CheckBox habitat8= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_8);
-            CheckBox habitat9= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_9);
-            CheckBox habitat10= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_10);
-            CheckBox habitat11= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_11);
-            CheckBox habitat12= (CheckBox) v.findViewById(R.id.dialog_pick_bird_habit_12);
-
-
-
-            CheckBox tail_shape1= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_1);
-            CheckBox tail_shape2= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_2);
-            CheckBox tail_shape3= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_3);
-            CheckBox tail_shape4= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_4);
-            CheckBox tail_shape5= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_5);
-            CheckBox tail_shape6= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_6);
-            CheckBox tail_shape7= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_7);
-            CheckBox tail_shape8= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_8);
-            CheckBox tail_shape9= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_9);
-            CheckBox tail_shape10= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_10);
-            CheckBox tail_shape11= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_11);
-            CheckBox tail_shape12= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_12);
-            CheckBox tail_shape13= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_13);
-            CheckBox tail_shape14= (CheckBox) v.findViewById(R.id.dialog_pick_bird_tail_shape_14);
-
 
 
             actionBack.setOnClickListener(new View.OnClickListener() {
@@ -867,7 +867,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     if(toneJsonArray.length()!=0)
                     map.put("tone",toneJsonArray);
                     JSONObject jsonObject=new JSONObject(map);//生成一个json对象
-                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
                     JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "bird", jsonObject, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {//
@@ -926,65 +926,6 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     requestQueue.add(request);
                 }
             });
-
-            shape1.setOnCheckedChangeListener(this);
-            shape2.setOnCheckedChangeListener(this);
-            shape3.setOnCheckedChangeListener(this);
-
-            tone1.setOnCheckedChangeListener(this);
-            tone2.setOnCheckedChangeListener(this);
-            tone3.setOnCheckedChangeListener(this);
-            tone4.setOnCheckedChangeListener(this);
-            tone5.setOnCheckedChangeListener(this);
-            tone6.setOnCheckedChangeListener(this);
-            tone7.setOnCheckedChangeListener(this);
-            tone8.setOnCheckedChangeListener(this);
-            tone9.setOnCheckedChangeListener(this);
-            tone10.setOnCheckedChangeListener(this);
-            tone11.setOnCheckedChangeListener(this);
-            tone12.setOnCheckedChangeListener(this);
-            tone13.setOnCheckedChangeListener(this);
-            tone14.setOnCheckedChangeListener(this);
-            tone15.setOnCheckedChangeListener(this);
-            tone16.setOnCheckedChangeListener(this);
-            tone17.setOnCheckedChangeListener(this);
-            tone18.setOnCheckedChangeListener(this);
-            tone19.setOnCheckedChangeListener(this);
-            tone20.setOnCheckedChangeListener(this);
-            tone21.setOnCheckedChangeListener(this);
-            tone22.setOnCheckedChangeListener(this);
-            tone23.setOnCheckedChangeListener(this);
-            tone24.setOnCheckedChangeListener(this);
-            tone25.setOnCheckedChangeListener(this);
-            tone26.setOnCheckedChangeListener(this);
-
-            habitat1.setOnCheckedChangeListener(this);
-            habitat2.setOnCheckedChangeListener(this);
-            habitat3.setOnCheckedChangeListener(this);
-            habitat4.setOnCheckedChangeListener(this);
-            habitat5.setOnCheckedChangeListener(this);
-            habitat6.setOnCheckedChangeListener(this);
-            habitat7.setOnCheckedChangeListener(this);
-            habitat8.setOnCheckedChangeListener(this);
-            habitat9.setOnCheckedChangeListener(this);
-            habitat10.setOnCheckedChangeListener(this);
-            habitat11.setOnCheckedChangeListener(this);
-            habitat12.setOnCheckedChangeListener(this);
-
-            tail_shape1.setOnCheckedChangeListener(this);
-            tail_shape2.setOnCheckedChangeListener(this);
-            tail_shape3.setOnCheckedChangeListener(this);
-            tail_shape4.setOnCheckedChangeListener(this);
-            tail_shape5.setOnCheckedChangeListener(this);
-            tail_shape6.setOnCheckedChangeListener(this);
-            tail_shape7.setOnCheckedChangeListener(this);
-            tail_shape8.setOnCheckedChangeListener(this);
-            tail_shape9.setOnCheckedChangeListener(this);
-            tail_shape10.setOnCheckedChangeListener(this);
-            tail_shape11.setOnCheckedChangeListener(this);
-            tail_shape12.setOnCheckedChangeListener(this);
-            tail_shape13.setOnCheckedChangeListener(this);
-            tail_shape14.setOnCheckedChangeListener(this);
 
             setContentView(v);
             TextView t1= (TextView)v. findViewById(R.id.t1);
@@ -1110,6 +1051,20 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             super.onCreate(savedInstanceState);
             init();
         }
+        @Override
+        public void onBackPressed() {
+
+            if(titleBarIsHide==true)
+            {
+                showTitleBar();
+                dismiss();
+            }else
+            {
+                super.onBackPressed();
+                dismiss();
+            }
+        }
+
         public void show(){
             super.show();
             Window dialogWindow = getWindow();
@@ -1128,7 +1083,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     R.id.dialog_pick_amphibia_web_7,R.id.dialog_pick_amphibia_web_8,R.id.dialog_pick_amphibia_web_9,
                     R.id.dialog_pick_amphibia_web_10,R.id.dialog_pick_amphibia_web_11,R.id.dialog_pick_amphibia_web_12,
                     R.id.dialog_pick_amphibia_web_13,R.id.dialog_pick_amphibia_web_14};
-            List<CheckBox> webCheckBox=new ArrayList<>();
+
 
             int []major_colorId={R.id.dialog_pick_amphibia_major_color_1,R.id.dialog_pick_amphibia_major_color_2,R.id.dialog_pick_amphibia_major_color_3,
                     R.id.dialog_pick_amphibia_major_color_4,R.id.dialog_pick_amphibia_major_color_5,R.id.dialog_pick_amphibia_major_color_6,
@@ -1136,42 +1091,42 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     R.id.dialog_pick_amphibia_major_color_10,R.id.dialog_pick_amphibia_major_color_11,R.id.dialog_pick_amphibia_major_color_12,
                     R.id.dialog_pick_amphibia_major_color_13,R.id.dialog_pick_amphibia_major_color_14,R.id.dialog_pick_amphibia_major_color_15,
                     R.id.dialog_pick_amphibia_major_color_16};
-            List<CheckBox> major_color_CheckBox=new ArrayList<>();
+
 
             int []sacId={R.id.dialog_pick_amphibia_sac_1,R.id.dialog_pick_amphibia_sac_2,R.id.dialog_pick_amphibia_sac_3};
-            List<CheckBox> sacCheckBox=new ArrayList<>();
+
 
             int []habitId={R.id.dialog_pick_amphibia_habit_1,R.id.dialog_pick_amphibia_habit_2,R.id.dialog_pick_amphibia_habit_3,
                     R.id.dialog_pick_amphibia_habit_4,R.id.dialog_pick_amphibia_habit_5,R.id.dialog_pick_amphibia_habit_6,
                     R.id.dialog_pick_amphibia_habit_7,R.id.dialog_pick_amphibia_habit_8,R.id.dialog_pick_amphibia_habit_9,
                     R.id.dialog_pick_amphibia_habit_10,R.id.dialog_pick_amphibia_habit_11};
-            List<CheckBox> habitCheckBox=new ArrayList<>();
 
+            final List<CheckBox> checkBoxList=new ArrayList<>();
 
             View v=getLayoutInflater().inflate(R.layout.dialog_pick_amphibia,null);
 
             for(int i:webId)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
-               // webCheckBox.add((CheckBox) v.findViewById(i));
+                checkBoxList.add((CheckBox) v.findViewById(i));
             }
 
             for(int i:major_colorId)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
-               // major_color_CheckBox.add((CheckBox) v.findViewById(i));
+                checkBoxList.add((CheckBox) v.findViewById(i));
             }
 
             for(int i:sacId)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
-                //sacCheckBox.add((CheckBox) v.findViewById(i));
+                checkBoxList.add((CheckBox) v.findViewById(i));
             }
 
             for (int i:habitId)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
-                //habitCheckBox.add((CheckBox) v.findViewById(i));
+                checkBoxList.add((CheckBox) v.findViewById(i));
             }
             ImageView resetPick= (ImageView) v.findViewById(R.id.dialog_pick_amphibia_image_view_reset_pick);
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_amphibia_linear_layout_action_back);
@@ -1241,9 +1196,9 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 @Override
                 public void onClick(View v) {
                     sourceFromPick=false;
-                    dismiss();
-                    showTitleBar();
-                    resetPick();
+//                    dismiss();
+//                    showTitleBar();
+                    resetPick(checkBoxList);
                 }
             });
 
@@ -1274,7 +1229,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     if(majorColorJsonArray.length()!=0)
                         map.put("fil_major_color",majorColorJsonArray);
                     JSONObject jsonObject=new JSONObject(map);//生成一个json对象
-                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
                     JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "amphibia", jsonObject, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {//
@@ -1396,6 +1351,21 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             super.onCreate(savedInstanceState);
             init();
         }
+
+        @Override
+        public void onBackPressed() {
+
+            if(titleBarIsHide==true)
+            {
+                showTitleBar();
+                dismiss();
+            }else
+            {
+                super.onBackPressed();
+                dismiss();
+            }
+        }
+
         public void show(){
             super.show();
             Window dialogWindow = getWindow();
@@ -1436,31 +1406,38 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
             int [] bigscale={R.id.dialog_pick_reptiles_fil_has_bigscale_1,R.id.dialog_pick_reptiles_fil_has_bigscale_2};
 
+            final List<CheckBox> checkBoxList=new ArrayList<>();
+
             View v=getLayoutInflater().inflate(R.layout.dialog_pick_reptiles,null);
             setContentView(v);
             for(int i:shape)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
             }
 
             for(int i:majorColor)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
             }
 
             for(int i:biotope)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
             }
 
             for(int i:microBiotope)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
             }
 
             for(int i:bigscale)
             {
                 ((CheckBox)v.findViewById(i)).setOnCheckedChangeListener(this);
+                checkBoxList.add((CheckBox)v.findViewById(i));
             }
             ImageView resetPick= (ImageView) v.findViewById(R.id.dialog_pick_reptiles_image_view_reset_pick);
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_reptiles_linear_layout_action_back);
@@ -1470,9 +1447,9 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                 @Override
                 public void onClick(View v) {
                     sourceFromPick=false;
-                    dismiss();
-                    showTitleBar();
-                    resetPick();
+                   // dismiss();
+//                    showTitleBar();
+                    resetPick(checkBoxList);
                 }
             });
             actionBack.setOnClickListener(new View.OnClickListener() {
@@ -1505,7 +1482,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     if(bigscaleJsonArray.length()!=0)
                         map.put("fil_has_bigscale",bigscaleJsonArray);
                     JSONObject jsonObject=new JSONObject(map);//生成一个json对象
-                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SpeciesClassActivity.this,jsonObject.toString(), Toast.LENGTH_SHORT).show();
                     JsonRequest request=new JsonObjectRequest(Request.Method.POST, url + "reptiles", jsonObject, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {//
@@ -1700,6 +1677,19 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     }
 
     public class mydialog_insect extends Dialog implements CompoundButton.OnCheckedChangeListener{
+        @Override
+        public void onBackPressed() {
+
+            if(titleBarIsHide==true)
+            {
+                showTitleBar();
+                dismiss();
+            }else
+            {
+                super.onBackPressed();
+                dismiss();
+            }
+        }
         boolean flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
         List<String> tentacle=new ArrayList<>();
         List<String> wing=new ArrayList<>();
@@ -1779,13 +1769,15 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             TextView sure= (TextView) v.findViewById(R.id.dialog_pick_insect_text_view_sure);
             LinearLayout actionBack= (LinearLayout) v.findViewById(R.id.dialog_pick_insect_linear_layout_action_back);
 
+
+
             resetPick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sourceFromPick=false;
                     dismiss();
                     showTitleBar();
-                    resetPick();
+//                    resetPick();
                 }
             });
             actionBack.setOnClickListener(new View.OnClickListener() {
@@ -2037,6 +2029,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesClassName.setVisibility(View.INVISIBLE);
         alertMenu.setVisibility(View.INVISIBLE);
         alertPick.setVisibility(View.INVISIBLE);
+        titleBarIsHide=true;
     }
 
     public void  showTitleBar()//显示物种界面头部的文字和功能图标
@@ -2045,5 +2038,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesClassName.setVisibility(View.VISIBLE);
         alertMenu.setVisibility(View.VISIBLE);
         alertPick.setVisibility(View.VISIBLE);
+        titleBarIsHide=false;
     }
+
 }

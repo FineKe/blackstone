@@ -1,10 +1,6 @@
 package com.hdu.myship.blackstone;
 
-import android.app.Dialog;
-import android.app.VoiceInteractor;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,38 +8,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.method.KeyListener;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.FileDescriptorBitmapDataLoadProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,8 +34,7 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-import JavaBean.SpeciesClasses;
-import database.Species;
+import database.SpeciesClasses;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
@@ -114,17 +94,17 @@ public class SpeciesFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        speciesClassesList.addAll(DataSupport.findAll(SpeciesClasses.class));
-        stickyListViewAdapter.notifyDataSetChanged();
-//        Message message=new Message();
-//        message.what=OK;
-//        handler.sendMessage(message);
-        System.out.println("speciesFragment:"+speciesClassesList.size());
-        if(speciesClassesList.size()==0)
+
+        if(DataSupport.findAll(SpeciesClasses.class).size()==0)
         {
             createClassList();
         }
-
+        else
+        {
+            speciesClassesList.clear();
+            speciesClassesList.addAll(DataSupport.findAll(SpeciesClasses.class));
+            stickyListViewAdapter.notifyDataSetChanged();
+        }
     }
 
     private void createClassList() {
@@ -233,7 +213,7 @@ public class SpeciesFragment extends Fragment{
                             speciesClasses.setClassesName(object.getString("name"));
                             speciesClasses.setMainPhoto(object.getString("img"));
                             speciesClasses.save();
-                            speciesClassesList.add(speciesClasses);
+                            //speciesClassesList.add(speciesClasses);
                         }
 
                         for(int i=0;i<invertebrate.length();i++)
@@ -244,9 +224,9 @@ public class SpeciesFragment extends Fragment{
                             speciesClasses.setClassesName(object.getString("name"));
                             speciesClasses.setMainPhoto(object.getString("img"));
                             speciesClasses.save();
-                            speciesClassesList.add(speciesClasses);
+                            //speciesClassesList.add(speciesClasses);
                         }
-                       Message message=new Message();
+                        Message message=new Message();
                         message.what=OK;
                         handler.sendMessage(message);
                     }
@@ -264,7 +244,6 @@ public class SpeciesFragment extends Fragment{
         });
         requestQueue.add(jsonObjectRequest);
     }
-
     private Handler handler=new Handler()
     {
         @Override
@@ -272,7 +251,9 @@ public class SpeciesFragment extends Fragment{
             super.handleMessage(msg);
             switch (msg.what)
             {
-                case OK: stickyListViewAdapter.notifyDataSetChanged();
+                case OK:
+                    speciesClassesList.addAll(DataSupport.findAll(SpeciesClasses.class));
+                    stickyListViewAdapter.notifyDataSetChanged();
             }
         }
     };

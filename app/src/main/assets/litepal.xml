@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="animal"></dbname>
-    <version value="3"></version>
+    <version value="4"></version>
     <list>
         <mapping class="database.Species"></mapping>
         <mapping class="database.User"></mapping>
@@ -12,5 +12,6 @@
         <mapping class="database.Record"></mapping>
         <mapping class="database.HistoryRecord"></mapping>
         <mapping class="database.SpeciesClasses"></mapping>
+        <mapping class="database.AlterRecord"></mapping>
     </list>
 </litepal>

@@ -42,12 +42,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import JavaBean.APIManager;
 import database.HistoryRecord;
 import database.Species;
 
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
-    private String searchURL="http://api.blackstone.ebirdnote.cn/v1/species/search";
+    private String searchURL= APIManager.rootDoname+"v1/species/search";
     private RequestQueue requestQueue;
     private JsonObjectRequest searchRequest;
     private EditText input;

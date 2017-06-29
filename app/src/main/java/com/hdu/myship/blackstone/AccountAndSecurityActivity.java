@@ -27,10 +27,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 public class AccountAndSecurityActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG ="AccountAndSecurity";
-    private String LogOutURL="http://api.blackstone.ebirdnote.cn/v1/user/logout";
+    private String LogOutURL=APIManager.rootDoname+"v1/user/logout";
     private RequestQueue requestQueue;
 
     private LinearLayout tab_personInformation;
@@ -153,7 +155,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(AccountAndSecurityActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountAndSecurityActivity.this, "没有网络", Toast.LENGTH_SHORT).show();
                 }
             }){
                 @Override

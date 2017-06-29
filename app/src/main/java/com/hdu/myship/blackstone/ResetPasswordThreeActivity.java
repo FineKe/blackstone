@@ -31,9 +31,10 @@ import java.util.Map;
 
 import ActivityUtil.ActivityCollector;
 import ActivityUtil.BaseActivity;
+import JavaBean.APIManager;
 
 public class ResetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
-    private String ResetPasswordURL="http://api.blackstone.ebirdnote.cn/v1/user/pwd";
+    private String ResetPasswordURL= APIManager.rootDoname+"v1/user/pwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
     private LinearLayout actionBack;
@@ -177,7 +178,7 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(ResetPasswordThreeActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResetPasswordThreeActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

@@ -5,5 +5,5 @@ package JavaBean;
  */
 
 public class APIManager {
-    public static String rootDoname="https://prod.api.blackstone.ebirdnote.cn/v1/";
+    public static String rootDoname="https://prod.api.blackstone.ebirdnote.cn/";
 }

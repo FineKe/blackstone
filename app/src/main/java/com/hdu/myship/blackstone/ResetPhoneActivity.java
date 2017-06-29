@@ -28,9 +28,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 public class ResetPhoneActivity extends AppCompatActivity implements View.OnClickListener{
-    private String getCodeURL="http://api.blackstone.ebirdnote.cn/v1/user/verifyCode/changeMobile";
-    private String submitURL="http://api.blackstone.ebirdnote.cn/v1/user/changeMobile";
+    private String getCodeURL= APIManager.rootDoname+"v1/user/verifyCode/changeMobile";
+    private String submitURL=APIManager.rootDoname+"v1/user/changeMobile";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCodeRequest;
     private JsonObjectRequest submitRquest;
@@ -151,7 +153,7 @@ public class ResetPhoneActivity extends AppCompatActivity implements View.OnClic
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-
+                            Toast.makeText(ResetPhoneActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                         }
                     }){
                         @Override

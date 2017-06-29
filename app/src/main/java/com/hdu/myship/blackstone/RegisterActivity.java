@@ -24,9 +24,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 public class RegisterActivity extends AutoLayoutActivity implements View.OnClickListener {
-    private String RegisterURL = "http://api.blackstone.ebirdnote.cn/v1/user/register";//注册账号请求，post请求夹带json数据
-    private String GetCodeURL = "http://api.blackstone.ebirdnote.cn/v1/user/verifyCode/mobile";//发送验证码请求，post请求夹带json数据
+    private String RegisterURL = APIManager.rootDoname+"v1/user/register";//注册账号请求，post请求夹带json数据
+    private String GetCodeURL = APIManager.rootDoname+"v1/user/verifyCode/mobile";//发送验证码请求，post请求夹带json数据
     private RequestQueue requestQueue;//请求列
 
     private JsonObjectRequest submitRequest;
@@ -156,7 +158,7 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
                 }, new Response.ErrorListener() {//请求异常回调
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(RegisterActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -209,7 +211,7 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
             }, new Response.ErrorListener() {//请求异常回调
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(RegisterActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                 }
             });
 

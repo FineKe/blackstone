@@ -45,6 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import JavaBean.APIManager;
+import database.AlterRecord;
 import database.Record;
 import database.Species;
 
@@ -52,7 +54,7 @@ import static com.hdu.myship.blackstone.MyApplication.getContext;
 import static com.hdu.myship.blackstone.MyRecordTwoActivity.noteList;
 
 public class RecordAlterActivity extends AppCompatActivity implements View.OnClickListener{
-    private String alterRecordURL="http://api.blackstone.ebirdnote.cn/v1/record/edit";
+    private String alterRecordURL= APIManager.rootDoname+"v1/record/edit";
     private String TAG="RecordAlterActivity";
     private static final int CREATE_OK = 1;
     private TextView date;
@@ -61,7 +63,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
     private ExpandableListView expandableListView;
     private LinearLayout actionBack;
 
-    public static List<List<Record>> recordList;
+    public static List<List<AlterRecord>> recordList;
     private MyExpandListViewAdapter adapter;
     private ProgressDialog progressDialog;
     private boolean datePickerShow = false;
@@ -172,9 +174,9 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
 
     public void resetRecords() {//重置记录
 
-        for(List<Record> records:recordList)
+        for(List<AlterRecord> records:recordList)
         {
-            for(Record record:records)
+            for(AlterRecord record:records)
             {
                 record.setChecked(false);
                 record.setRemarkIsNull(true);
@@ -201,11 +203,11 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
 
     class MyExpandListViewAdapter extends BaseExpandableListAdapter {
         private String[] groups = {"鸟类", "两栖类", "爬行类", "昆虫"};
-        private List<List<Record>> records;
+        private List<List<AlterRecord>> records;
         private Context context;
         private LayoutInflater layoutInflater;
 
-        public MyExpandListViewAdapter(Context context,List<List<Record>> records) {
+        public MyExpandListViewAdapter(Context context,List<List<AlterRecord>> records) {
             this.context=context;
             this.records = records;
             layoutInflater=LayoutInflater.from(context);
@@ -330,11 +332,11 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DataSupport.deleteAll(Record.class);
+                DataSupport.deleteAll(AlterRecord.class);
                 List<Species> list=DataSupport.findAll(Species.class);
                 for(Species species:list)
                 {
-                    Record record=new Record(species.getChineseName(),species.getSingal(),species.getSpeciesType());
+                    AlterRecord record=new AlterRecord(species.getChineseName(),species.getSingal(),species.getSpeciesType());
                     for(List<MyRecordTwoActivity.Note> notes:noteList)
                     {
                         for(MyRecordTwoActivity.Note note:notes)
@@ -353,10 +355,10 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
                     record.save();
                 }
 
-                List<Record>birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
-                List<Record>amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
-                List<Record>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
-                List<Record>insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
+                List<AlterRecord>birdRecord = DataSupport.where("speciesType=?", "bird").find(AlterRecord.class);
+                List<AlterRecord>amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(AlterRecord.class);
+                List<AlterRecord>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(AlterRecord.class);
+                List<AlterRecord>insectRecord = DataSupport.where("speciesType=?", "insect").find(AlterRecord.class);
 
                 System.out.println("ssssssssssssssssss");
                 recordList.add(birdRecord);
@@ -397,7 +399,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
             jsonObject.put("time",milliseconds);
             JSONArray jsonArray = new JSONArray();
             for (int i = 0; i <4; i++) {
-                for (Record record :recordList.get(i)) {
+                for (AlterRecord record :recordList.get(i)) {
                     if (record.isRemarkIsNull() == false && record.isChecked()) {
                         JSONObject js = new JSONObject();
                         js.put("speciesId", record.getSpeciesId());
@@ -433,7 +435,7 @@ public class RecordAlterActivity extends AppCompatActivity implements View.OnCli
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

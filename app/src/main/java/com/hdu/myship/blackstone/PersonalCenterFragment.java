@@ -33,14 +33,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 /**
  * Created by MY SHIP on 2017/3/18.
  * 个人中心fragment
  */
 
 public class PersonalCenterFragment extends Fragment implements View.OnClickListener{
-    private String loginURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
-    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String loginURL= APIManager.rootDoname+"v1/user/login";
+    private String updateURL=APIManager.rootDoname+"v1/user/login";
     private RequestQueue requestQueue;
 
     private FragmentManager fragmentManager;//fragment 管理者
@@ -229,7 +231,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getContext(),"请求异常",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"网络异常",Toast.LENGTH_SHORT).show();
                     }
                 });
                 requestQueue.add(loginRequest);

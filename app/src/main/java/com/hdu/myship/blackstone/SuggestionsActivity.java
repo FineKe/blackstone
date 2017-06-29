@@ -23,8 +23,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 public class SuggestionsActivity extends AppCompatActivity implements View.OnClickListener{
-    private String feedBackURL="http://api.blackstone.ebirdnote.cn/v1/feedback/new";
+    private String feedBackURL= APIManager.rootDoname+"v1/feedback/new";
     private RequestQueue requestQueue;
     private JsonObjectRequest suggestionRequest;
     private UserInformationUtil userInformation;
@@ -115,7 +117,7 @@ public class SuggestionsActivity extends AppCompatActivity implements View.OnCli
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(SuggestionsActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SuggestionsActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                 }
             }){
                 @Override

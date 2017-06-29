@@ -54,6 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import JavaBean.APIManager;
 import database.Record;
 import database.Species;
 
@@ -66,8 +67,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class AddRecordFragment extends Fragment implements View.OnClickListener {
-    private String loginURL = "http://api.blackstone.ebirdnote.cn/v1/user/login";
-    private String upLoadRecordURL = "http://api.blackstone.ebirdnote.cn/v1/record/new";
+    private String loginURL = APIManager.rootDoname+"v1/user/login";
+    private String upLoadRecordURL = APIManager.rootDoname+"v1/record/new";
     private RequestQueue requestQueue;
     private JsonObjectRequest upLoadRequest;
     private ExpandableListView expandableListView;
@@ -487,7 +488,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "没有网络", Toast.LENGTH_SHORT).show();
                     }
                 });
                 requestQueue.add(loginRequest);

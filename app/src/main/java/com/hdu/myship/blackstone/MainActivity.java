@@ -1,5 +1,6 @@
 package com.hdu.myship.blackstone;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Message;
@@ -31,6 +32,7 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import JavaBean.APIManager;
 import JsonUtil.JsonResolverSpeciesDetailed;
 import JsonUtil.JsonResolverSpeciesDetailedSave;
 import database.Amphibia;
@@ -44,8 +46,8 @@ import database.SpeciesClasses;
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener{
     private String TAG="MainActivity";
     private int textColor=Color.argb(100,74,144,226);
-    private String SpeciesDetailedUrl="http://api.blackstone.ebirdnote.cn/v1/species/";
-    private String getCategoryURL="http://api.blackstone.ebirdnote.cn/v1/species/categories";
+    private String SpeciesDetailedUrl= APIManager.rootDoname+"v1/species/";
+    private String getCategoryURL=APIManager.rootDoname+"v1/species/categories";
     private RequestQueue requestQueue;//请求队列
 
     private FragmentManager fragmentManager;//fragment 管理者
@@ -152,6 +154,18 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         }
 //        records=new ArrayList<>();
 //        createBasicRecords();
+
+        updateUserInformation(this);
+    }
+
+    public void updateUserInformation(Context context)
+    {
+         IsLoginUtil loginUtil=new IsLoginUtil(context);
+        if(loginUtil.getLogined())
+        {
+            UserInformationUtil informationUtil=new UserInformationUtil(context);
+            informationUtil.updateUserInfomation();
+        }
     }
 
     private void initView() {

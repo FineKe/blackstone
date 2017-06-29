@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import JavaBean.APIManager;
 import database.Amphibia;
 
 /**
@@ -28,7 +29,7 @@ import database.Amphibia;
  */
 
 public class SpeciesDetailedFragment extends Fragment {
-    private String getSpeciesClassesURL= "api.blackstone.ebirdnote.cn/v1/species/categories";
+    private String getSpeciesClassesURL= APIManager.rootDoname+"v1/species/categories";
     private String TAG="SpeciesDetailedFragment";
 
 

@@ -29,11 +29,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import database.Record;
-
+import JavaBean.APIManager;
 public class MyRecordsActivity extends AppCompatActivity {
-    private String getRecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/user/";
-    private String removeRecordListURL="http://api.blackstone.ebirdnote.cn/v1/record/";
+    private String getRecordListURL= APIManager.rootDoname+"v1/record/user/";
+    private String removeRecordListURL=APIManager.rootDoname+"v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRecordListRequest;
     private JsonObjectRequest deleteRecordListRequest;
@@ -118,7 +117,7 @@ public class MyRecordsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(MyRecordsActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyRecordsActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

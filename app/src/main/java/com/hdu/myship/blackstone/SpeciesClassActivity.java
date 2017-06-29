@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import JavaBean.APIManager;
 import JsonUtil.JsonResolverSpeciesDetailed;
 import database.Amphibia;
 import database.Bird;
@@ -61,7 +62,7 @@ import database.Species;
 public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnClickListener{
     private int HEAD=0;
     private int ITEM=1;
-    private String getSpeciesDetailedURL="http://api.blackstone.ebirdnote.cn/v1/species/";
+    private String getSpeciesDetailedURL= APIManager.rootDoname+"v1/species/";
     private RequestQueue requestQueue;
     private static final String TAG ="SpeciesClassActivity";
     private LinearLayout actionBack;
@@ -918,7 +919,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            Toast.makeText(SpeciesClassActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SpeciesClassActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                             dismiss();
                             showTitleBar();
                         }

@@ -3,6 +3,7 @@ package com.hdu.myship.blackstone;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,8 +25,8 @@ import JavaBean.APIManager;
 
 public class launcherActivity extends AutoLayoutActivity {
     String TAG="tag";
-    private String getSpeciesListURL= APIManager.rootDoname+"species/list";//物种清单获取接口
-    private String getSpeciesDetailedURL=APIManager.rootDoname+"species/";//物种详情接口
+    private String getSpeciesListURL= APIManager.rootDoname+"v1/species/list";//物种清单获取接口
+    private String getSpeciesDetailedURL=APIManager.rootDoname+"v1/species/";//物种详情接口
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -78,7 +79,7 @@ public class launcherActivity extends AutoLayoutActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-
+                    Toast.makeText(launcherActivity.this, "没有网络", Toast.LENGTH_SHORT).show();
                 }
             });
             requestQueue.add(getSpeciesListRequest);

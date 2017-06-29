@@ -56,12 +56,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.Inflater;
 
+import JavaBean.APIManager;
 import database.Species;
 
 public class MyCollectionsActivity extends AppCompatActivity {
     private final int LOAD_DATA_OK=0;
     private final int JUMP_OK=1;
-    private String getCollectionURL="http://api.blackstone.ebirdnote.cn/v1/species/collection/";
+    private String getCollectionURL= APIManager.rootDoname+"v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCollectionRequest;
     private ListView listView;
@@ -302,7 +303,7 @@ public class MyCollectionsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(MyCollectionsActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyCollectionsActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

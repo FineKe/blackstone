@@ -55,6 +55,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import JavaBean.APIManager;
 import JsonUtil.JsonResolverSpeciesDetailed;
 import ShapeUtil.GlideRoundTransform;
 import database.Amphibia;
@@ -64,9 +65,9 @@ import database.Reptiles;
 
 public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener {
     private final int LOAD_AUDIO_OK=8;
-    private String getSpeciesDetailedURL = "http://api.blackstone.ebirdnote.cn/v1/species/";
-    private String collectionURL = "http://api.blackstone.ebirdnote.cn/v1/species/addToCollection";
-    private String cancelCollectionURL = "http://api.blackstone.ebirdnote.cn/v1/species/collection/";
+    private String getSpeciesDetailedURL = APIManager.rootDoname+"v1/species/";
+    private String collectionURL = APIManager.rootDoname+"v1/species/addToCollection";
+    private String cancelCollectionURL = APIManager.rootDoname+"v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest request;
     private JsonObjectRequest collectionRequest;
@@ -143,7 +144,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         views = new ArrayList<>();
         pointers = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
         userInformation = new UserInformationUtil(this);
         isLoginUtil = new IsLoginUtil(this);
         updateToken = new UpdateToken(this);
@@ -583,17 +584,25 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     @Override
     protected void onStart() {
         super.onStart();
-        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(), 3, 3, TimeUnit.SECONDS);
+
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if(scheduledExecutorService!=null)
-        {
-            scheduledExecutorService.shutdown();
-        }
+    protected void onResume() {
+        super.onResume();
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(), 3, 3, TimeUnit.SECONDS);
     }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if(scheduledExecutorService!=null)
+//        {
+////            scheduledExecutorService.shutdown();
+//            scheduledExecutorService.shutdown();
+//        }
+//    }
 
     @Override
     protected void onStop() {
@@ -661,7 +670,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpeciesDeatailedActivity.this, "请在有网络下查看", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -695,7 +704,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpeciesDeatailedActivity.this, "请在有网络下查看", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -733,7 +742,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SpeciesDeatailedActivity.this, "请在有网络下查看", Toast.LENGTH_SHORT).show();
                     switch (speciesType)
                     {
                         case "bird":
@@ -797,7 +806,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(SpeciesDeatailedActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SpeciesDeatailedActivity.this, "请在有网络下查看", Toast.LENGTH_SHORT).show();
                     switch (speciesType)
                     {
                         case "bird":

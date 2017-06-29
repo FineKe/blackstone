@@ -28,9 +28,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ActivityUtil.BaseActivity;
+import JavaBean.APIManager;
 
 public class ForgetPasswordTwoActivity extends BaseActivity implements View.OnClickListener{
-    private String getCodeURL="http://api.blackstone.ebirdnote.cn/v1/user/forgetPwd/verifyCode/mobile";
+    private String getCodeURL= APIManager.rootDoname+"v1/user/forgetPwd/verifyCode/mobile";
     private RequestQueue requestQueue;
 
     private TextView messagePhone;
@@ -149,7 +150,7 @@ public class ForgetPasswordTwoActivity extends BaseActivity implements View.OnCl
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(ForgetPasswordTwoActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgetPasswordTwoActivity.this, "没有网络", Toast.LENGTH_SHORT).show();
             }
         });
 

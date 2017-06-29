@@ -18,12 +18,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 /**
  * Created by MY SHIP on 2017/5/25.
  */
 
 public class UserInformationUtil {
-    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String updateURL= APIManager.rootDoname+"v1/user/login";
     private SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static Context context;
@@ -174,7 +176,7 @@ public class UserInformationUtil {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(context, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(updateRquest);

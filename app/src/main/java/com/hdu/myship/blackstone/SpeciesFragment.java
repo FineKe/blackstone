@@ -34,6 +34,7 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import JavaBean.APIManager;
 import database.SpeciesClasses;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -44,7 +45,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class SpeciesFragment extends Fragment{
     private final int OK=1;
-    private String getCategoryURL="http://api.blackstone.ebirdnote.cn/v1/species/categories";
+    private String getCategoryURL= APIManager.rootDoname+"v1/species/categories";
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
     private StickyListViewAdapter stickyListViewAdapter;
@@ -238,7 +239,7 @@ public class SpeciesFragment extends Fragment{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
 
             }
         });

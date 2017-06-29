@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import JavaBean.APIManager;
 import ShapeUtil.GlideRoundTransform;
 import database.Species;
 
@@ -53,7 +54,7 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
     private int HEAD=0;
     private int ITEM=1;
 
-    private String getCollectionURL="http://api.blackstone.ebirdnote.cn/v1/species/collection/";
+    private String getCollectionURL= APIManager.rootDoname+"v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCollectionRequest;
     public  List<MyCollectionsActivity.SpeciesClass> speciesClassList;
@@ -65,6 +66,8 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
     private List<SpeciesClassActivity.Result> resultList;
     private int oldSize;
     private int nowSize;
+
+    private LinearLayoutManager linearLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,10 +105,19 @@ public class MyCollectionsTwoActivity extends AppCompatActivity implements View.
         title= (TextView) findViewById(R.id.activity_my_collection_text_view_title);
         sliderBar= (SliderBar) findViewById(R.id.activity_my_collection_two_slider_bar);
         sliderBar.setData(indexList,positionList);
+
+        linearLayoutManager=new LinearLayoutManager(this);
+
         speciesContentAdapter=new SpeciesContentAdapter(this,resultList);
         recyclerView.setAdapter(speciesContentAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
+        sliderBar.setCharacterListener(new SliderBar.CharacterClickListener() {
+            @Override
+            public void clickCharacter(View view) {
+                linearLayoutManager.scrollToPositionWithOffset((Integer) view.getTag(),0);
+            }
+        });
         speciesContentAdapter.setOnRecyclerViewItemClickeListener(new SpeciesContentAdapter.OnRecyclerViewItemClickeListener() {
             @Override
             public void onItemClick(View view, Species data) {

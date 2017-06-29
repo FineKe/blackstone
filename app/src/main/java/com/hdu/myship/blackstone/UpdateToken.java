@@ -18,13 +18,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 /**
  * Created by MY SHIP on 2017/5/30.
  * 检测token是否已经过期，过期将自动更新
  */
 
 public class UpdateToken {
-    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String updateURL= APIManager.rootDoname+"v1/user/login";
     private String TAG="UpdateToken";
     private UserInformationUtil information;
     private Context context;
@@ -81,7 +83,7 @@ public class UpdateToken {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(context, "请求异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
                 }
             });
             requestQueue.add(updateRquest);

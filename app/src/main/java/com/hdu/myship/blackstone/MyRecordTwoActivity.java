@@ -39,10 +39,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import JavaBean.APIManager;
 import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 
 public class MyRecordTwoActivity extends AppCompatActivity implements View.OnClickListener{
-    private String getRecordDeatailedURL="http://api.blackstone.ebirdnote.cn/v1/record/";
+    private String getRecordDeatailedURL= APIManager.rootDoname+"v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRcordDeatailedRquest;
     private String TAG="MyRecordTwoActivity";
@@ -392,7 +393,7 @@ public class MyRecordTwoActivity extends AppCompatActivity implements View.OnCli
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(MyRecordTwoActivity.this, "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyRecordTwoActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

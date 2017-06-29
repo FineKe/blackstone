@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import database.AlterRecord;
 import database.Record;
 
 public class AlterNotesActivity extends AppCompatActivity implements View.OnClickListener{
@@ -21,8 +22,8 @@ public class AlterNotesActivity extends AppCompatActivity implements View.OnClic
     private EditText notes;
     private LinearLayout actionBack;
     private int speciesId;
-    private List<Record> records;
-    private Record record;
+    private List<AlterRecord> records;
+    private AlterRecord record;
     private Intent data;
     private int groupPosition;
     private int childPosition;

@@ -54,6 +54,8 @@ import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
 
+import JavaBean.APIManager;
+
 import static com.hdu.myship.blackstone.MyApplication.getContext;
 
 /**
@@ -61,9 +63,9 @@ import static com.hdu.myship.blackstone.MyApplication.getContext;
  */
 
 public class LoginedFragment extends Fragment implements View.OnClickListener{
-    private String getUpLoadTokenURL="http://api.blackstone.ebirdnote.cn/v1/upload/token";
-    private String upLoadImageURL="http://api.blackstone.ebirdnote.cn/v1/user/avatar";
-    private String updateURL="http://api.blackstone.ebirdnote.cn/v1/user/login";
+    private String getUpLoadTokenURL= APIManager.rootDoname+"v1/upload/token";
+    private String upLoadImageURL=APIManager.rootDoname+"v1/user/avatar";
+    private String updateURL=APIManager.rootDoname+"v1/user/login";
 
     private String TAG="LoginedFragment";
     private final int CHOOSE_PICTURE=1;
@@ -280,7 +282,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
                     if(code==88)
                     {
                         Log.d(TAG, "onResponse:上传成功 ");
-                        Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
 //                        Message message=new Message();
 //                        message.what=UPLOAD_IMAGE_OK;
 //                        handler.sendMessage(message);
@@ -297,7 +299,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "没有网络", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -337,7 +339,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
 
                 break;
             case CHOOSE_PICTURE_RESULT:
-                Toast.makeText(getContext(), "111111", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "111111", Toast.LENGTH_SHORT).show();
                 System.out.println("2");
                 if(data!=null)
                 {
@@ -439,7 +441,7 @@ public class LoginedFragment extends Fragment implements View.OnClickListener{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(), "请求异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(updateRquest);

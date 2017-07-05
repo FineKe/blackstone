@@ -1,12 +1,12 @@
 package com.hdu.myship.blackstone;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class CopyRightActivity extends AppCompatActivity {
+public class CopyRightActivity extends BaseActivity {
 
     private LinearLayout actionBack;
     @Override

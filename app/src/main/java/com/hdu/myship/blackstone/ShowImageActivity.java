@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
@@ -20,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ShowImageActivity extends AppCompatActivity {
+public class ShowImageActivity extends BaseActivity {
     private Dialog dialog;
     ImageView imageView;
 

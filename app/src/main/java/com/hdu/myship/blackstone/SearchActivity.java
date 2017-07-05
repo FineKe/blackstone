@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.media.DrmInitData;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -47,7 +46,7 @@ import database.HistoryRecord;
 import database.Species;
 
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
+public class SearchActivity extends BaseActivity implements View.OnClickListener{
     private String searchURL= APIManager.rootDoname+"v1/species/search";
     private RequestQueue requestQueue;
     private JsonObjectRequest searchRequest;

@@ -116,7 +116,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     private MediaPlayer mediaPlayer=null;
     private ImageView playSound=null;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +152,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     private void initViews() {
         tab_pointers = (LinearLayout) findViewById(R.id.activity_species_deatailed_linear_layout_pointers);
         copyRight = (ImageView) findViewById(R.id.activity_species_deatailed_image_view_copy_right);
@@ -172,7 +172,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void createAllView() {
         switch (speciesType) {
             case "reptiles":
@@ -563,13 +563,13 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private View createView(String picture) {
         RoundedImageView imgView = new RoundedImageView(this);
-        imgView.setBackground(getDrawable(R.drawable.view_pager_background));
+//        imgView.setBackground(getDrawable(R.drawable.view_pager_background));
         imgView.setCornerRadius(6);
         imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(this).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this, 6)).into(imgView);
+        Glide.with(this).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this, 8)).into(imgView);
         return imgView;
     }
 

@@ -2,14 +2,13 @@ package com.hdu.myship.blackstone;
 
 import android.content.SharedPreferences;
 import android.media.DrmInitData;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class PersonInformationActivity extends AppCompatActivity implements View.OnClickListener{
+public class PersonInformationActivity extends BaseActivity implements View.OnClickListener{
 
     private TextView name;
     private TextView id;

@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -59,7 +58,7 @@ import java.util.zip.Inflater;
 import JavaBean.APIManager;
 import database.Species;
 
-public class MyCollectionsActivity extends AppCompatActivity {
+public class MyCollectionsActivity extends BaseActivity {
     private final int LOAD_DATA_OK=0;
     private final int JUMP_OK=1;
     private String getCollectionURL= APIManager.rootDoname+"v1/species/collection/";
@@ -70,7 +69,6 @@ public class MyCollectionsActivity extends AppCompatActivity {
     private MyAdapter listAdapter;
     public static List<SpeciesClass> speciesClassList;//该list声明为静态，是为了与下一级界面共享该数据
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,10 +85,11 @@ public class MyCollectionsActivity extends AppCompatActivity {
         getCollection();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     private void initViews() {
         listView= (ListView) findViewById(R.id.activity_my_collection_list_view);
-        listView.setDivider(getDrawable(R.drawable.line));
+//        listView.setDivider(getDrawable(R.drawable.line));
+        listView.setDivider(getResources().getDrawable(R.drawable.line));
         actionBack= (LinearLayout) findViewById(R.id.activity_my_collection_linear_layout_action_back);
         listView.setAdapter(listAdapter);
 

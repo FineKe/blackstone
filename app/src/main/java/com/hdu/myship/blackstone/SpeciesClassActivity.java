@@ -426,7 +426,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -448,38 +448,38 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showBirdPickDialog()
     {   hideTitleBar();
         mydialog_bird dialog=new mydialog_bird(this,R.style.customDialog,width,height);
-        dialog.create();
+//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showAmphibiaPickDialog()
     {   hideTitleBar();
         mydialog_amphibia dialog=new mydialog_amphibia(this,R.style.customDialog,width,height);
-        dialog.create();
+//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showReptilesPickDialog()
     {   hideTitleBar();
         mydialog_retile dialog= new mydialog_retile(this,R.style.customDialog,width,height);
-        dialog.create();
+//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showInsectPickDialog()
     {   hideTitleBar();
         mydialog_insect dialog=new mydialog_insect(this,R.style.customDialog,width,height);
-        dialog.create();
+//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
@@ -745,12 +745,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             this.context=context;
             this.width=width;
             this.height=height;
-        }
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
             init();
         }
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//
+//        }
 
         @Override
         public void onBackPressed() {
@@ -1046,12 +1047,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             this.context=context;
             this.width=width;
             this.height=height;
-        }
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
             init();
         }
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//
+//        }
         @Override
         public void onBackPressed() {
 
@@ -1345,13 +1347,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             this.context=context;
             this.width=width;
             this.height=height;
-
-        }
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
             init();
         }
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//
+//        }
 
         @Override
         public void onBackPressed() {
@@ -1704,12 +1706,13 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
             this.context=context;
             this.width=width;
             this.height=height;
-        }
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
             init();
         }
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//
+//        }
         public void show(){
             super.show();
             Window dialogWindow = getWindow();

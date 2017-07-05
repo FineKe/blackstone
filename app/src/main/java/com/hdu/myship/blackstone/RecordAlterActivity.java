@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -53,7 +52,7 @@ import database.Species;
 import static com.hdu.myship.blackstone.MyApplication.getContext;
 import static com.hdu.myship.blackstone.MyRecordTwoActivity.noteList;
 
-public class RecordAlterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RecordAlterActivity extends BaseActivity implements View.OnClickListener{
     private String alterRecordURL= APIManager.rootDoname+"v1/record/edit";
     private String TAG="RecordAlterActivity";
     private static final int CREATE_OK = 1;

@@ -1,7 +1,7 @@
 package com.hdu.myship.blackstone;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import database.Record;
 
-public class AddNotesActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddNotesActivity extends BaseActivity implements View.OnClickListener {
     private String TAG="AddNotesActivity";
 
     private EditText notes;

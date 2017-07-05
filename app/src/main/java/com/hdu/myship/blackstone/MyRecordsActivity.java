@@ -2,7 +2,6 @@ package com.hdu.myship.blackstone;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import JavaBean.APIManager;
-public class MyRecordsActivity extends AppCompatActivity {
+public class MyRecordsActivity extends BaseActivity {
     private String getRecordListURL= APIManager.rootDoname+"v1/record/user/";
     private String removeRecordListURL=APIManager.rootDoname+"v1/record/";
     private RequestQueue requestQueue;

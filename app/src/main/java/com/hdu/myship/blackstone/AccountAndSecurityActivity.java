@@ -3,10 +3,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,9 +28,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import ActivityUtil.*;
 import JavaBean.APIManager;
 
-public class AccountAndSecurityActivity extends AppCompatActivity implements View.OnClickListener{
+public class AccountAndSecurityActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG ="AccountAndSecurity";
     private String LogOutURL=APIManager.rootDoname+"v1/user/logout";
@@ -57,6 +59,7 @@ public class AccountAndSecurityActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_account_and_security);
+
         initData();
         initViews();
         initEvents();

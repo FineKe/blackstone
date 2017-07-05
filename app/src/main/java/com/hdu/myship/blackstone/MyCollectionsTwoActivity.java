@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +39,7 @@ import JavaBean.APIManager;
 import ShapeUtil.GlideRoundTransform;
 import database.Species;
 
-public class MyCollectionsTwoActivity extends AppCompatActivity implements View.OnClickListener{
+public class MyCollectionsTwoActivity extends BaseActivity implements View.OnClickListener{
     private final int LOAD_DATA_OK=0;
     private final int JUMP_OK=1;
     private String dealPicure="?imageView2/0/w/400/h/400";//本平台的图片采用了cdn分发，为了节省流量，采用七牛云的api处理接口

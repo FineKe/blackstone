@@ -1,6 +1,6 @@
 package com.hdu.myship.blackstone;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 import JavaBean.APIManager;
 
-public class SuggestionsActivity extends AppCompatActivity implements View.OnClickListener{
+public class SuggestionsActivity extends BaseActivity implements View.OnClickListener{
     private String feedBackURL= APIManager.rootDoname+"v1/feedback/new";
     private RequestQueue requestQueue;
     private JsonObjectRequest suggestionRequest;

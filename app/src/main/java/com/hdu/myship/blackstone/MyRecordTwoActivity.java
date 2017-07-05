@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +41,7 @@ import java.util.Map;
 import JavaBean.APIManager;
 import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 
-public class MyRecordTwoActivity extends AppCompatActivity implements View.OnClickListener{
+public class MyRecordTwoActivity extends BaseActivity implements View.OnClickListener{
     private String getRecordDeatailedURL= APIManager.rootDoname+"v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRcordDeatailedRquest;

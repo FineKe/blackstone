@@ -2,7 +2,7 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ import java.util.List;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-public class GuideTableFourActivity extends AppCompatActivity{
+public class GuideTableFourActivity extends BaseActivity{
     private String[] title={"野外鸟类的观察与识别"};
     private String[] text={"    鸟类学研究有诸多的优点和便利之处，因此在野外观察鸟类，记录鸟类的种类、数量和行为是一项基本的训练。观鸟，是指在自然环境中，以不影响野生鸟类正常生活为前提，通过肉眼或借助望远镜等设备，观察鸟类的形态、行为和生活习性的活动，是鸟类学研究的一项基本功。\n" +
             "    如何在野外观察鸟类呢？鸟类的多样性虽然较高、数量较大，但鸟类的动作非常敏捷和迅速，使观察的时间很有限。因此观察者需要在掌握鸟类形态特征的基础之上，通过鸟类的形态、羽色、行为、鸣声、栖息地等诸多信息做出快速、准确的判断。以下介绍一些常用的观鸟技巧。\n" +

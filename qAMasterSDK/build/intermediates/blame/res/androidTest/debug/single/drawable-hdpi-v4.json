@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\clear.png",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\clear.png"
+    },
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\text.png",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\text.png"
+    },
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\pencil.png",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\pencil.png"
+    },
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\success.png",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\success.png"
+    },
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\bugtag_hint.png",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\bugtag_hint.png"
+    },
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\back.png",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\back.png"
+    }
+]

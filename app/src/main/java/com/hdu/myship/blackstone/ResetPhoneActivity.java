@@ -3,7 +3,7 @@ package com.hdu.myship.blackstone;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -30,7 +30,7 @@ import java.util.Map;
 
 import JavaBean.APIManager;
 
-public class ResetPhoneActivity extends AppCompatActivity implements View.OnClickListener{
+public class ResetPhoneActivity extends BaseActivity implements View.OnClickListener{
     private String getCodeURL= APIManager.rootDoname+"v1/user/verifyCode/changeMobile";
     private String submitURL=APIManager.rootDoname+"v1/user/changeMobile";
     private RequestQueue requestQueue;

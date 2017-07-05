@@ -2,7 +2,7 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ import java.util.List;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-public class GuideTabOneActivity extends AppCompatActivity {
+public class GuideTabOneActivity extends BaseActivity {
     private String[] title={"地理区位","自然条件"};
     private String[] text={"    中山大学黑石顶野外教学实习基地暨教育部“热带、亚热带森林生态实验中心”位于广东省封开县黑石顶省级自然保护区，地理坐标为23°25′~23°29′N，111°49′~111°54′W，北回归线横穿保护区中部。保护区地处云开山脉余脉，向南距离云开山脉最高峰茂名大雾岭约150 km，距海南岛约400 km；西南距离十万大山不到400 km；西北距离广西大瑶山约200 km；向北距离南岭最高峰广西猫儿山370 km。云开山脉北向联通南岭山地，西南则由云开山脉、六万山脉和十万山脉3条彼此相连的山脉组成1条山脉带，进入中南半岛。云开山脉对于中国华南地区生物多样性的形成和维持发挥了至关重要的关键作用。",
             "图1.1 黑石顶的地理区位",

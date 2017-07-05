@@ -3,7 +3,6 @@ package com.hdu.myship.blackstone;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Parcel;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -21,7 +20,7 @@ import java.util.List;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-public class GuideTableTwoActivity extends AppCompatActivity {
+public class GuideTableTwoActivity extends BaseActivity {
     private String[] title={"两栖爬行动物区系特点","黑石顶鸟类区系特点"};
     private String[] text={"    截止2013年底，在黑石顶自然保护区42 km2的范围内共记录陆生脊椎动物4纲23目70科225种。包括两栖类1目7科23种，爬行类2目10科50种，鸟类13目40科131种。哺乳类的调查尚不充分，根据中山大学近几年的调查，在整理黑石顶保护区原有的调查数据基础上，初步统计为7目13科22种。其中，侧条跳树蛙 Chiromantis vittatus、北部湾蜓蜥 Sphenomorphus tonkinensis、黄斑后棱蛇 Opisthotropis maculosa 和白眉棕啄木鸟 Sasia ochracea均为广东省区域新纪录物种。\n" +
             "2.1 两栖、爬行动物区系特点\n" +

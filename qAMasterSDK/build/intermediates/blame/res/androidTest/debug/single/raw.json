@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\qamaster_font_awesome.ttf",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\raw\\qamaster_font_awesome.ttf"
+    },
+    {
+        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\qamaster_font_montserrat_bold.ttf",
+        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\raw\\qamaster_font_montserrat_bold.ttf"
+    }
+]

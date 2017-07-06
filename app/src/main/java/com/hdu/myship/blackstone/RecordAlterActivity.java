@@ -201,7 +201,7 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
     }
 
     class MyExpandListViewAdapter extends BaseExpandableListAdapter {
-        private String[] groups = {"鸟类", "两栖类", "爬行类", "昆虫"};
+        private String[] groups = {"昆虫", "两栖类", "爬行类", "鸟类"};
         private List<List<AlterRecord>> records;
         private Context context;
         private LayoutInflater layoutInflater;
@@ -359,11 +359,11 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
                 List<AlterRecord>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(AlterRecord.class);
                 List<AlterRecord>insectRecord = DataSupport.where("speciesType=?", "insect").find(AlterRecord.class);
 
-                System.out.println("ssssssssssssssssss");
-                recordList.add(birdRecord);
+//                System.out.println("ssssssssssssssssss");
+                recordList.add(insectRecord);
                 recordList.add(amphibiaRecord);
                 recordList.add(reptilesRecord);
-                recordList.add(insectRecord);
+                recordList.add(birdRecord);
 
                 Message message=new Message();
                 message.what=CREATE_OK;

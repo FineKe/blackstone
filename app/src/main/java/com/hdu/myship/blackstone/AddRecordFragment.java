@@ -225,10 +225,10 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         List<Record> amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
         List<Record> reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
         List<Record> insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
-        records.add(birdRecord);
+        records.add(insectRecord);
         records.add(amphibiaRecord);
         records.add(reptilesRecord);
-        records.add(insectRecord);
+        records.add(birdRecord);
 
         sharedPreferences = getActivity().getSharedPreferences(isLoginedFile, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -275,7 +275,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
 
     class MyExpandListViewAdapter extends BaseExpandableListAdapter {
-        private String[] groups = {"鸟类", "两栖类", "爬行类", "昆虫"};
+        private String[] groups = {"昆虫", "两栖类", "爬行类", "鸟类"};
         private List<List<Record>> records;
 
 
@@ -536,11 +536,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
         });
     }
-
-
-    /**
-     * 生成用于基础记录的records
-     */
 
 
     public void resetRecords() {

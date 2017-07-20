@@ -1,138 +1,138 @@
 [
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_beta_login_page.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_beta_login_page.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_feedback_header.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_feedback_header.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_screenshot_loader.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_screenshot_loader.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_problem_sub_header.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_problem_sub_header.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_dialog_footer.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_dialog_footer.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_bugtag_hint.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_bugtag_hint.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem_sub_header.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem_sub_header.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_login_forgot_passcode.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_login_forgot_passcode.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem_header.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem_header.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_login_page_credentials.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_login_page_credentials.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_editor.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_editor.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_dialog_footer.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_dialog_footer.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_screenshot_element.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_screenshot_element.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_editor.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_editor.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem_description.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem_description.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_user.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_user.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_forgot_passcode.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_forgot_passcode.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_report_success.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_report_success.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles_header.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles_header.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_testcycles_list.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_testcycles_list.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_login_error_box.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_login_error_box.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_header_quick.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_header_quick.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_feedback_description.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_feedback_description.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_header_normal.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_header_normal.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_header_beta.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_header_beta.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_problem_description.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_problem_description.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_header.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_header.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_feedback_options.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_feedback_options.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_options.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_options.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_feedback_title.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_feedback_title.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles_input.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles_input.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_header_beta.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_header_beta.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_dialog_generic.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_dialog_generic.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_problem.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_problem.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_editor.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_editor.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_login_quick.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_login_quick.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_page_credentials.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_page_credentials.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_feedback.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_feedback.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycle.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycle.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_testcycles_input.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_testcycles_input.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_normal.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_normal.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_welcome_screen.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_welcome_screen.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_welcome_screen.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_welcome_screen.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_feedback_editor.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_feedback_editor.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_description.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_description.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_testcycles_header.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_testcycles_header.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_login_normal.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_login_normal.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_user.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_user.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_dialog_generic.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_dialog_generic.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_quick.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_quick.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_problem_header.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_problem_header.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_error_box.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_error_box.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_screenshot_element.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_screenshot_element.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_title.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_title.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_beta_login_page.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_beta_login_page.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_report.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_report.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_header_quick.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_header_quick.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles_list.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles_list.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_testcycles.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_testcycles.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_bugtag_hint.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_bugtag_hint.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_report.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_report.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_report_success.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_report_success.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_testcycle.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_testcycle.xml"
     },
     {
-        "merged": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_header_normal.xml",
-        "source": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_header_normal.xml"
+        "merged": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/res/merged/androidTest/debug/layout/qamaster_screenshot_loader.xml",
+        "source": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/layout/qamaster_screenshot_loader.xml"
     }
 ]

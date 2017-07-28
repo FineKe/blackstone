@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-land\\values-land.xml",
+        "outputFile": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-land/values-land.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 121
                 },
                 "from": {
-                    "file": "E:\\workspace\\MyAndroidProjects\\blackstone\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\values-land\\values-land.xml",
+                    "file": "/Users/finefine.com/Desktop/AndroidStudioProjects/blackstone/qAMasterSDK/build/intermediates/bundles/debug/res/values-land/values-land.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

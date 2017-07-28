@@ -1,6 +1,7 @@
 package com.hdu.myship.blackstone;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -431,6 +432,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                         playAudio.setImageResource(R.mipmap.play_audio_pressed);
                         try {
                             mediaPlayer.setDataSource(path+speciesDetailed.getSingal()+".wav");
+                            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                             mediaPlayer.prepare();
                             mediaPlayer.start();
                             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -465,6 +467,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         playAudio.setImageResource(R.mipmap.play_audio_pressed);
         try {
             mediaPlayer.setDataSource(path+singal+".wav");
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

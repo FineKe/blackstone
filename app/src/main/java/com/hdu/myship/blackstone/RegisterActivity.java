@@ -149,6 +149,9 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
                             if (code != 88) {
                                 String message = jsonObject.getString("message");
                                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }else
+                            {
+                                Toast.makeText(RegisterActivity.this, "验证码发送成功", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

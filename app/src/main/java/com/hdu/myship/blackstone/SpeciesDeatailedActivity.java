@@ -63,6 +63,8 @@ import database.Amphibia;
 import database.Bird;
 import database.Insect;
 import database.Reptiles;
+import jp.wasabeef.glide.transformations.CropTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener {
     private final int LOAD_AUDIO_OK=8;
@@ -431,8 +433,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
                         playAudio.setImageResource(R.mipmap.play_audio_pressed);
                         try {
-                            mediaPlayer.setDataSource(path+speciesDetailed.getSingal()+".wav");
                             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            mediaPlayer.setDataSource(path+speciesDetailed.getSingal()+".wav");
                             mediaPlayer.prepare();
                             mediaPlayer.start();
                             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -466,8 +468,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         String path = Environment.getExternalStorageDirectory().toString() + "/blackstone/audio/";
         playAudio.setImageResource(R.mipmap.play_audio_pressed);
         try {
-            mediaPlayer.setDataSource(path+singal+".wav");
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setDataSource(path+singal+".wav");
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -570,9 +572,9 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private View createView(String picture) {
         RoundedImageView imgView = new RoundedImageView(this);
 //        imgView.setBackground(getDrawable(R.drawable.view_pager_background));
-        imgView.setCornerRadius(6);
+        imgView.setCornerRadius(8);
         imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(this).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).transform(new GlideRoundTransform(this, 8)).into(imgView);
+                Glide.with(getApplicationContext()).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).bitmapTransform(new GlideRoundTransform(this,8)).into(imgView);
         return imgView;
     }
 

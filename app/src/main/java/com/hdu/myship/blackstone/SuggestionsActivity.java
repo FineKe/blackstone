@@ -44,6 +44,8 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
         initDatas();
         initViews();
         initEvents();
+        UpdateToken updateToken=new UpdateToken(this);
+        updateToken.updateToken();
     }
 
     private void initDatas() {

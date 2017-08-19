@@ -51,6 +51,8 @@ public class MyRecordsActivity extends BaseActivity {
         setContentView(R.layout.activity_my_records);
         initData();
         initView();
+        UpdateToken updateToken=new UpdateToken(this);
+        updateToken.updateToken();
     }
 
     private void initData() {

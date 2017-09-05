@@ -124,6 +124,8 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
+                    UpdateToken updateToken=new UpdateToken(SuggestionsActivity.this);
+                    updateToken.updateToken();
                     Map<String,String> headers=new HashMap<>();
                     headers.put("token",token);
                     return headers;

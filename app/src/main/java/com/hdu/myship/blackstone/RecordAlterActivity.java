@@ -399,7 +399,7 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
             JSONArray jsonArray = new JSONArray();
             for (int i = 0; i <4; i++) {
                 for (AlterRecord record :recordList.get(i)) {
-                    if (record.isRemarkIsNull() == false && record.isChecked()) {
+                    if (record.isChecked()) {
                         JSONObject js = new JSONObject();
                         js.put("speciesId", record.getSpeciesId());
                         js.put("remark", record.getRemark());

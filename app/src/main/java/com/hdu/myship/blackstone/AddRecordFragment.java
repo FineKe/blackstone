@@ -157,7 +157,6 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         });
 
 
-//        millisecond=millisecondDate.getTime();//获得毫秒数
 
         textViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,7 +345,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         public View getChildView(final int groupPosition, final int childPosition, final boolean isLastChild, View convertView, ViewGroup parent) {
 
             if (convertView == null) {
-                convertView = getLayoutInflater(null).inflate(R.layout.expand_list_view_child, null);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.expand_list_view_child, null);
             }
 
             TextView textView = (TextView) convertView.findViewById(R.id.expand_listView_child_speciesChineseName);
@@ -594,7 +593,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             JSONArray jsonArray = new JSONArray();
             for (int i = 0; i < 4; i++) {
                 for (Record record : AddRecordFragment.records.get(i)) {
-                    if (record.isRemarkIsNull() == false && record.isChecked()) {
+                    if (record.isChecked()) {
                         JSONObject js = new JSONObject();
                         js.put("speciesId", record.getSpeciesId());
                         js.put("remark", record.getRemark());
@@ -634,6 +633,8 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                UpdateToken updateToken=new UpdateToken(getContext());
+                updateToken.updateToken();
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("token", token);
                 return headers;

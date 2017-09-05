@@ -152,8 +152,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             }
 
         }
-//        records=new ArrayList<>();
-//        createBasicRecords();
 
         updateUserInformation(this);
     }

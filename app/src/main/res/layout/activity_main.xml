@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hdu.myship.blackstone.MainActivity">
+    tools:context="com.hdu.myship.blackstone.MainActivity"
+    tools:layout_editor_absoluteX="0dp">
 
     <include
         android:id="@+id/include2"
         layout="@layout/bottom_bar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,6 +24,9 @@
         android:id="@+id/frame_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toTopOf="@+id/include2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,4 +37,5 @@
         app:layout_constraintVertical_weight="1">
 
     </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -397,6 +397,8 @@ public class MyRecordTwoActivity extends BaseActivity implements View.OnClickLis
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                UpdateToken updateToken=new UpdateToken(MyRecordTwoActivity.this);
+                updateToken.updateToken();
                 Map<String,String> headers=new HashMap<>();
                 headers.put("token",userInformation.getToken());
                 return headers;

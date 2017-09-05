@@ -193,7 +193,6 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
     {
         public TextView tv_latinName,tv_chineseName,tv_englishName;
         public RoundedImageView imageView;
-        // private ImageView imageView;
         public MyHolder(View itemView) {
             super(itemView);
             imageView= (RoundedImageView) itemView.findViewById(R.id.species_picture);
@@ -318,7 +317,6 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                                     break;
                                 case "insect":
                                     icount++;
-                                    Log.d("sssssssssssss", "onResponse: "+icount);
                                     Species ispecies=new Species();
                                     ispecies.setSingal(object.getInt("id"));
                                     insect.add(ispecies);

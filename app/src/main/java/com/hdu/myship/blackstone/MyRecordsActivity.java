@@ -123,6 +123,8 @@ public class MyRecordsActivity extends BaseActivity {
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                UpdateToken updateToken=new UpdateToken(MyRecordsActivity.this);
+                updateToken.updateToken();
                 Map<String,String>headers=new HashMap<>();
                 headers.put("token",userInformationUtil.getToken());
                 return  headers;
@@ -198,6 +200,8 @@ public class MyRecordsActivity extends BaseActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                UpdateToken updateToken=new UpdateToken(MyRecordsActivity.this);
+                updateToken.updateToken();
                 Map<String,String> headers=new HashMap<>();
                 headers.put("token",userInformationSharedPreferences.getString("token",""));
                 return headers;

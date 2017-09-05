@@ -43,6 +43,7 @@ public class UpdateToken {
 
     public void updateToken()
     {
+        System.out.println("current time"+System.currentTimeMillis()+"expireAt"+information.getExpireAt());
         if (isOutOfDate())
         {
             RequestQueue requestQueue= Volley.newRequestQueue(context);

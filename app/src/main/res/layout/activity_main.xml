@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.hdu.myship.blackstone.MainActivity"
-    tools:layout_editor_absoluteX="0dp">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/include2"
-        layout="@layout/bottom_bar"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -27,15 +13,27 @@
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/include2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_weight="1">
+        android:layout_marginTop="0dp">
 
     </FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_gravity="start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/activity_main_header_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </include>
+
+        <ListView
+            android:id="@+id/lv_slide_menu_main_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+        </ListView>
+    </LinearLayout>
+
+
+</android.support.v4.widget.DrawerLayout>

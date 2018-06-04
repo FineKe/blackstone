@@ -106,4 +106,14 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <array name="slide_menu_title">
+        <item>野外实习指南</item>
+        <item>添加记录</item>
+        <item>小测试</item>
+        <item>我的收藏</item>
+        <item>我的观察记录</item>
+        <item>设置</item>
+        <item>团队信息</item>
+    </array>
 </resources>

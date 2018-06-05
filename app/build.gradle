@@ -46,8 +46,12 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    //日志
+    implementation 'com.orhanobut:logger:2.2.0'
 
-    compile project(':PushSDK')
+    //banner
+    implementation 'com.youth.banner:banner:1.4.10'
+
     testCompile 'junit:junit:4.12'
     compile files('libs/AMap_Location_V3.4.0_20170427.jar')
     compile project(':qAMasterSDK')

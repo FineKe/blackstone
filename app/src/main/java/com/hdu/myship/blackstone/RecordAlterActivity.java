@@ -1,14 +1,11 @@
 package com.hdu.myship.blackstone;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,11 +41,9 @@ import java.util.Map;
 
 import JavaBean.APIManager;
 import database.AlterRecord;
-import database.Record;
 import database.Species;
 
-import static com.hdu.myship.blackstone.MyApplication.getContext;
-import static com.hdu.myship.blackstone.MyRecordTwoActivity.noteList;
+import static com.hdu.myship.blackstone.BlackStoneApplication.getContext;
 
 public class RecordAlterActivity extends BaseActivity implements View.OnClickListener{
     private String alterRecordURL= APIManager.rootDoname+"v1/record/edit";

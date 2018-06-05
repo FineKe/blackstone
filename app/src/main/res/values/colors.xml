@@ -34,4 +34,7 @@
     <color name="verifyCodeColor">#d9d9d9</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--app主题色-->
+    <color name="global_bg_clolor">#ff3376C5</color>
 </resources>

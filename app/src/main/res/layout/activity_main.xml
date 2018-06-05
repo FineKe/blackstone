@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
+    <include layout="@layout/activity_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp">
-
-    </FrameLayout>
+    </include>
 
     <LinearLayout
+        android:background="@drawable/slide_menu_bg"
         android:layout_gravity="start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,9 +24,10 @@
         </include>
 
         <ListView
+            android:layout_marginLeft="16dp"
             android:id="@+id/lv_slide_menu_main_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>
 

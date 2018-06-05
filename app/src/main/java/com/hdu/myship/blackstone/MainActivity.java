@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
+import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
@@ -63,6 +69,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private long exitTime = 0;
 
+    @BindView(R.id.drawer_main_activity)
+    DrawerLayout drawerLayout;
+
     @BindView(R.id.iv_home_header_view_main_activity)
     ImageView home;
 
@@ -73,14 +82,25 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     TextView signInUp;
 
     @BindView(R.id.lv_slide_menu_main_activity)
-    ListView slideMenu;
+    ListView slideMenuListView;
+
+    @BindView(R.id.banner_main_activity)
+    Banner banner;
+
+    @BindView(R.id.iv_slide_menu_main_activity)
+    ImageView slideMenu;
+
 
     private int[] menusIcon = {R.drawable.guide, R.drawable.add_record,
             R.drawable.testing, R.drawable.my_collection,
             R.drawable.observe_record, R.drawable.setting,
             R.drawable.team_info};
 
-    private List<SlideMenuVO>menuVOS=new ArrayList<>();
+    private int[] bannerUrl = {R.drawable.banner_b1_home, R.drawable.banner_b2_home,
+            R.drawable.banner_b3_home, R.drawable.banner_b4_home};
+
+
+    private List<SlideMenuVO> menuVOS = new ArrayList<>();
 
     private SlideMenuAdapter slideMenuAdapter;
 
@@ -91,8 +111,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         initData();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        initData();
         initView();//初始化控件
         initEvents();//添加逻辑事件控制
     }
@@ -154,21 +172,59 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void initView() {
 
-        String[] titles=getResources().getStringArray(R.array.slide_menu_title);
+        String[] titles = getResources().getStringArray(R.array.slide_menu_title);
+        Logger.d(titles.length);
         for (int i = 0; i < titles.length; i++) {
-            SlideMenuVO menuVO=new SlideMenuVO(menusIcon[i],titles[i]);
+            SlideMenuVO menuVO = new SlideMenuVO(menusIcon[i], titles[i]);
             menuVOS.add(menuVO);
         }
 
-        slideMenuAdapter=new SlideMenuAdapter(menuVOS);
+        slideMenuAdapter = new SlideMenuAdapter(menuVOS);
 
-        slideMenu.setAdapter(slideMenuAdapter);
+        slideMenuListView.setAdapter(slideMenuAdapter);
+        slideMenuListView.setDivider(null);//取消自带的下划线
+
+
+        //初始化 banner
+        List<Integer> images=new ArrayList<>();
+
+        for (int i : bannerUrl) {
+            images.add(i);
+        }
+
+
+        banner.setImages(images).setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                Glide.with(context).load((Integer)path).into(imageView);
+            }
+        });
+
 
     }
 
     private void initEvents() {
 
+        slideMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this, "" + ((SlideMenuVO) adapterView.getAdapter().getItem(i)).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        slideMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT,true);
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(Gravity.LEFT,true);
+            }
+        });
     }
 
 
@@ -222,5 +278,17 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @Override
     public void finish() {
         moveTaskToBack(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        banner.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        banner.stopAutoPlay();
     }
 }

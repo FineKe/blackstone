@@ -37,7 +37,7 @@ import java.util.Map;
 
 import JavaBean.APIManager;
 
-import static com.hdu.myship.blackstone.MyApplication.getContext;
+import static com.hdu.myship.blackstone.BlackStoneApplication.getContext;
 
 public class ClipActivity extends Activity {
     private String getUpLoadTokenURL=APIManager.rootDoname+"v1/upload/token";

@@ -215,7 +215,6 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
                                 }
                               //  userInformationEditor.putString("avatar",data.getString("avatar"));
                                 userInformationEditor.apply();
-                                transaction.replace(R.id.frame_layout,new LoginedFragment()).commit();
 
                             }
                             else

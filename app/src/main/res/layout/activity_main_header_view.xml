@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/iv_home_header_view_main_activity"
         android:background="@drawable/home"
         android:layout_width="wrap_content"
@@ -21,8 +23,14 @@
         android:background="@drawable/default_icon" />
 
     <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/iv_icon_header_view_main_activity"
+        android:layout_marginTop="16dp"
         android:id="@+id/tv_signup_or_signup_header_view_main_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:text="注册/登录"
+        android:layout_marginBottom="10dp"/>
 </RelativeLayout>

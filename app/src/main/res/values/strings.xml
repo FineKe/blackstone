@@ -116,4 +116,10 @@
         <item>设置</item>
         <item>团队信息</item>
     </array>
+
+    <string name="title_home_page">黑石顶生物多样性野外实习</string>
+    <string name="species_query_main_activity">种类检索</string>
+    <string name="testing_main_activity">小测验</string>
+    <string name="my_collection_main_activity">我的收藏</string>
+    <string name="see_all_main_activity">查看全部</string>
 </resources>

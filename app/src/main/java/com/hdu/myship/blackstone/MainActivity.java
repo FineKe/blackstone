@@ -9,10 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -46,11 +43,10 @@ import database.Record;
 import database.Reptiles;
 import database.Species;
 import ui.activity.AddRecordActivity;
-import ui.activity.GuideActivity;
 import ui.activity.SettingActivity;
 import ui.activity.TestingActivity;
-import ui.adapter.SlideMenuAdapter;
-import vo.SlideMenuVO;
+import ui.fragment.HomeFragment;
+import widget.HeaderBar;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener {
 
@@ -78,6 +74,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.drawer_main_activity)
     DrawerLayout drawerLayout;
 
+    @BindView(R.id.headerbar_main_activity)
+    HeaderBar headerBar;
+
     @BindView(R.id.iv_home_header_view_main_activity)
     ImageView home;
 
@@ -90,11 +89,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.tv_signin_header_view_main_activity)
     TextView signIn;
 
-    @BindView(R.id.banner_main_activity)
-    Banner banner;
-
-    @BindView(R.id.iv_slide_menu_main_activity)
-    ImageView slideMenu;
 
     @BindView(R.id.ll_guide_main_activity)
     LinearLayout guide;
@@ -117,9 +111,10 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.ll_team_main_activity)
     LinearLayout team;
 
+    private HomeFragment homeFragment;
 
-    private int[] bannerUrl = {R.drawable.banner_b1_home, R.drawable.banner_b2_home,
-            R.drawable.banner_b3_home, R.drawable.banner_b4_home};
+    private GuideFragment guideFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,37 +184,39 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void initView() {
 
-        //初始化 banner
-        List<Integer> images=new ArrayList<>();
-
-        for (int i : bannerUrl) {
-            images.add(i);
+        if (homeFragment == null) {
+            homeFragment = new HomeFragment();
         }
-
-
-        banner.setImages(images).setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load((Integer)path).into(imageView);
-            }
-        });
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_content_main_activity, homeFragment)
+                .commit();
 
 
     }
 
     private void initEvents() {
 
-        slideMenu.setOnClickListener(new View.OnClickListener() {
+        headerBar.getLeftPart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.LEFT,true);
+                drawerLayout.openDrawer(Gravity.LEFT, true);
             }
         });
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.closeDrawer(Gravity.LEFT,true);
+                drawerLayout.closeDrawer(Gravity.LEFT, true);
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                }
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_content_main_activity, homeFragment)
+                        .commit();
+                headerBar.getCenterTextView().setText(R.string.title_home_page);
+                headerBar.getRightImageView().setVisibility(View.VISIBLE);
             }
         });
 
@@ -236,7 +233,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 closeDrawer();
-                startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             }
         });
 
@@ -256,8 +253,13 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         closeDrawer();
 
         switch (v.getId()) {
-            case  R.id.ll_guide_main_activity:
-                startActivity(new Intent(this, GuideActivity.class));
+            case R.id.ll_guide_main_activity:
+                if (guideFragment == null) {
+                    guideFragment=new GuideFragment();
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity,guideFragment).commit();
+                headerBar.getCenterTextView().setText("指南");
+                headerBar.getRightImageView().setVisibility(View.INVISIBLE);
                 break;
             case R.id.ll_add_record_main_activity:
                 startActivity(new Intent(this, AddRecordActivity.class));
@@ -266,16 +268,16 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 startActivity(new Intent(this, TestingActivity.class));
                 break;
             case R.id.ll_collection_main_activity:
-                startActivity(new Intent(this,MyCollectionsActivity.class));
+                startActivity(new Intent(this, MyCollectionsActivity.class));
                 break;
             case R.id.ll_observe_record_main_activity:
-                startActivity(new Intent(this,MyRecordsActivity.class));
+                startActivity(new Intent(this, MyRecordsActivity.class));
                 break;
             case R.id.ll_setting_main_activity:
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.ll_team_main_activity:
-                startActivity(new Intent(this,MakeTeamActivity.class));
+                startActivity(new Intent(this, MakeTeamActivity.class));
                 break;
 
         }
@@ -329,19 +331,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         moveTaskToBack(true);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        banner.start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        banner.stopAutoPlay();
-    }
 
     private void closeDrawer() {
-        drawerLayout.closeDrawer(Gravity.LEFT,true);
+        drawerLayout.closeDrawer(Gravity.LEFT, true);
     }
 }

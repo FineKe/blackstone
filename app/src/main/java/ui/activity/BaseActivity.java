@@ -20,12 +20,11 @@ public abstract class BaseActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         initView();
-
         initEvent();
     }
 
 
-    private void initEvent() {
+    public void initEvent() {
         
     }
 

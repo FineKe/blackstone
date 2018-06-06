@@ -24,3 +24,15 @@ qAMasterSDK/build/intermediates/res/debug/
 qAMasterSDK/build/intermediates/res/symbol-table-with-package/
 qAMasterSDK/build/intermediates/rs/
 qAMasterSDK/build/outputs/logs/
+qAMasterSDK/build/generated/assets/
+qAMasterSDK/build/generated/source/apt/
+qAMasterSDK/build/intermediates/bundles/debug/assets/
+qAMasterSDK/build/intermediates/classes/
+qAMasterSDK/build/intermediates/incremental/debug-mergeJniLibs/
+qAMasterSDK/build/intermediates/incremental/mergeDebugJniLibFolders/
+qAMasterSDK/build/intermediates/intermediate-jars/
+qAMasterSDK/build/intermediates/javaPrecompile/
+qAMasterSDK/build/intermediates/jniLibs/
+qAMasterSDK/build/intermediates/shaders/
+qAMasterSDK/build/intermediates/transforms/
+qAMasterSDK/build/tmp/

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/guide_title_bar"
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_guide_activity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="150dp">
+
+    </com.youth.banner.Banner>
 
     <LinearLayout
         android:id="@+id/guideFragment_linearlayout_tab1"
@@ -26,8 +31,8 @@
             android:clickable="false"
             android:textColor="#f000"
             android:gravity="center_vertical|start"
-            android:text="黑石顶自然情况"
-            android:textSize="20sp" />
+            android:text="黑石顶自概况"
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -58,7 +63,7 @@
             android:gravity="center_vertical|start"
             android:text="黑石顶陆生脊椎动物区系"
             android:textColor="#f000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageView
 
@@ -91,7 +96,7 @@
             android:gravity="center_vertical|start"
             android:text="昆虫纲的分类特征"
             android:textColor="#f000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageView
 
@@ -123,7 +128,7 @@
             android:gravity="center_vertical|start"
             android:text="陆生脊椎动物的分类特征"
             android:textColor="#f000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"

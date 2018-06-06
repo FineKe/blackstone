@@ -28,7 +28,7 @@ import ActivityUtil.BaseActivity;
 import JavaBean.APIManager;
 
 public class ForgetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
-    private String resetPasswordURL= APIManager.rootDoname+"v1/user/forgetPwd/setPwd";
+    private String resetPasswordURL= APIManager.BASE_URL +"v1/user/forgetPwd/setPwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
     private ImageView actionBack;

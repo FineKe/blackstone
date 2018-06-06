@@ -25,8 +25,8 @@ import JavaBean.APIManager;
 
 public class launcherActivity extends AutoLayoutActivity {
     String TAG="tag";
-    private String getSpeciesListURL= APIManager.rootDoname+"v1/species/list";//物种清单获取接口
-    private String getSpeciesDetailedURL=APIManager.rootDoname+"v1/species/";//物种详情接口
+    private String getSpeciesListURL= APIManager.BASE_URL +"v1/species/list";//物种清单获取接口
+    private String getSpeciesDetailedURL=APIManager.BASE_URL +"v1/species/";//物种详情接口
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;

@@ -5,5 +5,7 @@ package JavaBean;
  */
 
 public class APIManager {
-    public static String rootDoname="https://prod.api.blackstone.ebirdnote.cn/";
+    public static final String BASE_URL ="https://prod.api.blackstone.ebirdnote.cn/";
+
+    public static final String LOGIN_URL=BASE_URL +"v1/user/login";
 }

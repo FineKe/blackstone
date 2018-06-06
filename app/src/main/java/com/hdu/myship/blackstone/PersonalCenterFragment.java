@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -41,8 +40,8 @@ import JavaBean.APIManager;
  */
 
 public class PersonalCenterFragment extends Fragment implements View.OnClickListener{
-    private String loginURL= APIManager.rootDoname+"v1/user/login";
-    private String updateURL=APIManager.rootDoname+"v1/user/login";
+    private String loginURL= APIManager.BASE_URL +"v1/user/login";
+    private String updateURL=APIManager.BASE_URL +"v1/user/login";
     private RequestQueue requestQueue;
 
     private FragmentManager fragmentManager;//fragment 管理者
@@ -128,7 +127,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
 
     public void login()
     {
-        showLoginDialog();
+//        showLoginDialog();
     }
 
 
@@ -137,7 +136,7 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
         startActivity(new Intent(getActivity(),RegisterActivity.class));
     }
 
-    public void showLoginDialog()
+    /*public void showLoginDialog()
     {
         final LoginDialog loginDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.login_dialog);
         loginDialog.show();
@@ -244,28 +243,28 @@ public class PersonalCenterFragment extends Fragment implements View.OnClickList
             }
         });
     }
-
+*/
 
     public void showErrorDialog()
     {
-        final LoginDialog errorDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.error_login_dialog);
-        errorDialog.show();
-        errorLoginForget= (TextView) errorDialog.findViewById(R.id.error_login_dialog_forget);
-        inputAgain= (TextView) errorDialog.findViewById(R.id.error_login_dialog_inputAgain);
-
-        errorLoginForget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
-            }
-        });
-
-        inputAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLoginDialog();
-                errorDialog.dismiss();
-            }
-        });
+//        final LoginDialog errorDialog=new LoginDialog(getContext(),R.style.LoginDialog,R.layout.error_login_dialog);
+//        errorDialog.show();
+//        errorLoginForget= (TextView) errorDialog.findViewById(R.id.error_login_dialog_forget);
+//        inputAgain= (TextView) errorDialog.findViewById(R.id.error_login_dialog_inputAgain);
+//
+//        errorLoginForget.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
+//            }
+//        });
+//
+//        inputAgain.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showLoginDialog();
+//                errorDialog.dismiss();
+//            }
+//        });
     }
 }

@@ -2,7 +2,6 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.provider.Settings;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,7 +24,7 @@ import JavaBean.APIManager;
  */
 
 public class UserInformationUtil {
-    private String updateURL= APIManager.rootDoname+"v1/user/login";
+    private String updateURL= APIManager.BASE_URL +"v1/user/login";
     private SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static Context context;

@@ -50,9 +50,9 @@ import JavaBean.APIManager;
  */
 
 public class LoginedFragment extends Fragment implements View.OnClickListener{
-    private String getUpLoadTokenURL= APIManager.rootDoname+"v1/upload/token";
-    private String upLoadImageURL=APIManager.rootDoname+"v1/user/avatar";
-    private String updateURL=APIManager.rootDoname+"v1/user/login";
+    private String getUpLoadTokenURL= APIManager.BASE_URL +"v1/upload/token";
+    private String upLoadImageURL=APIManager.BASE_URL +"v1/user/avatar";
+    private String updateURL=APIManager.BASE_URL +"v1/user/login";
 
     private String TAG="LoginedFragment";
     private final int CHOOSE_PICTURE=1;

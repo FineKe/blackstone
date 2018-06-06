@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,7 +44,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class SpeciesFragment extends Fragment{
     private final int OK=1;
-    private String getCategoryURL= APIManager.rootDoname+"v1/species/categories";
+    private String getCategoryURL= APIManager.BASE_URL +"v1/species/categories";
     private StickyListHeadersListView speciesClassListView;
     private List<SpeciesClasses>speciesClassesList;
     private StickyListViewAdapter stickyListViewAdapter;

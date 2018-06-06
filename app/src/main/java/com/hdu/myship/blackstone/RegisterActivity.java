@@ -1,7 +1,5 @@
 package com.hdu.myship.blackstone;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -26,8 +24,8 @@ import java.util.Map;
 import JavaBean.APIManager;
 
 public class RegisterActivity extends AutoLayoutActivity implements View.OnClickListener {
-    private String RegisterURL = APIManager.rootDoname+"v1/user/register";//注册账号请求，post请求夹带json数据
-    private String GetCodeURL = APIManager.rootDoname+"v1/user/verifyCode/mobile";//发送验证码请求，post请求夹带json数据
+    private String RegisterURL = APIManager.BASE_URL +"v1/user/register";//注册账号请求，post请求夹带json数据
+    private String GetCodeURL = APIManager.BASE_URL +"v1/user/verifyCode/mobile";//发送验证码请求，post请求夹带json数据
     private RequestQueue requestQueue;//请求列
 
     private JsonObjectRequest submitRequest;

@@ -37,4 +37,10 @@
 
     <!--app主题色-->
     <color name="global_bg_clolor">#ff3376C5</color>
+
+    <color name="slide_menu_light_line_color">#FFC1E3F9</color>
+
+    <color name="slide_menu_line_color">#FFFFFFFF</color>
+
+
 </resources>

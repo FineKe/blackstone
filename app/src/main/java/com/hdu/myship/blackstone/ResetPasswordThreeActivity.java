@@ -33,7 +33,7 @@ import ActivityUtil.BaseActivity;
 import JavaBean.APIManager;
 
 public class ResetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
-    private String ResetPasswordURL= APIManager.rootDoname+"v1/user/pwd";
+    private String ResetPasswordURL= APIManager.BASE_URL +"v1/user/pwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
     private LinearLayout actionBack;

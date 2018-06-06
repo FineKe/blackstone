@@ -15,20 +15,20 @@
         android:background="@drawable/slide_menu_bg"
         android:layout_gravity="start"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <include layout="@layout/activity_main_header_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
         </include>
 
-        <ListView
-            android:layout_marginLeft="16dp"
-            android:id="@+id/lv_slide_menu_main_activity"
+        <include layout="@layout/activity_slide_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </ListView>
+
+        </include>
     </LinearLayout>
 
 

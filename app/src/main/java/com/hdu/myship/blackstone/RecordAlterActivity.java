@@ -46,7 +46,7 @@ import database.Species;
 import static com.hdu.myship.blackstone.BlackStoneApplication.getContext;
 
 public class RecordAlterActivity extends BaseActivity implements View.OnClickListener{
-    private String alterRecordURL= APIManager.rootDoname+"v1/record/edit";
+    private String alterRecordURL= APIManager.BASE_URL +"v1/record/edit";
     private String TAG="RecordAlterActivity";
     private static final int CREATE_OK = 1;
     private TextView date;

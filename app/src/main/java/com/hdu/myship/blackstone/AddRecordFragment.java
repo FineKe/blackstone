@@ -1,23 +1,18 @@
 package com.hdu.myship.blackstone;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +53,6 @@ import JavaBean.APIManager;
 import database.Record;
 import database.Species;
 
-import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -67,8 +61,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class AddRecordFragment extends Fragment implements View.OnClickListener {
-    private String loginURL = APIManager.rootDoname+"v1/user/login";
-    private String upLoadRecordURL = APIManager.rootDoname+"v1/record/new";
+    private String loginURL = APIManager.BASE_URL +"v1/user/login";
+    private String upLoadRecordURL = APIManager.BASE_URL +"v1/record/new";
     private RequestQueue requestQueue;
     private JsonObjectRequest upLoadRequest;
     private ExpandableListView expandableListView;
@@ -251,7 +245,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         isLogined = sharedPreferences.getBoolean("islogined", false);
 
         if (isLogined == false) {//判断是否登录了
-            showLoginDialog();//如果没有则弹出登录框
+//            showLoginDialog();//如果没有则弹出登录框
         } else {
             if (mlocation != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -409,13 +403,13 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     /**
      * 登录对话框
      */
-    public void showLoginDialog() {
-        final LoginDialog loginDialog = new LoginDialog(getContext(), R.style.LoginDialog, R.layout.login_dialog);
+    /*public void showLoginDialog() {
+//        final LoginDialog loginDialog = new LoginDialog(getContext(), R.style.LoginDialog, R.layout.login_dialog);
         loginDialog.setCancelable(false);
         loginDialog.show();
-        /**
+        *//**
          * 绑定控件
-         */
+         *//*
         iuputAccount = (EditText) loginDialog.findViewById(R.id.update_phone_numbe_dialog_editText_account);
         inputPassword = (EditText) loginDialog.findViewById(R.id.update_phone_number_dialog_editText_code);
         loginForget = (TextView) loginDialog.findViewById(R.id.update_phone_number_text_view_get_code);
@@ -500,24 +494,24 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
                 startActivity(new Intent(getContext(), ForgetPasswordActivity.class));
             }
         });
-    }
+    }*/
 
 
     /**
      * 登录错误对话框
      */
-    public void showErrorDialog() {
+    /*public void showErrorDialog() {
         final LoginDialog errorDialog = new LoginDialog(getContext(), R.style.LoginDialog, R.layout.error_login_dialog);//创建一个错误dialog
         errorDialog.show();//显示dialog
-        /**
+        *//**
          * 绑定控件
-         */
+         *//*
         errorLoginForget = (TextView) errorDialog.findViewById(R.id.error_login_dialog_forget);
         inputAgain = (TextView) errorDialog.findViewById(R.id.error_login_dialog_inputAgain);
 
-        /**
+        *//**
          * 设置点击事件
-         */
+         *//*
         errorLoginForget.setOnClickListener(new View.OnClickListener() {//忘记密码处理逻辑
             @Override
             public void onClick(View v) {
@@ -535,7 +529,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
             }
         });
     }
-
+*/
 
     public void resetRecords() {
         int GROUP;

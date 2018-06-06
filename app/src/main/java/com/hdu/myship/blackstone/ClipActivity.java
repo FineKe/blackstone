@@ -40,8 +40,8 @@ import JavaBean.APIManager;
 import static com.hdu.myship.blackstone.BlackStoneApplication.getContext;
 
 public class ClipActivity extends Activity {
-    private String getUpLoadTokenURL=APIManager.rootDoname+"v1/upload/token";
-    private String upLoadImageURL=APIManager.rootDoname+"v1/user/avatar";
+    private String getUpLoadTokenURL=APIManager.BASE_URL +"v1/upload/token";
+    private String upLoadImageURL=APIManager.BASE_URL +"v1/user/avatar";
     private String TAG="ClipActivity";
     private ClipImageLayout mClipImageLayout;
     private String path;

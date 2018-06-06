@@ -2,12 +2,10 @@ package com.hdu.myship.blackstone;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,8 +29,8 @@ import java.util.Map;
 import JavaBean.APIManager;
 
 public class ResetPhoneActivity extends BaseActivity implements View.OnClickListener{
-    private String getCodeURL= APIManager.rootDoname+"v1/user/verifyCode/changeMobile";
-    private String submitURL=APIManager.rootDoname+"v1/user/changeMobile";
+    private String getCodeURL= APIManager.BASE_URL +"v1/user/verifyCode/changeMobile";
+    private String submitURL=APIManager.BASE_URL +"v1/user/changeMobile";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCodeRequest;
     private JsonObjectRequest submitRquest;

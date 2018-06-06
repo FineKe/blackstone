@@ -1,7 +1,6 @@
 package com.hdu.myship.blackstone;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,7 +25,7 @@ import JavaBean.APIManager;
  */
 
 public class UpdateToken {
-    private String updateURL= APIManager.rootDoname+"v1/user/login";
+    private String updateURL= APIManager.BASE_URL +"v1/user/login";
     private String TAG="UpdateToken";
     private UserInformationUtil information;
     private Context context;

@@ -53,7 +53,7 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
     private int HEAD=0;
     private int ITEM=1;
 
-    private String getCollectionURL= APIManager.rootDoname+"v1/species/collection/";
+    private String getCollectionURL= APIManager.BASE_URL +"v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCollectionRequest;
     public  List<MyCollectionsActivity.SpeciesClass> speciesClassList;

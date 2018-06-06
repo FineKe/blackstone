@@ -14,23 +14,45 @@
 
     <ImageView
         android:id="@+id/iv_icon_header_view_main_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
+        android:layout_below="@id/iv_home_header_view_main_activity"
         android:layout_centerInParent="true"
         android:background="@drawable/default_icon" />
 
-    <TextView
+    <LinearLayout
         android:layout_centerHorizontal="true"
         android:layout_below="@id/iv_icon_header_view_main_activity"
         android:layout_marginTop="16dp"
-        android:id="@+id/tv_signup_or_signup_header_view_main_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:text="注册/登录"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_signup_header_view_main_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="注册"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="/"/>
+
+        <TextView
+            android:id="@+id/tv_signin_header_view_main_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="登录"/>
+    </LinearLayout>
 </RelativeLayout>

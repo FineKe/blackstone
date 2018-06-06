@@ -45,10 +45,10 @@
             android:value="" />
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59391631310c9350ca0000bd"></meta-data>
+            android:value="59391631310c9350ca0000bd" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="2d07c154133bd5253ca02e416e3ae7cb"></meta-data>
+            android:value="2d07c154133bd5253ca02e416e3ae7cb" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="902b0a942fa8043b1cc3302b607e7b4d" />
@@ -180,7 +180,11 @@
         <activity
             android:name=".GuideTableFourActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="ui.activity.LoginActivity"></activity>
+        <activity android:name="ui.activity.LoginActivity" />
+        <activity android:name="ui.activity.GuideActivity" />
+        <activity android:name="ui.activity.AddRecordActivity" />
+        <activity android:name="ui.activity.TestingActivity" />
+        <activity android:name="ui.activity.SettingActivity"></activity>
     </application>
 
 </manifest>

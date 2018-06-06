@@ -2,14 +2,11 @@ package com.hdu.myship.blackstone;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -29,8 +26,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PrivateKey;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,10 +34,9 @@ import java.util.List;
 import java.util.Map;
 
 import JavaBean.APIManager;
-import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 
 public class MyRecordTwoActivity extends BaseActivity implements View.OnClickListener{
-    private String getRecordDeatailedURL= APIManager.rootDoname+"v1/record/";
+    private String getRecordDeatailedURL= APIManager.BASE_URL +"v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRcordDeatailedRquest;
     private String TAG="MyRecordTwoActivity";

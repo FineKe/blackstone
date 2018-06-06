@@ -4,11 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.shapes.Shape;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -29,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,25 +39,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import JavaBean.APIManager;
-import JsonUtil.JsonResolverSpeciesDetailed;
-import database.Amphibia;
-import database.Bird;
-import database.Insect;
-import database.Reptiles;
 import database.Species;
 
 public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnClickListener{
     private int HEAD=0;
     private int ITEM=1;
-    private String getSpeciesDetailedURL= APIManager.rootDoname+"v1/species/";
+    private String getSpeciesDetailedURL= APIManager.BASE_URL +"v1/species/";
     private RequestQueue requestQueue;
     private static final String TAG ="SpeciesClassActivity";
     private LinearLayout actionBack;

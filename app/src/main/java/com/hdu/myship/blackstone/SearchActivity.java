@@ -1,21 +1,13 @@
 package com.hdu.myship.blackstone;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.DrmInitData;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -47,7 +39,7 @@ import database.Species;
 
 
 public class SearchActivity extends BaseActivity implements View.OnClickListener{
-    private String searchURL= APIManager.rootDoname+"v1/species/search";
+    private String searchURL= APIManager.BASE_URL +"v1/species/search";
     private RequestQueue requestQueue;
     private JsonObjectRequest searchRequest;
     private EditText input;

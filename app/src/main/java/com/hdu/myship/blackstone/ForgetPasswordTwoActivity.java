@@ -31,7 +31,7 @@ import ActivityUtil.BaseActivity;
 import JavaBean.APIManager;
 
 public class ForgetPasswordTwoActivity extends BaseActivity implements View.OnClickListener{
-    private String getCodeURL= APIManager.rootDoname+"v1/user/forgetPwd/verifyCode/mobile";
+    private String getCodeURL= APIManager.BASE_URL +"v1/user/forgetPwd/verifyCode/mobile";
     private RequestQueue requestQueue;
 
     private TextView messagePhone;

@@ -1,6 +1,7 @@
 package com.hdu.myship.blackstone;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +45,10 @@ import database.Insect;
 import database.Record;
 import database.Reptiles;
 import database.Species;
+import ui.activity.AddRecordActivity;
+import ui.activity.GuideActivity;
+import ui.activity.SettingActivity;
+import ui.activity.TestingActivity;
 import ui.adapter.SlideMenuAdapter;
 import vo.SlideMenuVO;
 
@@ -51,8 +57,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private String TAG = "MainActivity";
     private int textColor = Color.argb(100, 74, 144, 226);
-    private String SpeciesDetailedUrl = APIManager.rootDoname + "v1/species/";
-    private String getCategoryURL = APIManager.rootDoname + "v1/species/categories";
+    private String SpeciesDetailedUrl = APIManager.BASE_URL + "v1/species/";
+    private String getCategoryURL = APIManager.BASE_URL + "v1/species/categories";
     private RequestQueue requestQueue;//请求队列
 
 
@@ -78,11 +84,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.iv_icon_header_view_main_activity)
     ImageView icon;
 
-    @BindView(R.id.tv_signup_or_signup_header_view_main_activity)
-    TextView signInUp;
+    @BindView(R.id.tv_signup_header_view_main_activity)
+    TextView signUp;
 
-    @BindView(R.id.lv_slide_menu_main_activity)
-    ListView slideMenuListView;
+    @BindView(R.id.tv_signin_header_view_main_activity)
+    TextView signIn;
 
     @BindView(R.id.banner_main_activity)
     Banner banner;
@@ -90,19 +96,30 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.iv_slide_menu_main_activity)
     ImageView slideMenu;
 
+    @BindView(R.id.ll_guide_main_activity)
+    LinearLayout guide;
 
-    private int[] menusIcon = {R.drawable.guide, R.drawable.add_record,
-            R.drawable.testing, R.drawable.my_collection,
-            R.drawable.observe_record, R.drawable.setting,
-            R.drawable.team_info};
+    @BindView(R.id.ll_add_record_main_activity)
+    LinearLayout addRecord;
+
+    @BindView(R.id.ll_testing_main_activity)
+    LinearLayout testing;
+
+    @BindView(R.id.ll_collection_main_activity)
+    LinearLayout collection;
+
+    @BindView(R.id.ll_observe_record_main_activity)
+    LinearLayout observeRcord;
+
+    @BindView(R.id.ll_setting_main_activity)
+    LinearLayout setting;
+
+    @BindView(R.id.ll_team_main_activity)
+    LinearLayout team;
+
 
     private int[] bannerUrl = {R.drawable.banner_b1_home, R.drawable.banner_b2_home,
             R.drawable.banner_b3_home, R.drawable.banner_b4_home};
-
-
-    private List<SlideMenuVO> menuVOS = new ArrayList<>();
-
-    private SlideMenuAdapter slideMenuAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,19 +189,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void initView() {
 
-        String[] titles = getResources().getStringArray(R.array.slide_menu_title);
-        Logger.d(titles.length);
-        for (int i = 0; i < titles.length; i++) {
-            SlideMenuVO menuVO = new SlideMenuVO(menusIcon[i], titles[i]);
-            menuVOS.add(menuVO);
-        }
-
-        slideMenuAdapter = new SlideMenuAdapter(menuVOS);
-
-        slideMenuListView.setAdapter(slideMenuAdapter);
-        slideMenuListView.setDivider(null);//取消自带的下划线
-
-
         //初始化 banner
         List<Integer> images=new ArrayList<>();
 
@@ -205,13 +209,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void initEvents() {
 
-        slideMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this, "" + ((SlideMenuVO) adapterView.getAdapter().getItem(i)).getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         slideMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,11 +222,63 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 drawerLayout.closeDrawer(Gravity.LEFT,true);
             }
         });
+
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeDrawer();
+                LoginDialog.getLoginDialog(MainActivity.this).show();
+
+            }
+        });
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeDrawer();
+                startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+            }
+        });
+
+        guide.setOnClickListener(this);
+        addRecord.setOnClickListener(this);
+        testing.setOnClickListener(this);
+        collection.setOnClickListener(this);
+        observeRcord.setOnClickListener(this);
+        setting.setOnClickListener(this);
+        team.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
+
+        closeDrawer();
+
+        switch (v.getId()) {
+            case  R.id.ll_guide_main_activity:
+                startActivity(new Intent(this, GuideActivity.class));
+                break;
+            case R.id.ll_add_record_main_activity:
+                startActivity(new Intent(this, AddRecordActivity.class));
+                break;
+            case R.id.ll_testing_main_activity:
+                startActivity(new Intent(this, TestingActivity.class));
+                break;
+            case R.id.ll_collection_main_activity:
+                startActivity(new Intent(this,MyCollectionsActivity.class));
+                break;
+            case R.id.ll_observe_record_main_activity:
+                startActivity(new Intent(this,MyRecordsActivity.class));
+                break;
+            case R.id.ll_setting_main_activity:
+                startActivity(new Intent(this, SettingActivity.class));
+                break;
+            case R.id.ll_team_main_activity:
+                startActivity(new Intent(this,MakeTeamActivity.class));
+                break;
+
+        }
     }
 
     public void createBasicRecords() {
@@ -290,5 +339,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     protected void onStop() {
         super.onStop();
         banner.stopAutoPlay();
+    }
+
+    private void closeDrawer() {
+        drawerLayout.closeDrawer(Gravity.LEFT,true);
     }
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,17 +20,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import JavaBean.APIManager;
 public class MyRecordsActivity extends BaseActivity {
-    private String getRecordListURL= APIManager.rootDoname+"v1/record/user/";
-    private String removeRecordListURL=APIManager.rootDoname+"v1/record/";
+    private String getRecordListURL= APIManager.BASE_URL +"v1/record/user/";
+    private String removeRecordListURL=APIManager.BASE_URL +"v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRecordListRequest;
     private JsonObjectRequest deleteRecordListRequest;

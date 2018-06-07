@@ -40,4 +40,15 @@
 
     </declare-styleable>
 
+    <declare-styleable name="PrecentCricleView">
+        <attr name="text" format="reference|string"/>
+        <attr name="textColor" format="color|reference"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="circleBackgroundColor" format="color|reference"/>
+        <attr name="arcBackgroundColor" format="color|reference"/>
+        <attr name="startAngdle" format="float"/>
+        <attr name="sweepAngle" format="float"/>
+        <attr name="arcThickness" format="integer"/>
+    </declare-styleable>
+
 </resources>

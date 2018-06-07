@@ -42,5 +42,9 @@
 
     <color name="slide_menu_line_color">#FFFFFFFF</color>
 
+    <color name="global_text_color_gray">#4a4a4a</color>
+    
+    <color name="circle_bg_color">#3376c5</color>
 
+    <color name="arc_bg_color">#FFC8C7CC</color>
 </resources>

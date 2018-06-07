@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import widget.PrecentCricleView;
 
 /**
  * @note:
@@ -25,6 +26,15 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.banner_home_fragment)
     Banner banner;
+
+    @BindView(R.id.precent_view_correct_rate_home_fragment)
+    PrecentCricleView correctRate;
+
+    @BindView(R.id.precent_view_this_score_home_fragment)
+    PrecentCricleView thisScore;
+
+    @BindView(R.id.precent_view_last_score_home_fragment)
+    PrecentCricleView lastScore;
 
     @Override
     public int setLayout() {
@@ -47,6 +57,10 @@ public class HomeFragment extends BaseFragment {
                 Glide.with(context).load((Integer)path).into(imageView);
             }
         }).start();
+
+        correctRate.setSweepAngle(0.98F*360);
+        lastScore.setText("100");
+        thisScore.setText("67");
 
     }
 

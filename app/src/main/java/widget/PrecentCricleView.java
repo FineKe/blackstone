@@ -90,14 +90,17 @@ public class PrecentCricleView extends View {
         circilePaint.setStrokeWidth(thickness);
         circilePaint.setStyle(Paint.Style.STROKE);
         circilePaint.setColor(circleBackgroundColor);
+        circilePaint.setAntiAlias(true);
 
         arcPaint.setStrokeWidth(thickness);
         arcPaint.setStyle(Paint.Style.STROKE);
         arcPaint.setColor(arcBackgroundColor);
+        arcPaint.setAntiAlias(true);
 
         textPaint.setTextSize(textSize);
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setColor(textColor);
+        textPaint.setAntiAlias(true);
 
     }
 
@@ -197,21 +200,6 @@ public class PrecentCricleView extends View {
 
     public void setText(String text) {
         this.text = text;
-        invalidate();
-    }
-
-    public void setCircilePaint(Paint circilePaint) {
-        this.circilePaint = circilePaint;
-        invalidate();
-    }
-
-    public void setArcPaint(Paint arcPaint) {
-        this.arcPaint = arcPaint;
-        invalidate();
-    }
-
-    public void setTextPaint(Paint textPaint) {
-        this.textPaint = textPaint;
         invalidate();
     }
 }

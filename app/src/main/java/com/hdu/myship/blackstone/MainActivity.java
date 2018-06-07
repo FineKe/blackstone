@@ -20,16 +20,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import JavaBean.APIManager;
@@ -44,8 +40,8 @@ import database.Reptiles;
 import database.Species;
 import ui.activity.AddRecordActivity;
 import ui.activity.SettingActivity;
-import ui.activity.TestingActivity;
 import ui.fragment.HomeFragment;
+import ui.fragment.TestingFragment;
 import widget.HeaderBar;
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener {
@@ -114,6 +110,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private HomeFragment homeFragment;
 
     private GuideFragment guideFragment;
+
+    private TestingFragment testingFragment;
 
 
     @Override
@@ -260,12 +258,23 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity,guideFragment).commit();
                 headerBar.getCenterTextView().setText("指南");
                 headerBar.getRightImageView().setVisibility(View.INVISIBLE);
+
                 break;
+
             case R.id.ll_add_record_main_activity:
                 startActivity(new Intent(this, AddRecordActivity.class));
+
                 break;
+
             case R.id.ll_testing_main_activity:
-                startActivity(new Intent(this, TestingActivity.class));
+
+                if (testingFragment == null) {
+                    testingFragment=new TestingFragment();
+                }
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity,testingFragment).commit();
+                headerBar.getCenterTextView().setText("小测试");
+                headerBar.getRightImageView().setVisibility(View.INVISIBLE);
                 break;
             case R.id.ll_collection_main_activity:
                 startActivity(new Intent(this, MyCollectionsActivity.class));

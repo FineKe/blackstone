@@ -3,6 +3,7 @@ package com.hdu.myship.blackstone;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -11,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
@@ -31,12 +33,16 @@ public class launcherActivity extends AutoLayoutActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private String speciesListState="ListState";
+    private ImageView imageView;
     private boolean isLoaded=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+        imageView= (ImageView) findViewById(R.id.imageView);
+
+        Glide.with(this).load(R.drawable.splash).into(imageView);
         initData();
 
         Timer timer=new Timer();

@@ -182,7 +182,6 @@
             android:screenOrientation="portrait" />
         <activity android:name="ui.activity.LoginActivity" />
         <activity android:name="ui.activity.AddRecordActivity" />
-        <activity android:name="ui.activity.TestingActivity" />
         <activity android:name="ui.activity.SettingActivity"></activity>
     </application>
 

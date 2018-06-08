@@ -24,7 +24,7 @@
 
             <include layout="@layout/qamaster_feedback_title" />
 
-            <com.qamaster.android.ui.QAMasterRatingBar
+            <com.qamaster.android.com.kefan.blackstone.ui.QAMasterRatingBar
                 android:id="@+id/qamaster_feedback_rating_bar"
                 style="@style/qamaster_blue_rating_bar"
                 android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical" >
 
-                    <com.qamaster.android.ui.MontserratTextView
+                    <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"

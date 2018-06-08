@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
-    tools:context="com.hdu.myship.blackstone.RegisterActivity">
+    tools:context="com.kefan.blackstone.RegisterActivity">
 
     <include
         layout="@layout/register_title_bar"

@@ -40,7 +40,7 @@
             <requestFocus />
         </EditText>
 
-        <com.qamaster.android.ui.MontserratButton
+        <com.qamaster.android.com.kefan.blackstone.ui.MontserratButton
             android:id="@+id/qamaster_test_cycles_select_cycle_btn"
             style="@style/qamaster_button"
             android:layout_width="match_parent"

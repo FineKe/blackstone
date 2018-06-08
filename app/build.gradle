@@ -3,7 +3,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.hdu.myship.blackstone"
+        applicationId "com.kefan.blackstone"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1

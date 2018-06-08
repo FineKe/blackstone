@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/qamaster_editor_bg" >
 
-    <com.qamaster.android.ui.overlay.OverlayView
+    <com.qamaster.android.com.kefan.blackstone.ui.overlay.OverlayView
         android:id="@+id/qamaster_overlay"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:background="@color/qamaster_editor_header_bg" >
 
-        <com.qamaster.android.ui.MontserratTextView
+        <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
@@ -27,7 +27,7 @@
             android:textColor="@color/qamaster_editor_header_text"
             android:textSize="20sp" />
 
-        <com.qamaster.android.ui.AwesomeFontButton
+        <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
             android:id="@+id/qamaster_overlay_go_report"
             android:layout_width="64dip"
             android:layout_height="64dip"
@@ -38,7 +38,7 @@
             android:textSize="26dp"
             tools:ignore="SpUsage" />
 
-        <com.qamaster.android.ui.AwesomeFontButton
+        <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
             android:id="@+id/qamaster_overlay_delete_screenshot"
             android:layout_width="64dip"
             android:layout_height="64dip"
@@ -57,7 +57,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/qamaster_editor_footer_bg" >
 
-        <com.qamaster.android.ui.AwesomeFontButton
+        <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
             android:id="@+id/qamaster_overlay_pencil"
             style="@style/qamaster_editor_button"
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
             android:layout_weight="1"
             android:text="@string/qamaster_pencil_icon" />
 
-        <com.qamaster.android.ui.AwesomeFontButton
+        <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
             android:id="@+id/qamaster_overlay_spray"
             style="@style/qamaster_editor_button"
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
             android:layout_weight="1"
             android:text="@string/qamaster_spray_icon" />
 
-        <com.qamaster.android.ui.AwesomeFontButton
+        <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
             android:id="@+id/qamaster_overlay_eraser"
             style="@style/qamaster_editor_button"
             android:layout_width="match_parent"

@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:paddingLeft="16dp" >
 
-    <com.qamaster.android.ui.MontserratTextView
+    <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="0dp"

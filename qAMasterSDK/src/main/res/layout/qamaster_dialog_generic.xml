@@ -52,7 +52,7 @@
             android:gravity="right|center_vertical"
             android:padding="8dp" >
 
-            <com.qamaster.android.ui.MontserratButton
+            <com.qamaster.android.com.kefan.blackstone.ui.MontserratButton
                 android:id="@+id/qamaster_generic_dialog_negative_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
@@ -64,7 +64,7 @@
                 android:textSize="14sp"
                 tools:text="Negative button" />
 
-            <com.qamaster.android.ui.MontserratButton
+            <com.qamaster.android.com.kefan.blackstone.ui.MontserratButton
                 android:id="@+id/qamaster_generic_dialog_positive_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"

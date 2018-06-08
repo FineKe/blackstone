@@ -12,9 +12,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application>
-        <activity android:name="com.qamaster.android.ui.ProblemActivity" />
-        <activity android:name="com.qamaster.android.ui.FeedbackActivity" />
-        <activity android:name="com.qamaster.android.ui.ScreenshotEditorActivity" />
+        <activity android:name="com.qamaster.android.com.kefan.blackstone.ui.ProblemActivity" />
+        <activity android:name="com.qamaster.android.com.kefan.blackstone.ui.FeedbackActivity" />
+        <activity android:name="com.qamaster.android.com.kefan.blackstone.ui.ScreenshotEditorActivity" />
     </application>
 
 </manifest>

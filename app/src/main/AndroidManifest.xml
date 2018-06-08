@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hdu.myship.blackstone">
+    package="com.kefan.blackstone">
 
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -54,7 +54,7 @@
             android:value="902b0a942fa8043b1cc3302b607e7b4d" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="ui.activity.MainActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />

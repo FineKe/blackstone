@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qamaster.android.ui.ScreenshotElementView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qamaster.android.com.kefan.blackstone.ui.ScreenshotElementView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -12,13 +12,13 @@
 
         <include layout="@layout/qamaster_screenshot_loader" />
 
-        <com.qamaster.android.ui.util.ScreenshotImageView
+        <com.qamaster.android.com.kefan.blackstone.ui.com.kefan.blackstone.util.ScreenshotImageView
             android:id="@+id/qamaster_screenshot_small"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scaleType="fitCenter" />
 
-        <com.qamaster.android.ui.util.ScreenshotImageView
+        <com.qamaster.android.com.kefan.blackstone.ui.com.kefan.blackstone.util.ScreenshotImageView
             android:id="@+id/qamaster_screenshot_overlay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -41,7 +41,7 @@
             android:background="@drawable/qamaster_screenshot_thumbnail_overlay" />
     </FrameLayout>
 
-    <com.qamaster.android.ui.AwesomeFontTextView
+    <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontTextView
         android:id="@+id/qamaster_gallery_next"
         android:layout_width="32dp"
         android:layout_height="@dimen/qamaster_screenshot_height"
@@ -51,4 +51,4 @@
         android:textSize="28dp"
         tools:ignore="SpUsage" />
 
-</com.qamaster.android.ui.ScreenshotElementView>
+</com.qamaster.android.com.kefan.blackstone.ui.ScreenshotElementView>

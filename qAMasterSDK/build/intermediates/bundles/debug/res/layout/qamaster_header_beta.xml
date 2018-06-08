@@ -5,7 +5,7 @@
     android:background="@drawable/qamaster_beta_dialog_header_background"
     android:orientation="horizontal" >
 
-    <com.qamaster.android.ui.MontserratTextView
+    <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
         android:id="@+id/qamaster_login_forgot_passcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:text="@string/qamaster_login_forgot_passcode"
         android:textColor="@color/qamaster_beta_forgot_passcode" />
 
-    <com.qamaster.android.ui.MontserratTextView
+    <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

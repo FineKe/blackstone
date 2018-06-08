@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hdu.myship.blackstone.SpeciesClassActivity">
+    tools:context="com.kefan.blackstone.SpeciesClassActivity">
 
     <include
         layout="@layout/species_class_title_bar"
@@ -38,7 +38,7 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <com.hdu.myship.blackstone.SliderBar
+    <com.kefan.blackstone.SliderBar
         android:id="@+id/species_class_sliderBar"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
@@ -46,5 +46,5 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@+id/species_class_recyclerView_speciesContent"
-        app:layout_constraintTop_toTopOf="@+id/species_class_recyclerView_speciesContent"></com.hdu.myship.blackstone.SliderBar>
+        app:layout_constraintTop_toTopOf="@+id/species_class_recyclerView_speciesContent"></com.kefan.blackstone.SliderBar>
 </android.support.constraint.ConstraintLayout>

@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     tools:ignore="InconsistentLayout" >
 
-    <com.qamaster.android.ui.MontserratTextView
+    <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:gravity="center_vertical|left"

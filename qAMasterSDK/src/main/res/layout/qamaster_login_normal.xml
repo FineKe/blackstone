@@ -53,7 +53,7 @@
                         android:textStyle="bold"
                         android:typeface="monospace" />
 
-                    <com.qamaster.android.ui.MontserratButton
+                    <com.qamaster.android.com.kefan.blackstone.ui.MontserratButton
                         android:id="@+id/qamaster_login_btn_login"
                         style="@style/qamaster_button"
                         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                         android:text="@string/qamaster_login_login_button"
                         android:textAllCaps="true" />
 
-                    <com.qamaster.android.ui.MontserratButton
+                    <com.qamaster.android.com.kefan.blackstone.ui.MontserratButton
                         android:id="@+id/qamaster_login_btn_anon_login"
                         style="@style/qamaster_button"
                         android:layout_width="match_parent"

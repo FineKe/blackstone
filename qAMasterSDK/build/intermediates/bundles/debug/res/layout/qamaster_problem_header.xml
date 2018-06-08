@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     tools:showIn="@layout/qamaster_problem" >
 
-    <com.qamaster.android.ui.MontserratTextView
+    <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -17,7 +17,7 @@
         android:textColor="@color/qamaster_problem_header_text"
         android:textSize="20sp" />
 
-    <com.qamaster.android.ui.AwesomeFontButton
+    <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
         android:id="@+id/qamaster_send_report"
         android:layout_width="64dp"
         android:layout_height="64dp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hdu.myship.blackstone.MyRecordsActivity">
+    tools:context="com.kefan.blackstone.MyRecordsActivity">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -64,7 +64,7 @@
             tools:ignore="HardcodedText" />
     </android.support.constraint.ConstraintLayout>
 
-    <com.hdu.myship.blackstone.ItemRemoveRecordRecycle
+    <com.kefan.blackstone.ItemRemoveRecordRecycle
         android:id="@+id/activity_my_records_item_remove_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -75,5 +75,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"></com.hdu.myship.blackstone.ItemRemoveRecordRecycle>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"></com.kefan.blackstone.ItemRemoveRecordRecycle>
 </android.support.constraint.ConstraintLayout>

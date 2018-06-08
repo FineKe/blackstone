@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qamaster.android.ui.UserListAdapterRow xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qamaster.android.com.kefan.blackstone.ui.UserListAdapterRow xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -49,4 +49,4 @@
         android:textStyle="normal"
         tools:text="User name" />
 
-</com.qamaster.android.ui.UserListAdapterRow>
+</com.qamaster.android.com.kefan.blackstone.ui.UserListAdapterRow>

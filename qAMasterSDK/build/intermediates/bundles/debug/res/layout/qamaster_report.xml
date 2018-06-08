@@ -6,7 +6,7 @@
     android:background="@color/qamaster_transparent"
     android:padding="0dp" >
 
-    <com.qamaster.android.ui.AwesomeFontButton
+    <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontButton
         android:id="@+id/qamaster_show_info"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -32,7 +32,7 @@
             android:layout_marginRight="@dimen/qamaster_report_dialog_buttons_distance"
             android:orientation="vertical" >
 
-            <com.qamaster.android.ui.AwesomeFontTextView
+            <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontTextView
                 android:id="@+id/qamaster_report_dialog_bug"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -43,7 +43,7 @@
                 android:textColor="@color/qamaster_white"
                 android:textSize="36dp" />
 
-            <com.qamaster.android.ui.MontserratTextView
+            <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -61,7 +61,7 @@
             android:layout_marginLeft="@dimen/qamaster_report_dialog_buttons_distance"
             android:orientation="vertical" >
 
-            <com.qamaster.android.ui.AwesomeFontTextView
+            <com.qamaster.android.com.kefan.blackstone.ui.AwesomeFontTextView
                 android:id="@+id/qamaster_report_dialog_feedback"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -72,7 +72,7 @@
                 android:textColor="@color/qamaster_white"
                 android:textSize="36dp" />
 
-            <com.qamaster.android.ui.MontserratTextView
+            <com.qamaster.android.com.kefan.blackstone.ui.MontserratTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

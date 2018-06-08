@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 
 import org.json.JSONArray;
@@ -34,8 +35,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import JavaBean.APIManager;
 
 public class MyRecordTwoActivity extends BaseActivity implements View.OnClickListener{
     private String getRecordDeatailedURL= APIManager.BASE_URL +"v1/record/";

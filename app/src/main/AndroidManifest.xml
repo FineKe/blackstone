@@ -23,7 +23,6 @@
     <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
@@ -54,12 +53,12 @@
             android:value="902b0a942fa8043b1cc3302b607e7b4d" />
 
         <activity
-            android:name="ui.activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".launcherActivity"
+            android:name=".ui.activity.launcherActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.No">
             <intent-filter>
@@ -79,106 +78,106 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SpeciesDeatailedActivity"
+            android:name=".ui.activity.SpeciesDeatailedActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SpeciesClassActivity" />
+        <activity android:name=".ui.activity.SpeciesClassActivity" />
         <activity
-            android:name=".AccountAndSecurityActivity"
+            android:name=".ui.activity.AccountAndSecurityActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PersonInformationActivity"
+            android:name=".ui.activity.PersonInformationActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ResetPhoneActivity"
+            android:name=".ui.activity.ResetPhoneActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MakeTeamActivity"
+            android:name=".ui.activity.MakeTeamActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CopyRightActivity"
+            android:name=".ui.activity.CopyRightActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".ui.activity.ResetPasswordActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyCollectionsActivity"
+            android:name=".ui.activity.MyCollectionsActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyRecordsActivity"
+            android:name=".ui.activity.MyRecordsActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".AddNotesActivity" />
+        <activity android:name=".ui.activity.AddNotesActivity" />
 
         <service
-            android:name=".UploadIntentService"
+            android:name=".ui.activity.UploadIntentService"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ResetPasswordTwoActivity"
+            android:name=".ui.activity.ResetPasswordTwoActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ForgetPasswordActivity"
+            android:name=".ui.activity.ForgetPasswordActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ForgetPasswordTwoActivity"
+            android:name=".ui.activity.ForgetPasswordTwoActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SuggestionsActivity"
+            android:name=".ui.activity.SuggestionsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ResetPasswordThreeActivity"
+            android:name=".ui.activity.ResetPasswordThreeActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ForgetPasswordThreeActivity"
+            android:name=".ui.activity.ForgetPasswordThreeActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyCollectionsTwoActivity"
+            android:name=".ui.activity.MyCollectionsTwoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyRecordTwoActivity"
+            android:name=".ui.activity.MyRecordTwoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RecordAlterActivity"
+            android:name=".ui.activity.RecordAlterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ClipActivity"
+            android:name=".ui.activity.ClipActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AlterNotesActivity"
+            android:name=".ui.activity.AlterNotesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GuideTabOneActivity"
+            android:name=".ui.activity.GuideTabOneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ShowImageActivity"
+            android:name=".ui.activity.ShowImageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GuideTableTwoActivity"
+            android:name=".ui.activity.GuideTableTwoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GuideTableThreeActivity"
+            android:name=".ui.activity.GuideTableThreeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GuideTableFourActivity"
+            android:name=".ui.activity.GuideTableFourActivity"
             android:screenOrientation="portrait" />
         <activity android:name="ui.activity.LoginActivity" />
         <activity android:name="ui.activity.AddRecordActivity" />

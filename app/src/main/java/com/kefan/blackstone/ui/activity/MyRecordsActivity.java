@@ -16,6 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,11 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import JavaBean.APIManager;
 public class MyRecordsActivity extends BaseActivity {
     private String getRecordListURL= APIManager.BASE_URL +"v1/record/user/";
-    private String removeRecordListURL=APIManager.BASE_URL +"v1/record/";
+    private String removeRecordListURL= APIManager.BASE_URL +"v1/record/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getRecordListRequest;
     private JsonObjectRequest deleteRecordListRequest;

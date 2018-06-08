@@ -1,4 +1,4 @@
-package widget;
+package com.kefan.blackstone.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -19,11 +19,11 @@ import com.kefan.blackstone.R;
  * @author: 柯帆
  * @date: 2018/6/6 上午12:28
  */
-public class HeaderBar extends RelativeLayout{
+public class HeaderBar extends RelativeLayout {
 
-    private static final int DEFAULT_COLOR=0xFFFFFFFF;
-    private static final int DEFAULT_TEXT_SIZE=14;
-    private static final int DEFAULT_MARGIN=0;
+    private static final int DEFAULT_COLOR = 0xFFFFFFFF;
+    private static final int DEFAULT_TEXT_SIZE = 14;
+    private static final int DEFAULT_MARGIN = 0;
 
     private boolean showLeftText;
     private boolean showLeftIcon;
@@ -61,44 +61,42 @@ public class HeaderBar extends RelativeLayout{
     private int rightMargin;
 
 
-
-
     public HeaderBar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public HeaderBar(Context context, @Nullable AttributeSet attrs) {
-        this(context,attrs,0);
+        this(context, attrs, 0);
     }
 
     public HeaderBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.HeaderBar);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HeaderBar);
 
-        showLeftText=typedArray.getBoolean(R.styleable.HeaderBar_showLeftText,true);
-        showLeftIcon=typedArray.getBoolean(R.styleable.HeaderBar_showLeftIcon,true);
-        showCenterText=typedArray.getBoolean(R.styleable.HeaderBar_showCenterText,true);
-        showRightText=typedArray.getBoolean(R.styleable.HeaderBar_showRightText,true);
-        showRightIcon=typedArray.getBoolean(R.styleable.HeaderBar_showRightIcon,true);
+        showLeftText = typedArray.getBoolean(R.styleable.HeaderBar_showLeftText, true);
+        showLeftIcon = typedArray.getBoolean(R.styleable.HeaderBar_showLeftIcon, true);
+        showCenterText = typedArray.getBoolean(R.styleable.HeaderBar_showCenterText, true);
+        showRightText = typedArray.getBoolean(R.styleable.HeaderBar_showRightText, true);
+        showRightIcon = typedArray.getBoolean(R.styleable.HeaderBar_showRightIcon, true);
 
-        leftTextColor=typedArray.getColor(R.styleable.HeaderBar_leftTextColor,DEFAULT_COLOR);
-        centerTextColor=typedArray.getColor(R.styleable.HeaderBar_centerTextColor,DEFAULT_COLOR);
-        rightTextColor=typedArray.getColor(R.styleable.HeaderBar_rightTextColor,DEFAULT_COLOR);
+        leftTextColor = typedArray.getColor(R.styleable.HeaderBar_leftTextColor, DEFAULT_COLOR);
+        centerTextColor = typedArray.getColor(R.styleable.HeaderBar_centerTextColor, DEFAULT_COLOR);
+        rightTextColor = typedArray.getColor(R.styleable.HeaderBar_rightTextColor, DEFAULT_COLOR);
 
-        leftText=typedArray.getString(R.styleable.HeaderBar_leftText);
-        centerText=typedArray.getString(R.styleable.HeaderBar_centerText);
-        rightText=typedArray.getString(R.styleable.HeaderBar_rightText);
+        leftText = typedArray.getString(R.styleable.HeaderBar_leftText);
+        centerText = typedArray.getString(R.styleable.HeaderBar_centerText);
+        rightText = typedArray.getString(R.styleable.HeaderBar_rightText);
 
-        leftTextSize=typedArray.getDimensionPixelSize(R.styleable.HeaderBar_leftTextSize,DEFAULT_TEXT_SIZE);
-        centerTextSize=typedArray.getDimensionPixelSize(R.styleable.HeaderBar_centerTextSize,DEFAULT_TEXT_SIZE);
-        rightTextSize=typedArray.getDimensionPixelSize(R.styleable.HeaderBar_rightTextSize,DEFAULT_TEXT_SIZE);
+        leftTextSize = typedArray.getDimensionPixelSize(R.styleable.HeaderBar_leftTextSize, DEFAULT_TEXT_SIZE);
+        centerTextSize = typedArray.getDimensionPixelSize(R.styleable.HeaderBar_centerTextSize, DEFAULT_TEXT_SIZE);
+        rightTextSize = typedArray.getDimensionPixelSize(R.styleable.HeaderBar_rightTextSize, DEFAULT_TEXT_SIZE);
 
-        leftIcon=typedArray.getDrawable(R.styleable.HeaderBar_leftIcon);
-        rightIcon=typedArray.getDrawable(R.styleable.HeaderBar_rightIcon);
+        leftIcon = typedArray.getDrawable(R.styleable.HeaderBar_leftIcon);
+        rightIcon = typedArray.getDrawable(R.styleable.HeaderBar_rightIcon);
 
-        leftMargin=typedArray.getLayoutDimension(R.styleable.HeaderBar_left_margin,DEFAULT_MARGIN);
-        rightMargin=typedArray.getLayoutDimension(R.styleable.HeaderBar_right_margin,DEFAULT_MARGIN);
+        leftMargin = typedArray.getLayoutDimension(R.styleable.HeaderBar_left_margin, DEFAULT_MARGIN);
+        rightMargin = typedArray.getLayoutDimension(R.styleable.HeaderBar_right_margin, DEFAULT_MARGIN);
 
         typedArray.recycle();
 
@@ -109,18 +107,18 @@ public class HeaderBar extends RelativeLayout{
 
     private void initView(Context context) {
 
-        View view=View.inflate(context,R.layout.header_bar,this);
+        View view = View.inflate(context, R.layout.header_bar, this);
 
-        left= (LinearLayout) view.findViewById(R.id.ll_left_header_bar);
-        center= (LinearLayout) view.findViewById(R.id.ll_center_header_bar);
-        right= (LinearLayout) view.findViewById(R.id.ll_right_header_bar);
+        left = (LinearLayout) view.findViewById(R.id.ll_left_header_bar);
+        center = (LinearLayout) view.findViewById(R.id.ll_center_header_bar);
+        right = (LinearLayout) view.findViewById(R.id.ll_right_header_bar);
 
-        leftTextView= (TextView) view.findViewById(R.id.tv_left_header_bar);
-        centerTextView= (TextView) view.findViewById(R.id.tv_center_header_bar);
-        rightTextView= (TextView) view.findViewById(R.id.tv_right_header_bar);
+        leftTextView = (TextView) view.findViewById(R.id.tv_left_header_bar);
+        centerTextView = (TextView) view.findViewById(R.id.tv_center_header_bar);
+        rightTextView = (TextView) view.findViewById(R.id.tv_right_header_bar);
 
-        leftImageView= (ImageView) view.findViewById(R.id.iv_left_header_bar);
-        rightImageView= (ImageView) view.findViewById(R.id.iv_right_header_bar);
+        leftImageView = (ImageView) view.findViewById(R.id.iv_left_header_bar);
+        rightImageView = (ImageView) view.findViewById(R.id.iv_right_header_bar);
 
         if (!showLeftText) {
             leftTextView.setVisibility(GONE);
@@ -153,7 +151,7 @@ public class HeaderBar extends RelativeLayout{
         leftImageView.setBackground(leftIcon);
         rightImageView.setBackground(rightIcon);
 
-        this.setPadding(leftMargin,0,rightMargin,0);
+        this.setPadding(leftMargin, 0, rightMargin, 0);
     }
 
 

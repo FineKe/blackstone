@@ -1,4 +1,5 @@
 package com.kefan.blackstone.ui.activity;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.kefan.blackstone.ActivityUtil.ActivityCollector;
+import com.kefan.blackstone.ActivityUtil.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +32,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kefan.blackstone.ActivityUtil.ActivityCollector;
-import com.kefan.blackstone.ActivityUtil.BaseActivity;
-import com.kefan.blackstone.R;
-
-import JavaBean.APIManager;
-
-public class ResetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
-    private String ResetPasswordURL= APIManager.BASE_URL +"v1/user/pwd";
+public class ResetPasswordThreeActivity extends BaseActivity implements View.OnClickListener {
+    private String ResetPasswordURL = APIManager.BASE_URL + "v1/user/pwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;
     private LinearLayout actionBack;
@@ -46,11 +45,12 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
 
     private BootstrapButton completed;
 
-    private Boolean isShowed=false;
+    private Boolean isShowed = false;
 
     private SharedPreferences userInformationSharedPreferences;
     private SharedPreferences.Editor userInformationEditor;
-    private String userInformation="UesrInformation";
+    private String userInformation = "UesrInformation";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +62,14 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
     }
 
     private void initViews() {
-        actionBack= (LinearLayout) findViewById(R.id.activity_reset_password_three_linear_layout_action_back);
-        showPassword= (ImageView) findViewById(R.id.activity_reset_password_three_image_view_show_password);
+        actionBack = (LinearLayout) findViewById(R.id.activity_reset_password_three_linear_layout_action_back);
+        showPassword = (ImageView) findViewById(R.id.activity_reset_password_three_image_view_show_password);
 
-        inputPassword= (EditText) findViewById(R.id.activity_reset_password_three_edit_text_input_password);
+        inputPassword = (EditText) findViewById(R.id.activity_reset_password_three_edit_text_input_password);
 
-        message= (TextView) findViewById(R.id.activity_forget_password_three_text_view_message);
+        message = (TextView) findViewById(R.id.activity_forget_password_three_text_view_message);
 
-        completed= (BootstrapButton) findViewById(R.id.activity_reset_password_three_boot_strap_button_completed);
+        completed = (BootstrapButton) findViewById(R.id.activity_reset_password_three_boot_strap_button_completed);
     }
 
     private void initEvents() {
@@ -85,7 +85,7 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               message.setText("");
+                message.setText("");
             }
 
             @Override
@@ -98,8 +98,7 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.activity_reset_password_three_linear_layout_action_back:
                 actionBack();
                 break;
@@ -116,59 +115,52 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
 
     private void actionBack() {
         this.finish();
-      //  overridePendingTransition(R.anim.in,R.anim.out);
+        //  overridePendingTransition(R.anim.in,R.anim.out);
 
     }
 
     private void showPassword() {
-        if(!isShowed)
-        {
+        if (!isShowed) {
             inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             showPassword.setImageResource(R.mipmap.see);
-        }
-        else
-        {
+        } else {
             inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
             showPassword.setImageResource(R.mipmap.no_see);
         }
-        isShowed=!isShowed;
+        isShowed = !isShowed;
         inputPassword.setSelection(inputPassword.getText().length());
         inputPassword.postInvalidate();
     }
 
     private void completed() {
-        if(inputPassword.getText().length()<6||inputPassword.getText().length()>16)
-        {
+        if (inputPassword.getText().length() < 6 || inputPassword.getText().length() > 16) {
             message.setText("密码为6~16位字母、数字或符号");
-        }
-        else
-        {
+        } else {
             resetPassword();
         }
     }
 
-    private void resetPassword()
-    {   userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
-        userInformationEditor=userInformationSharedPreferences.edit();
-        String oldPassword=userInformationSharedPreferences.getString("password","");
-        final String token=userInformationSharedPreferences.getString("token","");
+    private void resetPassword() {
+        userInformationSharedPreferences = getSharedPreferences(userInformation, MODE_PRIVATE);
+        userInformationEditor = userInformationSharedPreferences.edit();
+        String oldPassword = userInformationSharedPreferences.getString("password", "");
+        final String token = userInformationSharedPreferences.getString("token", "");
         requestQueue = Volley.newRequestQueue(this);
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("originPwd",oldPassword);
-            jsonObject.put("newPwd",inputPassword.getText().toString());
+            jsonObject.put("originPwd", oldPassword);
+            jsonObject.put("newPwd", inputPassword.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        resetPasswordRequest=new JsonObjectRequest(Request.Method.POST, ResetPasswordURL, jsonObject, new Response.Listener<JSONObject>() {
+        resetPasswordRequest = new JsonObjectRequest(Request.Method.POST, ResetPasswordURL, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    int code=jsonObject.getInt("code");
-                    if(code==88)
-                    {
+                    int code = jsonObject.getInt("code");
+                    if (code == 88) {
                         Toast.makeText(ResetPasswordThreeActivity.this, "密码修改成功", Toast.LENGTH_SHORT).show();
-                        userInformationEditor.putString("password",inputPassword.getText().toString()).apply();
+                        userInformationEditor.putString("password", inputPassword.getText().toString()).apply();
                         ActivityCollector.finishAll();
                     }
                 } catch (JSONException e) {
@@ -180,11 +172,11 @@ public class ResetPasswordThreeActivity extends BaseActivity implements View.OnC
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(ResetPasswordThreeActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers=new HashMap();
-                headers.put("token",token);
+                Map<String, String> headers = new HashMap();
+                headers.put("token", token);
                 return headers;
             }
         };

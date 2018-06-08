@@ -7,7 +7,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ui.activity.MainActivity;
+import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.PrecentCricleView;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 
@@ -17,7 +19,7 @@ import butterknife.BindView;
  * @author: 柯帆
  * @date: 2018/6/8 上午12:42
  */
-public class TestingFragment extends BaseFragment implements View.OnClickListener{
+public class TestingFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.iv_icon_test_fragment)
     ImageView icon;
@@ -36,7 +38,10 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
 
     @BindView(R.id.tv_rank_testing_fragment)
     TextView rank;
-    
+
+
+    private ExecuteTestFragment executeTestFragment;
+
     @Override
     public int setLayout() {
         return R.layout.fragment_testing;
@@ -44,6 +49,8 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initView() {
+
+
 
         Glide.with(this).load(R.drawable.testing_bg).into(icon);
 
@@ -57,12 +64,29 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+
+    }
+
+    @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.tv_start_testing_fragment:
 
-                ((MainActivity) getActivity()).headerBar.getCenterPart().addView();
+                if (executeTestFragment == null) {
+                    executeTestFragment=new ExecuteTestFragment();
+                }
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity,executeTestFragment).commit();
 
                 break;
         }

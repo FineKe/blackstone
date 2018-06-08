@@ -1,4 +1,4 @@
-package database;
+package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
@@ -190,9 +190,8 @@ public class Reptiles extends DataSupport {
         this.collected = collected;
     }
 
-    public void setViewTables()
-    {
-        viewTables=new ArrayList<>();
+    public void setViewTables() {
+        viewTables = new ArrayList<>();
         viewTables.add(resolution_feature);
         viewTables.add(shape);
         viewTables.add(habitat);

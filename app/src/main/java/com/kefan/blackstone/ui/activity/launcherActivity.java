@@ -13,23 +13,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.JsonUtil.JsonResolverList;
 import com.kefan.blackstone.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import java.util.Timer;
 import java.util.TimerTask;
-
-import JsonUtil.JsonResolverList;
-import JavaBean.APIManager;
 
 public class launcherActivity extends AutoLayoutActivity {
     String TAG="tag";
     private String getSpeciesListURL= APIManager.BASE_URL +"v1/species/list";//物种清单获取接口
-    private String getSpeciesDetailedURL=APIManager.BASE_URL +"v1/species/";//物种详情接口
+    private String getSpeciesDetailedURL= APIManager.BASE_URL +"v1/species/";//物种详情接口
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;

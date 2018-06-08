@@ -1,6 +1,4 @@
-package database;
-
-import android.provider.ContactsContract;
+package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
@@ -10,7 +8,7 @@ import java.util.ArrayList;
  * Created by MY SHIP on 2017/5/2.
  */
 
-public class Bird extends DataSupport{
+public class Bird extends DataSupport {
     private int singal;//id
     private String chineseName;
     private String englishName;
@@ -47,6 +45,7 @@ public class Bird extends DataSupport{
     public void setSingal(int singal) {
         this.singal = singal;
     }
+
     public String getChineseName() {
         return chineseName;
     }
@@ -252,7 +251,7 @@ public class Bird extends DataSupport{
     }
 
     public void setViewTables() {
-        viewTables=new ArrayList<>();
+        viewTables = new ArrayList<>();
         viewTables.add(getShape());//体型
         viewTables.add(getHabitat());//栖息地
         viewTables.add(getTone());//色调

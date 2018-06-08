@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:orientation="horizontal">
 
     <TextView
@@ -11,16 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:gravity="center"
-        android:text="目"
         android:maxLines="1"
+        android:text="目"
         android:textColor="@color/mycolor"
         android:textSize="17sp" />
 
     <TextView
         android:id="@+id/species_content_recyclerView_head_orderOrFamily_latinName"
         android:layout_width="0dp"
-        android:layout_marginLeft="11dp"
         android:layout_height="match_parent"
+        android:layout_marginLeft="11dp"
         android:layout_weight="1"
         android:gravity="left"
         android:text="latinName"

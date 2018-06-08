@@ -14,8 +14,8 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.R;
 
-public class ResetPasswordTwoActivity extends BaseActivity implements View.OnClickListener{
-    private String TAG="ResetPasswordTwoActivity";
+public class ResetPasswordTwoActivity extends BaseActivity implements View.OnClickListener {
+    private String TAG = "ResetPasswordTwoActivity";
     private TextView messagePhone;
     private TextView message;
 
@@ -27,7 +27,7 @@ public class ResetPasswordTwoActivity extends BaseActivity implements View.OnCli
 
     private SharedPreferences userInformationSharedPreferences;
     private SharedPreferences.Editor userInformationEditor;
-    private String userInformation="UesrInformation";
+    private String userInformation = "UesrInformation";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +40,22 @@ public class ResetPasswordTwoActivity extends BaseActivity implements View.OnCli
     }
 
     private void initData() {
-        userInformationSharedPreferences=getSharedPreferences(userInformation,MODE_PRIVATE);
-        userInformationEditor=userInformationSharedPreferences.edit();
+        userInformationSharedPreferences = getSharedPreferences(userInformation, MODE_PRIVATE);
+        userInformationEditor = userInformationSharedPreferences.edit();
     }
 
     /**
      * 控件绑定
      */
     private void initViews() {
-        messagePhone= (TextView) findViewById(R.id.activity_forget_password_two_textView_phoneMessage);
-        message= (TextView) findViewById(R.id.activity_forget_password_two_textView_message);
+        messagePhone = (TextView) findViewById(R.id.activity_forget_password_two_textView_phoneMessage);
+        message = (TextView) findViewById(R.id.activity_forget_password_two_textView_message);
 
-        phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);//密码
+        phone = (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);//密码
 
-        actionBack= (LinearLayout) findViewById(R.id.activity_reset_password_two_action_back);
+        actionBack = (LinearLayout) findViewById(R.id.activity_reset_password_two_action_back);
 
-        sure= (BootstrapButton) findViewById(R.id.activity_resetPasswordTwo_boot_strap_button_sue);
+        sure = (BootstrapButton) findViewById(R.id.activity_resetPasswordTwo_boot_strap_button_sue);
 
 
     }
@@ -75,8 +75,7 @@ public class ResetPasswordTwoActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count==0)
-                {
+                if (count == 0) {
                     message.setText("");
                 }
             }
@@ -90,12 +89,13 @@ public class ResetPasswordTwoActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.activity_reset_password_two_action_back:actionBack();
+        switch (v.getId()) {
+            case R.id.activity_reset_password_two_action_back:
+                actionBack();
                 break;
 
-            case R.id.activity_resetPasswordTwo_boot_strap_button_sue:sure();
+            case R.id.activity_resetPasswordTwo_boot_strap_button_sue:
+                sure();
                 break;
         }
     }
@@ -107,16 +107,14 @@ public class ResetPasswordTwoActivity extends BaseActivity implements View.OnCli
 
     private void actionBack() {
         this.finish();
-       // overridePendingTransition(R.anim.in,R.anim.out);
+        // overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void sure() {
-        if(phone.getText().toString().equals(userInformationSharedPreferences.getString("password","")))
-        {
-            startActivity(new Intent(this,ResetPasswordThreeActivity.class));
-           // overridePendingTransition(R.anim.in,R.anim.out);
-        }else
-        {
+        if (phone.getText().toString().equals(userInformationSharedPreferences.getString("password", ""))) {
+            startActivity(new Intent(this, ResetPasswordThreeActivity.class));
+            // overridePendingTransition(R.anim.in,R.anim.out);
+        } else {
             message.setText("密码有误，请重新输入");
         }
     }

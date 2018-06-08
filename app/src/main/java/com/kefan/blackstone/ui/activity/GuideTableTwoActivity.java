@@ -2,11 +2,9 @@ package com.kefan.blackstone.ui.activity;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Parcel;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.AlignmentSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewGroup;

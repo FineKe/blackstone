@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#323232">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#323232"
+    android:orientation="vertical">
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mycolor"
-        >
+        android:background="@color/mycolor">
 
         <LinearLayout
             android:id="@+id/dialog_pick_amphibia_linear_layout_action_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="13dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp">
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/mycolor"
-                android:src="@mipmap/action_back"
-                />
+                android:src="@mipmap/action_back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="返回"
                 android:layout_marginLeft="6dp"
+                android:text="返回"
                 android:textColor="#ffff"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -47,47 +44,47 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="筛选"
             android:textColor="#ffff"
             android:textSize="20sp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/dialog_pick_amphibia_text_view_sure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="确认"
             android:textColor="#ffff"
             android:textSize="20sp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/dialog_pick_amphibia_image_view_reset_pick"
-            android:background="@color/mycolor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/reset_pick"
-            app:layout_constraintRight_toLeftOf="@+id/dialog_pick_amphibia_text_view_sure"
+            android:layout_marginBottom="8dp"
             android:layout_marginRight="8dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"
+            android:background="@color/mycolor"
+            android:src="@mipmap/reset_pick"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
+            app:layout_constraintRight_toLeftOf="@+id/dialog_pick_amphibia_text_view_sure"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -95,18 +92,19 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-        android:id="@+id/t1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="蹼"
-        android:gravity="center"/>
+                android:id="@+id/t1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="蹼"
+                android:textColor="@android:color/background_light" />
 
             <LinearLayout
                 android:id="@+id/l1"
@@ -129,22 +127,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="无蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        />
+                        android:text="无蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:button="@null"
                         android:tag="web"
                         android:text="无蹼、半蹼"
-                        android:textColor="@drawable/button"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_11"
@@ -152,9 +149,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="全蹼、有吸盘"
                         android:tag="web"
-                        android:textColor="@drawable/button"/>
+                        android:text="全蹼、有吸盘"
+                        android:textColor="@drawable/button" />
 
                 </LinearLayout>
 
@@ -171,22 +168,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="微蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        />
+                        android:text="微蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="全蹼、无蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:text="全蹼、无蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_12"
@@ -194,9 +190,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="无蹼、有吸盘"
                         android:tag="web"
-                        android:textColor="@drawable/button"/>
+                        android:text="无蹼、有吸盘"
+                        android:textColor="@drawable/button" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -212,22 +208,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="半蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        />
+                        android:text="半蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="无蹼、全蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:text="无蹼、全蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_13"
@@ -235,9 +230,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="微蹼、半蹼、有吸盘"
                         android:tag="web"
-                        android:textColor="@drawable/button"/>
+                        android:text="微蹼、半蹼、有吸盘"
+                        android:textColor="@drawable/button" />
 
                 </LinearLayout>
 
@@ -254,22 +249,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="全蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        />
+                        android:text="全蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="半蹼、全蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:text="半蹼、全蹼"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_14"
@@ -277,16 +271,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="无蹼、全蹼、有吸盘"
                         android:tag="web"
-                        android:textColor="@drawable/button"/>
+                        android:text="无蹼、全蹼、有吸盘"
+                        android:textColor="@drawable/button" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -296,462 +290,454 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="具蹼迹"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        />
+                        android:text="具蹼迹"
+                        android:textColor="@drawable/button" />
 
                     <CheckBox
                         android:id="@+id/dialog_pick_amphibia_web_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:text="无蹼、微蹼"
                         android:tag="web"
-                        android:textColor="@drawable/button"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:text="无蹼、微蹼"
+                        android:textColor="@drawable/button" />
 
                 </LinearLayout>
             </LinearLayout>
-    <include layout="@layout/line"/>
-    <TextView
-        android:id="@+id/t2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="主色"
-        android:gravity="center"/>
-    <LinearLayout
-        android:id="@+id/l2"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-                />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_1"
-                android:layout_width="wrap_content"
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="主色"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="棕褐色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_4"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="棕褐色、红色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="绿色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="棕褐色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="黄色、棕褐色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="灰色、棕褐色"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="黄色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="棕褐色、黄色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="棕褐色、绿色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="黄色、绿色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="棕褐色、绿色、黑色"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="绿色、黄色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="绿色、黄色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="灰色、棕褐色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="黄色、棕褐色、黑色"
+                        android:textColor="@drawable/button" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_major_color_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="majorColor"
+                        android:text="绿色"
+                        android:textColor="@drawable/button" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="声囊"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+                android:id="@+id/l3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp">
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_amphibia_sac_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:tag="sac"
+                    android:text="0"
+                    android:textColor="@drawable/button" />
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_amphibia_sac_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:tag="sac"
+                    android:text="1"
+                    android:textColor="@drawable/button" />
+
+                <CheckBox
+                    android:id="@+id/dialog_pick_amphibia_sac_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:tag="sac"
+                    android:text="2"
+                    android:textColor="@drawable/button" />
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:id="@+id/t4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="栖息地"
+                android:textColor="@android:color/background_light" />
+
+            <LinearLayout
+
+                android:id="@+id/l4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="棕褐色、红色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="绿色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:text="棕褐色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                android:textColor="@drawable/button" />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="湿地"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:text="黄色、棕褐色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                android:textColor="@drawable/button" />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="湿地、林缘灌丛"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:text="灰色、棕褐色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                android:textColor="@drawable/button" />
-        </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="湿地、农田、城市"
+                        android:textColor="@drawable/button" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="山地森林"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="黄色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="山地森林、湿地、农田"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="棕褐色、黄色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="农田、林缘灌丛"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="棕褐色、绿色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="黄色、绿色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="棕褐色、绿色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
-        </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="林缘灌丛"
+                        android:textColor="@drawable/button" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="农田"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="绿色、黄色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="农田、城市、林缘灌丛"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="绿色、黄色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="山地森林、林缘灌丛、湿地"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="灰色、棕褐色、黑色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
+                    <CheckBox
+                        android:id="@+id/dialog_pick_amphibia_habit_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:tag="habit"
+                        android:text="林缘灌丛、农田"
+                        android:textColor="@drawable/button" />
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:tag="majorColor"
-                android:text="黄色、棕褐色、黑色"
-                />
+                </LinearLayout>
+            </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_major_color_15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="绿色"
-                android:tag="majorColor"
-                android:layout_marginBottom="10dp"
-                />
-        </LinearLayout>
-
-    </LinearLayout>
-    <include layout="@layout/line"/>
-    <TextView
-        android:id="@+id/t3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="声囊"
-        android:gravity="center"/>
-    <LinearLayout
-        android:id="@+id/l3"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
-        >
-        <CheckBox
-            android:id="@+id/dialog_pick_amphibia_sac_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:tag="sac"
-            android:text="0"
-            />
-        <CheckBox
-            android:id="@+id/dialog_pick_amphibia_sac_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:tag="sac"
-            android:text="1"/>
-        <CheckBox
-            android:id="@+id/dialog_pick_amphibia_sac_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/button"
-            android:button="@null"
-            android:tag="sac"
-            android:text="2"/>
-    </LinearLayout>
-    <include layout="@layout/line"/>
-    <TextView
-        android:id="@+id/t4"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@android:color/background_light"
-        android:text="栖息地"
-        android:gravity="center"/>
-    <LinearLayout
-
-        android:id="@+id/l4"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="湿地"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="湿地、林缘灌丛"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"/>
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="湿地、农田、城市"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="山地森林"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="山地森林、湿地、农田"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="农田、林缘灌丛"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="林缘灌丛"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="农田"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="农田、城市、林缘灌丛"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="山地森林、林缘灌丛、湿地"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-            <CheckBox
-                android:id="@+id/dialog_pick_amphibia_habit_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@drawable/button"
-                android:button="@null"
-                android:text="林缘灌丛、农田"
-                android:tag="habit"
-                android:layout_marginBottom="10dp"
-                />
-
-        </LinearLayout>
-    </LinearLayout>
-    <include layout="@layout/line"/>
+            <include layout="@layout/line" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

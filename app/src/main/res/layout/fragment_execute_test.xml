@@ -8,77 +8,78 @@
         android:id="@+id/iv_icon_execute_test_fragment"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="fitXY"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY" />
 
     <RadioGroup
         android:id="@+id/rg_anser_group_execute_test_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/iv_icon_execute_test_fragment"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp">
+        android:orientation="vertical">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#a1a1a1">
-        </View>
+            android:background="#a1a1a1"></View>
+
         <RadioButton
             android:id="@+id/rb_anser_a_execute_test_fragment"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:textColor="@color/global_bg_clolor"
-            android:text="A 中白鹭"
+            android:button="@null"
             android:gravity="center_vertical"
-            android:button="@null"/>
+            android:text="A 中白鹭"
+            android:textColor="@color/global_bg_clolor" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#a1a1a1">
-        </View>
+            android:background="#a1a1a1"></View>
+
         <RadioButton
             android:id="@+id/rb_anser_b_execute_test_fragment"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:textColor="@color/global_bg_clolor"
-            android:text="B 白鹤"
-            android:gravity="center_vertical"
             android:button="@null"
-            />
+            android:gravity="center_vertical"
+            android:text="B 白鹤"
+            android:textColor="@color/global_bg_clolor" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#a1a1a1">
-        </View>
+            android:background="#a1a1a1"></View>
+
         <RadioButton
             android:id="@+id/rb_anser_c_execute_test_fragment"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:textColor="@color/global_bg_clolor"
-            android:text="C 白鹭"
+            android:button="@null"
             android:gravity="center_vertical"
-            android:button="@null"/>
+            android:text="C 白鹭"
+            android:textColor="@color/global_bg_clolor" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#a1a1a1">
-        </View>
+            android:background="#a1a1a1"></View>
+
         <RadioButton
             android:id="@+id/rb_anser_d_execute_test_fragment"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:textColor="@color/global_bg_clolor"
-            android:text="D 朱鹤"
+            android:button="@null"
             android:gravity="center_vertical"
-            android:button="@null"/>
+            android:text="D 朱鹤"
+            android:textColor="@color/global_bg_clolor" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#a1a1a1">
-        </View>
+            android:background="#a1a1a1"></View>
 
     </RadioGroup>
 
@@ -87,25 +88,24 @@
         android:id="@+id/ll_answer_result_and_next_execute_test_fragment"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:background="@color/global_bg_clolor"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/global_bg_clolor">
 
         <TextView
             android:id="@+id/tv_answer_result_execute_test_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="正确"
             android:layout_centerInParent="true"
-            />
+            android:gravity="center"
+            android:text="正确" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/right_arrow"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            android:background="@mipmap/right_arrow" />
     </RelativeLayout>
 
 </RelativeLayout>

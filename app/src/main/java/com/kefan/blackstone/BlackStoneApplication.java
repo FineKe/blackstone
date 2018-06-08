@@ -1,4 +1,4 @@
-package com.kefan.blackstone.ui.activity;
+package com.kefan.blackstone;
 
 import android.app.Application;
 import android.content.Context;

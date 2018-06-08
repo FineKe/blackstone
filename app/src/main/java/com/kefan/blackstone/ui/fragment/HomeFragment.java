@@ -46,7 +46,7 @@ public class HomeFragment extends BaseFragment {
     public void initView() {
 
         //初始化 banner
-        List<Integer> images=new ArrayList<>();
+        List<Integer> images = new ArrayList<>();
 
         for (int i : bannerUrl) {
             images.add(i);
@@ -55,11 +55,11 @@ public class HomeFragment extends BaseFragment {
         banner.setImages(images).setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load((Integer)path).into(imageView);
+                Glide.with(context).load((Integer) path).into(imageView);
             }
         }).start();
 
-        correctRate.setSweepAngle(0.98F*360);
+        correctRate.setSweepAngle(0.98F * 360);
         lastScore.setText("100");
         thisScore.setText("67");
 

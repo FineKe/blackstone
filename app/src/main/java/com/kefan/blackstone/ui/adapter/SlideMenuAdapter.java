@@ -9,19 +9,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.vo.SlideMenuVO;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import vo.SlideMenuVO;
+
 
 /**
  * @note:
  * @author: 柯帆
  * @date: 2018/6/5 上午12:08
  */
-public class SlideMenuAdapter extends BaseAdapter{
+public class SlideMenuAdapter extends BaseAdapter {
 
     private List<SlideMenuVO> menus;
 
@@ -47,7 +48,7 @@ public class SlideMenuAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder=null;
+        ViewHolder viewHolder = null;
 
 //        if (view == null) {
 //            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_main_item_view_slide_menu, null, false);
@@ -58,9 +59,9 @@ public class SlideMenuAdapter extends BaseAdapter{
 //            viewHolder.title.setText(menus.get(i).getTitle());
 //            Glide.with(viewGroup.getContext()).load(menus.get(i).getDrawable()).into(viewHolder.icon);
 //        }
-        view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_main_item_view_slide_menu, null, false);
-        ImageView icon= (ImageView) view.findViewById(R.id.iv_icon_item_view_slide_menu_main_activity);
-        TextView title= (TextView) view.findViewById(R.id.tv_title_item_view_slide_menu_main_activity);
+        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_main_item_view_slide_menu, null, false);
+        ImageView icon = (ImageView) view.findViewById(R.id.iv_icon_item_view_slide_menu_main_activity);
+        TextView title = (TextView) view.findViewById(R.id.tv_title_item_view_slide_menu_main_activity);
         title.setText(menus.get(i).getTitle());
         Glide.with(viewGroup.getContext()).load(menus.get(i).getDrawable()).into(icon);
         return view;
@@ -75,7 +76,7 @@ public class SlideMenuAdapter extends BaseAdapter{
         TextView title;
 
         public ViewHolder(View item) {
-            ButterKnife.bind(this,item);
+            ButterKnife.bind(this, item);
         }
     }
 

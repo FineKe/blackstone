@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.kefan.blackstone.RecordAlterActivity">
+  >
 
     <android.support.constraint.ConstraintLayout
         android:background="@color/mycolor"

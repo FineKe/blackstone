@@ -1,7 +1,6 @@
 package com.kefan.blackstone.ui.activity;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.kefan.blackstone.ActivityUtil.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,11 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.kefan.blackstone.ActivityUtil.BaseActivity;
-import com.kefan.blackstone.R;
-
-import JavaBean.APIManager;
 
 public class ForgetPasswordTwoActivity extends BaseActivity implements View.OnClickListener{
     private String getCodeURL= APIManager.BASE_URL +"v1/user/forgetPwd/verifyCode/mobile";

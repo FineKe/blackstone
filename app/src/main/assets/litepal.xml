@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="animal"></dbname>
-    <version value="4"></version>
+    <version value="1"></version>
     <list>
-        <mapping class="database.Species"></mapping>
-        <mapping class="database.User"></mapping>
-        <mapping class="database.Amphibia"></mapping>
-        <mapping class="database.Bird"></mapping>
-        <mapping class="database.Reptiles"></mapping>
-        <mapping class="database.Insect"></mapping>
-        <mapping class="database.Record"></mapping>
-        <mapping class="database.HistoryRecord"></mapping>
-        <mapping class="database.SpeciesClasses"></mapping>
-        <mapping class="database.AlterRecord"></mapping>
+        <mapping class="com.kefan.blackstone.database.Species"></mapping>
+        <mapping class="com.kefan.blackstone.database.User"></mapping>
+        <mapping class="com.kefan.blackstone.database.Amphibia"></mapping>
+        <mapping class="com.kefan.blackstone.database.Bird"></mapping>
+        <mapping class="com.kefan.blackstone.database.Reptiles"></mapping>
+        <mapping class="com.kefan.blackstone.database.Insect"></mapping>
+        <mapping class="com.kefan.blackstone.database.Record"></mapping>
+        <mapping class="com.kefan.blackstone.database.HistoryRecord"></mapping>
+        <mapping class="com.kefan.blackstone.database.SpeciesClasses"></mapping>
+        <mapping class="com.kefan.blackstone.database.AlterRecord"></mapping>
     </list>
 </litepal>

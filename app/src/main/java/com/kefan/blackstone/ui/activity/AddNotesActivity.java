@@ -1,23 +1,20 @@
 package com.kefan.blackstone.ui.activity;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.R;
-
-import org.litepal.crud.DataSupport;
+import com.kefan.blackstone.database.Record;
 
 import java.util.List;
 
-import database.Record;
+
 
 public class AddNotesActivity extends BaseActivity implements View.OnClickListener {
     private String TAG="AddNotesActivity";

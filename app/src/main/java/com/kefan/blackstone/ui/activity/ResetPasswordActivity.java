@@ -12,11 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-
 import com.kefan.blackstone.ActivityUtil.BaseActivity;
 import com.kefan.blackstone.R;
 
-public class ResetPasswordActivity extends BaseActivity implements View.OnClickListener{
+public class ResetPasswordActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView messagePhone;
     private TextView message;
@@ -29,9 +28,10 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
 
     private SharedPreferences userInformationSharedPreferences;
     private SharedPreferences.Editor userInformationEditor;
-    private String userInformation="UesrInformation";
+    private String userInformation = "UesrInformation";
     private String phoneNumber;
     private String phoneCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,29 +43,27 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        userInformationSharedPreferences=getSharedPreferences(userInformation, Context.MODE_PRIVATE);
-        userInformationEditor=userInformationSharedPreferences.edit();
-        phoneNumber=userInformationSharedPreferences.getString("mobile","");
-        if(!phoneNumber.equals(""))
-        {
-            phoneCode=phoneNumber.substring(0,3)+"****"+phoneNumber.substring(7);
-        }else
-        {
-            phoneCode="";
+        userInformationSharedPreferences = getSharedPreferences(userInformation, Context.MODE_PRIVATE);
+        userInformationEditor = userInformationSharedPreferences.edit();
+        phoneNumber = userInformationSharedPreferences.getString("mobile", "");
+        if (!phoneNumber.equals("")) {
+            phoneCode = phoneNumber.substring(0, 3) + "****" + phoneNumber.substring(7);
+        } else {
+            phoneCode = "";
         }
     }
 
     private void initViews() {
-        messagePhone= (TextView) findViewById(R.id.activity_forget_password_two_textView_phoneMessage);
-        message= (TextView) findViewById(R.id.activity_forget_password_two_textView_message);
+        messagePhone = (TextView) findViewById(R.id.activity_forget_password_two_textView_phoneMessage);
+        message = (TextView) findViewById(R.id.activity_forget_password_two_textView_message);
 
-        phone= (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
+        phone = (EditText) findViewById(R.id.activity_forget_password_two_edit_text_code);
 
-        actionBack= (LinearLayout) findViewById(R.id.activity_reset_password_linear_layout_action_back);
+        actionBack = (LinearLayout) findViewById(R.id.activity_reset_password_linear_layout_action_back);
 
-        nextStep= (BootstrapButton) findViewById(R.id.activity_resetPassword_boot_strap_button_next_step);
+        nextStep = (BootstrapButton) findViewById(R.id.activity_resetPassword_boot_strap_button_next_step);
 
-        messagePhone.setText("请输入"+phoneCode+"的完整手机号码，以验证身份");
+        messagePhone.setText("请输入" + phoneCode + "的完整手机号码，以验证身份");
 
         phone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -75,8 +73,7 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count==0)
-                {
+                if (count == 0) {
                     message.setText("");
                 }
             }
@@ -94,11 +91,9 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
     }
 
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.activity_reset_password_linear_layout_action_back:
                 actionBack();
                 break;
@@ -112,19 +107,16 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
 
     private void actionBack() {
         this.finish();
-       // overridePendingTransition(R.anim.in,R.anim.out);
+        // overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void nextStep() {
         phone.clearFocus();
 
-        if(phoneNumber.equals(phone.getText().toString()))
-        {
-            startActivity(new Intent(this,ResetPasswordTwoActivity.class));
+        if (phoneNumber.equals(phone.getText().toString())) {
+            startActivity(new Intent(this, ResetPasswordTwoActivity.class));
             //overridePendingTransition(R.anim.in,R.anim.out);
-        }
-        else
-        {
+        } else {
             message.setText("手机号输入有误，请重新输入");
         }
     }

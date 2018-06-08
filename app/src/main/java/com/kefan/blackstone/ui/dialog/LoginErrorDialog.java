@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ui.activity.ForgetPasswordActivity;
 import com.kefan.blackstone.ui.activity.LoginDialog;
@@ -35,18 +34,18 @@ public class LoginErrorDialog extends Dialog {
 
 
     private LoginErrorDialog(@NonNull Context context, int themeResId) {
-        this(context,0,0);
+        this(context, 0, 0);
     }
 
-    private LoginErrorDialog(Context context,int themeResId,int layout) {
-        super(context,themeResId);
-        this.resId=layout;
+    private LoginErrorDialog(Context context, int themeResId, int layout) {
+        super(context, themeResId);
+        this.resId = layout;
     }
 
 
     public static LoginErrorDialog buildLoginErrorDialog(Context context) {
 
-        LoginErrorDialog loginErrorDialog=new LoginErrorDialog(context,R.style.LoginDialog,R.layout.error_login_dialog);
+        LoginErrorDialog loginErrorDialog = new LoginErrorDialog(context, R.style.LoginDialog, R.layout.error_login_dialog);
         loginErrorDialog.setCancelable(false);
         return loginErrorDialog;
 
@@ -67,7 +66,7 @@ public class LoginErrorDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 LoginErrorDialog.this.dismiss();
-                getContext().startActivity(new Intent(getContext(),ForgetPasswordActivity.class));
+                getContext().startActivity(new Intent(getContext(), ForgetPasswordActivity.class));
             }
         });
 

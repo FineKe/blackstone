@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -36,13 +37,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import JavaBean.APIManager;
-
-import static com.kefan.blackstone.ui.activity.BlackStoneApplication.getContext;
+import static com.kefan.blackstone.BlackStoneApplication.getContext;
 
 
 public class ClipActivity extends Activity {
-    private String getUpLoadTokenURL=APIManager.BASE_URL +"v1/upload/token";
+    private String getUpLoadTokenURL= APIManager.BASE_URL +"v1/upload/token";
     private String upLoadImageURL=APIManager.BASE_URL +"v1/user/avatar";
     private String TAG="ClipActivity";
     private ClipImageLayout mClipImageLayout;

@@ -2,9 +2,9 @@ package com.kefan.blackstone.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +23,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.R;
+import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
+import com.kefan.blackstone.database.Species;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
@@ -34,10 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import JavaBean.APIManager;
-import ShapeUtil.GlideRoundTransform;
-import database.Species;
 
 public class MyCollectionsTwoActivity extends BaseActivity implements View.OnClickListener{
     private final int LOAD_DATA_OK=0;

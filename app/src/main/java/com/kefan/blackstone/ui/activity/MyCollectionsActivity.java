@@ -2,9 +2,9 @@ package com.kefan.blackstone.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.Species;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,9 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import JavaBean.APIManager;
-import database.Species;
 
 public class MyCollectionsActivity extends BaseActivity {
     private final int LOAD_DATA_OK=0;

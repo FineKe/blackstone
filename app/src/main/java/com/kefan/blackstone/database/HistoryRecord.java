@@ -1,4 +1,4 @@
-package database;
+package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 

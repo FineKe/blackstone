@@ -1,8 +1,7 @@
 package com.kefan.blackstone.ui.activity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.kefan.blackstone.BaseActivity;

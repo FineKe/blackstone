@@ -1,12 +1,12 @@
-package database;
+package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 
 /**
- * Created by MY SHIP on 2017/4/28.
+ * @author MY SHIP
+ * @date 2017/4/28
  */
 
 public class Amphibia extends DataSupport {
@@ -34,6 +34,7 @@ public class Amphibia extends DataSupport {
     private ArrayList<String> viewTables;//动态创建视图的字符信息
     private boolean collected;//是否收藏
     private String speciesType;
+
     public int getSingal() {
         return singal;
     }
@@ -226,9 +227,8 @@ public class Amphibia extends DataSupport {
         this.viewTables = viewTables;
     }
 
-    public void setViewTables()
-    {
-        viewTables=new ArrayList<>();
+    public void setViewTables() {
+        viewTables = new ArrayList<>();
         viewTables.add(resolution_feature);
         viewTables.add(shape);
         viewTables.add(tone);

@@ -30,7 +30,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.JsonUtil.JsonResolverSpeciesDetailed;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
+import com.kefan.blackstone.database.Amphibia;
+import com.kefan.blackstone.database.Bird;
+import com.kefan.blackstone.database.Insect;
+import com.kefan.blackstone.database.Reptiles;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -51,19 +58,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import JavaBean.APIManager;
-import JsonUtil.JsonResolverSpeciesDetailed;
-import ShapeUtil.GlideRoundTransform;
-import database.Amphibia;
-import database.Bird;
-import database.Insect;
-import database.Reptiles;
-
 public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View.OnClickListener {
-    private final int LOAD_AUDIO_OK=8;
-    private String getSpeciesDetailedURL = APIManager.BASE_URL +"v1/species/";
-    private String collectionURL = APIManager.BASE_URL +"v1/species/addToCollection";
-    private String cancelCollectionURL = APIManager.BASE_URL +"v1/species/collection/";
+    private final int LOAD_AUDIO_OK = 8;
+    private String getSpeciesDetailedURL = APIManager.BASE_URL + "v1/species/";
+    private String collectionURL = APIManager.BASE_URL + "v1/species/addToCollection";
+    private String cancelCollectionURL = APIManager.BASE_URL + "v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest request;
     private JsonObjectRequest collectionRequest;
@@ -108,11 +107,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private IsLoginUtil isLoginUtil;
     private UpdateToken updateToken;
 
-    private boolean isPlay=false;
+    private boolean isPlay = false;
 
-    private MediaPlayer mediaPlayer=null;
-    private ImageView playSound=null;
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private MediaPlayer mediaPlayer = null;
+    private ImageView playSound = null;
+
+    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,7 +168,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void createAllView() {
         switch (speciesType) {
             case "reptiles":
@@ -186,7 +186,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 }
                 break;
             case "bird":
-                ;
                 Bird bird = (Bird) speciesDetaileds;
                 isCollected = bird.isCollected();
                 if (bird.isCollected()) {
@@ -215,7 +214,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 }
                 break;
             case "insect":
-                ;
                 Insect insect = (Insect) speciesDetaileds;
                 isCollected = insect.isCollected();
                 if (insect.isCollected()) {
@@ -281,7 +279,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(s);
-                content.setLineSpacing(8,1);
+                content.setLineSpacing(8, 1);
                 tableView.addView(title);
                 tableView.addView(content);
                 View view1 = linearLayout.getChildAt(1);
@@ -301,7 +299,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getGenus());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
-      //  englishName.setText(speciesDetailed.getLatinName());
+        //  englishName.setText(speciesDetailed.getLatinName());
         englishName.setVisibility(View.GONE);
         String[] tables = getResources().getStringArray(R.array.aphibiaTablesName);
         int i = 0;
@@ -315,7 +313,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(speciesDetailed.getViewTables().get(i));
-                content.setLineSpacing(8,1);
+                content.setLineSpacing(8, 1);
                 tableView.addView(title);
                 tableView.addView(content);
 
@@ -352,7 +350,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(speciesDetailed.getViewTables().get(i));
-                content.setLineSpacing(8,1);
+                content.setLineSpacing(8, 1);
                 tableView.addView(title);
                 tableView.addView(content);
                 View view1 = linearLayout.getChildAt(1);
@@ -387,7 +385,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 title.setTextColor(getResources().getColor(R.color.mycolor));
                 TextView content = new TextView(this);
                 content.setText(speciesDetailed.getViewTables().get(i));
-                content.setLineSpacing(8,1);
+                content.setLineSpacing(8, 1);
                 tableView.addView(title);
                 tableView.addView(content);
 
@@ -405,47 +403,44 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         View v = LayoutInflater.from(this).inflate(R.layout.bird_audio_picture, linearLayout);
         ImageView audioPicture = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_audio_picture);
         final ImageView playAudio = (ImageView) v.findViewById(R.id.bird_audio_picture_image_view_play_audio);
-        playSound=playAudio;
+        playSound = playAudio;
         audioPicture.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load(speciesDetailed.getAudioPicture()).placeholder(R.mipmap.loading_big).into(audioPicture);
 
         playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPlay==false)
-                {   mediaPlayer= new MediaPlayer();
-                    isPlay=true;
-                    File file=new File(Environment.getExternalStorageDirectory().toString() + "/blackstone/audio/"+speciesDetailed.getSingal()+".wav");
-                    if (!file.exists())
-                    {
-                        download(speciesDetailed.getAudio(),speciesDetailed.getSingal()+".wav");
-                    }else
-                    {
+                if (isPlay == false) {
+                    mediaPlayer = new MediaPlayer();
+                    isPlay = true;
+                    File file = new File(Environment.getExternalStorageDirectory().toString() + "/blackstone/audio/" + speciesDetailed.getSingal() + ".wav");
+                    if (!file.exists()) {
+                        download(speciesDetailed.getAudio(), speciesDetailed.getSingal() + ".wav");
+                    } else {
 
                         String path = Environment.getExternalStorageDirectory().toString() + "/blackstone/audio/";
 
                         playAudio.setImageResource(R.mipmap.play_audio_pressed);
                         try {
                             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            mediaPlayer.setDataSource(path+speciesDetailed.getSingal()+".wav");
+                            mediaPlayer.setDataSource(path + speciesDetailed.getSingal() + ".wav");
                             mediaPlayer.prepare();
                             mediaPlayer.start();
                             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                 @Override
                                 public void onCompletion(MediaPlayer mp) {
-                                    if(mp.isPlaying()==false)
-                                    {
+                                    if (mp.isPlaying() == false) {
                                         playAudio.setImageResource(R.mipmap.play_audio_normal);
-                                        isPlay=false;
+                                        isPlay = false;
                                     }
                                 }
                             });
                         } catch (IOException e) {
-                            e.printStackTrace();}
+                            e.printStackTrace();
+                        }
                     }
-                }else
-                {
-                    isPlay=false;
+                } else {
+                    isPlay = false;
                     mediaPlayer.stop();
                     playAudio.setImageResource(R.mipmap.play_audio_normal);
                 }
@@ -455,23 +450,21 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
 
-    public void playAudio(final MediaPlayer mediaPlayer, final int singal, final ImageView playAudio)
-    {
+    public void playAudio(final MediaPlayer mediaPlayer, final int singal, final ImageView playAudio) {
 
         String path = Environment.getExternalStorageDirectory().toString() + "/blackstone/audio/";
         playAudio.setImageResource(R.mipmap.play_audio_pressed);
         try {
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setDataSource(path+singal+".wav");
+            mediaPlayer.setDataSource(path + singal + ".wav");
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-                    if(mp.isPlaying()==false)
-                    {
+                    if (mp.isPlaying() == false) {
                         playAudio.setImageResource(R.mipmap.play_audio_normal);
-                        isPlay=false;
+                        isPlay = false;
                     }
                 }
             });
@@ -515,7 +508,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 if (isLoginUtil.getLogined())//判断是否登录
                 {
                     updateToken.updateToken();
-                    Log.d(TAG, "onClick: "+isCollected);
+                    Log.d(TAG, "onClick: " + isCollected);
                     if (!isCollected) {
                         addCollection(singal);
                     } else {
@@ -561,13 +554,13 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         }
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private View createView(String picture) {
         RoundedImageView imgView = new RoundedImageView(this);
 //        imgView.setBackground(getDrawable(R.drawable.view_pager_background));
         imgView.setCornerRadius(8);
         imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Glide.with(getApplicationContext()).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).bitmapTransform(new GlideRoundTransform(this,8)).into(imgView);
+        Glide.with(getApplicationContext()).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).bitmapTransform(new GlideRoundTransform(this, 8)).into(imgView);
         return imgView;
     }
 
@@ -605,8 +598,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     @Override
     protected void onStop() {
         super.onStop();
-        if(scheduledExecutorService!=null)
-        {
+        if (scheduledExecutorService != null) {
             scheduledExecutorService.shutdown();
         }
     }
@@ -615,10 +607,10 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         @Override
         public void run() {
             System.out.println(currentIndex);
-            currentIndex = (currentIndex + 1) %views.size();
+            currentIndex = (currentIndex + 1) % views.size();
             //更新界面
-            Message message=new Message();
-            message.what=0;
+            Message message = new Message();
+            message.what = 0;
             handler.sendMessage(message);
         }
     }
@@ -628,17 +620,17 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         @Override
         public void handleMessage(Message msg) {
             //设置当前页面
-            switch (msg.what)
-            {
-                case 0: viewPager.setCurrentItem(currentIndex);
+            switch (msg.what) {
+                case 0:
+                    viewPager.setCurrentItem(currentIndex);
                     break;
                 case 1:
                     createAllView();
-                    start=true;
+                    start = true;
                     System.out.println(1);
                     break;
                 case LOAD_AUDIO_OK:
-                    playAudio(mediaPlayer,singal,playSound);
+                    playAudio(mediaPlayer, singal, playSound);
                     break;
             }
 
@@ -683,7 +675,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
     public void cancelCollection(int speciesId) {
-        canelCollcetionRequest = new JsonObjectRequest(Request.Method.DELETE, cancelCollectionURL+singal,null , new Response.Listener<JSONObject>() {
+        canelCollcetionRequest = new JsonObjectRequest(Request.Method.DELETE, cancelCollectionURL + singal, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
@@ -729,8 +721,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                             JsonResolverSpeciesDetailed speciesDetailed = new JsonResolverSpeciesDetailed(jsonObject);
                             speciesDetailed.ResolveSpeciesDetailed();
                             speciesDetaileds = speciesDetailed.getResultObject();
-                            Message message=new Message();
-                            message.what=1;
+                            Message message = new Message();
+                            message.what = 1;
                             handler.sendMessage(message);
                         }
                     } catch (JSONException e) {
@@ -741,30 +733,29 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     Toast.makeText(SpeciesDeatailedActivity.this, "请在有网络下查看", Toast.LENGTH_SHORT).show();
-                    switch (speciesType)
-                    {
+                    switch (speciesType) {
                         case "bird":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Bird.class)).get(0);
-                            Message messageb=new Message();
-                            messageb.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Bird.class)).get(0);
+                            Message messageb = new Message();
+                            messageb.what = 1;
                             handler.sendMessage(messageb);
                             break;
                         case "amphibia":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Amphibia.class)).get(0);
-                            Message messagea=new Message();
-                            messagea.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Amphibia.class)).get(0);
+                            Message messagea = new Message();
+                            messagea.what = 1;
                             handler.sendMessage(messagea);
                             break;
                         case "insect":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Insect.class)).get(0);
-                            Message messagei=new Message();
-                            messagei.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Insect.class)).get(0);
+                            Message messagei = new Message();
+                            messagei.what = 1;
                             handler.sendMessage(messagei);
                             break;
                         case "reptiles":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Reptiles.class)).get(0);
-                            Message messages=new Message();
-                            messages.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Reptiles.class)).get(0);
+                            Message messages = new Message();
+                            messages.what = 1;
                             handler.sendMessage(messages);
                             break;
                     }
@@ -777,7 +768,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                     return headers;
                 }
             };
-            speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000,1,1.0f));
+            speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000, 1, 1.0f));
             requestQueue.add(speciesDetailedRequest);
         } else {
             JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
@@ -805,30 +796,29 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     Toast.makeText(SpeciesDeatailedActivity.this, "请在有网络下查看", Toast.LENGTH_SHORT).show();
-                    switch (speciesType)
-                    {
+                    switch (speciesType) {
                         case "bird":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Bird.class)).get(0);
-                            Message messageb=new Message();
-                            messageb.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Bird.class)).get(0);
+                            Message messageb = new Message();
+                            messageb.what = 1;
                             handler.sendMessage(messageb);
                             break;
                         case "amphibia":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Amphibia.class)).get(0);
-                            Message messagea=new Message();
-                            messagea.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Amphibia.class)).get(0);
+                            Message messagea = new Message();
+                            messagea.what = 1;
                             handler.sendMessage(messagea);
                             break;
                         case "insect":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Insect.class)).get(0);
-                            Message messagei=new Message();
-                            messagei.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Insect.class)).get(0);
+                            Message messagei = new Message();
+                            messagei.what = 1;
                             handler.sendMessage(messagei);
                             break;
                         case "reptiles":
-                            speciesDetaileds=(DataSupport.where("singal=?",""+singal).find(Reptiles.class)).get(0);
-                            Message messages=new Message();
-                            messages.what=1;
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Reptiles.class)).get(0);
+                            Message messages = new Message();
+                            messages.what = 1;
                             handler.sendMessage(messages);
                             break;
                     }
@@ -836,7 +826,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
                 }
             });
-            speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000,1,1.0f));
+            speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000, 1, 1.0f));
             requestQueue.add(speciesDetailedRequest);
         }
 
@@ -845,15 +835,13 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     @Override
     public void finish() {
         super.finish();
-        if(mediaPlayer!=null)
-        {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
 
     }
 
-    public void download(final String path, final String fileName)
-    {
+    public void download(final String path, final String fileName) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -880,8 +868,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                             fileOutputStream.flush();
                             fileOutputStream.close();
                         }
-                        Message message=new Message();
-                        message.what=LOAD_AUDIO_OK;
+                        Message message = new Message();
+                        message.what = LOAD_AUDIO_OK;
                         handler.sendMessage(message);
                     }
                 } catch (Exception e) {
@@ -906,6 +894,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
         /**
          * 创建一个文件
+         *
          * @param FileName 文件名
          * @return
          */

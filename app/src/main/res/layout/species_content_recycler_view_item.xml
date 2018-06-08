@@ -6,12 +6,11 @@
     android:layout_height="100dp"
     android:orientation="vertical"
     android:weightSum="1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
-
 
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -24,55 +23,57 @@
             android:cropToPadding="true"
             android:scaleType="centerCrop"
             app:riv_corner_radius="8dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginLeft="11dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_chineseName"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:textSize="16sp"
-                android:gravity="center_vertical" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_englishName"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="latinName"
-                android:textSize="16sp"
-                android:textStyle="italic" />
+                <TextView
+                    android:id="@+id/tv_chineseName"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:text="englishName"
-                android:id="@+id/tv_latinName"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:gravity="center_vertical"/>
-         </LinearLayout>
-        <View
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="11dp"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_gravity="bottom"
-            android:background="#c9cace" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_englishName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="latinName"
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/tv_latinName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="englishName"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="10dp"
+                android:background="#c9cace" />
+        </LinearLayout>
     </LinearLayout>
 
 

@@ -1,4 +1,4 @@
-package vo;
+package com.kefan.blackstone.vo;
 
 /**
  * @note:

@@ -1,4 +1,4 @@
-package database;
+package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
@@ -7,7 +7,7 @@ import org.litepal.crud.DataSupport;
  * javaBean 物种类别
  */
 
-public class SpeciesClasses extends DataSupport{
+public class SpeciesClasses extends DataSupport {
     private int flag;//用于区分是否处于同一header下
     private String title;
     private String classesName;//类别名称

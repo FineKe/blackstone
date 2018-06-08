@@ -26,7 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.AlterRecord;
+import com.kefan.blackstone.database.Species;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,15 +44,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import JavaBean.APIManager;
-import database.AlterRecord;
-import database.Species;
+import static com.kefan.blackstone.BlackStoneApplication.getContext;
 
 
-
-public class RecordAlterActivity extends BaseActivity implements View.OnClickListener{
-    private String alterRecordURL= APIManager.BASE_URL +"v1/record/edit";
-    private String TAG="RecordAlterActivity";
+public class RecordAlterActivity extends BaseActivity implements View.OnClickListener {
+    private String alterRecordURL = APIManager.BASE_URL + "v1/record/edit";
+    private String TAG = "RecordAlterActivity";
     private static final int CREATE_OK = 1;
     private TextView date;
     private TextView save;
@@ -70,6 +70,7 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
 
 
     private List<List<MyRecordTwoActivity.Note>> noteList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,43 +82,42 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
-        time=getIntent().getLongExtra("time",0);
-        recordList=new ArrayList<>();
-        noteList=MyRecordTwoActivity.noteList;
-        adapter=new MyExpandListViewAdapter(this,recordList);
-        progressDialog=new ProgressDialog(this);
+        time = getIntent().getLongExtra("time", 0);
+        recordList = new ArrayList<>();
+        noteList = MyRecordTwoActivity.noteList;
+        adapter = new MyExpandListViewAdapter(this, recordList);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("请稍后...");
         progressDialog.setCancelable(false);
         createBaseRecord();
     }
 
 
-
     private void initViews() {
-        date= (TextView) findViewById(R.id.activity_record_alter_text_view_date);
-        save= (TextView) findViewById(R.id.activity_record_alter_text_view_save);
-        actionBack= (LinearLayout) findViewById(R.id.activity_record_alter_linear_layout_action_back);
-        datePicker= (DatePicker) findViewById(R.id.activity_record_alter_datepicker);
+        date = (TextView) findViewById(R.id.activity_record_alter_text_view_date);
+        save = (TextView) findViewById(R.id.activity_record_alter_text_view_save);
+        actionBack = (LinearLayout) findViewById(R.id.activity_record_alter_linear_layout_action_back);
+        datePicker = (DatePicker) findViewById(R.id.activity_record_alter_datepicker);
 
-        expandableListView= (ExpandableListView) findViewById(R.id.activity_record_alter_expandListView);
+        expandableListView = (ExpandableListView) findViewById(R.id.activity_record_alter_expandListView);
         expandableListView.setAdapter(adapter);
         expandableListView.setGroupIndicator(null);
 
-        Date da=new Date(getIntent().getLongExtra("time",0));
-        SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-        String mdate=format.format(da);
-        Log.d(TAG, "onBindViewHolder:"+da.toString() );
-        date.setText(mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日");
-        year_=Integer.parseInt(mdate.substring(0, 4));
-        month_=Integer.parseInt(mdate.substring(5, 7));
-        day_=Integer.parseInt(mdate.substring(8, 10));
-        datePicker.init(Integer.parseInt(mdate.substring(0, 4)), Integer.parseInt(mdate.substring(5, 7))-1, Integer.parseInt(mdate.substring(8, 10)), new DatePicker.OnDateChangedListener() {
+        Date da = new Date(getIntent().getLongExtra("time", 0));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String mdate = format.format(da);
+        Log.d(TAG, "onBindViewHolder:" + da.toString());
+        date.setText(mdate.substring(0, 4) + "年" + mdate.substring(5, 7) + "月" + mdate.substring(8, 10) + "日");
+        year_ = Integer.parseInt(mdate.substring(0, 4));
+        month_ = Integer.parseInt(mdate.substring(5, 7));
+        day_ = Integer.parseInt(mdate.substring(8, 10));
+        datePicker.init(Integer.parseInt(mdate.substring(0, 4)), Integer.parseInt(mdate.substring(5, 7)) - 1, Integer.parseInt(mdate.substring(8, 10)), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                year_=year;
-                month_=monthOfYear;
-                day_=dayOfMonth;
-                date.setText(year+"年"+(monthOfYear+1)+"月"+dayOfMonth+"日");
+                year_ = year;
+                month_ = monthOfYear;
+                day_ = dayOfMonth;
+                date.setText(year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日");
             }
         });
     }
@@ -129,11 +129,9 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.activity_record_alter_text_view_date:
                 showDataPicker();
                 break;
@@ -152,7 +150,7 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
             Long second = format.parse(year_ + "-" + month_ + "-" + day_).getTime();
             System.out.println(second);
             millisecond = second;
-            Log.d(TAG, "save: "+millisecond);
+            Log.d(TAG, "save: " + millisecond);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -168,10 +166,8 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
 
     public void resetRecords() {//重置记录
 
-        for(List<AlterRecord> records:recordList)
-        {
-            for(AlterRecord record:records)
-            {
+        for (List<AlterRecord> records : recordList) {
+            for (AlterRecord record : records) {
                 record.setChecked(false);
                 record.setRemarkIsNull(true);
                 record.setRemark("");
@@ -201,10 +197,10 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
         private Context context;
         private LayoutInflater layoutInflater;
 
-        public MyExpandListViewAdapter(Context context,List<List<AlterRecord>> records) {
-            this.context=context;
+        public MyExpandListViewAdapter(Context context, List<List<AlterRecord>> records) {
+            this.context = context;
             this.records = records;
-            layoutInflater=LayoutInflater.from(context);
+            layoutInflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -321,22 +317,18 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    public void createBaseRecord()
-    {   progressDialog.show();
+    public void createBaseRecord() {
+        progressDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 DataSupport.deleteAll(AlterRecord.class);
-                List<Species> list=DataSupport.findAll(Species.class);
-                for(Species species:list)
-                {
-                    AlterRecord record=new AlterRecord(species.getChineseName(),species.getSingal(),species.getSpeciesType());
-                    for(List<MyRecordTwoActivity.Note> notes:noteList)
-                    {
-                        for(MyRecordTwoActivity.Note note:notes)
-                        {
-                            if(note.getSpeciesId()==species.getSingal())
-                            {
+                List<Species> list = DataSupport.findAll(Species.class);
+                for (Species species : list) {
+                    AlterRecord record = new AlterRecord(species.getChineseName(), species.getSingal(), species.getSpeciesType());
+                    for (List<MyRecordTwoActivity.Note> notes : noteList) {
+                        for (MyRecordTwoActivity.Note note : notes) {
+                            if (note.getSpeciesId() == species.getSingal()) {
                                 System.out.println(note.getSpeciesId());
                                 record.setRemarkIsNull(false);
                                 record.setChecked(true);
@@ -349,10 +341,10 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
                     record.save();
                 }
 
-                List<AlterRecord>birdRecord = DataSupport.where("speciesType=?", "bird").find(AlterRecord.class);
-                List<AlterRecord>amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(AlterRecord.class);
-                List<AlterRecord>reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(AlterRecord.class);
-                List<AlterRecord>insectRecord = DataSupport.where("speciesType=?", "insect").find(AlterRecord.class);
+                List<AlterRecord> birdRecord = DataSupport.where("speciesType=?", "bird").find(AlterRecord.class);
+                List<AlterRecord> amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(AlterRecord.class);
+                List<AlterRecord> reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(AlterRecord.class);
+                List<AlterRecord> insectRecord = DataSupport.where("speciesType=?", "insect").find(AlterRecord.class);
 
 //                System.out.println("ssssssssssssssssss");
                 recordList.add(insectRecord);
@@ -360,8 +352,8 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
                 recordList.add(reptilesRecord);
                 recordList.add(birdRecord);
 
-                Message message=new Message();
-                message.what=CREATE_OK;
+                Message message = new Message();
+                message.what = CREATE_OK;
                 handler.sendMessage(message);
             }
         }).start();
@@ -369,13 +361,11 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
 
     }
 
-    private Handler handler=new Handler()
-    {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what)
-            {
+            switch (msg.what) {
                 case CREATE_OK:
                     adapter.notifyDataSetChanged();
                     progressDialog.dismiss();
@@ -386,14 +376,14 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
 
 
     private void upLoadData(Long milliseconds) {
-       RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id",getIntent().getIntExtra("recordId",0) );
-            jsonObject.put("time",milliseconds);
+            jsonObject.put("id", getIntent().getIntExtra("recordId", 0));
+            jsonObject.put("time", milliseconds);
             JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i <4; i++) {
-                for (AlterRecord record :recordList.get(i)) {
+            for (int i = 0; i < 4; i++) {
+                for (AlterRecord record : recordList.get(i)) {
                     if (record.isChecked()) {
                         JSONObject js = new JSONObject();
                         js.put("speciesId", record.getSpeciesId());
@@ -435,9 +425,9 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                UpdateToken updateToken=new UpdateToken(getContext());
+                UpdateToken updateToken = new UpdateToken(getContext());
                 updateToken.updateToken();
-                UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
+                UserInformationUtil userInformationUtil = new UserInformationUtil(getContext());
                 headers.put("token", userInformationUtil.getToken());
                 return headers;
             }

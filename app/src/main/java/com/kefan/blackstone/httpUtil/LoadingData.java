@@ -1,10 +1,4 @@
-package httpUtil;
-
-import android.content.Context;
-import android.media.MediaPlayer;
-import android.net.Uri;
-
-import java.io.IOException;
+package com.kefan.blackstone.httpUtil;
 
 /**
  * Created by MY SHIP on 2017/3/24.

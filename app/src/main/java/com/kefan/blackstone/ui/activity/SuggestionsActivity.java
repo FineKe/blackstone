@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 
 import org.json.JSONException;
@@ -24,10 +25,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import JavaBean.APIManager;
-
-public class SuggestionsActivity extends BaseActivity implements View.OnClickListener{
-    private String feedBackURL= APIManager.BASE_URL +"v1/feedback/new";
+public class SuggestionsActivity extends BaseActivity implements View.OnClickListener {
+    private String feedBackURL = APIManager.BASE_URL + "v1/feedback/new";
     private RequestQueue requestQueue;
     private JsonObjectRequest suggestionRequest;
     private UserInformationUtil userInformation;
@@ -36,6 +35,7 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
     private TextView send;
 
     private EditText write;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +45,19 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
         initDatas();
         initViews();
         initEvents();
-        UpdateToken updateToken=new UpdateToken(this);
+        UpdateToken updateToken = new UpdateToken(this);
         updateToken.updateToken();
     }
 
     private void initDatas() {
-        userInformation=new UserInformationUtil(this);
+        userInformation = new UserInformationUtil(this);
 
     }
 
     private void initViews() {
-        actionBack= (LinearLayout) findViewById(R.id.activity_suggestion_linear_layout_action_back);
-        send= (TextView) findViewById(R.id.activity_suggestion_text_view_send);
-        write= (EditText) findViewById(R.id.activity_suggestion_edit_text_write_suggestions);
+        actionBack = (LinearLayout) findViewById(R.id.activity_suggestion_linear_layout_action_back);
+        send = (TextView) findViewById(R.id.activity_suggestion_text_view_send);
+        write = (EditText) findViewById(R.id.activity_suggestion_edit_text_write_suggestions);
     }
 
     private void initEvents() {
@@ -67,8 +67,7 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.activity_suggestion_linear_layout_action_back:
                 actionBack();
                 break;
@@ -81,37 +80,32 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
 
     private void actionBack() {
         finish();
-       // overridePendingTransition(R.anim.in,R.anim.out);
+        // overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     private void send() {
-        requestQueue= Volley.newRequestQueue(this);
-        final String token=userInformation.getToken();
-        if(token.equals(""))
-        {
+        requestQueue = Volley.newRequestQueue(this);
+        final String token = userInformation.getToken();
+        if (token.equals("")) {
             Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
-        }else
-        {
-            JSONObject jsonObject=new JSONObject();
+        } else {
+            JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("content",write.getText().toString());
+                jsonObject.put("content", write.getText().toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            suggestionRequest=new JsonObjectRequest(Request.Method.POST, feedBackURL, jsonObject, new Response.Listener<JSONObject>() {
+            suggestionRequest = new JsonObjectRequest(Request.Method.POST, feedBackURL, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
-                        int code=jsonObject.getInt("code");
-                        if(code==88)
-                        {
+                        int code = jsonObject.getInt("code");
+                        if (code == 88) {
                             Toast.makeText(SuggestionsActivity.this, "感谢你的建议", Toast.LENGTH_SHORT).show();
                             finish();
-                        }
-                        else
-                        {
-                            String message=jsonObject.getString("message");
-                            Toast.makeText(SuggestionsActivity.this,message, Toast.LENGTH_SHORT).show();
+                        } else {
+                            String message = jsonObject.getString("message");
+                            Toast.makeText(SuggestionsActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -122,13 +116,13 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
                 public void onErrorResponse(VolleyError volleyError) {
                     Toast.makeText(SuggestionsActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    UpdateToken updateToken=new UpdateToken(SuggestionsActivity.this);
+                    UpdateToken updateToken = new UpdateToken(SuggestionsActivity.this);
                     updateToken.updateToken();
-                    Map<String,String> headers=new HashMap<>();
-                    headers.put("token",token);
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("token", token);
                     return headers;
                 }
             };

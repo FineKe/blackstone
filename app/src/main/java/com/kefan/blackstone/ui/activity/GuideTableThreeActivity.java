@@ -2,8 +2,8 @@ package com.kefan.blackstone.ui.activity;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.R;
 
 import java.util.ArrayList;
 import java.util.List;

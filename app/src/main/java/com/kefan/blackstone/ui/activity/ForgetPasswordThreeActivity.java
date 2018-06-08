@@ -18,15 +18,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.kefan.blackstone.ActivityUtil.ActivityCollector;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.kefan.blackstone.ActivityUtil.ActivityCollector;
-import com.kefan.blackstone.ActivityUtil.BaseActivity;
-import JavaBean.APIManager;
-
-public class ForgetPasswordThreeActivity extends BaseActivity implements View.OnClickListener{
+public class ForgetPasswordThreeActivity extends com.kefan.blackstone.BaseActivity implements View.OnClickListener{
     private String resetPasswordURL= APIManager.BASE_URL +"v1/user/forgetPwd/setPwd";
     private RequestQueue requestQueue;
     private JsonObjectRequest resetPasswordRequest;

@@ -1,23 +1,19 @@
 package com.kefan.blackstone.ui.activity;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.AlterRecord;
 
 import java.util.List;
 
-import database.AlterRecord;
-import database.Record;
 
 public class AlterNotesActivity extends BaseActivity implements View.OnClickListener{
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/global_bg_clolor"
@@ -10,16 +9,16 @@
         android:id="@+id/ll_left_header_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_left_header_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/action_back"/>
+            android:background="@mipmap/action_back" />
 
         <TextView
             android:id="@+id/tv_left_header_bar"
@@ -35,16 +34,16 @@
         android:id="@+id/ll_center_header_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_centerInParent="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_center_header_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="Test"/>
+            android:text="Test"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
@@ -52,10 +51,10 @@
         android:id="@+id/ll_right_header_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_right_header_bar"
@@ -68,9 +67,9 @@
             android:id="@+id/tv_right_header_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:layout_marginLeft="8dp"
             android:text="筛选"
-            android:layout_marginLeft="8dp"/>
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </RelativeLayout>

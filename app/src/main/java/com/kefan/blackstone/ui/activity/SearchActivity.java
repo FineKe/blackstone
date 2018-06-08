@@ -23,7 +23,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.HistoryRecord;
+import com.kefan.blackstone.database.Species;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,13 +38,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import JavaBean.APIManager;
-import database.HistoryRecord;
-import database.Species;
 
-
-public class SearchActivity extends BaseActivity implements View.OnClickListener{
-    private String searchURL= APIManager.BASE_URL +"v1/species/search";
+public class SearchActivity extends BaseActivity implements View.OnClickListener {
+    private String searchURL = APIManager.BASE_URL + "v1/species/search";
     private RequestQueue requestQueue;
     private JsonObjectRequest searchRequest;
     private EditText input;
@@ -53,11 +52,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private List<Species> myList;
     private List<HistoryRecord> historyRecordList;
     private HistoryRecordAdapter historyRecordAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_search);
         initData();
         initViews();
@@ -66,11 +66,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initData() {
-        requestQueue= Volley.newRequestQueue(this);
-        myList=new ArrayList<>();
-        myListViewAdapter=new MyListViewAdapter(myList);
-        historyRecordList=DataSupport.limit(10).find(HistoryRecord.class);
-        historyRecordAdapter=new HistoryRecordAdapter(historyRecordList);
+        requestQueue = Volley.newRequestQueue(this);
+        myList = new ArrayList<>();
+        myListViewAdapter = new MyListViewAdapter(myList);
+        historyRecordList = DataSupport.limit(10).find(HistoryRecord.class);
+        historyRecordAdapter = new HistoryRecordAdapter(historyRecordList);
 
     }
 
@@ -79,10 +79,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HistoryRecord historyRecord= (HistoryRecord) view.getTag();
-                Intent intent=new Intent(SearchActivity.this,SpeciesDeatailedActivity.class);
-                intent.putExtra("singal",historyRecord.getSingal());
-                intent.putExtra("speciesType",historyRecord.getSpeciesType());
+                HistoryRecord historyRecord = (HistoryRecord) view.getTag();
+                Intent intent = new Intent(SearchActivity.this, SpeciesDeatailedActivity.class);
+                intent.putExtra("singal", historyRecord.getSingal());
+                intent.putExtra("speciesType", historyRecord.getSpeciesType());
                 startActivity(intent);
             }
         });
@@ -90,11 +90,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
 
     private void initViews() {
-        input= (EditText) findViewById(R.id.activity_search_view_edit_text_input);
-        cancel= (TextView) findViewById(R.id.activity_search_view_text_view_cancel);
-        history= (LinearLayout) findViewById(R.id.activity_search_view_linear_layout_history);
-        listView= (ListView) findViewById(R.id.activity_search_view_list_view);
-        listViewHistory= (ListView) findViewById(R.id.activity_search_list_view_history);
+        input = (EditText) findViewById(R.id.activity_search_view_edit_text_input);
+        cancel = (TextView) findViewById(R.id.activity_search_view_text_view_cancel);
+        history = (LinearLayout) findViewById(R.id.activity_search_view_linear_layout_history);
+        listView = (ListView) findViewById(R.id.activity_search_view_list_view);
+        listViewHistory = (ListView) findViewById(R.id.activity_search_list_view_history);
         listViewHistory.setAdapter(historyRecordAdapter);
         listView.setAdapter(myListViewAdapter);
         input.addTextChangedListener(new TextWatcher() {
@@ -107,8 +107,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 listView.setVisibility(View.VISIBLE);
                 history.setVisibility(View.GONE);
-                if(s.length()==0)
-                {
+                if (s.length() == 0) {
                     history.setVisibility(View.VISIBLE);
                     listView.setVisibility(View.GONE);
                 }
@@ -124,54 +123,48 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Species species=myList.get(position);
+                Species species = myList.get(position);
 
-                HistoryRecord historyRecord=new HistoryRecord();
+                HistoryRecord historyRecord = new HistoryRecord();
                 historyRecord.setSingal(species.getSingal());
                 historyRecord.setChineseName(species.getChineseName());
                 historyRecord.setSpeciesType(species.getSpeciesType());
                 historyRecord.save();
 
-                Intent intent=new Intent(SearchActivity.this,SpeciesDeatailedActivity.class);
-                intent.putExtra("singal",species.getSingal());
-                intent.putExtra("speciesType",species.getSpeciesType());
+                Intent intent = new Intent(SearchActivity.this, SpeciesDeatailedActivity.class);
+                intent.putExtra("singal", species.getSingal());
+                intent.putExtra("speciesType", species.getSpeciesType());
                 startActivity(intent);
             }
         });
     }
 
     private void updateAdapter(String s) {
-        if(s.equals(""))
-        {
+        if (s.equals("")) {
             myListViewAdapter.list.clear();
             myListViewAdapter.notifyDataSetChanged();
             history.setVisibility(View.VISIBLE);
-        }else
-        {
-            Map<String,String> map=new HashMap<>();
-            map.put("key",input.getText().toString());
-            JSONObject jsonObject=new JSONObject(map);
-            searchRequest=new JsonObjectRequest(Request.Method.POST, searchURL, jsonObject, new Response.Listener<JSONObject>() {
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("key", input.getText().toString());
+            JSONObject jsonObject = new JSONObject(map);
+            searchRequest = new JsonObjectRequest(Request.Method.POST, searchURL, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
-                        int code=jsonObject.getInt("code");
-                        if(code==88)
-                        {   myList.clear();
-                            JSONArray data=jsonObject.getJSONArray("data");
-                            for(int i=0;i<data.length();i++)
-                            {
-                                Species species= new Species();
+                        int code = jsonObject.getInt("code");
+                        if (code == 88) {
+                            myList.clear();
+                            JSONArray data = jsonObject.getJSONArray("data");
+                            for (int i = 0; i < data.length(); i++) {
+                                Species species = new Species();
                                 species.setSingal(data.getJSONObject(i).getInt("id"));
                                 species.setChineseName(data.getJSONObject(i).getString("chineseName"));
                                 species.setLatinName(data.getJSONObject(i).getString("latinName"));
                                 species.setOrder(data.getJSONObject(i).getString("order"));
-                                if(data.getJSONObject(i).has("family"))
-                                {
+                                if (data.getJSONObject(i).has("family")) {
                                     species.setFamily(data.getJSONObject(i).getString("family"));
-                                }
-                                else
-                                {
+                                } else {
                                     species.setFamily("");
                                 }
                                 species.setSpeciesType(data.getJSONObject(i).getString("speciesType"));
@@ -181,13 +174,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    myListViewAdapter.list=myList;
+                                    myListViewAdapter.list = myList;
                                     myListViewAdapter.notifyDataSetChanged();
                                 }
                             });
-                        }else
-                        {
-                            String message=jsonObject.getString("message");
+                        } else {
+                            String message = jsonObject.getString("message");
                             Toast.makeText(SearchActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
@@ -201,7 +193,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }
             });
             requestQueue.add(searchRequest);
-           // myList= DataSupport.where("chineseName like ?","%"+s+"%").find(Species.class);
+            // myList= DataSupport.where("chineseName like ?","%"+s+"%").find(Species.class);
 
         }
 
@@ -209,15 +201,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.activity_search_view_text_view_cancel:
                 this.finish();
                 break;
         }
     }
-    public class MyListViewAdapter extends BaseAdapter
-    {
+
+    public class MyListViewAdapter extends BaseAdapter {
         List<Species> list;
 
         public MyListViewAdapter(List<Species> list) {
@@ -241,15 +232,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView= LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_view_reseult_item,null);
-            TextView textView= (TextView) convertView.findViewById(R.id.search_view_result_item_text_view);
+            convertView = LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_view_reseult_item, null);
+            TextView textView = (TextView) convertView.findViewById(R.id.search_view_result_item_text_view);
             textView.setText(list.get(position).getChineseName());
             return convertView;
         }
     }
 
-    public class HistoryRecordAdapter extends BaseAdapter
-    {
+    public class HistoryRecordAdapter extends BaseAdapter {
         List<HistoryRecord> historyRecordList;
 
         public HistoryRecordAdapter(List<HistoryRecord> historyRecordList) {
@@ -273,8 +263,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView=LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_view_history_item,null);
-            TextView textView= (TextView) convertView.findViewById(R.id.search_view_history_item_text_view);
+            convertView = LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_view_history_item, null);
+            TextView textView = (TextView) convertView.findViewById(R.id.search_view_history_item_text_view);
             textView.setText(historyRecordList.get(position).getChineseName());
             convertView.setTag(historyRecordList.get(position));
             return convertView;

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <widget.HeaderBar
+        <com.kefan.blackstone.widget.HeaderBar
             android:background="@color/global_bg_clolor"
             android:id="@+id/headerbar_main_activity"
             android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             app:left_margin="16dp"
             app:right_margin="16dp"
             android:layout_height="40dp">
-        </widget.HeaderBar>
+        </com.kefan.blackstone.widget.HeaderBar>
 
         <FrameLayout
 

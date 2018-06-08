@@ -22,6 +22,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+
 /**
  * Created by 98613 on 2017/5/31 0031.
  */
@@ -179,8 +180,9 @@ public class ClipZoomImageView extends ImageView implements
         float scale = getScale();
         float scaleFactor = detector.getScaleFactor();
 
-        if (getDrawable() == null)
+        if (getDrawable() == null) {
             return true;
+        }
 
         /**
          * 缩放的范围控制
@@ -244,8 +246,9 @@ public class ClipZoomImageView extends ImageView implements
     public boolean onTouch(View v, MotionEvent event)
     {
 
-        if (mGestureDetector.onTouchEvent(event))
+        if (mGestureDetector.onTouchEvent(event)) {
             return true;
+        }
         mScaleGestureDetector.onTouchEvent(event);
 
         float x = 0, y = 0;
@@ -355,8 +358,9 @@ public class ClipZoomImageView extends ImageView implements
         if (once)
         {
             Drawable d = getDrawable();
-            if (d == null)
+            if (d == null) {
                 return;
+            }
             // 垂直方向的边距
             mVerticalPadding = (getHeight() - (getWidth() - 2 * mHorizontalPadding)) / 2;
 

@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.kefan.blackstone.BaseActivity;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 
 import org.json.JSONObject;
@@ -27,12 +28,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import JavaBean.APIManager;
 
 public class AccountAndSecurityActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG ="AccountAndSecurity";
-    private String LogOutURL=APIManager.BASE_URL +"v1/user/logout";
+    private String LogOutURL= APIManager.BASE_URL +"v1/user/logout";
     private RequestQueue requestQueue;
 
     private LinearLayout tab_personInformation;

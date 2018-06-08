@@ -1,16 +1,14 @@
 package com.kefan.blackstone.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.R;
 
 import java.util.ArrayList;

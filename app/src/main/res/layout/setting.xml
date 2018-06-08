@@ -2,14 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffff">
-
-    <include
-        layout="@layout/setting_title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+    android:background="#ffff"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/setting_linearlayout_version_update"
@@ -27,20 +21,22 @@
             android:layout_weight="1"
             android:text="版本更新"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
         />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="21dp"
-            android:text="2.0"
+            android:text="3.0"
+            android:textSize="18sp"
             android:textColor="@color/font_color" />
     </LinearLayout>
 
-    <include layout="@layout/setting_divider_line"
+    <include
+        layout="@layout/setting_divider_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/setting_linearlayout_account_and_security"
@@ -58,7 +54,7 @@
             android:layout_weight="1"
             android:text="账号与安全"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -69,9 +65,10 @@
             android:src="@mipmap/right_arrow" />
     </LinearLayout>
 
-    <include layout="@layout/setting_divider_line"
+    <include
+        layout="@layout/setting_divider_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/setting_linearlayout_copyright"
@@ -89,7 +86,7 @@
             android:layout_weight="1"
             android:text="版权信息"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -100,9 +97,10 @@
             android:src="@mipmap/right_arrow" />
     </LinearLayout>
 
-    <include layout="@layout/setting_divider_line"
+    <include
+        layout="@layout/setting_divider_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/setting_linearlayout_developing_team"
@@ -120,7 +118,7 @@
             android:layout_weight="1"
             android:text="制作团队"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -131,9 +129,10 @@
             android:src="@mipmap/right_arrow" />
     </LinearLayout>
 
-    <include layout="@layout/setting_divider_line"
+    <include
+        layout="@layout/setting_divider_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/setting_linearlayout_suggestions"
@@ -151,13 +150,14 @@
             android:layout_weight="1"
             android:text="给我们建议"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
 
-    <include layout="@layout/setting_divider_line"
+    <include
+        layout="@layout/setting_divider_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

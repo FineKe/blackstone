@@ -16,8 +16,9 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bugout.init(this,"e20636cd3cd1295bb49b76aa0bac2727","");
+        Bugout.init(this, "e20636cd3cd1295bb49b76aa0bac2727", "");
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -25,12 +26,14 @@ public class BaseActivity extends AppCompatActivity {
         //注：回调 1
         Bugout.onResume(this);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         //注：回调 2
         Bugout.onPause(this);
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         //注：回调 3

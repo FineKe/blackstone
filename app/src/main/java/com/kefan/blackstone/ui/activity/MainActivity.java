@@ -20,9 +20,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kefan.blackstone.JavaBean.APIManager;
+import com.kefan.blackstone.JsonUtil.JsonResolverSpeciesDetailedSave;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.Amphibia;
+import com.kefan.blackstone.database.Bird;
+import com.kefan.blackstone.database.Insect;
+import com.kefan.blackstone.database.Record;
+import com.kefan.blackstone.database.Reptiles;
+import com.kefan.blackstone.database.Species;
 import com.kefan.blackstone.ui.fragment.HomeFragment;
 import com.kefan.blackstone.ui.fragment.TestingFragment;
+import com.kefan.blackstone.widget.HeaderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
@@ -31,19 +40,10 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
-import JavaBean.APIManager;
-import JsonUtil.JsonResolverSpeciesDetailedSave;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import database.Amphibia;
-import database.Bird;
-import database.Insect;
-import database.Record;
-import database.Reptiles;
-import database.Species;
-import widget.HeaderBar;
 
-;
+
 
 public class MainActivity extends AutoLayoutActivity implements View.OnClickListener {
 
@@ -71,8 +71,10 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.drawer_main_activity)
     DrawerLayout drawerLayout;
 
+
+
     @BindView(R.id.headerbar_main_activity)
-    HeaderBar headerBar;
+    public HeaderBar headerBar;
 
     @BindView(R.id.iv_home_header_view_main_activity)
     ImageView home;
@@ -113,6 +115,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private GuideFragment guideFragment;
 
     private TestingFragment testingFragment;
+
+    private SettingFragment settingFragment;
 
 
     @Override
@@ -263,7 +267,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 break;
 
             case R.id.ll_add_record_main_activity:
-                startActivity(new Intent(this, AddRecordActivity.class));
+
 
                 break;
 
@@ -276,18 +280,28 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity, testingFragment).commit();
                 headerBar.getCenterTextView().setText("小测试");
                 headerBar.getRightImageView().setVisibility(View.INVISIBLE);
+
                 break;
             case R.id.ll_collection_main_activity:
-                startActivity(new Intent(this, MyCollectionsActivity.class));
+
                 break;
             case R.id.ll_observe_record_main_activity:
-                startActivity(new Intent(this, MyRecordsActivity.class));
+
                 break;
             case R.id.ll_setting_main_activity:
-                startActivity(new Intent(this, SettingActivity.class));
+
+                if (settingFragment == null) {
+                    settingFragment=new SettingFragment();
+                }
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity, settingFragment).commit();
+                headerBar.getCenterTextView().setText("设置");
+                headerBar.getCenterTextView().setVisibility(View.VISIBLE);
+                headerBar.getRightImageView().setVisibility(View.INVISIBLE);
+
                 break;
             case R.id.ll_team_main_activity:
-                startActivity(new Intent(this, MakeTeamActivity.class));
+
                 break;
 
         }

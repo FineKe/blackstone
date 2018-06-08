@@ -1,4 +1,4 @@
-package database;
+package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
@@ -18,8 +18,8 @@ public class Record extends DataSupport {
         this.chineseName = chineseName;
         this.speciesId = speciesId;
         this.speciesType = speciesType;
-        remarkIsNull=true;
-        isChecked=false;
+        remarkIsNull = true;
+        isChecked = false;
     }
 
     public String getChineseName() {

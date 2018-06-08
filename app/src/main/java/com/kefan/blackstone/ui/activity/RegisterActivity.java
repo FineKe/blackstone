@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -22,11 +23,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import JavaBean.APIManager;
-
 public class RegisterActivity extends AutoLayoutActivity implements View.OnClickListener {
-    private String RegisterURL = APIManager.BASE_URL +"v1/user/register";//注册账号请求，post请求夹带json数据
-    private String GetCodeURL = APIManager.BASE_URL +"v1/user/verifyCode/mobile";//发送验证码请求，post请求夹带json数据
+    private String RegisterURL = APIManager.BASE_URL + "v1/user/register";//注册账号请求，post请求夹带json数据
+    private String GetCodeURL = APIManager.BASE_URL + "v1/user/verifyCode/mobile";//发送验证码请求，post请求夹带json数据
     private RequestQueue requestQueue;//请求列
 
     private JsonObjectRequest submitRequest;
@@ -148,8 +147,7 @@ public class RegisterActivity extends AutoLayoutActivity implements View.OnClick
                             if (code != 88) {
                                 String message = jsonObject.getString("message");
                                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }else
-                            {
+                            } else {
                                 Toast.makeText(RegisterActivity.this, "验证码发送成功", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {

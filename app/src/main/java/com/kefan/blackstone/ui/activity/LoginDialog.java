@@ -17,8 +17,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.kefan.blackstone.BlackStoneApplication;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ui.dialog.LoginErrorDialog;
+import com.kefan.blackstone.util.UserSharePreferenceUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +29,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import JavaBean.APIManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import util.UserSharePreferenceUtil;
 
 /**
  * Created by MY SHIP on 2017/5/4.

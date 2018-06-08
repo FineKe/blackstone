@@ -1,4 +1,4 @@
-package LocationUtil;
+package com.kefan.blackstone.LocationUtil;
 
 import android.Manifest;
 import android.content.Context;

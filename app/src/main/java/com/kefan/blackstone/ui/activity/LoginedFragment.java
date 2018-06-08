@@ -33,6 +33,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 
 import org.json.JSONException;
@@ -43,8 +44,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-
-import JavaBean.APIManager;
 
 /**
  * Created by MY SHIP on 2017/5/7.

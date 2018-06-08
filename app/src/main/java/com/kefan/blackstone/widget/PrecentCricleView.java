@@ -46,12 +46,11 @@ public class PrecentCricleView extends View {
     private float sweepAngle = 90;
 
 
-    private String text=null;
+    private String text = null;
 
     private Paint circilePaint = new Paint();
     private Paint arcPaint = new Paint();
     private Paint textPaint = new Paint();
-
 
 
     public PrecentCricleView(Context context) {
@@ -65,17 +64,17 @@ public class PrecentCricleView extends View {
     public PrecentCricleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.PrecentCricleView);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PrecentCricleView);
 
-        thickness = typedArray.getInteger(R.styleable.PrecentCricleView_arcThickness,20);
+        thickness = typedArray.getInteger(R.styleable.PrecentCricleView_arcThickness, 20);
 
-        circleBackgroundColor = typedArray.getColor(R.styleable.PrecentCricleView_circleBackgroundColor,circleBackgroundColor);
-        arcBackgroundColor = typedArray.getColor(R.styleable.PrecentCricleView_arcBackgroundColor,arcBackgroundColor);
-        textColor = typedArray.getColor(R.styleable.PrecentCricleView_textColor,textColor);
+        circleBackgroundColor = typedArray.getColor(R.styleable.PrecentCricleView_circleBackgroundColor, circleBackgroundColor);
+        arcBackgroundColor = typedArray.getColor(R.styleable.PrecentCricleView_arcBackgroundColor, arcBackgroundColor);
+        textColor = typedArray.getColor(R.styleable.PrecentCricleView_textColor, textColor);
 
-        textSize = typedArray.getDimensionPixelSize(R.styleable.PrecentCricleView_textSize,20);
-        startAngdle = typedArray.getFloat(R.styleable.PrecentCricleView_startAngdle,90);
-        sweepAngle = typedArray.getFloat(R.styleable.PrecentCricleView_sweepAngle,0);
+        textSize = typedArray.getDimensionPixelSize(R.styleable.PrecentCricleView_textSize, 20);
+        startAngdle = typedArray.getFloat(R.styleable.PrecentCricleView_startAngdle, 90);
+        sweepAngle = typedArray.getFloat(R.styleable.PrecentCricleView_sweepAngle, 0);
 
         text = typedArray.getString(R.styleable.PrecentCricleView_text);
 
@@ -108,12 +107,12 @@ public class PrecentCricleView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int width=getSize(DEFAULT_SIZE,widthMeasureSpec);
-        int height=getSize(DEFAULT_SIZE,heightMeasureSpec);
+        int width = getSize(DEFAULT_SIZE, widthMeasureSpec);
+        int height = getSize(DEFAULT_SIZE, heightMeasureSpec);
 
-        int size = width>height?height:width;
+        int size = width > height ? height : width;
 
-        setMeasuredDimension(size,size);
+        setMeasuredDimension(size, size);
 
     }
 
@@ -122,21 +121,20 @@ public class PrecentCricleView extends View {
         super.onDraw(canvas);
 
         //画圆环
-        canvas.drawCircle(getWidth()/2.0f,getWidth()/2.0f,(getWidth()- thickness)/2.0f,circilePaint);
+        canvas.drawCircle(getWidth() / 2.0f, getWidth() / 2.0f, (getWidth() - thickness) / 2.0f, circilePaint);
 
 
         //画圆弧
-        RectF rectF=new RectF(0+ thickness /2,0+ thickness /2,getWidth()- thickness /2,getHeight()- thickness /2);
-        canvas.drawArc(rectF,startAngdle,sweepAngle,false,arcPaint);
-
+        RectF rectF = new RectF(0 + thickness / 2, 0 + thickness / 2, getWidth() - thickness / 2, getHeight() - thickness / 2);
+        canvas.drawArc(rectF, startAngdle, sweepAngle, false, arcPaint);
 
 
         //画文字
         if (text != null && text.length() != 0) {
 
-            Rect rect=new Rect();
-            textPaint.getTextBounds(text,0,text.length(),rect);
-            canvas.drawText(text,getWidth()/2.0f-rect.width()/2,getWidth()/2.0f+rect.height()/2,textPaint);
+            Rect rect = new Rect();
+            textPaint.getTextBounds(text, 0, text.length(), rect);
+            canvas.drawText(text, getWidth() / 2.0f - rect.width() / 2, getWidth() / 2.0f + rect.height() / 2, textPaint);
 
         }
 

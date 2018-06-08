@@ -1,4 +1,9 @@
-package JsonUtil;
+package com.kefan.blackstone.JsonUtil;
+
+import com.kefan.blackstone.database.Amphibia;
+import com.kefan.blackstone.database.Bird;
+import com.kefan.blackstone.database.Insect;
+import com.kefan.blackstone.database.Reptiles;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,10 +11,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import database.Amphibia;
-import database.Bird;
-import database.Insect;
-import database.Reptiles;
 
 /**
  * Created by MY SHIP on 2017/4/29.
@@ -18,6 +19,7 @@ import database.Reptiles;
 public class JsonResolverSpeciesDetailedSave {
     private JSONObject jsonObject;
     private Object resultObject;
+
     public JsonResolverSpeciesDetailedSave(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
     }
@@ -37,16 +39,16 @@ public class JsonResolverSpeciesDetailedSave {
                 JSONObject data = jsonObject.getJSONObject("data");
                 switch (data.getString("speciesType")) {
                     case "reptiles":
-                        resultObject=ResolveRepties(jsonObject);
+                        resultObject = ResolveRepties(jsonObject);
                         break;
                     case "bird":
-                        resultObject=ResolveBird(jsonObject);
+                        resultObject = ResolveBird(jsonObject);
                         break;
                     case "amphibia":
-                        resultObject=ResolveAmphibia(jsonObject);
+                        resultObject = ResolveAmphibia(jsonObject);
                         break;
                     case "insect":
-                        resultObject=ResolveInsect(jsonObject);
+                        resultObject = ResolveInsect(jsonObject);
                         break;
                 }
             }
@@ -242,7 +244,7 @@ public class JsonResolverSpeciesDetailedSave {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    return reptiles;
+        return reptiles;
     }
 
 }

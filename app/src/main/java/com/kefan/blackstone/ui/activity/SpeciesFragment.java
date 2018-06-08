@@ -24,7 +24,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.SpeciesClasses;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +36,6 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-import JavaBean.APIManager;
-import database.SpeciesClasses;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
@@ -43,45 +43,44 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by MY SHIP on 2017/3/18.
  */
 
-public class SpeciesFragment extends Fragment{
-    private final int OK=1;
-    private String getCategoryURL= APIManager.BASE_URL +"v1/species/categories";
+public class SpeciesFragment extends Fragment {
+    private final int OK = 1;
+    private String getCategoryURL = APIManager.BASE_URL + "v1/species/categories";
     private StickyListHeadersListView speciesClassListView;
-    private List<SpeciesClasses>speciesClassesList;
+    private List<SpeciesClasses> speciesClassesList;
     private StickyListViewAdapter stickyListViewAdapter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private String categoryFile="category";
-    private String speciesType[]={"amphibia","reptiles","bird"};
-    private boolean isLoadedCategory=false;
-    boolean flag=true;
+    private String categoryFile = "category";
+    private String speciesType[] = {"amphibia", "reptiles", "bird"};
+    private boolean isLoadedCategory = false;
+    boolean flag = true;
     private ImageView searchView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.species,container,false);
-        speciesClassListView= (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
-        searchView= (ImageView) view.findViewById(R.id.species_title_image_view_search_view);
-        speciesClassesList=new ArrayList<>();
-        stickyListViewAdapter=new StickyListViewAdapter(speciesClassesList,getContext());
+        View view = inflater.inflate(R.layout.species, container, false);
+        speciesClassListView = (StickyListHeadersListView) view.findViewById(R.id.StickyListHeadersListView_species_list_view);
+        searchView = (ImageView) view.findViewById(R.id.species_title_image_view_search_view);
+        speciesClassesList = new ArrayList<>();
+        stickyListViewAdapter = new StickyListViewAdapter(speciesClassesList, getContext());
         speciesClassListView.setAdapter(stickyListViewAdapter);
         speciesClassListView.setDivider(null);
         speciesClassListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position<=2)
-                {
-                    startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesType",speciesType[position]).putExtra("position",position));
-                }else
-                {
-                    startActivity(new Intent(getContext(),SpeciesClassActivity.class).putExtra("speciesClassName",speciesClassesList.get(position).getClassesName()).putExtra("position",position));
+                if (position <= 2) {
+                    startActivity(new Intent(getContext(), SpeciesClassActivity.class).putExtra("speciesType", speciesType[position]).putExtra("position", position));
+                } else {
+                    startActivity(new Intent(getContext(), SpeciesClassActivity.class).putExtra("speciesClassName", speciesClassesList.get(position).getClassesName()).putExtra("position", position));
                 }
             }
         });
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),SearchActivity.class));
+                startActivity(new Intent(getContext(), SearchActivity.class));
             }
         });
         return view;
@@ -96,12 +95,9 @@ public class SpeciesFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        if(DataSupport.findAll(SpeciesClasses.class).size()==0)
-        {
+        if (DataSupport.findAll(SpeciesClasses.class).size() == 0) {
             createClassList();
-        }
-        else
-        {
+        } else {
             speciesClassesList.clear();
             speciesClassesList.addAll(DataSupport.findAll(SpeciesClasses.class));
             stickyListViewAdapter.notifyDataSetChanged();
@@ -132,12 +128,11 @@ public class SpeciesFragment extends Fragment{
 //            speciesClassesList.add(speciesClasses);
 //            i++;
 //        }
-            GetCategory();
+        GetCategory();
 
     }
 
-    private class StickyListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter
-    {
+    private class StickyListViewAdapter extends BaseAdapter implements StickyListHeadersAdapter {
         private List<SpeciesClasses> list;
         private LayoutInflater inflater;
 
@@ -148,8 +143,8 @@ public class SpeciesFragment extends Fragment{
 
         @Override
         public View getHeaderView(int position, View convertView, ViewGroup parent) {
-            convertView=inflater.inflate(R.layout.species_classes_list_view_header,parent,false);
-            TextView title= (TextView) convertView.findViewById(R.id.species_classes_header_text_view_classes_title);
+            convertView = inflater.inflate(R.layout.species_classes_list_view_header, parent, false);
+            TextView title = (TextView) convertView.findViewById(R.id.species_classes_header_text_view_classes_title);
             title.setText(list.get(position).getTitle());
             return convertView;
         }
@@ -176,14 +171,13 @@ public class SpeciesFragment extends Fragment{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView=inflater.inflate(R.layout.species_classes_list_view_item,parent,false);
-            ImageView picture= (ImageView) convertView.findViewById(R.id.species_classes_item_image_view_class_picture);
-            TextView className= (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
+            convertView = inflater.inflate(R.layout.species_classes_list_view_item, parent, false);
+            ImageView picture = (ImageView) convertView.findViewById(R.id.species_classes_item_image_view_class_picture);
+            TextView className = (TextView) convertView.findViewById(R.id.species_classes_item_text_view_class_name);
             Glide.with(getContext()).load(list.get(position).getMainPhoto()).into(picture);
             className.setText(list.get(position).getClassesName());
-            View line=convertView.findViewById(R.id.fragment_species_recycler_view_item_line);
-            if(position==2)
-            {
+            View line = convertView.findViewById(R.id.fragment_species_recycler_view_item_line);
+            if (position == 2) {
                 line.setVisibility(View.GONE);
             }
             return convertView;
@@ -191,24 +185,23 @@ public class SpeciesFragment extends Fragment{
     }
 
 
-    public void GetCategory()
-    {   speciesClassesList.clear();
+    public void GetCategory() {
+        speciesClassesList.clear();
         DataSupport.deleteAll(SpeciesClasses.class);
-        RequestQueue requestQueue= Volley.newRequestQueue(getContext());
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, getCategoryURL, null, new Response.Listener<JSONObject>() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getCategoryURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    int code=jsonObject.getInt("code");
-                    if(code==88)
-                    {
-                        JSONObject data=jsonObject.getJSONObject("data");
-                        JSONArray invertebrate=data.getJSONArray("无脊椎动物");
-                        JSONArray vertebrate=data.getJSONArray("脊椎动物");
+                    int code = jsonObject.getInt("code");
+                    if (code == 88) {
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        JSONArray invertebrate = data.getJSONArray("无脊椎动物");
+                        JSONArray vertebrate = data.getJSONArray("脊椎动物");
 
-                        for(int i=0;i<vertebrate.length();i++)
-                        {   JSONObject object=vertebrate.getJSONObject(i);
-                            SpeciesClasses speciesClasses=new SpeciesClasses();
+                        for (int i = 0; i < vertebrate.length(); i++) {
+                            JSONObject object = vertebrate.getJSONObject(i);
+                            SpeciesClasses speciesClasses = new SpeciesClasses();
                             speciesClasses.setFlag(0);
                             speciesClasses.setTitle("脊椎动物");
                             speciesClasses.setClassesName(object.getString("name"));
@@ -217,9 +210,9 @@ public class SpeciesFragment extends Fragment{
                             //speciesClassesList.add(speciesClasses);
                         }
 
-                        for(int i=0;i<invertebrate.length();i++)
-                        {   JSONObject object=invertebrate.getJSONObject(i);
-                            SpeciesClasses speciesClasses=new SpeciesClasses();
+                        for (int i = 0; i < invertebrate.length(); i++) {
+                            JSONObject object = invertebrate.getJSONObject(i);
+                            SpeciesClasses speciesClasses = new SpeciesClasses();
                             speciesClasses.setFlag(1);
                             speciesClasses.setTitle("无脊椎动物");
                             speciesClasses.setClassesName(object.getString("name"));
@@ -227,8 +220,8 @@ public class SpeciesFragment extends Fragment{
                             speciesClasses.save();
                             //speciesClassesList.add(speciesClasses);
                         }
-                        Message message=new Message();
-                        message.what=OK;
+                        Message message = new Message();
+                        message.what = OK;
                         handler.sendMessage(message);
                     }
                 } catch (JSONException e) {
@@ -245,13 +238,12 @@ public class SpeciesFragment extends Fragment{
         });
         requestQueue.add(jsonObjectRequest);
     }
-    private Handler handler=new Handler()
-    {
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what)
-            {
+            switch (msg.what) {
                 case OK:
                     speciesClassesList.addAll(DataSupport.findAll(SpeciesClasses.class));
                     stickyListViewAdapter.notifyDataSetChanged();

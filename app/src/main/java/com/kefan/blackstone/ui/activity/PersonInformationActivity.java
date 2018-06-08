@@ -1,10 +1,8 @@
 package com.kefan.blackstone.ui.activity;
 
 import android.content.SharedPreferences;
-import android.media.DrmInitData;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 

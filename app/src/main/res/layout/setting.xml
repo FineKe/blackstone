@@ -102,37 +102,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/setting_linearlayout_developing_team"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="21dp"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
-            android:layout_marginTop="9dp"
-            android:layout_weight="1"
-            android:text="制作团队"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:background="#fff"
-            android:src="@mipmap/right_arrow" />
-    </LinearLayout>
-
-    <include
-        layout="@layout/setting_divider_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/setting_linearlayout_suggestions"

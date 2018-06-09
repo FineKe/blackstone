@@ -1,4 +1,4 @@
-package com.kefan.blackstone.ui.activity;
+package com.kefan.blackstone.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.ui.activity.AccountAndSecurityActivity;
+import com.kefan.blackstone.ui.activity.CopyRightActivity;
+import com.kefan.blackstone.ui.activity.MainActivity;
+import com.kefan.blackstone.ui.activity.SuggestionsActivity;
+import com.kefan.blackstone.widget.HeaderBar;
 
 /**
  * Created by MY SHIP on 2017/3/18.
@@ -21,7 +26,6 @@ import com.kefan.blackstone.R;
 public class SettingFragment extends Fragment implements View.OnClickListener {
     private LinearLayout tab_account;
     private LinearLayout tab_copyright;
-    private LinearLayout tab_team;
     private LinearLayout tab_suggestions;
 
     private SharedPreferences sharedPreferences;
@@ -29,19 +33,24 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private String isLoginedFile = "isLogin";
     private Boolean isLogined;
 
+    private HeaderBar headerBar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.setting, container, false);
         tab_account = (LinearLayout) view.findViewById(R.id.setting_linearlayout_account_and_security);
         tab_copyright = (LinearLayout) view.findViewById(R.id.setting_linearlayout_copyright);
-        tab_team = (LinearLayout) view.findViewById(R.id.setting_linearlayout_developing_team);
         tab_suggestions = (LinearLayout) view.findViewById(R.id.setting_linearlayout_suggestions);
 
         tab_account.setOnClickListener(this);
         tab_copyright.setOnClickListener(this);
-        tab_team.setOnClickListener(this);
         tab_suggestions.setOnClickListener(this);
+
+        headerBar= ((MainActivity) getActivity()).headerBar;
+        headerBar.getCenterTextView().setText("设置");
+        headerBar.getRightPart().setVisibility(View.GONE);
+
         return view;
     }
 
@@ -56,6 +65,15 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         sharedPreferences = getActivity().getSharedPreferences(isLoginedFile, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+    }
+
+    @Override
+    public void onDestroyView() {
+
+        headerBar.getCenterTextView().setText("");
+        headerBar.getRightPart().setVisibility(View.VISIBLE);
+
+        super.onDestroyView();
     }
 
     @Override
@@ -77,10 +95,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 //                getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 break;
 
-            case R.id.setting_linearlayout_developing_team:
-                startActivity(new Intent(getContext(), MakeTeamActivity.class));
-//                getActivity().overridePendingTransition(R.anim.in,R.anim.out);
-                break;
 
             case R.id.setting_linearlayout_suggestions:
                 startActivity(new Intent(getContext(), SuggestionsActivity.class));

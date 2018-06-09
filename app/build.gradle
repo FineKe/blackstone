@@ -58,4 +58,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/AMap_Location_V3.4.0_20170427.jar')
     compile project(':qAMasterSDK')
+
+    //ios 风格switch控件
+    compile 'ch.ielse:switchbutton:1.0.1'
+
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile 'com.alibaba:fastjson:1.1.68.android'
+
 }

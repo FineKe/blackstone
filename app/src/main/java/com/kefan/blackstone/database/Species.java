@@ -1,7 +1,5 @@
 package com.kefan.blackstone.database;
 
-import android.nfc.Tag;
-
 import org.litepal.crud.DataSupport;
 
 /**

@@ -1,10 +1,13 @@
 package com.kefan.blackstone.ui.fragment;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.ui.activity.MainActivity;
+import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.PrecentCricleView;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -37,6 +40,8 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.precent_view_last_score_home_fragment)
     PrecentCricleView lastScore;
 
+    private HeaderBar headerBar;
+
     @Override
     public int setLayout() {
         return R.layout.fragment_home;
@@ -63,11 +68,21 @@ public class HomeFragment extends BaseFragment {
         lastScore.setText("100");
         thisScore.setText("67");
 
+        headerBar= ((MainActivity) getActivity()).headerBar;
+
+        headerBar.getCenterTextView().setText("黑石顶生物多样性野外实习");
+
     }
 
     @Override
     public void initEvent() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        headerBar.getCenterTextView().setText("");
+        super.onDestroyView();
     }
 
     @Override

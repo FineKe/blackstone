@@ -9,7 +9,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,22 +35,23 @@ import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.ui.fragment.BaseFragment;
+import com.kefan.blackstone.widget.HeaderBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import butterknife.BindView;
+import ch.ielse.view.SwitchView;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -60,7 +60,7 @@ import static android.content.Context.MODE_PRIVATE;
  * 添加记录fragment
  */
 
-public class AddRecordFragment extends Fragment implements View.OnClickListener {
+public class AddRecordFragment extends BaseFragment implements View.OnClickListener {
     private String loginURL = APIManager.BASE_URL +"v1/user/login";
     private String upLoadRecordURL = APIManager.BASE_URL +"v1/record/new";
     private RequestQueue requestQueue;
@@ -125,51 +125,105 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
 
     private AMapLocationClient mapLocationClient;
 
-    @Nullable
+    private HeaderBar headerBar;
+
+    @BindView(R.id.sv_upload_add_record_fragment)
+    SwitchView switchUpload;
+
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_record, null, false);
-        textViewDate = (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
-        datePicker = (DatePicker) view.findViewById(R.id.add_record_datepicker);
-        expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
-        expandableListView.setAdapter(myExpandListViewAdapter);
-        //createBasicRecords();
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        textViewDate.setText(year + "年" + (month + 1) + "月" + day + "日");
-        month++;
-        datePicker.init(year, month - 1, day, new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year_, int monthOfYear, int dayOfMonth) {
-                year = year_;
-                month = monthOfYear + 1;
-                day = dayOfMonth;
-                textViewDate.setText(year + "年" + (month) + "月" + day + "日");
-            }
-        });
-
-
-
-        textViewDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (datePickerShow == false) {
-                    datePicker.setVisibility(View.VISIBLE);
-                    datePickerShow = true;
-                } else {
-                    datePicker.setVisibility(View.GONE);
-                    datePickerShow = false;
-                }
-            }
-        });
-        save = (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
-        initEvents();
-
-        expandableListView.setGroupIndicator(null);
-        return view;
+    public int setLayout() {
+        return R.layout.fragment_add_record;
     }
+
+    @Override
+    public void initView() {
+
+        //设置headerbar
+        headerBar= ((MainActivity) getActivity()).headerBar;
+        headerBar.getCenterTextView().setText("添加记录");
+        headerBar.getRightImageView().setVisibility(View.GONE);
+        headerBar.getRightTextView().setText("保存");
+
+    }
+
+    @Override
+    public void initEvent() {
+
+        switchUpload.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
+            @Override
+            public void toggleToOn(SwitchView view) {
+                headerBar.getRightTextView().setText("发表");
+                view.toggleSwitch(true);
+            }
+
+            @Override
+            public void toggleToOff(SwitchView view) {
+                headerBar.getRightTextView().setText("保存");
+                view.toggleSwitch(false);
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+
+        //还原初始headerbar
+        headerBar.getCenterTextView().setText("");
+        headerBar.getRightImageView().setVisibility(View.VISIBLE);
+        headerBar.getRightTextView().setText("");
+
+        super.onDestroyView();
+    }
+
+    //    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_add_record, null, false);
+//        textViewDate = (TextView) view.findViewById(R.id.add_record_titleBar_textView_date);
+//        datePicker = (DatePicker) view.findViewById(R.id.add_record_datepicker);
+//        expandableListView = (ExpandableListView) view.findViewById(R.id.add_record_expandListView);
+//        expandableListView.setAdapter(myExpandListViewAdapter);
+//        //createBasicRecords();
+//        calendar = Calendar.getInstance();
+//        year = calendar.get(Calendar.YEAR);
+//        month = calendar.get(Calendar.MONTH);
+//        day = calendar.get(Calendar.DAY_OF_MONTH);
+//        textViewDate.setText(year + "年" + (month + 1) + "月" + day + "日");
+//        month++;
+//        datePicker.init(year, month - 1, day, new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker view, int year_, int monthOfYear, int dayOfMonth) {
+//                year = year_;
+//                month = monthOfYear + 1;
+//                day = dayOfMonth;
+//                textViewDate.setText(year + "年" + (month) + "月" + day + "日");
+//            }
+//        });
+//
+//
+//
+//        textViewDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (datePickerShow == false) {
+//                    datePicker.setVisibility(View.VISIBLE);
+//                    datePickerShow = true;
+//                } else {
+//                    datePicker.setVisibility(View.GONE);
+//                    datePickerShow = false;
+//                }
+//            }
+//        });
+//        save = (TextView) view.findViewById(R.id.add_record_titleBar_textView_save);
+//        initEvents();
+//
+//        expandableListView.setGroupIndicator(null);
+//        return view;
+//    }
+
+
 
     private void initEvents() {
         save.setOnClickListener(this);
@@ -178,7 +232,7 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+//        initData();
         myExpandListViewAdapter = new MyExpandListViewAdapter(records);
 
     }
@@ -199,34 +253,34 @@ public class AddRecordFragment extends Fragment implements View.OnClickListener 
         super.onResume();
     }
 
-    private void initData() {
-        createBasicRecordsSharedPreferences = getActivity().getSharedPreferences(createBasicRecordsFile, MODE_PRIVATE);
-        createBasicRecordsEditor = createBasicRecordsSharedPreferences.edit();
-
-        userInformationSharedPreferences = getActivity().getSharedPreferences(userInformation, MODE_PRIVATE);
-        userInformationEditor = userInformationSharedPreferences.edit();
-
-        requestQueue = Volley.newRequestQueue(getContext());
-        boolean isCreateBasicRecords = createBasicRecordsSharedPreferences.getBoolean("isCreated", false);
-        records = new ArrayList<>();
-        birdRecord = new ArrayList<>();
-        amphibiaRecord = new ArrayList<>();
-        reptilesRecord = new ArrayList<>();
-        insectRecord = new ArrayList<>();
-        createBasicRecordsEditor.putBoolean("isCreated", true).apply();
-        List<Record> birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
-        List<Record> amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
-        List<Record> reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
-        List<Record> insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
-        records.add(insectRecord);
-        records.add(amphibiaRecord);
-        records.add(reptilesRecord);
-        records.add(birdRecord);
-
-        sharedPreferences = getActivity().getSharedPreferences(isLoginedFile, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        isLogined = sharedPreferences.getBoolean("islogined", false);
-    }
+//    private void initData() {
+//        createBasicRecordsSharedPreferences = getActivity().getSharedPreferences(createBasicRecordsFile, MODE_PRIVATE);
+//        createBasicRecordsEditor = createBasicRecordsSharedPreferences.edit();
+//
+//        userInformationSharedPreferences = getActivity().getSharedPreferences(userInformation, MODE_PRIVATE);
+//        userInformationEditor = userInformationSharedPreferences.edit();
+//
+//        requestQueue = Volley.newRequestQueue(getContext());
+//        boolean isCreateBasicRecords = createBasicRecordsSharedPreferences.getBoolean("isCreated", false);
+//        records = new ArrayList<>();
+//        birdRecord = new ArrayList<>();
+//        amphibiaRecord = new ArrayList<>();
+//        reptilesRecord = new ArrayList<>();
+//        insectRecord = new ArrayList<>();
+//        createBasicRecordsEditor.putBoolean("isCreated", true).apply();
+//        List<Record> birdRecord = DataSupport.where("speciesType=?", "bird").find(Record.class);
+//        List<Record> amphibiaRecord = DataSupport.where("speciesType=?", "amphibia").find(Record.class);
+//        List<Record> reptilesRecord = DataSupport.where("speciesType=?", "reptiles").find(Record.class);
+//        List<Record> insectRecord = DataSupport.where("speciesType=?", "insect").find(Record.class);
+//        records.add(insectRecord);
+//        records.add(amphibiaRecord);
+//        records.add(reptilesRecord);
+//        records.add(birdRecord);
+//
+//        sharedPreferences = getActivity().getSharedPreferences(isLoginedFile, MODE_PRIVATE);
+//        editor = sharedPreferences.edit();
+//        isLogined = sharedPreferences.getBoolean("islogined", false);
+//    }
 
     @Override
     public void onClick(View v) {

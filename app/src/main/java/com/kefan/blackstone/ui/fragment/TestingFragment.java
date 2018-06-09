@@ -1,5 +1,6 @@
 package com.kefan.blackstone.ui.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ui.activity.MainActivity;
+import com.kefan.blackstone.ui.activity.RankActivity;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.PrecentCricleView;
 import com.orhanobut.logger.Logger;
@@ -42,6 +44,8 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
 
     private ExecuteTestFragment executeTestFragment;
 
+    private HeaderBar headerBar;
+
     @Override
     public int setLayout() {
         return R.layout.fragment_testing;
@@ -51,8 +55,11 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
     public void initView() {
 
 
-
         Glide.with(this).load(R.drawable.testing_bg).into(icon);
+        headerBar=((MainActivity) getActivity()).headerBar;
+
+        headerBar.getRightPart().setVisibility(View.GONE);
+        headerBar.getCenterTextView().setText("小测试");
 
     }
 
@@ -60,19 +67,15 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
     public void initEvent() {
 
         start.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+        rank.setOnClickListener(this);
 
     }
 
     @Override
     public void onDestroyView() {
+        headerBar.getRightPart().setVisibility(View.VISIBLE);
+        headerBar.getCenterTextView().setText("");
         super.onDestroyView();
-
 
     }
 
@@ -87,6 +90,11 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
                 }
 
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity,executeTestFragment).commit();
+
+                break;
+            case R.id.tv_rank_testing_fragment:
+
+                startActivity(new Intent(getContext(), RankActivity.class));
 
                 break;
         }

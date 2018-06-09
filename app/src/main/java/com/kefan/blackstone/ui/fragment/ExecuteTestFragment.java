@@ -53,7 +53,6 @@ public class ExecuteTestFragment extends BaseFragment {
 
     private ImageView heartOne;
 
-
     private ImageView heartTwo;
 
     private ImageView heartThree;
@@ -95,6 +94,8 @@ public class ExecuteTestFragment extends BaseFragment {
         rightText.setText("0");
         rightText.setTextSize(18);
 
+        headerBar.getRightImageView().setVisibility(View.GONE);
+
         Glide.with(this).load(R.drawable.testing_bg).into(icon);
 
     }
@@ -104,19 +105,7 @@ public class ExecuteTestFragment extends BaseFragment {
         return R.layout.fragment_execute_test;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-
-    }
 
     @Override
     public void onDestroyView() {
@@ -132,5 +121,6 @@ public class ExecuteTestFragment extends BaseFragment {
 
         headerBar.getRightTextView().setText("");
         headerBar.getRightTextView().setVisibility(View.GONE);
+        headerBar.getRightImageView().setVisibility(View.VISIBLE);
     }
 }

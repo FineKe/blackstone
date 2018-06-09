@@ -20,10 +20,10 @@ import java.util.List;
  */
 
 public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcordAdapter.ViewHolder>{
-    private List<MyRecordsActivity.Record> recordList;
+    private List<ObserveRecordFragment.Record> recordList;
     private Context context;
     private String TAG="ItemRemoveRcordAdapter";
-    public ItemRemoveRcordAdapter(Context context,List<MyRecordsActivity.Record>recordList){
+    public ItemRemoveRcordAdapter(Context context,List<ObserveRecordFragment.Record>recordList){
         this.context=context;
         this.recordList = recordList;
     }
@@ -43,13 +43,13 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
             Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getUserId());
             Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getTime());
             Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getNoteCountses().get(0).getSpeciesType());
-            MyRecordsActivity.Record record=recordList.get(position);
+            ObserveRecordFragment.Record record=recordList.get(position);
             Date da=new Date(record.getTime());
             SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
             String mdate=format.format(da);
             Log.d(TAG, "onBindViewHolder:"+da.toString() );
             holder.date.setText(mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日");
-            for(MyRecordsActivity.NoteCounts noteCounts:record.getNoteCountses())
+            for(ObserveRecordFragment.NoteCounts noteCounts:record.getNoteCountses())
             {
                 switch (noteCounts.getSpeciesType())
                 {

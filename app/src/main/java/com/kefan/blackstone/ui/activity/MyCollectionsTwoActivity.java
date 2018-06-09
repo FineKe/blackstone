@@ -57,7 +57,7 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
     private String getCollectionURL= APIManager.BASE_URL +"v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCollectionRequest;
-    public  List<MyCollectionsActivity.SpeciesClass> speciesClassList;
+    public  List<CollectionHomeFragment.SpeciesClass> speciesClassList;
     private List<String> indexList;
 
     private SpeciesContentAdapter speciesContentAdapter;
@@ -79,8 +79,8 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
 
     private void initData() {
         position=getIntent().getIntExtra("position",0);//取出position
-        List<Species> specieslist=MyCollectionsActivity.speciesClassList.get(position).getList();//这里从上一个activity中取list
-        oldSize=MyCollectionsActivity.speciesClassList.size();
+        List<Species> specieslist= CollectionHomeFragment.speciesClassList.get(position).getList();//这里从上一个activity中取list
+        oldSize= CollectionHomeFragment.speciesClassList.size();
         speciesList=new ArrayList<>();
         resultList=new ArrayList<>();
         indexList=new ArrayList<>();
@@ -102,7 +102,6 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
     private void initViews() {
         actionBack= (LinearLayout) findViewById(R.id.activity_my_collection_two_linear_layout_action_back);
         recyclerView= (RecyclerView) findViewById(R.id.activity_my_collection_two_recycler_view);
-        title= (TextView) findViewById(R.id.activity_my_collection_text_view_title);
         sliderBar= (SliderBar) findViewById(R.id.activity_my_collection_two_slider_bar);
         sliderBar.setData(indexList,positionList);
 
@@ -326,19 +325,19 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                         }
                         if(acount!=0)
                         {
-                            MyCollectionsActivity.SpeciesClass a=new MyCollectionsActivity.SpeciesClass("amphibia",amphibia,acount);
+                            CollectionHomeFragment.SpeciesClass a=new CollectionHomeFragment.SpeciesClass("amphibia",amphibia,acount);
                             a.setName("两栖类");
                             speciesClassList.add(a);
                         }
                         if(rcount!=0)
                         {
-                            MyCollectionsActivity.SpeciesClass r=new MyCollectionsActivity.SpeciesClass("reptiles",reptiles,rcount);
+                            CollectionHomeFragment.SpeciesClass r=new CollectionHomeFragment.SpeciesClass("reptiles",reptiles,rcount);
                             r.setName("爬行类");
                             speciesClassList.add(r);
                         }
                         if(bcount!=0)
                         {
-                            MyCollectionsActivity.SpeciesClass b=new MyCollectionsActivity.SpeciesClass("bird",bird,bcount);
+                            CollectionHomeFragment.SpeciesClass b=new CollectionHomeFragment.SpeciesClass("bird",bird,bcount);
                             b.setName("鸟类");
                             speciesClassList.add(b);
                         }
@@ -346,7 +345,7 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                         if(icount!=0)
                         {
                             Log.d("zx", "onResponse: "+icount);
-                            MyCollectionsActivity.SpeciesClass in=new MyCollectionsActivity.SpeciesClass("insect",insect,icount);
+                            CollectionHomeFragment.SpeciesClass in=new CollectionHomeFragment.SpeciesClass("insect",insect,icount);
                             Log.d("zx", "onResponse: "+icount);
                             in.setName("昆虫目");
                             speciesClassList.add(in);

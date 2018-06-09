@@ -1,4 +1,4 @@
-package com.kefan.blackstone.ui.activity;
+package com.kefan.blackstone.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,13 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.ui.activity.GuideTabOneActivity;
+import com.kefan.blackstone.ui.activity.GuideTableFourActivity;
+import com.kefan.blackstone.ui.activity.GuideTableThreeActivity;
+import com.kefan.blackstone.ui.activity.GuideTableTwoActivity;
+import com.kefan.blackstone.ui.activity.MainActivity;
 import com.kefan.blackstone.ui.fragment.BaseFragment;
+import com.kefan.blackstone.widget.HeaderBar;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -40,6 +46,7 @@ public class GuideFragment extends BaseFragment implements View.OnClickListener{
     LinearLayout tabfour;
 
 
+    private HeaderBar headerBar;
 
     @Override
     public int setLayout() {
@@ -62,6 +69,12 @@ public class GuideFragment extends BaseFragment implements View.OnClickListener{
                 Glide.with(context).load((Integer)path).into(imageView);
             }
         }).start();
+
+        headerBar= ((MainActivity) getActivity()).headerBar;
+
+        headerBar.getCenterTextView().setText("指南");
+        headerBar.getRightPart().setVisibility(View.GONE);
+
     }
 
     @Override
@@ -82,6 +95,13 @@ public class GuideFragment extends BaseFragment implements View.OnClickListener{
     public void onStop() {
         super.onStop();
         banner.stopAutoPlay();
+    }
+
+    @Override
+    public void onDestroyView() {
+        headerBar.getCenterTextView().setText("");
+        headerBar.getRightPart().setVisibility(View.VISIBLE);
+        super.onDestroyView();
     }
 
     @Override

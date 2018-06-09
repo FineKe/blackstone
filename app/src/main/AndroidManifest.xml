@@ -97,10 +97,6 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.MakeTeamActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.CopyRightActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
@@ -109,11 +105,11 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.MyCollectionsActivity"
+            android:name=".ui.activity.CollectionHomeFragment"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.MyRecordsActivity"
+            android:name=".ui.activity.ObserveRecordFragment"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.AddNotesActivity" />
@@ -181,7 +177,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="ui.activity.LoginActivity" />
         <activity android:name="ui.activity.AddRecordActivity" />
-        <activity android:name="ui.activity.SettingActivity"></activity>
+        <activity android:name=".ui.activity.RankActivity"></activity>
     </application>
 
 </manifest>

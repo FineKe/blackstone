@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ui.activity.ForgetPasswordActivity;
 import com.kefan.blackstone.ui.activity.LoginDialog;
+import com.kefan.blackstone.ui.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,7 +75,7 @@ public class LoginErrorDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 LoginErrorDialog.this.dismiss();
-                LoginDialog.getLoginDialog(getContext()).show();
+                LoginDialog.getLoginDialog(getContext(), ((MainActivity) getOwnerActivity()).handler).show();
             }
         });
 

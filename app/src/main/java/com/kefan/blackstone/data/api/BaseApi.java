@@ -51,7 +51,7 @@ public class BaseApi {
      * @param errorListener
      * @return
      */
-    public JsonObjectRequest baseJsonObjectPostRequest(Context context, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener) {
+    protected JsonObjectRequest baseJsonObjectPostRequest(Context context, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener) {
         return baseJsonObjectRequest(context, Request.Method.POST,url,data,listener,errorListener);
     }
 
@@ -63,7 +63,7 @@ public class BaseApi {
      * @param errorListener
      * @return
      */
-    public JsonObjectRequest baseJsonObjectGetRequest(Context context, String url, Response.Listener listener, Response.ErrorListener errorListener) {
+    protected JsonObjectRequest baseJsonObjectGetRequest(Context context, String url, Response.Listener listener, Response.ErrorListener errorListener) {
         return baseJsonObjectRequest(context,Request.Method.GET,url,null,listener,errorListener);
     }
 
@@ -77,7 +77,7 @@ public class BaseApi {
      * @param header
      * @return
      */
-    public JsonObjectRequest baseJsonObjectPostRequestWithHeader(Context context, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener,Map<String,String> header) {
+    protected JsonObjectRequest baseJsonObjectPostRequestWithHeader(Context context, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener,Map<String,String> header) {
         return baseJsonObjectRequestWithHeader(context, Request.Method.POST,url,data,listener,errorListener,header);
     }
 
@@ -90,7 +90,7 @@ public class BaseApi {
      * @param header
      * @return
      */
-    public JsonObjectRequest baseJsonObjectGetRequestWithHeader(Context context, String url, Response.Listener listener, Response.ErrorListener errorListener,Map<String,String> header) {
+    protected JsonObjectRequest baseJsonObjectGetRequestWithHeader(Context context, String url, Response.Listener listener, Response.ErrorListener errorListener,Map<String,String> header) {
         return baseJsonObjectRequestWithHeader(context,Request.Method.GET,url,null,listener,errorListener,header);
     }
 

@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -37,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.JsonUtil.JsonResolverSpeciesDetailedSave;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.common.HandlerConstant;
 import com.kefan.blackstone.database.Amphibia;
 import com.kefan.blackstone.database.Bird;
 import com.kefan.blackstone.database.Insect;
@@ -48,6 +51,7 @@ import com.kefan.blackstone.ui.fragment.HomeFragment;
 import com.kefan.blackstone.ui.fragment.SettingFragment;
 import com.kefan.blackstone.ui.fragment.TeamFragment;
 import com.kefan.blackstone.ui.fragment.TestingFragment;
+import com.kefan.blackstone.util.UserSharePreferenceUtil;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -141,6 +145,10 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.ll_team_main_activity)
     LinearLayout team;
 
+    @BindView(R.id.ll_combine_signinup_header_view_main_activity)
+    LinearLayout combine;
+
+
     private HomeFragment homeFragment;
 
     private GuideFragment guideFragment;
@@ -156,6 +164,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private SettingFragment settingFragment;
 
     private TeamFragment teamFragment;
+
 
 
     @Override
@@ -226,6 +235,14 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void initView() {
 
+        if (UserSharePreferenceUtil.getUser(this).isIslogined()) {
+            combine.setVisibility(View.INVISIBLE);
+            combine.setClickable(false);
+        }else {
+            combine.setVisibility(View.VISIBLE);
+            combine.setClickable(true);
+        }
+
         if (homeFragment == null) {
             homeFragment = new HomeFragment();
         }
@@ -251,7 +268,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 closeDrawer();
-                LoginDialog.getLoginDialog(MainActivity.this).show();
+                LoginDialog.getLoginDialog(MainActivity.this,handler).show();
 
             }
         });
@@ -675,4 +692,16 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         }
 
     }
+
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case HandlerConstant.LOGIN_SUCCESS:
+                    combine.setVisibility(View.INVISIBLE);
+                    combine.setClickable(false);
+
+            }
+        }
+    };
 }

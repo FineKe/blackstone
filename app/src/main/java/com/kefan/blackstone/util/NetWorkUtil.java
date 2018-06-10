@@ -1,7 +1,9 @@
 package com.kefan.blackstone.util;
 
+import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
 
 /**
@@ -19,6 +21,7 @@ public class NetWorkUtil {
      */
     private static boolean isConnected(Context context,Integer type) {
 
+
         //获取网络管理器
         ConnectivityManager connectivityManager=((ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -33,7 +36,12 @@ public class NetWorkUtil {
         }
 
         //返回网络连接状态
-        return networkInfo.isAvailable();
+
+        if (networkInfo == null) {
+            return false;
+        } else {
+            return networkInfo.isAvailable();
+        }
     }
 
 

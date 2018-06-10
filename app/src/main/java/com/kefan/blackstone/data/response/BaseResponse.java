@@ -1,4 +1,4 @@
-package com.kefan.blackstone.data;
+package com.kefan.blackstone.data.response;
 
 import com.kefan.blackstone.common.CommonConstant;
 

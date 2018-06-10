@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.kefan.blackstone.model.User;
+import com.kefan.blackstone.vo.TokenVO;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class UserSharePreferenceUtil {
     public static final String ISLOGINED = "isLogined";
     public static final String AVATAR = "avatar";
 
-    public static void save(Context context, JSONObject jsonObject, String pwd) throws JSONException {
+    public static void saveUser(Context context, JSONObject jsonObject, String pwd) throws JSONException {
 
         SharedPreferences.Editor editor = context.getSharedPreferences(USER_INFO_FILE, Context.MODE_PRIVATE).edit();
 
@@ -54,7 +55,26 @@ public class UserSharePreferenceUtil {
 
     }
 
-    private static User getUser(Context context) {
+    public static void saveUser(Context context, TokenVO tokenVO,String pwd) {
+
+        SharedPreferences.Editor editor = context.getSharedPreferences(USER_INFO_FILE, Context.MODE_PRIVATE).edit();
+
+        editor.putLong(ID, tokenVO.getUser().getId());
+        editor.putString(MOBILE, tokenVO.getUser().getMobile());
+        editor.putString(STUDENT_ID, tokenVO.getUser().getStudentId());
+        editor.putString(NAME, tokenVO.getUser().getName());
+        editor.putString(GENDER,tokenVO.getUser().getGender());
+        editor.putString(TOKEN, tokenVO.getToken());
+        editor.putLong(EXPIREAT, tokenVO.getExpireAt());
+        editor.putString(PASSWORD, pwd);
+        editor.putBoolean(ISLOGINED, true);
+        editor.putString(AVATAR,tokenVO.getUser().getAvatar());
+
+        editor.apply();
+
+    }
+
+    public static User getUser(Context context) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(USER_INFO_FILE, Context.MODE_PRIVATE);
 

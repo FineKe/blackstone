@@ -23,4 +23,10 @@ public interface UserService {
 
 
     public void saveUser(TokenVO tokenVO, String pwd);
+
+
+    /**
+     * 登出
+     */
+    public void logout();
 }

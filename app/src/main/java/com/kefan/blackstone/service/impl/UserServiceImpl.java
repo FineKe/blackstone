@@ -8,6 +8,7 @@ import com.kefan.blackstone.data.req.LoginReq;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.util.UserSharePreferenceUtil;
 import com.kefan.blackstone.vo.TokenVO;
+import com.kefan.blackstone.vo.UserVO;
 
 /**
  * @note: user service 实现类
@@ -45,6 +46,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService{
     @Override
     public void saveUser(TokenVO tokenVO, String pwd) {
 
-        UserSharePreferenceUtil.saveUser(context,tokenVO,pwd);
+        UserSharePreferenceUtil.saveUser(context,tokenVO,pwd,true);
+    }
+
+    @Override
+    public void logout() {
+        TokenVO tokenVO=new TokenVO();
+        UserVO userVO=new UserVO();
+        tokenVO.setUser(userVO);
+        UserSharePreferenceUtil.saveUser(context,tokenVO,null,false);
     }
 }

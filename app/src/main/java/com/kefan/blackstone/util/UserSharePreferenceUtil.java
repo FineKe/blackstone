@@ -55,7 +55,7 @@ public class UserSharePreferenceUtil {
 
     }
 
-    public static void saveUser(Context context, TokenVO tokenVO,String pwd) {
+    public static void saveUser(Context context, TokenVO tokenVO,String pwd,boolean islogin) {
 
         SharedPreferences.Editor editor = context.getSharedPreferences(USER_INFO_FILE, Context.MODE_PRIVATE).edit();
 
@@ -67,7 +67,7 @@ public class UserSharePreferenceUtil {
         editor.putString(TOKEN, tokenVO.getToken());
         editor.putLong(EXPIREAT, tokenVO.getExpireAt());
         editor.putString(PASSWORD, pwd);
-        editor.putBoolean(ISLOGINED, true);
+        editor.putBoolean(ISLOGINED, islogin);
         editor.putString(AVATAR,tokenVO.getUser().getAvatar());
 
         editor.apply();

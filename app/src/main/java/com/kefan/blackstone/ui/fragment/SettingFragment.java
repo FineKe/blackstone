@@ -17,6 +17,7 @@ import com.kefan.blackstone.ui.activity.AccountAndSecurityActivity;
 import com.kefan.blackstone.ui.activity.CopyRightActivity;
 import com.kefan.blackstone.ui.activity.MainActivity;
 import com.kefan.blackstone.ui.activity.SuggestionsActivity;
+import com.kefan.blackstone.util.UserSharePreferenceUtil;
 import com.kefan.blackstone.widget.HeaderBar;
 
 /**
@@ -80,8 +81,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.setting_linearlayout_account_and_security:
-                isLogined = sharedPreferences.getBoolean("islogined", false);
-                if (isLogined) {
+
+                if (UserSharePreferenceUtil.getUser(getContext()).isIslogined()) {
                     startActivity(new Intent(getContext(), AccountAndSecurityActivity.class));
 //                    getActivity().overridePendingTransition(R.anim.in,0);
                 } else {

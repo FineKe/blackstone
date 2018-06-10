@@ -22,6 +22,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 
 import org.json.JSONObject;
 
@@ -137,38 +138,6 @@ public class AccountAndSecurityActivity extends BaseActivity implements View.OnC
       //  overridePendingTransition(R.anim.in,R.anim.out);
     }
 
-    private void logOut() {
-
-        final String token=userInformationSharedPreferences.getString("token","");
-        Log.d(TAG, "logOut: "+userInformationSharedPreferences.getString("token",""));
-
-            JsonObjectRequest logOutRequest=new JsonObjectRequest(Request.Method.GET, LogOutURL + "?token=" + token, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject jsonObject) {
-                    Log.d(TAG, "onResponse: "+jsonObject.toString());
-
-                            editor.putBoolean("islogined",false).apply();//将用户登录设为false
-                            resetUserInfomation();
-                            finish();
-
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(AccountAndSecurityActivity.this, "没有网络", Toast.LENGTH_SHORT).show();
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String,String>headers=new HashMap<>();
-                    headers.put("token",token);
-                    return headers;
-                }
-            };
-            requestQueue.add(logOutRequest);
-        }
-
 
     private void resetUserInfomation()//重置用户信息
     {
@@ -194,8 +163,13 @@ public class AccountAndSecurityActivity extends BaseActivity implements View.OnC
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logOut();
+
+                new UserServiceImpl().logout();
+
+
                 logOutDialog.dismiss();
+
+                finish();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {

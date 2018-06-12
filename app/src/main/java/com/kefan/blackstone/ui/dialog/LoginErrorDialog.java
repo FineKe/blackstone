@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ui.activity.ForgetPasswordActivity;
-import com.kefan.blackstone.ui.activity.LoginDialog;
 import com.kefan.blackstone.ui.activity.MainActivity;
 
 import butterknife.BindView;

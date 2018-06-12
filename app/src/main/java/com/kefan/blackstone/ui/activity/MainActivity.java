@@ -46,6 +46,7 @@ import com.kefan.blackstone.database.Insect;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.ui.dialog.LoginDialog;
 import com.kefan.blackstone.ui.fragment.GuideFragment;
 import com.kefan.blackstone.ui.fragment.HomeFragment;
 import com.kefan.blackstone.ui.fragment.SettingFragment;

@@ -154,6 +154,21 @@
 
     </android.support.constraint.ConstraintLayout>
 
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading_login_dialog"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:indicatorColor="@color/global_bg_clolor"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ImageView
         android:id="@+id/login_dialog_imageView_actionCancel"
         android:layout_width="28dp"

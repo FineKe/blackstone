@@ -65,4 +65,7 @@ dependencies {
     //gson
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    //loading
+    implementation 'com.wang.avi:library:2.1.3'
+
 }

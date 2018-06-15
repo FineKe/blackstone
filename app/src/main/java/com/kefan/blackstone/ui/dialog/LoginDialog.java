@@ -138,7 +138,7 @@ public class LoginDialog extends Dialog {
             public void onClick(View v) {
                 showLoading();
                 userService.login(account.getText().toString(), password.getText().toString()
-                        , new BaseResponseListener<TokenVO>() {
+                        , new BaseResponseListener<TokenVO>(TokenVO.class) {
 
                             @Override
                             protected void onSuccess(TokenVO data) {

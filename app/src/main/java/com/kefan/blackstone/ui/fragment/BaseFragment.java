@@ -22,10 +22,15 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(setLayout(), null, false);
         ButterKnife.bind(this, view);
 
+        initData();
         initView();
         initEvent();
 
         return view;
+    }
+
+    protected void initData() {
+
     }
 
     public abstract int setLayout();

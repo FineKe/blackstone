@@ -29,4 +29,16 @@ public interface UserService {
      * 登出
      */
     public void logout();
+
+    /**
+     * 获取token
+     * @return
+     */
+    public String getToken();
+
+    /**
+     * 头像
+     * @return
+     */
+    public String icon();
 }

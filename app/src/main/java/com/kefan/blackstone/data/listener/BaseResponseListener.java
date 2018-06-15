@@ -4,6 +4,8 @@ import com.android.volley.Response;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kefan.blackstone.data.response.BaseResponse;
+import com.kefan.blackstone.util.GsonUtil;
+import com.kefan.blackstone.vo.MainVo;
 import com.kefan.blackstone.vo.TokenVO;
 import com.orhanobut.logger.Logger;
 
@@ -16,38 +18,38 @@ import java.lang.reflect.Type;
  * @author: 柯帆
  * @date: 2018/6/10 下午12:35
  */
-public  class BaseResponseListener<T> implements Response.Listener<JSONObject>{
+public  abstract class BaseResponseListener<T> implements Response.Listener<JSONObject> {
 
+    private Class clazz;
+
+    public BaseResponseListener(Class clazz) {
+        this.clazz = clazz;
+    }
 
     @Override
     public void onResponse(JSONObject jsonObject) {
 
-        Gson gson=new Gson();
+        BaseResponse<T> baseResponse = GsonUtil.fromJson(jsonObject.toString(),clazz);
 
-        Logger.d(jsonObject);
+        if (baseResponse.isSuccess()) {
 
-        Type jsonType = new TypeToken<BaseResponse<T>>(){}.getType();
-
-        System.out.println(jsonType.toString());
-
-        BaseResponse<T> tBaseResponse = gson.fromJson(jsonObject.toString(),new TypeToken<BaseResponse<TokenVO>>(){}.getType());
-
-        if (tBaseResponse.isSuccess()) {
-
-            onSuccess(tBaseResponse.getData());
+            onSuccess(baseResponse.getData());
 
         } else {
 
-            onFailed(tBaseResponse.getCode(),tBaseResponse.getMessage());
+            onFailed(baseResponse.getCode(),baseResponse.getMessage());
 
         }
+
+        Logger.d(baseResponse);
     }
 
-    protected  void onFailed(int code,String message) {
+
+    protected void onFailed(int code, String message) {
 
     }
 
-    protected  void onSuccess(T data) {
+    protected void  onSuccess(T data) {
 
     }
 }

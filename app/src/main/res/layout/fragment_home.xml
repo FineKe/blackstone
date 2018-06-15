@@ -1,259 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ScrollView
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/prl_home_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:refreshType="ring">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.youth.banner.Banner
-                android:id="@+id/banner_home_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="150dp">
-
-            </com.youth.banner.Banner>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="16dp"
-                    android:gravity="center"
-                    android:text="@string/species_query_main_activity"
-                    android:textColor="@color/global_bg_clolor"
-                    android:textSize="20sp"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycle_view_species_query_main_activity"
+                <com.youth.banner.Banner
+                    android:id="@+id/banner_home_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="150dp">
 
-                </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#a1a1a1">
-
-            </View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:orientation="vertical">
+                </com.youth.banner.Banner>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:layout_height="150dp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
-                        android:text="@string/testing_main_activity"
+                        android:gravity="center"
+                        android:text="@string/species_query_main_activity"
                         android:textColor="@color/global_bg_clolor"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycle_view_species_query_home_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a1a1a1">
+
+                </View>
+
+                <LinearLayout
+                    android:id="@+id/ll_testing_home_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="开始答题"
-                            android:textColor="@color/global_text_color_gray"
-                            android:textSize="18sp" />
+                            android:layout_marginLeft="16dp"
+                            android:layout_weight="1"
+                            android:text="@string/testing_main_activity"
+                            android:textColor="@color/global_bg_clolor"
+                            android:textSize="20sp"
+                            android:clickable="false"/>
 
-                        <ImageView
+                        <LinearLayout
+                            android:id="@+id/ll_start_test_home_fragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/next_step"
-                            android:clickable="false"
-                            />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:text="开始答题"
+                                android:textColor="@color/global_text_color_gray"
+                                android:textSize="18sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/next_step"
+                                android:clickable="false" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.kefan.blackstone.widget.PrecentCricleView
+                                android:id="@+id/precent_view_this_score_home_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:arcBackgroundColor="@color/circle_bg_color"
+                                app:arcThickness="15"
+                                app:circleBackgroundColor="@color/arc_bg_color"
+                                app:text="0"
+                                app:textColor="@android:color/black"
+                                app:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="本次得分"
+                                android:textColor="@color/global_text_color_gray"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.kefan.blackstone.widget.PrecentCricleView
+                                android:id="@+id/precent_view_correct_rate_home_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:arcBackgroundColor="@color/circle_bg_color"
+                                app:arcThickness="15"
+                                app:circleBackgroundColor="@color/arc_bg_color"
+                                app:sweepAngle="280.8"
+                                app:text="78%"
+                                app:textColor="@android:color/black"
+                                app:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="正确率"
+                                android:textColor="@color/global_text_color_gray"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.kefan.blackstone.widget.PrecentCricleView
+                                android:id="@+id/precent_view_last_score_home_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:arcBackgroundColor="@color/circle_bg_color"
+                                app:arcThickness="15"
+                                app:circleBackgroundColor="@color/arc_bg_color"
+                                app:text="0"
+                                app:textColor="@android:color/black"
+                                app:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="上次得分"
+                                android:textColor="@color/global_text_color_gray"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a1a1a1">
+
+                </View>
 
                 <LinearLayout
+                    android:id="@+id/ll_collection_home_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <com.kefan.blackstone.widget.PrecentCricleView
-                            android:id="@+id/precent_view_this_score_home_fragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:arcBackgroundColor="@color/circle_bg_color"
-                            app:textColor="@android:color/black"
-                            app:text="0"
-                            app:textSize="18sp"
-                            app:arcThickness="15"
-                            app:circleBackgroundColor="@color/arc_bg_color"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_weight="1"
+                            android:text="@string/my_collection_main_activity"
+                            android:textColor="@color/global_bg_clolor"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_check_all_collection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="本次得分"
-                            android:textColor="@color/global_text_color_gray"
-                            android:textSize="18sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:text="@string/see_all_main_activity"
+                                android:textColor="@color/global_text_color_gray"
+                                android:textSize="18sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/next_step"
+                                android:clickable="false" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <com.kefan.blackstone.widget.PrecentCricleView
-                            android:id="@+id/precent_view_correct_rate_home_fragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:arcBackgroundColor="@color/circle_bg_color"
-                            app:textColor="@android:color/black"
-                            app:text="78%"
-                            app:textSize="18sp"
-                            app:arcThickness="15"
-                            app:circleBackgroundColor="@color/arc_bg_color"
-                            app:sweepAngle="280.8"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="正确率"
-                            android:textColor="@color/global_text_color_gray"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <com.kefan.blackstone.widget.PrecentCricleView
-                            android:id="@+id/precent_view_last_score_home_fragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:arcBackgroundColor="@color/circle_bg_color"
-                            app:textColor="@android:color/black"
-                            app:text="0"
-                            app:textSize="18sp"
-                            app:arcThickness="15"
-                            app:circleBackgroundColor="@color/arc_bg_color"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="上次得分"
-                            android:textColor="@color/global_text_color_gray"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#a1a1a1">
-
-            </View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:text="@string/my_collection_main_activity"
-                        android:textColor="@color/global_bg_clolor"
-                        android:textSize="20sp"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/ll_collection_icon_home_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="@string/see_all_main_activity"
-                            android:textColor="@color/global_text_color_gray"
-                            android:textSize="18sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/next_step"
-                            android:clickable="false"
-                            />
                     </LinearLayout>
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp">
-                </LinearLayout>
-
             </LinearLayout>
-        </LinearLayout>
 
-    </ScrollView>
-
-
+        </ScrollView>
+    </com.baoyz.widget.PullRefreshLayout>
 </LinearLayout>

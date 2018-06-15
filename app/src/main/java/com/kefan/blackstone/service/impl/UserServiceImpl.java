@@ -56,4 +56,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService{
         tokenVO.setUser(userVO);
         UserSharePreferenceUtil.saveUser(context,tokenVO,null,false);
     }
+
+    @Override
+    public String getToken() {
+        return UserSharePreferenceUtil.getUser(context).getToken();
+    }
+
+    @Override
+    public String icon() {
+        return UserSharePreferenceUtil.getUser(context).getAvatar();
+    }
+
+
 }

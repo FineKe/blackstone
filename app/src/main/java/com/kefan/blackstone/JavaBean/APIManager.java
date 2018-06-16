@@ -17,4 +17,6 @@ public class APIManager {
     public static final String UPLOAD_IMAGE_URL = BASE_URL +"v1/user/avatar";
 
     public static final String HOME_MAIN_URL= BASE_URL+"v1/main";
+
+    public static final String COLLECTION_URL = BASE_URL + "v1/species/collection/";
 }

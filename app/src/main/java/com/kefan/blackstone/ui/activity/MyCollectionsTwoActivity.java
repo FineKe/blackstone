@@ -28,6 +28,8 @@ import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.model.SpeciesClass;
+import com.kefan.blackstone.widget.SliderBar;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
@@ -57,7 +59,7 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
     private String getCollectionURL= APIManager.BASE_URL +"v1/species/collection/";
     private RequestQueue requestQueue;
     private JsonObjectRequest getCollectionRequest;
-    public  List<CollectionHomeFragment.SpeciesClass> speciesClassList;
+    public  List<SpeciesClass> speciesClassList;
     private List<String> indexList;
 
     private SpeciesContentAdapter speciesContentAdapter;
@@ -325,19 +327,19 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                         }
                         if(acount!=0)
                         {
-                            CollectionHomeFragment.SpeciesClass a=new CollectionHomeFragment.SpeciesClass("amphibia",amphibia,acount);
+                            SpeciesClass a=new SpeciesClass("amphibia",amphibia,acount);
                             a.setName("两栖类");
                             speciesClassList.add(a);
                         }
                         if(rcount!=0)
                         {
-                            CollectionHomeFragment.SpeciesClass r=new CollectionHomeFragment.SpeciesClass("reptiles",reptiles,rcount);
+                            SpeciesClass r=new SpeciesClass("reptiles",reptiles,rcount);
                             r.setName("爬行类");
                             speciesClassList.add(r);
                         }
                         if(bcount!=0)
                         {
-                            CollectionHomeFragment.SpeciesClass b=new CollectionHomeFragment.SpeciesClass("bird",bird,bcount);
+                            SpeciesClass b=new SpeciesClass("bird",bird,bcount);
                             b.setName("鸟类");
                             speciesClassList.add(b);
                         }
@@ -345,7 +347,7 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                         if(icount!=0)
                         {
                             Log.d("zx", "onResponse: "+icount);
-                            CollectionHomeFragment.SpeciesClass in=new CollectionHomeFragment.SpeciesClass("insect",insect,icount);
+                            SpeciesClass in=new SpeciesClass("insect",insect,icount);
                             Log.d("zx", "onResponse: "+icount);
                             in.setName("昆虫目");
                             speciesClassList.add(in);

@@ -5,6 +5,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.kefan.blackstone.data.api.UserApi;
 import com.kefan.blackstone.data.listener.BaseResponseListener;
 import com.kefan.blackstone.data.req.LoginReq;
+import com.kefan.blackstone.model.User;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.util.UserSharePreferenceUtil;
 import com.kefan.blackstone.vo.TokenVO;
@@ -50,6 +51,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService{
     }
 
     @Override
+    public User getUser() {
+        return UserSharePreferenceUtil.getUser(context);
+    }
+
+    @Override
     public void logout() {
         TokenVO tokenVO=new TokenVO();
         UserVO userVO=new UserVO();
@@ -65,6 +71,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService{
     @Override
     public String icon() {
         return UserSharePreferenceUtil.getUser(context).getAvatar();
+    }
+
+    @Override
+    public boolean isLogined() {
+        return UserSharePreferenceUtil.getUser(context).isIslogined();
     }
 
 

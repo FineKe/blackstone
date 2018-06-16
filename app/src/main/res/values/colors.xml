@@ -47,4 +47,6 @@
     <color name="circle_bg_color">#3376c5</color>
 
     <color name="arc_bg_color">#FFC8C7CC</color>
+
+    <color name="split_line_color">#ffd6d7d7</color>
 </resources>

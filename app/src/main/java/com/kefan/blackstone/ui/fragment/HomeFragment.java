@@ -16,20 +16,26 @@ import com.android.volley.VolleyError;
 import com.baoyz.widget.PullRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
+import com.kefan.blackstone.common.IntentFieldConstant;
 import com.kefan.blackstone.data.listener.BaseErrorListener;
 import com.kefan.blackstone.data.listener.BaseResponseListener;
 import com.kefan.blackstone.service.HomeService;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.HomeServiceImpl;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
+import com.kefan.blackstone.ui.activity.CollectionHomeFragment;
 import com.kefan.blackstone.ui.activity.MainActivity;
+import com.kefan.blackstone.ui.activity.MyCollectionsTwoActivity;
 import com.kefan.blackstone.ui.activity.SearchActivity;
+import com.kefan.blackstone.ui.activity.SpeciesDeatailedActivity;
 import com.kefan.blackstone.ui.adapter.HomeRecycleViewAdapter;
 import com.kefan.blackstone.util.DensityUtil;
 import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.vo.MainVo;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.PrecentCricleView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -93,6 +99,7 @@ public class HomeFragment extends BaseFragment {
 
     private List<MainVo.CategoriesBean> categoriesBeans;
 
+    private CollectionHomeFragment collectionHomeFragment;
 
     @Override
     public int setLayout() {
@@ -106,9 +113,6 @@ public class HomeFragment extends BaseFragment {
         userService = new UserServiceImpl();
         homeService = new HomeServiceImpl();
         categoriesBeans = new ArrayList<>();
-
-        loadData();
-
         adapter = new HomeRecycleViewAdapter(getContext(), categoriesBeans);
 
     }
@@ -153,6 +157,11 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
 
     @Override
     public void onDestroyView() {
@@ -258,16 +267,18 @@ public class HomeFragment extends BaseFragment {
 
             for (int i = 0; i < collectionsBeans.size(); i++) {
 
-                ImageView imageView = (ImageView) LayoutInflater.from(collectionView.getContext()).inflate(R.layout.icon_collection_home_fragment, null, false);
+                RoundedImageView imageView = (RoundedImageView) LayoutInflater.from(collectionView.getContext()).inflate(R.layout.icon_collection_home_fragment, null, false);
 
                 //设置自动调整大小
                 imageView.setAdjustViewBounds(true);
 
                 //加载图片
-                Glide.with(getContext()).load(collectionsBeans.get(i).getMainPhoto()).into(imageView);
+                Glide.with(getContext()).load(collectionsBeans.get(i).getMainPhoto()).transform(new GlideRoundTransform(getContext(), 8)).into(imageView);
 
                 //添加至视图中
                 collectionIcon.addView(imageView, i);
+
+                imageView.setTag(collectionsBeans.get(i));
 
                 //设置 间距
                 if (i == 0) {
@@ -286,9 +297,38 @@ public class HomeFragment extends BaseFragment {
                                     , DensityUtil.dip2px(getContext(), 10));
                 }
 
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(getContext(),SpeciesDeatailedActivity.class);
+
+                        MainVo.CollectionsBean collectionsBean= (MainVo.CollectionsBean) view.getTag();
+
+                        intent.putExtra(IntentFieldConstant.SPECIES_TYPE,collectionsBean.getSpeciesType());
+                        intent.putExtra(IntentFieldConstant.SPECIES_ID,collectionsBean.getId());
+
+                        getActivity().startActivity(intent);
+                    }
+                });
+
 
 
             }
+
+            checkAllCollection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    collectionHomeFragment=collectionHomeFragment==null?new CollectionHomeFragment():collectionHomeFragment;
+
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fl_content_main_activity,collectionHomeFragment)
+                            .commit();
+                }
+            });
 
         } else {
 
@@ -304,7 +344,9 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void handleMessage(Message msg) {
+
             super.handleMessage(msg);
+
             switch (msg.what) {
                 case DATA_LOAD_COMPLETE:
 

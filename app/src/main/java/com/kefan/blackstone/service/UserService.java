@@ -2,6 +2,7 @@ package com.kefan.blackstone.service;
 
 import com.android.volley.Response;
 import com.kefan.blackstone.data.listener.BaseResponseListener;
+import com.kefan.blackstone.model.User;
 import com.kefan.blackstone.vo.TokenVO;
 
 /**
@@ -26,6 +27,12 @@ public interface UserService {
 
 
     /**
+     * 获取用户
+     * @return
+     */
+    public User getUser();
+
+    /**
      * 登出
      */
     public void logout();
@@ -41,4 +48,10 @@ public interface UserService {
      * @return
      */
     public String icon();
+
+    /**
+     * 判断是否登录
+     * @return
+     */
+    public boolean isLogined();
 }

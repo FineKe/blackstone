@@ -129,7 +129,7 @@
         <activity
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".ui.activity.ResetPasswordThreeActivity"
             android:launchMode="singleInstance"
@@ -170,7 +170,8 @@
             android:screenOrientation="portrait" />
         <activity android:name="ui.activity.LoginActivity" />
         <activity android:name="ui.activity.AddRecordActivity" />
-        <activity android:name=".ui.activity.RankActivity"></activity>
+        <activity android:name=".ui.activity.RankActivity" />
+        <activity android:name=".ui.activity.MyCollectionActivity"></activity>
     </application>
 
 </manifest>

@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.widget.SliderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONArray;
@@ -153,6 +154,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         indexList = new ArrayList<>();
         positionList = new ArrayList<>();
         resultList = new ArrayList<>();
+
         position = getIntent().getIntExtra("position", 0);
         if (position <= 2) {
             speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);

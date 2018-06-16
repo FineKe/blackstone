@@ -38,6 +38,8 @@ import com.kefan.blackstone.database.Amphibia;
 import com.kefan.blackstone.database.Bird;
 import com.kefan.blackstone.database.Insect;
 import com.kefan.blackstone.database.Reptiles;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -112,6 +114,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private MediaPlayer mediaPlayer = null;
     private ImageView playSound = null;
 
+    private UserService userService;
+
     //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,10 +136,11 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     private void initEvents() {
         actionBack.setOnClickListener(this);
         collection.setOnClickListener(this);
-        collection.setOnClickListener(this);
     }
 
     private void initData() {
+
+        userService=new UserServiceImpl();
 
         views = new ArrayList<>();
         pointers = new ArrayList<>();
@@ -157,6 +162,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         actionBack = (LinearLayout) findViewById(R.id.species_deatailed_title_bar_linear_layout_action_back);
         actionBackText = (TextView) findViewById(R.id.species_detailed_title_bar_textView_action_back_text);
         titleText = (TextView) findViewById(R.id.species_detailed_title_bar_textView_title);
+
+        //收藏按钮
         collection = (ImageView) findViewById(R.id.species_detailed_title_bar_image_view_collection);
 
         orderFamilyGenus = (TextView) findViewById(R.id.activity_species_deatailed_text_view_order_family_genus);
@@ -164,11 +171,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         latinGenus = (TextView) findViewById(R.id.activity_species_deatailed_text_view_latin_genus);
         englishName = (TextView) findViewById(R.id.activity_species_deatailed_text_view_english_name);
         linearLayout = (LinearLayout) findViewById(R.id.species_deatailed_linear_layout);
+
         loadDeatailed(this);
 
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     private void createAllView() {
         switch (speciesType) {
             case "reptiles":
@@ -505,7 +513,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 break;
 
             case R.id.species_detailed_title_bar_image_view_collection:
-                if (isLoginUtil.getLogined())//判断是否登录
+                if (userService.isLogined())//判断是否登录
                 {
                     updateToken.updateToken();
                     Log.d(TAG, "onClick: " + isCollected);

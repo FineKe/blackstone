@@ -37,7 +37,7 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <com.kefan.blackstone.SliderBar
+    <com.kefan.blackstone.widget.SliderBar
         android:id="@+id/species_class_sliderBar"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
@@ -45,5 +45,5 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@+id/species_class_recyclerView_speciesContent"
-        app:layout_constraintTop_toTopOf="@+id/species_class_recyclerView_speciesContent"></com.kefan.blackstone.SliderBar>
+        app:layout_constraintTop_toTopOf="@+id/species_class_recyclerView_speciesContent"></com.kefan.blackstone.widget.SliderBar>
 </android.support.constraint.ConstraintLayout>

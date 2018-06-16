@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/lv_category_home_collection_fragment"
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/rfl_collection_home_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
-    </ListView>
+        app:refreshType="ring">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_collection_home_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+    </com.baoyz.widget.PullRefreshLayout>
 
 </LinearLayout>

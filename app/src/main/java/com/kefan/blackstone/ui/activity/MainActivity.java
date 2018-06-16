@@ -46,6 +46,8 @@ import com.kefan.blackstone.database.Insect;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.dialog.LoginDialog;
 import com.kefan.blackstone.ui.fragment.GuideFragment;
 import com.kefan.blackstone.ui.fragment.HomeFragment;
@@ -87,15 +89,14 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private String isLoginedFile = "isLogin";
 
 
-
     public static List<List<Record>> records;
 
     private long exitTime = 0;
 
-    private final int CHOOSE_PICTURE=1;
-    private final int CHOOSE_PICTURE_RESULT=2;
-    private final int TAKE_PHOTO=3;
-    private final int TAKE_PHOTO_RESULT=4;
+    private final int CHOOSE_PICTURE = 1;
+    private final int CHOOSE_PICTURE_RESULT = 2;
+    private final int TAKE_PHOTO = 3;
+    private final int TAKE_PHOTO_RESULT = 4;
 
     private String choosePicturePath;//图片全路径
     private Uri choosePictureUri;
@@ -149,6 +150,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     @BindView(R.id.ll_combine_signinup_header_view_main_activity)
     LinearLayout combine;
 
+    @BindView(R.id.tv_center_place_holer_header_view_main_activity)
+    TextView centerPlaceHolder;
+
+
+    private UserService userService;
 
     private HomeFragment homeFragment;
 
@@ -167,7 +173,6 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private TeamFragment teamFragment;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,6 +185,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     }
 
     private void initData() {
+
+        userService = new UserServiceImpl();
+
         sharedPreferences = getSharedPreferences(isLoginedFile, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         int size = (DataSupport.findAll(Bird.class)).size() + (DataSupport.findAll(Amphibia.class)).size() + (DataSupport.findAll(Insect.class)).size() + (DataSupport.findAll(Reptiles.class)).size();
@@ -236,13 +244,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void initView() {
 
-        if (UserSharePreferenceUtil.getUser(this).isIslogined()) {
-            combine.setVisibility(View.INVISIBLE);
-            combine.setClickable(false);
-        }else {
-            combine.setVisibility(View.VISIBLE);
-            combine.setClickable(true);
-        }
+        initUserView();
 
         if (homeFragment == null) {
             homeFragment = new HomeFragment();
@@ -269,7 +271,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 closeDrawer();
-                LoginDialog.getLoginDialog(MainActivity.this,handler).show();
+                LoginDialog.getLoginDialog(MainActivity.this, handler).show();
 
             }
         });
@@ -304,6 +306,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     /**
      * 侧滑栏点击 切换fragment
+     *
      * @param v
      */
     @Override
@@ -484,7 +487,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Display display;
         display = windowManager.getDefaultDisplay();
-        final Dialog dialog = new Dialog(this,R.style.ActionSheetDialogStyle);
+        final Dialog dialog = new Dialog(this, R.style.ActionSheetDialogStyle);
         View view = LayoutInflater.from(this).inflate(R.layout.view_actionsheet, null);
         view.setMinimumWidth(display.getWidth());
         dialog.setContentView(view);
@@ -497,10 +500,10 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         dialogWindow.setAttributes(lp);
         dialog.show();
 
-        deletePicture= (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_delete_picture);
-        choosePicture= (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_choose_picture);
-        takePhoto= (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_take_photo);
-        actionCancel= (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_action_cancel);
+        deletePicture = (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_delete_picture);
+        choosePicture = (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_choose_picture);
+        takePhoto = (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_take_photo);
+        actionCancel = (TextView) dialog.findViewById(R.id.dialog_change_picture_text_view_action_cancel);
 
         deletePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -542,59 +545,54 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void deletePicture() {
         upLoadImage();
-        UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
+        UserInformationUtil userInformationUtil = new UserInformationUtil(getContext());
         userInformationUtil.setAvatar(null);
     }
 
     private void takePhoto() {
-        File file = new File(Environment.getExternalStorageDirectory(),"ClipHeadPhoto/cache");
+        File file = new File(Environment.getExternalStorageDirectory(), "ClipHeadPhoto/cache");
         if (!file.exists()) {
             file.mkdirs();
         }
-        takePhotoSavePath=Environment.getExternalStorageDirectory()+"/ClipHeadPhoto/cache/";
-        takePhotoSaveName =System.currentTimeMillis()+ ".png";
+        takePhotoSavePath = Environment.getExternalStorageDirectory() + "/ClipHeadPhoto/cache/";
+        takePhotoSaveName = System.currentTimeMillis() + ".png";
         //photoSaveName =String.valueOf(System.currentTimeMillis()) + ".png";
         Intent openCameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-        takePhotoimageUri = Uri.fromFile(new File(takePhotoSavePath,takePhotoSaveName));
+        takePhotoimageUri = Uri.fromFile(new File(takePhotoSavePath, takePhotoSaveName));
         openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, takePhotoimageUri);
         startActivityForResult(openCameraIntent, TAKE_PHOTO);
     }
 
-    public void choosePictures(Dialog dialog)
-    {
-        Intent choosePictureIntent=new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    public void choosePictures(Dialog dialog) {
+        Intent choosePictureIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         //choosePictureIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         dialog.dismiss();
-        startActivityForResult(choosePictureIntent,CHOOSE_PICTURE);
+        startActivityForResult(choosePictureIntent, CHOOSE_PICTURE);
 //        Intent intent = new Intent(Intent.ACTION_PICK);
 //        intent.setType("image/*");//相片类型
 //        startActivityForResult(intent, CHOOSE_PICTURE);
     }
 
-    public void upLoadImage()
-    {
-        RequestQueue requestQueue=Volley.newRequestQueue(getContext());
-        Map<String,String> map=new HashMap<>();
-        map.put("avatar",null);
-        JSONObject jsonObject=new JSONObject(map);
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, APIManager.UPLOAD_IMAGE_URL, jsonObject, new Response.Listener<JSONObject>() {
+    public void upLoadImage() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        Map<String, String> map = new HashMap<>();
+        map.put("avatar", null);
+        JSONObject jsonObject = new JSONObject(map);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, APIManager.UPLOAD_IMAGE_URL, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    int code=jsonObject.getInt("code");
-                    if(code==88)
-                    {
+                    int code = jsonObject.getInt("code");
+                    if (code == 88) {
                         Log.d(TAG, "onResponse:上传成功 ");
 //                        Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
 //                        Message message=new Message();
 //                        message.what=UPLOAD_IMAGE_OK;
 //                        handler.sendMessage(message);
-                    }
-                    else
-                    {
-                        String message=jsonObject.getString("message");
-                        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -605,14 +603,14 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(getContext(), "没有网络", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String>headers=new HashMap<>();
-                UpdateToken updateToken=new UpdateToken(getContext());
+                Map<String, String> headers = new HashMap<>();
+                UpdateToken updateToken = new UpdateToken(getContext());
                 updateToken.updateToken();
-                UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
-                headers.put("token",userInformationUtil.getToken());
+                UserInformationUtil userInformationUtil = new UserInformationUtil(getContext());
+                headers.put("token", userInformationUtil.getToken());
                 return headers;
             }
         };
@@ -624,7 +622,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG, "onActivityResult: "+requestCode);
+        Log.d(TAG, "onActivityResult: " + requestCode);
         switch (requestCode) {
             case CHOOSE_PICTURE://相册
                 System.out.println("1");
@@ -646,21 +644,19 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             case CHOOSE_PICTURE_RESULT:
 //                Toast.makeText(getContext(), "111111", Toast.LENGTH_SHORT).show();
                 System.out.println("2");
-                if(data!=null)
-                {
+                if (data != null) {
                     final String temppath = data.getStringExtra("path");
                     icon.setImageBitmap(getLoacalBitmap(temppath));
-                    Log.d(TAG, "getLoacalBitmap: "+"null");
+                    Log.d(TAG, "getLoacalBitmap: " + "null");
 
                 }
                 break;
             case TAKE_PHOTO:
                 takePhotoPath = takePhotoSavePath + takePhotoSaveName;
-                if (takePhotoPath!=null) {
+                if (takePhotoPath != null) {
                     if (takePhotoimageUri != null) {
                         takePhotoimageUri = Uri.fromFile(new File(takePhotoPath));
-                        if((new File(takePhotoPath)).exists())
-                        {
+                        if ((new File(takePhotoPath)).exists()) {
                             Intent intent2 = new Intent(getContext(), ClipActivity.class);
                             intent2.putExtra("path", takePhotoPath);
                             startActivityForResult(intent2, TAKE_PHOTO_RESULT);
@@ -672,8 +668,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 break;
 
             case TAKE_PHOTO_RESULT:
-                if(data!=null)
-                {
+                if (data != null) {
                     final String tempath = data.getStringExtra("path");
                     icon.setImageBitmap(getLoacalBitmap(tempath));
                 }
@@ -694,15 +689,41 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     }
 
-    public Handler handler = new Handler(){
+    public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case HandlerConstant.LOGIN_SUCCESS:
-                    combine.setVisibility(View.INVISIBLE);
-                    combine.setClickable(false);
+
+                    initUserView();
+
+                    break;
+
 
             }
         }
     };
+
+    private void initUserView() {
+
+        if (userService.isLogined()) {
+
+            //加载头像
+            Glide.with(this).load(userService.getUser().getAvatar()).into(icon);
+            signIn.setVisibility(View.GONE);
+            signUp.setVisibility(View.GONE);
+
+            centerPlaceHolder.setText(userService.getUser().getName());
+
+            combine.setClickable(false);
+        } else {
+            signIn.setVisibility(View.VISIBLE);
+            signUp.setVisibility(View.VISIBLE);
+
+            centerPlaceHolder.setText("/");
+            combine.setClickable(true);
+        }
+
+
+    }
 }

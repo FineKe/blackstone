@@ -1,34 +1,18 @@
 package com.kefan.blackstone.ui.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
-import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.ui.fragment.BaseFragment;
 import com.kefan.blackstone.widget.HeaderBar;
+import com.kefan.blackstone.widget.ItemRemoveRecordRecycleView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
@@ -38,7 +22,7 @@ public class ObserveRecordFragment extends BaseFragment {
     private RequestQueue requestQueue;
     private JsonObjectRequest getRecordListRequest;
     private JsonObjectRequest deleteRecordListRequest;
-    private ItemRemoveRecordRecycle removeRecordRecycleView;
+    private ItemRemoveRecordRecycleView removeRecordRecycleView;
     private List<Record> recordList;
     private ItemRemoveRcordAdapter itemRemoveRcordAdapter;
     private LinearLayout actionBack;
@@ -52,7 +36,7 @@ public class ObserveRecordFragment extends BaseFragment {
 
 
     @BindView(R.id.item_remove_recycler_view_observe_record_fragment)
-    ItemRemoveRecordRecycle itemRemoveRecordRecycle;
+    ItemRemoveRecordRecycleView itemRemoveRecordRecycleView;
 
 
     @Override

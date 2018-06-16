@@ -15,14 +15,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by MY SHIP on 2017/5/20.
  */
 
 public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcordAdapter.ViewHolder>{
+
     private List<ObserveRecordFragment.Record> recordList;
+
     private Context context;
+
     private String TAG="ItemRemoveRcordAdapter";
+
+
     public ItemRemoveRcordAdapter(Context context,List<ObserveRecordFragment.Record>recordList){
         this.context=context;
         this.recordList = recordList;
@@ -36,58 +44,40 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        if(recordList.size()!=0)
-        {
-            Log.d(TAG, "onBindViewHolder: "+recordList.size());
-            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getId());
-            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getUserId());
-            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getTime());
-            Log.d(TAG, "onBindViewHolder: "+recordList.get(position).getNoteCountses().get(0).getSpeciesType());
-            ObserveRecordFragment.Record record=recordList.get(position);
-            Date da=new Date(record.getTime());
-            SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-            String mdate=format.format(da);
-            Log.d(TAG, "onBindViewHolder:"+da.toString() );
-            holder.date.setText(mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日");
-            for(ObserveRecordFragment.NoteCounts noteCounts:record.getNoteCountses())
-            {
-                switch (noteCounts.getSpeciesType())
-                {
-                    case "amphibia":holder.amphibia.setText("两栖类"+noteCounts.getCount()+"种");
-                        holder.amphibia.setVisibility(View.VISIBLE);
-                        break;
-                    case "bird":holder.bird.setText("鸟类"+noteCounts.getCount()+"种");
-                        holder.bird.setVisibility(View.VISIBLE);
-                        break;
-                    case "reptiles":holder.reptile.setText("爬行类"+noteCounts.getCount()+"种");
-                        holder.reptile.setVisibility(View.VISIBLE);
-                        break;
-                    case "insect":holder.insect.setText("昆虫"+noteCounts.getCount()+"个目");
-                        holder.insect.setVisibility(View.VISIBLE);
-                }
-            }
-        }
+
     }
     @Override
     public int getItemCount(){
         return recordList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView date, amphibia, reptile, bird,insect,delete;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+
+        @BindView(R.id.ll_record_item_view_oberver_record_fragment)
         public LinearLayout recordLayout;
+
+        @BindView(R.id.tv_date_item_view_oberver_record_fragment)
+        TextView date;
+
+        @BindView(R.id.tv_species_count_item_view_oberver_record_fragment)
+        TextView speciesCount;
+
+        @BindView(R.id.tv_upload_state_item_view_oberver_record_fragment)
+        TextView uploadState;
+
+        @BindView(R.id.tv_upload_item_view_oberver_record_fragment)
+        public TextView upload;
+
+        @BindView(R.id.tv_delete_item_view_oberver_record_fragment)
+        public TextView delete;
+
         public ViewHolder(View itemView){
             super(itemView);
-            date= (TextView) itemView.findViewById(R.id.activity_my_records_list_view_item_text_view_date);
-            amphibia = (TextView) itemView.findViewById(R.id.activity_my_records_list_view_item_text_view_amphibia);
-            reptile = (TextView) itemView.findViewById(R.id.activity_my_records_list_view_item_text_view_reptiles);
-            bird = (TextView) itemView.findViewById(R.id.activity_my_records_list_view_item_text_view_bird);
-            insect = (TextView) itemView.findViewById(R.id.activity_my_records_list_view_item_text_view_insect);
-            delete = (TextView) itemView.findViewById(R.id.activity_my_records_list_view_item_text_view_record_delete);
-            recordLayout = (LinearLayout) itemView.findViewById(R.id.activity_my_records_list_view_item_linear_layout_record);
+            ButterKnife.bind(this,itemView);
         }
     }
 
     public void removeItem(int position) {
+
     }
 }

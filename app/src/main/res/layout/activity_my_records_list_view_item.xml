@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_my_records_list_view_item_linear_layout_record"
-    android:layout_width="match_parent"
+    android:id="@+id/ll_record_item_view_oberver_record_fragment"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/activity_my_records_list_view_item_text_view_date"
+            android:id="@+id/tv_date_item_view_oberver_record_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
@@ -23,74 +22,51 @@
             android:textSize="16sp"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
-        <LinearLayout
-            android:layout_marginBottom="7dp"
-            android:id="@+id/activity_my_records_list_view_item_linear_layout"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/tv_species_count_item_view_oberver_record_fragment"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_date_item_view_oberver_record_fragment"
+            android:layout_below="@id/tv_date_item_view_oberver_record_fragment"
+            android:text="sadsaaaaaaaaaa" />
+
+
+        <TextView
+            android:id="@+id/tv_upload_state_item_view_oberver_record_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="7dp"
-            android:orientation="horizontal">
+            android:text="已上传"
+            android:textColor="@color/global_bg_clolor" />
 
-            <TextView
-                android:id="@+id/activity_my_records_list_view_item_text_view_amphibia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:text="两栖类2种"
-                android:textColor="#9B9B9B"
-                android:textSize="13sp"
-                android:visibility="gone"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-
-            <TextView
-                android:id="@+id/activity_my_records_list_view_item_text_view_reptiles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:text="爬行类2种"
-                android:textColor="#9B9B9B"
-                android:textSize="13sp"
-                android:visibility="gone"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-
-            <TextView
-                android:id="@+id/activity_my_records_list_view_item_text_view_bird"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:text="鸟类7种"
-                android:textColor="#9B9B9B"
-                android:textSize="13sp"
-                android:visibility="gone"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-
-            <TextView
-                android:id="@+id/activity_my_records_list_view_item_text_view_insect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:text="昆虫1个目"
-                android:textColor="#9B9B9B"
-                android:textSize="13sp"
-                android:visibility="gone"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-        </LinearLayout>
-       <View
-
+        <View
             android:layout_width="match_parent"
-            android:layout_marginLeft="23dp"
             android:layout_height="1px"
-            android:background="#9B9B9B"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="right|bottom"
+            android:layout_marginLeft="23dp"
+            android:background="#9B9B9B" />
 
-            />
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/activity_my_records_list_view_item_text_view_record_delete"
+        android:id="@+id/tv_upload_item_view_oberver_record_fragment"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@color/global_bg_clolor"
+        android:gravity="center"
+        android:text="上传记录"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_delete_item_view_oberver_record_fragment"
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:background="@mipmap/delete" />
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@android:color/white" />
 </LinearLayout>

@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.kefan.blackstone.ui.activity.ItemRemoveRecordRecycle
+    <com.kefan.blackstone.widget.ItemRemoveRecordRecycleView
         android:id="@+id/item_remove_recycler_view_observe_record_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.kefan.blackstone.ui.activity.ItemRemoveRecordRecycle>
+    </com.kefan.blackstone.widget.ItemRemoveRecordRecycleView>
 
 </LinearLayout>

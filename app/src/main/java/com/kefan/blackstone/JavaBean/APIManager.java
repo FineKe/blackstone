@@ -19,4 +19,6 @@ public class APIManager {
     public static final String HOME_MAIN_URL= BASE_URL+"v1/main";
 
     public static final String COLLECTION_URL = BASE_URL + "v1/species/collection/";
+
+    public static final String SPECIES_LIST_URL = BASE_URL+ "v1/species/list";
 }

@@ -49,12 +49,12 @@ import com.kefan.blackstone.database.Species;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.dialog.LoginDialog;
+import com.kefan.blackstone.ui.fragment.AddRecordFragment;
 import com.kefan.blackstone.ui.fragment.GuideFragment;
 import com.kefan.blackstone.ui.fragment.HomeFragment;
 import com.kefan.blackstone.ui.fragment.SettingFragment;
 import com.kefan.blackstone.ui.fragment.TeamFragment;
 import com.kefan.blackstone.ui.fragment.TestingFragment;
-import com.kefan.blackstone.util.UserSharePreferenceUtil;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -223,11 +223,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 requestQueue.add(speciesDetailedRequest);
             }
 
-            for (Species species : DataSupport.findAll(Species.class)) {
-                Record record = new Record(species.getChineseName(), species.getSingal(), species.getSpeciesType());
-                record.save();
-                System.out.println(species.getSingal());
-            }
+//            for (Species species : DataSupport.findAll(Species.class)) {
+//                Record record = new Record(species.getChineseName(), species.getSingal(), species.getSpeciesType());
+//                record.save();
+//                System.out.println(species.getSingal());
+//            }
 
         }
 

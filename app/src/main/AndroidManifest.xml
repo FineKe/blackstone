@@ -106,11 +106,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.AddNotesActivity" />
 
-        <service
-            android:name=".ui.activity.UploadIntentService"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.ResetPasswordTwoActivity"
             android:launchMode="singleInstance"

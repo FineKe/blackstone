@@ -2,63 +2,91 @@ package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.List;
+
 /**
  * Created by MY SHIP on 2017/5/11.
  */
 
 public class Record extends DataSupport {
-    private String chineseName;
-    private boolean isChecked;
-    private int speciesId;
-    private String remark;
-    private boolean remarkIsNull;
-    private String speciesType;
 
-    public Record(String chineseName, int speciesId, String speciesType) {
-        this.chineseName = chineseName;
-        this.speciesId = speciesId;
-        this.speciesType = speciesType;
-        remarkIsNull = true;
-        isChecked = false;
+    /**
+     * 记录id
+     */
+    private Long id;
+
+    /**
+     * 时间戳
+     */
+    private Long time;
+
+
+    /**
+     * 纬度
+     */
+    private Double lat;
+
+    /**
+     * 经度
+     */
+    private Double lon;
+
+    /**
+     * 加入观察列表
+     */
+    private Boolean addToObservedList;
+
+    /**
+     * 笔记列表
+     */
+    private List<Note> notes;
+
+
+    public Long getId() {
+        return id;
     }
 
-    public String getChineseName() {
-        return chineseName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setChineseName(String chineseName) {
-        this.chineseName = chineseName;
+    public Long getTime() {
+        return time;
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public void setTime(Long time) {
+        this.time = time;
     }
 
-    public void setChecked(boolean checked) {
-        isChecked = checked;
+    public Double getLat() {
+        return lat;
     }
 
-    public int getSpeciesId() {
-        return speciesId;
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
-    public void setSpeciesId(int speciesId) {
-        this.speciesId = speciesId;
+    public Double getLon() {
+        return lon;
     }
 
-    public String getRemark() {
-        return remark;
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public Boolean getAddToObservedList() {
+        return addToObservedList;
     }
 
-    public boolean isRemarkIsNull() {
-        return remarkIsNull;
+    public void setAddToObservedList(Boolean addToObservedList) {
+        this.addToObservedList = addToObservedList;
     }
 
-    public void setRemarkIsNull(boolean remarkIsNull) {
-        this.remarkIsNull = remarkIsNull;
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 }

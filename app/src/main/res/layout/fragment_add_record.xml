@@ -41,6 +41,20 @@
         android:layout_height="wrap_content" />
 
 
+
+
+
+
+    <DatePicker
+        android:id="@+id/add_record_datepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:visibility="gone"></DatePicker>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="42dp">
@@ -75,22 +89,12 @@
         layout="@layout/split_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <DatePicker
-        android:id="@+id/add_record_datepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:visibility="gone"></DatePicker>
-
     <ExpandableListView
+
         android:id="@+id/add_record_expandListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="0.3dp">
-
     </ExpandableListView>
 
 </LinearLayout>

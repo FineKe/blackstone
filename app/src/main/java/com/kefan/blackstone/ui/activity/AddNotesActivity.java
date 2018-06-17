@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.Record;
+import com.kefan.blackstone.ui.fragment.AddRecordFragment;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class AddNotesActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         notes= (EditText) findViewById(R.id.add_notes_editText_notes);
         actionBack= (LinearLayout) findViewById(R.id.activity_add_notes_linear_layout_action_back);
-        notes.setText(AddRecordFragment.records.get(groupPosition).get(childPosition).getRemark());
+//        notes.setText(AddRecordFragment.records.get(groupPosition).get(childPosition).getRemark());
         notes.setSelection(notes.getText().length());
     }
 
@@ -77,22 +78,22 @@ public class AddNotesActivity extends BaseActivity implements View.OnClickListen
     private void actionBack() {
         String notesContent=notes.getText().toString();
         Log.d(TAG, "actionBack: "+notesContent);
-        if(!notesContent.equals(""))
-        {
-            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemark(notesContent);
-            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemarkIsNull(false);
-            AddRecordFragment.records.get(groupPosition).get(childPosition).save();
-           // data.putExtra("Remark",notesContent);
-            //data.putExtra("isNull",false);
-            //this.setResult(2,data);
-            this.finish();
-        }else
-        {
-            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemark(notesContent);
-            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemarkIsNull(true);
-            AddRecordFragment.records.get(groupPosition).get(childPosition).save();
-            this.finish();
-        }
+//        if(!notesContent.equals(""))
+//        {
+//            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemark(notesContent);
+//            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemarkIsNull(false);
+//            AddRecordFragment.records.get(groupPosition).get(childPosition).save();
+//           // data.putExtra("Remark",notesContent);
+//            //data.putExtra("isNull",false);
+//            //this.setResult(2,data);
+//            this.finish();
+//        }else
+//        {
+//            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemark(notesContent);
+//            AddRecordFragment.records.get(groupPosition).get(childPosition).setRemarkIsNull(true);
+//            AddRecordFragment.records.get(groupPosition).get(childPosition).save();
+//            this.finish();
+//        }
     }
 
     @Override

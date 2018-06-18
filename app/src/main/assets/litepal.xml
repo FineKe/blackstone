@@ -14,5 +14,6 @@
         <mapping class="com.kefan.blackstone.database.SpeciesClasses"></mapping>
         <mapping class="com.kefan.blackstone.database.AlterRecord"></mapping>
         <mapping class="com.kefan.blackstone.database.NoteTemplate"></mapping>
+        <mapping class="com.kefan.blackstone.database.Note"></mapping>
     </list>
 </litepal>

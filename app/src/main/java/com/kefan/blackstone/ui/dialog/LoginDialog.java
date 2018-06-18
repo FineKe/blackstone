@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.method.HideReturnsTransformationMethod;
@@ -25,7 +24,6 @@ import com.kefan.blackstone.ui.activity.ForgetPasswordActivity;
 import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.vo.TokenVO;
 import com.wang.avi.AVLoadingIndicatorView;
-import com.wang.avi.indicators.BallBeatIndicator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -2,6 +2,7 @@ package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,11 @@ public class Record extends DataSupport {
      * 记录id
      */
     private Long id;
+
+    /**
+     * 用户id
+     */
+    private Long userId;
 
     /**
      * 时间戳
@@ -39,7 +45,7 @@ public class Record extends DataSupport {
     /**
      * 笔记列表
      */
-    private List<Note> notes;
+    private List<Note> notes=new ArrayList<Note>();
 
 
     public Long getId() {
@@ -88,5 +94,13 @@ public class Record extends DataSupport {
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

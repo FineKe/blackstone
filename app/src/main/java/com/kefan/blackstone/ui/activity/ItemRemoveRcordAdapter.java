@@ -10,6 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.common.SpeciesConstant;
+import com.kefan.blackstone.database.Note;
+import com.kefan.blackstone.database.Record;
+
+import org.litepal.crud.DataSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,14 +29,14 @@ import butterknife.ButterKnife;
 
 public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcordAdapter.ViewHolder>{
 
-    private List<ObserveRecordFragment.Record> recordList;
+    private List<Record> recordList;
 
     private Context context;
 
     private String TAG="ItemRemoveRcordAdapter";
 
 
-    public ItemRemoveRcordAdapter(Context context,List<ObserveRecordFragment.Record>recordList){
+    public ItemRemoveRcordAdapter(Context context,List<Record>recordList){
         this.context=context;
         this.recordList = recordList;
     }
@@ -44,6 +49,26 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
+
+        Record record=recordList.get(position);
+
+        holder.date.setText(dateForamt(record.getTime()));
+
+
+//        List<Note> notes = DataSupport.where("record_id=?",String.valueOf(record.getId())).find(Note.class);
+
+        holder.speciesCount.setText(specesCount(record.getNotes()));
+
+        if (record.getAddToObservedList()) {
+            holder.uploadState.setText("已上传");
+            holder.upload.setVisibility(View.GONE);
+        } else {
+            holder.uploadState.setText("未上传");
+            holder.upload.setVisibility(View.VISIBLE);
+        }
+
+
+
 
     }
     @Override
@@ -77,7 +102,77 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
         }
     }
 
-    public void removeItem(int position) {
+    private String dateForamt(Long second) {
 
+        Date da=new Date(second);
+        SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+        String mdate=format.format(da);
+        return mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日";
+
+    }
+
+    /**
+     * 物种种类文字描述转换
+     * @param notes
+     * @return
+     */
+    private String specesCount(List<Note> notes) {
+        String strs[]={"","","",""};
+        int counts[]={0,0,0,0};
+
+        for (Note note : notes) {
+
+            switch (note.getSpeciesType()) {
+
+                case SpeciesConstant.BIRD:
+                    counts[0]++;
+                    break;
+
+                case SpeciesConstant.INSECT:
+                    counts[1]++;
+                    break;
+
+                case SpeciesConstant.AMPHIBIA:
+                    counts[2]++;
+                    break;
+
+                case SpeciesConstant.REPTILES:
+                    counts[3]++;
+                    break;
+            }
+
+        }
+
+        if (counts[0] != 0) {
+            strs[0]="鸟类"+counts[0]+"种";
+        }
+
+        if (counts[1] != 0) {
+            strs[1]="昆虫"+counts[1]+"种";
+        }
+
+        if (counts[2] != 0) {
+            strs[2]="两栖类"+counts[2]+"种";
+        }
+
+        if (counts[3] != 0) {
+            strs[3]="爬行类"+counts[3]+"种";
+        }
+
+        String str="";
+
+        for (int i = 0; i < counts.length-2; i++) {
+
+            if (counts[i] != 0 && counts[i] != 0) {
+                str += strs[i] + "|";
+            } else {
+                str += strs[i];
+            }
+
+            str+=strs[counts.length-1];
+        }
+
+
+        return str;
     }
 }

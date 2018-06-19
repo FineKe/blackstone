@@ -3,6 +3,7 @@ package com.kefan.blackstone.database;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,6 +90,7 @@ public class Record extends DataSupport {
     }
 
     public List<Note> getNotes() {
+        notes = DataSupport.where("record_id=?",String.valueOf(getId())).find(Note.class);
         return notes;
     }
 

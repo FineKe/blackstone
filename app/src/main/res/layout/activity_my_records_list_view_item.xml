@@ -59,6 +59,7 @@
         android:background="@color/global_bg_clolor"
         android:gravity="center"
         android:text="上传记录"
+        android:visibility="gone"
         android:textColor="@android:color/white" />
 
     <TextView

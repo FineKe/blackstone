@@ -1,23 +1,32 @@
 package com.kefan.blackstone.ui.activity;
 
-import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.Record;
+import com.kefan.blackstone.service.RecordService;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.RecordServiceImpl;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.fragment.BaseFragment;
+import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.ItemRemoveRecordRecycleView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 
 public class ObserveRecordFragment extends BaseFragment {
 
+
+    public static final int LOAD_RECORDS_COMPLETE=1;
 
     private HeaderBar headerBar;
 
@@ -25,6 +34,17 @@ public class ObserveRecordFragment extends BaseFragment {
     @BindView(R.id.item_remove_recycler_view_observe_record_fragment)
     ItemRemoveRecordRecycleView itemRemoveRecordRecycleView;
 
+    private UserService userService;
+
+    private RecordService recordService;
+
+    private ItemRemoveRcordAdapter itemRemoveRcordAdapter;
+
+    private List<Record> records;
+
+    private ExecutorService executor= Executors.newSingleThreadExecutor();
+
+    private LoadRecordRunner loadRecordRunner = new LoadRecordRunner();
 
     @Override
     public int setLayout() {
@@ -38,6 +58,50 @@ public class ObserveRecordFragment extends BaseFragment {
         headerBar.getCenterTextView().setText("我的观察记录");
         headerBar.getRightPart().setVisibility(View.GONE);
 
+
+        itemRemoveRecordRecycleView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        itemRemoveRecordRecycleView.setAdapter(itemRemoveRcordAdapter);
+
+    }
+
+    @Override
+    protected void initData() {
+
+        userService=new UserServiceImpl();
+        recordService=new RecordServiceImpl();
+
+        records=new ArrayList<>();
+        itemRemoveRcordAdapter=new ItemRemoveRcordAdapter(getContext(),records);
+
+        //加载数据
+        loadRecords();
+    }
+
+    @Override
+    public void initEvent() {
+
+        itemRemoveRecordRecycleView.setOnItemClickListener(new OnItemRemoveRecordListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ToastUtil.showToast(getContext(),position+"");
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+
+                records.remove(position);
+                itemRemoveRcordAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onUploadClick(int position) {
+
+                records.get(position).setAddToObservedList(true);
+                itemRemoveRcordAdapter.notifyDataSetChanged();
+
+            }
+        });
     }
 
     @Override
@@ -50,64 +114,36 @@ public class ObserveRecordFragment extends BaseFragment {
     }
 
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case LOAD_RECORDS_COMPLETE:
 
-    public class Record {
-        private int id;//记录id
-        private int userId;//用户id
-        private Long time;//时间：毫秒数
-        private List<NoteCounts> noteCountses;
+                    itemRemoveRcordAdapter.notifyDataSetChanged();
 
-        public int getId() {
-            return id;
+                    break;
+            }
         }
+    };
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    private void loadRecords() {
 
-        public int getUserId() {
-            return userId;
-        }
+        executor.submit(loadRecordRunner);
 
-        public void setUserId(int userId) {
-            this.userId = userId;
-        }
+    }
 
-        public Long getTime() {
-            return time;
-        }
+    private class LoadRecordRunner implements Runnable {
 
-        public void setTime(Long time) {
-            this.time = time;
-        }
-//
-        public List<NoteCounts> getNoteCountses() {
-            return noteCountses;
-        }
-
-        public void setNoteCountses(List<NoteCounts> noteCountses) {
-            this.noteCountses = noteCountses;
+        @Override
+        public void run() {
+            records.clear();
+            records.addAll(recordService.list(userService.getUser().getId()));
+            handler.sendEmptyMessage(LOAD_RECORDS_COMPLETE);
         }
     }
-    public class NoteCounts
-    {
-        String speciesType;
-        int count;
 
-        public String getSpeciesType() {
-            return speciesType;
-        }
 
-        public void setSpeciesType(String speciesType) {
-            this.speciesType = speciesType;
-        }
 
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
-    }
 }

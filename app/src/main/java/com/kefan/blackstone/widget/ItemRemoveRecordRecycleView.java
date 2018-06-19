@@ -2,6 +2,7 @@ package com.kefan.blackstone.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,7 +14,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.kefan.blackstone.ui.activity.ItemRemoveRcordAdapter;
-import com.kefan.blackstone.ui.activity.OnItemRemoveRecord;
+import com.kefan.blackstone.ui.activity.OnItemRemoveRecordListener;
 
 /**
  * Created by MY SHIP on 2017/5/20.
@@ -32,7 +33,8 @@ public class ItemRemoveRecordRecycleView extends RecyclerView {
     private int mDeleteBtnState; //删除按钮状态   0：关闭 1：将要关闭 2：将要打开 3：打开
     private VelocityTracker mVelocityTracker; //检测手指在滑动过程中的速度
     private Scroller mScroller;
-    private OnItemRemoveRecord mListener;
+    private OnItemRemoveRecordListener mListener;
+
 
     public ItemRemoveRecordRecycleView(Context context) {
         this(context, null);
@@ -47,6 +49,7 @@ public class ItemRemoveRecordRecycleView extends RecyclerView {
         mContext = context;
         mScroller = new Scroller(context, new LinearInterpolator());
         mVelocityTracker = VelocityTracker.obtain();
+
     }
 
     @Override
@@ -68,11 +71,39 @@ public class ItemRemoveRecordRecycleView extends RecyclerView {
                     mPosition = viewHolder.getAdapterPosition();
 
                     mDelete = viewHolder.delete;
-                    mMaxLength = mDelete.getWidth();
+
+                    TextView upload=viewHolder.upload;
+
+                    if (upload.getVisibility()==VISIBLE) {
+
+                        mMaxLength = mDelete.getWidth() + upload.getWidth();
+                        upload.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mListener != null) {
+                                    mListener.onUploadClick(mPosition);
+                                }
+
+                                mItemLayout.scrollTo(0, 0);
+                                mDeleteBtnState = 0;
+                            }
+                        });
+
+                    } else {
+
+                        mMaxLength = mDelete.getWidth();
+
+
+                    }
+
+
                     mDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mListener.onDeleteClick(mPosition);
+
+                            if (mListener != null) {
+                                mListener.onDeleteClick(mPosition);
+                            }
                             mItemLayout.scrollTo(0, 0);
                             mDeleteBtnState = 0;
                         }
@@ -178,7 +209,7 @@ public class ItemRemoveRecordRecycleView extends RecyclerView {
         isDragging = state == SCROLL_STATE_DRAGGING;
     }
 
-    public void setOnItemClickListener(OnItemRemoveRecord listener) {
+    public void setOnItemClickListener(OnItemRemoveRecordListener listener) {
         mListener = listener;
     }
 }

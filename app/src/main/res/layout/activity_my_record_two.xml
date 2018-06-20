@@ -1,75 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.constraint.ConstraintLayout
-        android:background="@color/mycolor"
+
+
+    <com.kefan.blackstone.widget.HeaderBar
+        android:id="@+id/headerbar_record_activity"
+        android:background="@color/global_bg_clolor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:gravity="center"
-            android:background="@color/mycolor"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            android:id="@+id/activity_myrecord_two_linear_layout_action_back">
-            <ImageView
-                android:background="@color/mycolor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/action_back"/>
+        android:layout_height="40dp"
+        app:leftText="返回"
+        app:leftIcon="@mipmap/action_back"
+        app:centerText="当天记录"
+        app:rightText="修改"
+        app:left_margin="16dp"
+        app:right_margin="16dp">
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_weight="1"
-                android:text="当天记录"
-                android:textColor="#fff"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                tools:layout_editor_absoluteY="8dp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="个人记录"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
-        <TextView
-            android:id="@+id/activity_myrecord_two_text_view_alter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:text="修改"
-            android:layout_marginRight="16dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
-    </android.support.constraint.ConstraintLayout>
+    </com.kefan.blackstone.widget.HeaderBar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

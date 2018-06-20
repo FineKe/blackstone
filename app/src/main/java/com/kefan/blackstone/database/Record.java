@@ -90,7 +90,7 @@ public class Record extends DataSupport {
     }
 
     public List<Note> getNotes() {
-        notes = DataSupport.where("record_id=?",String.valueOf(getId())).find(Note.class);
+        notes = DataSupport.where("record_id=?",String.valueOf(this.id)).find(Note.class);
         return notes;
     }
 

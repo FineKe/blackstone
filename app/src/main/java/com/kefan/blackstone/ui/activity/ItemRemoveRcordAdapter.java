@@ -54,9 +54,6 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
 
         holder.date.setText(dateForamt(record.getTime()));
 
-
-//        List<Note> notes = DataSupport.where("record_id=?",String.valueOf(record.getId())).find(Note.class);
-
         holder.speciesCount.setText(specesCount(record.getNotes()));
 
         if (record.getAddToObservedList()) {
@@ -161,18 +158,19 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
 
         String str="";
 
-        for (int i = 0; i < counts.length-2; i++) {
+        for (int i = 0; i < counts.length; i++) {
 
-            if (counts[i] != 0 && counts[i] != 0) {
-                str += strs[i] + "|";
-            } else {
-                str += strs[i];
+            if (counts[i] != 0 ) {
+                str +=strs[i]+" | ";
             }
-
-            str+=strs[counts.length-1];
         }
 
 
-        return str;
+        if (str.length() > 0) {
+            return str.substring(0, str.length() - 3);
+        } else {
+            return str;
+        }
+
     }
 }

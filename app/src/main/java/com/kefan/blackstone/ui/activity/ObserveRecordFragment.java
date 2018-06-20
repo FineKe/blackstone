@@ -1,5 +1,6 @@
 package com.kefan.blackstone.ui.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -83,7 +84,10 @@ public class ObserveRecordFragment extends BaseFragment {
         itemRemoveRecordRecycleView.setOnItemClickListener(new OnItemRemoveRecordListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ToastUtil.showToast(getContext(),position+"");
+
+                Intent intent=new Intent(getContext(),MyRecordTwoActivity.class);
+                intent.putExtra("recordId",records.get(position).getId());
+                startActivity(intent);
             }
 
             @Override

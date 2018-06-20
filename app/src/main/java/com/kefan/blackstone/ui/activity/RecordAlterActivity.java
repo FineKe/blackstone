@@ -29,6 +29,7 @@ import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.AlterRecord;
+import com.kefan.blackstone.database.Note;
 import com.kefan.blackstone.database.Species;
 
 import org.json.JSONArray;
@@ -69,7 +70,7 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
     private Long millisecond;
 
 
-    private List<List<MyRecordTwoActivity.Note>> noteList;
+    private List<List<Note>> noteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,9 +327,9 @@ public class RecordAlterActivity extends BaseActivity implements View.OnClickLis
                 List<Species> list = DataSupport.findAll(Species.class);
                 for (Species species : list) {
                     AlterRecord record = new AlterRecord(species.getChineseName(), species.getSingal(), species.getSpeciesType());
-                    for (List<MyRecordTwoActivity.Note> notes : noteList) {
-                        for (MyRecordTwoActivity.Note note : notes) {
-                            if (note.getSpeciesId() == species.getSingal()) {
+                    for (List<Note> notes : noteList) {
+                        for (Note note : notes) {
+                            if (note.getId() == species.getSingal()) {
                                 System.out.println(note.getSpeciesId());
                                 record.setRemarkIsNull(false);
                                 record.setChecked(true);

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.AlterRecord;
+import com.kefan.blackstone.database.NoteTemplate;
 
 import java.util.List;
 
@@ -20,34 +21,29 @@ public class AlterNotesActivity extends BaseActivity implements View.OnClickList
     private String TAG="AlterNotesActivity";
     private EditText notes;
     private LinearLayout actionBack;
-    private int speciesId;
-    private List<AlterRecord> records;
-    private AlterRecord record;
-    private Intent data;
-    private int groupPosition;
-    private int childPosition;
+
+
+    //引用上个activity noteTemplate
+    private NoteTemplate noteTemplate=RecordAlterActivity.noteTemplate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_alter_notes);
-        initData();
         initView();
         initEvents();
     }
 
-    private void initData() {
 
-        groupPosition=getIntent().getIntExtra("groupPosition",0);
-        childPosition=getIntent().getIntExtra("childPosition",0);
-        Log.d(TAG, "initData: "+groupPosition+":"+childPosition);
-        data=new Intent();
-    }
 
     private void initView() {
         notes= (EditText) findViewById(R.id.activity_alter_notes_editText_notes);
         actionBack= (LinearLayout) findViewById(R.id.activity_alter_notes_linear_layout_action_back);
-        notes.setText(RecordAlterActivity.recordList.get(groupPosition).get(childPosition).getRemark());
+
+        //设置已经有的笔记
+        notes.setText(noteTemplate.getRemark());
+
         notes.setSelection(notes.getText().length());
     }
 
@@ -72,21 +68,21 @@ public class AlterNotesActivity extends BaseActivity implements View.OnClickList
         Log.d(TAG, "actionBack: "+notesContent);
         if(!notesContent.equals(""))
         {
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemark(notesContent);
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemarkIsNull(false);
-            // data.putExtra("Remark",notesContent);
-            //data.putExtra("isNull",false);
-            //this.setResult(2,data);
+            //重新设置笔记
+            noteTemplate.setRemark(notesContent);
             this.finish();
         }else
         {
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemark(notesContent);
-            RecordAlterActivity.recordList.get(groupPosition).get(childPosition).setRemarkIsNull(true);
-            //data.putExtra("isNull",true);
-            //this.setResult(2,data);
             this.finish();
         }
     }
+
+    /**
+     * 重写该方法，用户通过物理键返回，也保存笔记
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(event.getKeyCode()==KeyEvent.KEYCODE_BACK)

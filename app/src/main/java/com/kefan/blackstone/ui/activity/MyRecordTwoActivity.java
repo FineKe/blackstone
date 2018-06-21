@@ -36,7 +36,7 @@ public class MyRecordTwoActivity extends BaseActivity{
     private String TAG = "MyRecordTwoActivity";
 
     public static List<List<Note>> noteList;
-    private List<String> father;
+    public static List<String> father;
 
     private RecordDeatailedAdapter recordDeatailedAdapter;
 
@@ -54,7 +54,9 @@ public class MyRecordTwoActivity extends BaseActivity{
      */
     private Long recordId;
 
-    private RecordService recordService;
+    public static Record record;
+
+    public RecordService recordService;
 
 
     @Override
@@ -105,6 +107,8 @@ public class MyRecordTwoActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
 
+                startActivity(new Intent(MyRecordTwoActivity.this,RecordAlterActivity.class));
+
             }
         });
 
@@ -134,7 +138,8 @@ public class MyRecordTwoActivity extends BaseActivity{
         List<Note> insect=new ArrayList<>();
         List<Note> reptiles=new ArrayList<>();
 
-        Record record = recordService.findRecordById(recordId);
+        record = recordService.findRecordById(recordId);
+
         List<Note> notes = record.getNotes();
         for (Note note : notes) {
 

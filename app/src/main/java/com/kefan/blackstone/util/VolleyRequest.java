@@ -5,6 +5,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.kefan.blackstone.BlackStoneApplication;
+import com.kefan.blackstone.ui.activity.UpdateToken;
 
 import org.json.JSONObject;
 
@@ -44,6 +46,16 @@ public class VolleyRequest {
      * @return
      */
     public static JsonObjectRequest baseRequestWithHeader(int method, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener, final Map<String,String> header) {
+
+
+        if (!UserSharePreferenceUtil.tokenisExpired(BlackStoneApplication.getContext())) {
+
+            new UpdateToken(BlackStoneApplication.getContext()).updateToken();
+
+            header.put("token",UserSharePreferenceUtil.getUser(BlackStoneApplication.getContext()).getToken());
+        }
+
+
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(method,url,data,listener,errorListener){
             @Override

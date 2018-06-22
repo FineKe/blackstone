@@ -93,7 +93,12 @@ public class ObserveRecordFragment extends BaseFragment {
             @Override
             public void onDeleteClick(int position) {
 
-                records.remove(position);
+                Record record = records.remove(position);
+
+                if (record.delete() > 0) {
+                    ToastUtil.showToast(getContext(),"删除成功");
+                }
+
                 itemRemoveRcordAdapter.notifyDataSetChanged();
 
             }

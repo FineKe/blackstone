@@ -17,10 +17,9 @@ import com.kefan.blackstone.vo.TokenVO;
  */
 public final class UserApi extends BaseApi{
 
-    private Context context;
 
     public UserApi(Context context) {
-        this.context = context;
+        super(context);
     }
 
     public JsonObjectRequest login(LoginReq loginReq, BaseResponseListener<TokenVO> listener, Response.ErrorListener errorListener) {

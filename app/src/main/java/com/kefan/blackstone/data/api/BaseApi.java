@@ -21,6 +21,12 @@ import java.util.Map;
  */
 public class BaseApi {
 
+    protected Context context;
+
+    public BaseApi(Context context) {
+        this.context = context;
+    }
+
     private JsonObjectRequest baseJsonObjectRequest(Context context, int method, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener) {
 
         if (!NetWorkUtil.isConnected(context)) {

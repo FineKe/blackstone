@@ -93,4 +93,14 @@ public class UserSharePreferenceUtil {
         return user;
     }
 
+    public static boolean tokenisExpired(Context context) {
+
+        if (getUser(context).getExpireAt() > System.currentTimeMillis()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

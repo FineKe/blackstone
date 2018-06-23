@@ -18,6 +18,11 @@ public class Record extends DataSupport {
     private Long id;
 
     /**
+     * 远程记录id
+     */
+    private Long netId;
+
+    /**
      * 用户id
      */
     private Long userId;
@@ -90,8 +95,16 @@ public class Record extends DataSupport {
     }
 
     public List<Note> getNotes() {
-        notes.addAll(DataSupport.where("record_id=?",String.valueOf(this.id)).find(Note.class));
+//        notes.addAll(DataSupport.where("record_id=?",String.valueOf(this.id)).find(Note.class));
         return notes;
+    }
+
+    public Long getNetId() {
+        return netId;
+    }
+
+    public void setNetId(Long netId) {
+        this.netId = netId;
     }
 
     public void setNotes(List<Note> notes) {

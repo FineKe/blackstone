@@ -27,30 +27,32 @@ import butterknife.ButterKnife;
  * Created by MY SHIP on 2017/5/20.
  */
 
-public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcordAdapter.ViewHolder>{
+public class ItemRemoveRcordAdapter extends RecyclerView.Adapter<ItemRemoveRcordAdapter.ViewHolder> {
 
     private List<Record> recordList;
 
     private Context context;
 
-    private String TAG="ItemRemoveRcordAdapter";
+    private String TAG = "ItemRemoveRcordAdapter";
 
 
-    public ItemRemoveRcordAdapter(Context context,List<Record>recordList){
-        this.context=context;
+    public ItemRemoveRcordAdapter(Context context, List<Record> recordList) {
+        this.context = context;
         this.recordList = recordList;
     }
+
     @Override
-    public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_my_records_list_view_item,parent, false);
+                .inflate(R.layout.activity_my_records_list_view_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
 
-        Record record=recordList.get(position);
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        Record record = recordList.get(position);
 
         holder.date.setText(dateForamt(record.getTime()));
 
@@ -65,15 +67,14 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
         }
 
 
-
-
     }
+
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return recordList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ll_record_item_view_oberver_record_fragment)
         public LinearLayout recordLayout;
@@ -93,29 +94,31 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
         @BindView(R.id.tv_delete_item_view_oberver_record_fragment)
         public TextView delete;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     private String dateForamt(Long second) {
 
-        Date da=new Date(second);
-        SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-        String mdate=format.format(da);
-        return mdate.substring(0,4)+"年"+mdate.substring(5,7)+"月"+mdate.substring(8,10)+"日";
+        Date da = new Date(second);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String mdate = format.format(da);
+        return mdate.substring(0, 4) + "年" + mdate.substring(5, 7) + "月" + mdate.substring(8, 10) + "日";
 
     }
 
     /**
      * 物种种类文字描述转换
+     *
      * @param notes
      * @return
      */
     private String specesCount(List<Note> notes) {
-        String strs[]={"","","",""};
-        int counts[]={0,0,0,0};
+
+        String strs[] = {"", "", "", ""};
+        int counts[] = {0, 0, 0, 0};
 
         for (Note note : notes) {
 
@@ -141,27 +144,27 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter <ItemRemoveRcor
         }
 
         if (counts[0] != 0) {
-            strs[0]="鸟类"+counts[0]+"种";
+            strs[0] = "鸟类" + counts[0] + "种";
         }
 
         if (counts[1] != 0) {
-            strs[1]="昆虫"+counts[1]+"种";
+            strs[1] = "昆虫" + counts[1] + "种";
         }
 
         if (counts[2] != 0) {
-            strs[2]="两栖类"+counts[2]+"种";
+            strs[2] = "两栖类" + counts[2] + "种";
         }
 
         if (counts[3] != 0) {
-            strs[3]="爬行类"+counts[3]+"种";
+            strs[3] = "爬行类" + counts[3] + "种";
         }
 
-        String str="";
+        String str = "";
 
         for (int i = 0; i < counts.length; i++) {
 
-            if (counts[i] != 0 ) {
-                str +=strs[i]+" | ";
+            if (counts[i] != 0) {
+                str += strs[i] + " | ";
             }
         }
 

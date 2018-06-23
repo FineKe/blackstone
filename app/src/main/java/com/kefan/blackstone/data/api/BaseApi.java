@@ -101,4 +101,18 @@ public class BaseApi {
     }
 
 
+    /**
+     * 删除
+     * @param context
+     * @param url
+     * @param data
+     * @param listener
+     * @param errorListener
+     * @param header
+     * @return
+     */
+    protected JsonObjectRequest baseJsonObjectDeleteRequestWithHeader(Context context, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener,Map<String,String> header) {
+        return baseJsonObjectRequestWithHeader(context, Request.Method.DELETE,url,data,listener,errorListener,header);
+    }
+
 }

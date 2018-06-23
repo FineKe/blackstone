@@ -23,4 +23,10 @@ public class APIManager {
     public static final String SPECIES_LIST_URL = BASE_URL+ "v1/species/list";
 
     public static final String UPLOAD_RECORD = BASE_URL+"v1/record/new";
+
+    public static final String DELETE_RECORD = BASE_URL+"v1/record/";
+
+    public static final String PULL_RECORDS = BASE_URL+"v1/record/user/";
+
+    public static final String ALTER_RECORD = BASE_URL+"v1/record/edit";
 }

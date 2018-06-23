@@ -56,7 +56,7 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
 
 
         Glide.with(this).load(R.drawable.testing_bg).into(icon);
-        headerBar=((MainActivity) getActivity()).headerBar;
+        headerBar = ((MainActivity) getActivity()).headerBar;
 
         headerBar.getRightPart().setVisibility(View.GONE);
         headerBar.getCenterTextView().setText("小测试");
@@ -85,11 +85,10 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.tv_start_testing_fragment:
 
-                if (executeTestFragment == null) {
-                    executeTestFragment=new ExecuteTestFragment();
-                }
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity,executeTestFragment).commit();
+                executeTestFragment = new ExecuteTestFragment();
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_content_main_activity, executeTestFragment).commit();
 
                 break;
             case R.id.tv_rank_testing_fragment:

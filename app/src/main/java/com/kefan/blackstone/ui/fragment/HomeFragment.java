@@ -39,6 +39,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -239,6 +240,15 @@ public class HomeFragment extends BaseFragment {
 
         if (mainVo.getTest() != null) {
 
+            MainVo.Test test = mainVo.getTest();
+
+            System.out.println(test.toString());
+
+            BigDecimal bigDecimal=BigDecimal.valueOf(test.getRatio()*100);
+            float ratio = bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+
+            correctRate.setSweepAngle(ratio*3.6f);
+            correctRate.setText(""+ratio+"%");
             testing.setVisibility(View.VISIBLE);
 
         } else {

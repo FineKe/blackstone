@@ -29,4 +29,8 @@ public class APIManager {
     public static final String PULL_RECORDS = BASE_URL+"v1/record/user/";
 
     public static final String ALTER_RECORD = BASE_URL+"v1/record/edit";
+
+    public static final String NETX_QUESTION = BASE_URL+"v1/game/nextQ";
+
+    public static final String GAME_SUBMIT = BASE_URL+"v1/game/submit";
 }

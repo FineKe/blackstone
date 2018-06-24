@@ -20,6 +20,7 @@ import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
 import com.kefan.blackstone.common.IntentFieldConstant;
 import com.kefan.blackstone.data.listener.BaseErrorListener;
 import com.kefan.blackstone.data.listener.BaseResponseListener;
+import com.kefan.blackstone.database.TestRecord;
 import com.kefan.blackstone.service.HomeService;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.HomeServiceImpl;
@@ -38,6 +39,8 @@ import com.kefan.blackstone.widget.PrecentCricleView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
+
+import org.litepal.crud.DataSupport;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -102,6 +105,7 @@ public class HomeFragment extends BaseFragment {
 
     private CollectionHomeFragment collectionHomeFragment;
 
+
     @Override
     public int setLayout() {
         return R.layout.fragment_home;
@@ -122,16 +126,27 @@ public class HomeFragment extends BaseFragment {
     public void initView() {
 
 
-        correctRate.setSweepAngle(0.98F * 360);
-        lastScore.setText("100");
-        thisScore.setText("67");
-
         headerBar = ((MainActivity) getActivity()).headerBar;
 
         headerBar.getCenterTextView().setText("黑石顶生物多样性野外实习");
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        List<TestRecord> testRecords = DataSupport.where("userId=?",String.valueOf(userService.getUser().getId())).order("time").find(TestRecord.class);
+
+        //设置得分
+        if (testRecords.size() >0) {
+            int length = testRecords.size();
+            //设置本次得分
+            thisScore.setText(testRecords.get(length-1).getScore()+"");
+
+            //设置历史得分
+            if (length > 1) {
+                lastScore.setText(testRecords.get(length-2).getScore()+"");
+            }
+        }
+
 
     }
 
@@ -246,6 +261,8 @@ public class HomeFragment extends BaseFragment {
 
             BigDecimal bigDecimal=BigDecimal.valueOf(test.getRatio()*100);
             float ratio = bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+
+            ((MainActivity) getActivity()).ratio=ratio;
 
             correctRate.setSweepAngle(ratio*3.6f);
             correctRate.setText(""+ratio+"%");

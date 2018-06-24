@@ -15,5 +15,6 @@
         <mapping class="com.kefan.blackstone.database.AlterRecord"></mapping>
         <mapping class="com.kefan.blackstone.database.NoteTemplate"></mapping>
         <mapping class="com.kefan.blackstone.database.Note"></mapping>
+        <mapping class="com.kefan.blackstone.database.TestRecord"></mapping>
     </list>
 </litepal>

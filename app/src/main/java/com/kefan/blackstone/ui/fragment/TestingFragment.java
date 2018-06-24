@@ -7,11 +7,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.database.TestRecord;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.activity.MainActivity;
 import com.kefan.blackstone.ui.activity.RankActivity;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.PrecentCricleView;
 import com.orhanobut.logger.Logger;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -41,6 +49,8 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
     @BindView(R.id.tv_rank_testing_fragment)
     TextView rank;
 
+    private UserService userService;
+
 
     private ExecuteTestFragment executeTestFragment;
 
@@ -52,6 +62,13 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
     }
 
     @Override
+    protected void initData() {
+
+        userService=new UserServiceImpl();
+
+    }
+
+    @Override
     public void initView() {
 
 
@@ -60,6 +77,24 @@ public class TestingFragment extends BaseFragment implements View.OnClickListene
 
         headerBar.getRightPart().setVisibility(View.GONE);
         headerBar.getCenterTextView().setText("小测试");
+
+        List<TestRecord> testRecords = DataSupport.where("userId=?",String.valueOf(userService.getUser().getId())).order("time").find(TestRecord.class);
+
+        //设置得分
+        if (testRecords.size() >0) {
+            int length = testRecords.size();
+            //设置本次得分
+            thisScore.setText(testRecords.get(length-1).getScore()+"");
+
+            //设置历史得分
+            if (length > 1) {
+                lastScore.setText(testRecords.get(length-2).getScore()+"");
+            }
+        }
+
+        float ratio = ((MainActivity) getActivity()).ratio;
+        correctRate.setText(ratio+"%");
+        correctRate.setSweepAngle(ratio*3.6f);
 
     }
 

@@ -106,6 +106,8 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private String takePhotoPath;//图片全路径
     private Uri takePhotoimageUri;
 
+    public float ratio = 0f;
+
     @BindView(R.id.drawer_main_activity)
     DrawerLayout drawerLayout;
 

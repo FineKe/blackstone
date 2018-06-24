@@ -22,6 +22,7 @@ import com.kefan.blackstone.database.Amphibia;
 import com.kefan.blackstone.database.Bird;
 import com.kefan.blackstone.database.Insect;
 import com.kefan.blackstone.database.Reptiles;
+import com.kefan.blackstone.database.TestRecord;
 import com.kefan.blackstone.model.Optional;
 import com.kefan.blackstone.model.Question;
 import com.kefan.blackstone.service.TestService;
@@ -257,6 +258,13 @@ public class ExecuteTestFragment extends BaseFragment {
 
         headerBar.getRightTextView().setText("");
         headerBar.getRightImageView().setVisibility(View.VISIBLE);
+
+        //保存 测试记录
+        TestRecord testRecord=new TestRecord();
+        testRecord.setTime(System.currentTimeMillis());
+        testRecord.setUserId(userService.getUser().getId());
+        testRecord.setScore(score);
+        testRecord.save();
     }
 
     /**

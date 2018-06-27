@@ -29,6 +29,7 @@ import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.fragment.BaseFragment;
 import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.vo.RecordVo;
+import com.kefan.blackstone.vo.UpLoadRecordVo;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.kefan.blackstone.widget.ItemRemoveRecordRecycleView;
 
@@ -157,13 +158,15 @@ public class ObserveRecordFragment extends BaseFragment {
 
                 RecordReq recordReq = copyFromRecord(record);
 
-                recordService.uploadRecord(userService.getToken(), recordReq, new BaseResponseListener(Object.class) {
+                recordService.uploadRecord(userService.getToken(), recordReq, new BaseResponseListener<UpLoadRecordVo>(UpLoadRecordVo.class) {
                     @Override
-                    protected void onSuccess(Object data) {
+                    protected void onSuccess(UpLoadRecordVo data) {
 
                         ToastUtil.showToast(getContext(), "上传成功");
 
                         record.setAddToObservedList(true);
+
+                        record.setNetId(data.getId());
 
                         boolean result = record.save();
 
@@ -332,7 +335,7 @@ public class ObserveRecordFragment extends BaseFragment {
 
         for (NoteCount noteCount : noteCounts) {
 
-            Note note = new Note(0l, "", noteCount.getSpeciesType(), "", "");
+            Note note = new Note(0l,0l, "", noteCount.getSpeciesType(), "", "");
             note.save();
             notes.add(note);
         }

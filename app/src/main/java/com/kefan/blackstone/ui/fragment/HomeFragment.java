@@ -232,7 +232,7 @@ public class HomeFragment extends BaseFragment {
         banner.setImages(urls).setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load((String) path).into(imageView);
+                Glide.with(context).load((String) path+"?imageslim").into(imageView);
             }
         }).start();
     }

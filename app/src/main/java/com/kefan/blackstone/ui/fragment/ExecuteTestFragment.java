@@ -85,12 +85,6 @@ public class ExecuteTestFragment extends BaseFragment {
 
     private TextView title;
 
-    private ImageView heartOne;
-
-    private ImageView heartTwo;
-
-    private ImageView heartThree;
-
     private TextView rightText;
 
     private UserService userService;
@@ -146,28 +140,12 @@ public class ExecuteTestFragment extends BaseFragment {
         //标题栏设置
         headerBar = headerBar == null ? ((MainActivity) getActivity()).headerBar : headerBar;
         title = title == null ? headerBar.getCenterTextView() : title;
-        heartOne = heartOne == null ? new ImageView(getContext()) : heartOne;
-        heartTwo = heartTwo == null ? new ImageView(getContext()) : heartTwo;
-        heartThree = heartThree == null ? new ImageView(getContext()) : heartThree;
 
         rightText = rightText == null ? headerBar.getRightTextView() : rightText;
-
-        heartOne.setImageDrawable(getResources().getDrawable(R.mipmap.heart_pressed));
-        heartTwo.setImageDrawable(getResources().getDrawable(R.mipmap.heart_pressed));
-        heartThree.setImageDrawable(getResources().getDrawable(R.mipmap.heart_pressed));
-
 
         headerBar.getCenterPart().removeView(title);
 
         headerBar.getRightTextView().setVisibility(View.VISIBLE);
-
-        headerBar.getCenterPart().addView(heartOne);
-        headerBar.getCenterPart().addView(heartTwo);
-        headerBar.getCenterPart().addView(heartThree);
-
-        //设置间距
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) heartTwo.getLayoutParams();
-        layoutParams.setMargins(32, 0, 32, 0);
 
         rightText.setText("0");
         rightText.setTextSize(18);
@@ -251,9 +229,6 @@ public class ExecuteTestFragment extends BaseFragment {
         Logger.i(">>");
 
         //恢复标题栏
-        headerBar.getCenterPart().removeView(heartOne);
-        headerBar.getCenterPart().removeView(heartTwo);
-        headerBar.getCenterPart().removeView(heartThree);
         headerBar.getCenterPart().addView(title);
 
         headerBar.getRightTextView().setText("");
@@ -265,32 +240,6 @@ public class ExecuteTestFragment extends BaseFragment {
         testRecord.setUserId(userService.getUser().getId());
         testRecord.setScore(score);
         testRecord.save();
-    }
-
-    /**
-     * 死亡执行函数
-     *
-     * @return
-     */
-    private boolean died() {
-
-        if (life == 3) {
-            life--;
-            heartThree.setVisibility(View.INVISIBLE);
-            return true;
-        } else if (life == 2) {
-            life--;
-            heartTwo.setVisibility(View.INVISIBLE);
-            return true;
-        } else if (life == 1) {
-            //最后一条命的时候 返回false ，因为已经死了，没机会玩下去了
-            life--;
-            heartOne.setVisibility(View.INVISIBLE);
-            return false;
-        } else {
-            return false;
-        }
-
     }
 
     /**
@@ -313,9 +262,6 @@ public class ExecuteTestFragment extends BaseFragment {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-                    if (!died()) {
-                        gameOver = true;
-                    }
 
                 }
 
@@ -334,9 +280,7 @@ public class ExecuteTestFragment extends BaseFragment {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-                    if (!died()) {
-                        gameOver = true;
-                    }
+
 
                 }
                 break;
@@ -354,9 +298,6 @@ public class ExecuteTestFragment extends BaseFragment {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-                    if (!died()) {
-                        gameOver = true;
-                    }
 
                 }
 
@@ -375,9 +316,7 @@ public class ExecuteTestFragment extends BaseFragment {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-                    if (!died()) {
-                        gameOver = true;
-                    }
+
 
                 }
 

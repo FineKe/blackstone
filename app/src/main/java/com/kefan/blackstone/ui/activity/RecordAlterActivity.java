@@ -20,10 +20,17 @@ import com.kefan.blackstone.BlackStoneApplication;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.common.SpeciesConstant;
+import com.kefan.blackstone.data.req.AlterRecordReq;
+import com.kefan.blackstone.data.req.RecordReq;
 import com.kefan.blackstone.database.AlterRecord;
 import com.kefan.blackstone.database.Note;
 import com.kefan.blackstone.database.NoteTemplate;
+import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.listener.addNoteOnclickListener;
+import com.kefan.blackstone.service.RecordService;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.RecordServiceImpl;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.adapter.AddRecordExpandAdapter;
 import com.kefan.blackstone.widget.HeaderBar;
 
@@ -32,6 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -83,6 +92,11 @@ public class RecordAlterActivity extends BaseActivity {
     @BindView(R.id.expandListView_alter_record_activity)
     ExpandableListView expandListView;
 
+    private Long recordId;
+
+    private RecordService recordService;
+
+    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +114,11 @@ public class RecordAlterActivity extends BaseActivity {
 
     @Override
     public void initData() {
+
+        recordService=new RecordServiceImpl();
+        userService=new UserServiceImpl();
+
+        recordId=getIntent().getLongExtra("recordId",0l);
         group = new ArrayList<>();
         noteTemplateList = new ArrayList<>();
         adapter = new AddRecordExpandAdapter(group, noteTemplateList);
@@ -122,6 +141,8 @@ public class RecordAlterActivity extends BaseActivity {
         expandListView.setGroupIndicator(null);
 
     }
+
+
 
     @Override
     public void initEvent() {
@@ -183,6 +204,9 @@ public class RecordAlterActivity extends BaseActivity {
         });
     }
 
+    private void uploadRecord() {
+        
+    }
 
     private void createNoteTemplate() {
 
@@ -269,6 +293,52 @@ public class RecordAlterActivity extends BaseActivity {
             }
 
         });
+    }
+
+
+    /**
+     * 从笔记模板产生note 对象
+     *
+     * @param noteTemplate
+     * @return
+     */
+    private Note copyFromTemplate(NoteTemplate noteTemplate) {
+
+        return new Note(noteTemplate.getSpeciesId(),0l, noteTemplate.getRemark()
+                , noteTemplate.getSpeciesType(), noteTemplate.getFamily(), noteTemplate.getSpeciesName());
+    }
+
+
+    /**
+     * @param record
+     * @return
+     */
+    private AlterRecordReq copyFromRecord(Record record) {
+
+        return new AlterRecordReq(recordId,record.getTime(),record.getNotes());
+
+    }
+
+
+    /**
+     * 获取时间
+     *
+     * @return
+     */
+    private Long getTime() {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Long second = format.parse(year + "-" + month + "-" + day).getTime();
+
+            return second;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0l;
+
     }
 
 

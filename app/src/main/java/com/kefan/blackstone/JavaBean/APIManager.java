@@ -35,4 +35,6 @@ public class APIManager {
     public static final String GAME_SUBMIT = BASE_URL+"v1/game/submit";
 
     public static final String RANK_LIST = BASE_URL+"v1/game/leaderBoard";
+
+    public static final String RECORD_DETAILED = BASE_URL+"v1/record/";
 }

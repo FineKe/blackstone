@@ -10,29 +10,35 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.common.SpeciesConstant;
+import com.kefan.blackstone.data.listener.BaseErrorListener;
+import com.kefan.blackstone.data.listener.BaseResponseListener;
 import com.kefan.blackstone.database.Note;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.service.RecordService;
+import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.RecordServiceImpl;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.adapter.RecordDeatailedAdapter;
+import com.kefan.blackstone.vo.RecordDetailedVO;
 import com.kefan.blackstone.widget.HeaderBar;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class MyRecordTwoActivity extends BaseActivity{
+public class MyRecordTwoActivity extends BaseActivity {
 
-    private static final int LOAD_DATA_COMPLETE=1;
+    private static final int LOAD_DATA_COMPLETE = 1;
 
-    private String getRecordDeatailedURL = APIManager.BASE_URL + "v1/record/";
-    private RequestQueue requestQueue;
-    private JsonObjectRequest getRcordDeatailedRquest;
+    public static final int LOAD_NET_DATA_COMPLETE = 2;
     private String TAG = "MyRecordTwoActivity";
 
     public static List<List<Note>> noteList;
@@ -58,6 +64,8 @@ public class MyRecordTwoActivity extends BaseActivity{
 
     public RecordService recordService;
 
+    public UserService userService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,16 +77,18 @@ public class MyRecordTwoActivity extends BaseActivity{
     protected int setLayout() {
         return R.layout.activity_my_record_two;
     }
+
     @Override
     public void initData() {
 
-        recordId=getIntent().getLongExtra("recordId",0l);
-        recordService=new RecordServiceImpl();
+        recordId = getIntent().getLongExtra("recordId", 0l);
+        recordService = new RecordServiceImpl();
+        userService = new UserServiceImpl();
 
-        father=new ArrayList<>();
-        noteList=new ArrayList<>();
+        father = new ArrayList<>();
+        noteList = new ArrayList<>();
 
-        recordDeatailedAdapter=new RecordDeatailedAdapter(this,father,noteList);
+        recordDeatailedAdapter = new RecordDeatailedAdapter(this, father, noteList);
 
         loadNotes();
     }
@@ -107,7 +117,7 @@ public class MyRecordTwoActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(MyRecordTwoActivity.this,RecordAlterActivity.class));
+                startActivity(new Intent(MyRecordTwoActivity.this, RecordAlterActivity.class));
 
             }
         });
@@ -115,7 +125,7 @@ public class MyRecordTwoActivity extends BaseActivity{
 
     }
 
-    private Handler handler= new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -125,70 +135,139 @@ public class MyRecordTwoActivity extends BaseActivity{
                     recordDeatailedAdapter.notifyDataSetChanged();
 
                     break;
+
+                case LOAD_NET_DATA_COMPLETE:
+
+                    loadNotes();
+
+                    break;
             }
         }
     };
 
     private void loadNotes() {
 
-        List<String> species=new ArrayList<>();
-        List<List<Note>> speciesNotes=new ArrayList<>();
-        List<Note> bird=new ArrayList<>();
-        List<Note> amphibia=new ArrayList<>();
-        List<Note> insect=new ArrayList<>();
-        List<Note> reptiles=new ArrayList<>();
+        final List<String> species = new ArrayList<>();
+        List<List<Note>> speciesNotes = new ArrayList<>();
+        List<Note> bird = new ArrayList<>();
+        List<Note> amphibia = new ArrayList<>();
+        List<Note> insect = new ArrayList<>();
+        final List<Note> reptiles = new ArrayList<>();
 
         record = recordService.findRecordById(recordId);
 
-        List<Note> notes = record.getNotes();
-        for (Note note : notes) {
 
-            switch (note.getSpeciesType()) {
+        String chineseName = record.getNotes().get(0).getChineseName();
 
-                case SpeciesConstant.BIRD:
-                    bird.add(note);
-                    break;
+        //判断笔记数据是否已经填充，如果没有填充 则请求服务器
+        if (chineseName == null || chineseName.length() <= 0) {
 
-                case SpeciesConstant.AMPHIBIA:
-                    amphibia.add(note);
-                    break;
+            recordService.getRecordDetailed(userService.getToken(), record.getNetId(), new BaseResponseListener<RecordDetailedVO>(RecordDetailedVO.class) {
 
-                case SpeciesConstant.INSECT:
-                    insect.add(note);
-                    break;
+                @Override
+                protected void onSuccess(RecordDetailedVO data) {
 
-                case SpeciesConstant.REPTILES:
-                    reptiles.add(note);
-                    break;
+                    record.setLat(data.getLat());
+                    record.setLon(data.getLon());
+
+                    List<RecordDetailedVO.NotesBean> notesBeans = data.getNotes();
+
+                    DataSupport.deleteAll(Note.class, "record_id=?", "" + recordId);
+
+                    //设置经纬度
+                    record.setLon(data.getLon());
+                    record.setLat(data.getLat());
+
+                    List<Note> notes = new ArrayList<>();
+
+                    for (RecordDetailedVO.NotesBean notesBean : notesBeans) {
+
+
+                        RecordDetailedVO.NotesBean.SpeciesBean speciesBean = notesBean.getSpecies();
+                        Note note = new Note(speciesBean.getId()
+                                , notesBean.getId()
+                                , notesBean.getRemark()
+                                , speciesBean.getSpeciesType()
+                                , speciesBean.getFamily() == null ? speciesBean.getChineseName() : speciesBean.getFamily()
+                                , speciesBean.getChineseName());
+
+                        note.save();
+
+                        notes.add(note);
+
+                    }
+
+                    record.setNotes(notes);
+                    record.save();
+
+                    handler.sendEmptyMessage(LOAD_NET_DATA_COMPLETE);
+
+                }
+
+                @Override
+                protected void onFailed(int code, String message) {
+
+                    handler.sendEmptyMessage(LOAD_NET_DATA_COMPLETE);
+
+                }
+            }, new BaseErrorListener(getApplicationContext()) {
+                @Override
+                protected void onError(VolleyError volleyError) {
+
+                }
+            });
+
+        } else {
+
+            List<Note> notes = record.getNotes();
+            for (Note note : notes) {
+
+                switch (note.getSpeciesType()) {
+
+                    case SpeciesConstant.BIRD:
+                        bird.add(note);
+                        break;
+
+                    case SpeciesConstant.AMPHIBIA:
+                        amphibia.add(note);
+                        break;
+
+                    case SpeciesConstant.INSECT:
+                        insect.add(note);
+                        break;
+
+                    case SpeciesConstant.REPTILES:
+                        reptiles.add(note);
+                        break;
+                }
+
             }
 
-        }
+            if (bird.size() > 0) {
+                speciesNotes.add(bird);
+                species.add("鸟类");
+            }
+            if (amphibia.size() > 0) {
+                speciesNotes.add(amphibia);
+                species.add("两栖类");
+            }
+            if (insect.size() > 0) {
+                speciesNotes.add(insect);
+                species.add("昆虫");
+            }
+            if (reptiles.size() > 0) {
+                speciesNotes.add(reptiles);
+                species.add("爬行类");
+            }
 
-        if (bird.size() > 0) {
-            speciesNotes.add(bird);
-            species.add("鸟类");
-        }
-        if (amphibia.size() > 0) {
-            speciesNotes.add(amphibia);
-            species.add("两栖类");
-        }
-        if (insect.size() > 0) {
-            speciesNotes.add(insect);
-            species.add("昆虫");
-        }
-        if (reptiles.size() > 0) {
-            speciesNotes.add(reptiles);
-            species.add("爬行类");
-        }
+            this.father.clear();
+            this.noteList.clear();
 
-        this.father.clear();
-        this.noteList.clear();
+            father.addAll(species);
+            noteList.addAll(speciesNotes);
 
-        father.addAll(species);
-        noteList.addAll(speciesNotes);
-
-        handler.sendEmptyMessage(LOAD_DATA_COMPLETE);
-
+            handler.sendEmptyMessage(LOAD_DATA_COMPLETE);
+        }
     }
 
 

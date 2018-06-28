@@ -19,9 +19,9 @@
             android:id="@+id/tx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="8sp"
+            android:lineSpacingExtra="8dp"
             android:text="dsagdhjgasjdgjashgjdghhjsahdjashhjashhjashashjhjashahsjdhjasggggggggggggggggggggggggggggggggggsdkahjjkasjkhjkkj"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"/>
 
         <ImageView
             android:id="@+id/im1"
@@ -35,6 +35,7 @@
             android:id="@+id/tx2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:lineSpacingExtra="8dp"/>
     </LinearLayout>
 </LinearLayout>

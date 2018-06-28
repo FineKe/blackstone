@@ -19,6 +19,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="13dp"
+            android:lineSpacingExtra="8dp"
             android:gravity="center"
             android:textColor="#4990E2"
             android:textSize="15sp" />

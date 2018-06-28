@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -36,6 +37,7 @@ import com.kefan.blackstone.widget.HeaderBar;
 import com.orhanobut.logger.Logger;
 
 import org.litepal.crud.DataSupport;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,17 +64,24 @@ public class ExecuteTestFragment extends BaseFragment {
     @BindView(R.id.iv_icon_execute_test_fragment)
     ImageView icon;
 
-    @BindView(R.id.rg_anser_group_execute_test_fragment)
-    RadioGroup answerGroup;
 
-    @BindView(R.id.rb_anser_a_execute_test_fragment)
-    RadioButton answerA;
-    @BindView(R.id.rb_anser_b_execute_test_fragment)
-    RadioButton answerB;
-    @BindView(R.id.rb_anser_c_execute_test_fragment)
-    RadioButton answerC;
-    @BindView(R.id.rb_anser_d_execute_test_fragment)
-    RadioButton answerD;
+    @BindView(R.id.tv_anser_a_execute_test_fragment)
+    TextView answerA;
+    @BindView(R.id.tv_anser_b_execute_test_fragment)
+    TextView answerB;
+    @BindView(R.id.tv_anser_c_execute_test_fragment)
+    TextView answerC;
+    @BindView(R.id.tv_anser_d_execute_test_fragment)
+    TextView answerD;
+
+    @BindView(R.id.iv_anser_a_execute_test_fragment)
+    ImageView answerAIcon;
+    @BindView(R.id.iv_anser_b_execute_test_fragment)
+    ImageView answerBIcon;
+    @BindView(R.id.iv_anser_c_execute_test_fragment)
+    ImageView answerCIcon;
+    @BindView(R.id.iv_anser_d_execute_test_fragment)
+    ImageView answerDIcon;
 
     @BindView(R.id.tv_answer_result_execute_test_fragment)
     TextView result;
@@ -116,6 +125,8 @@ public class ExecuteTestFragment extends BaseFragment {
 
     //正常颜色
     private int normalColor = Color.argb(255, 229, 228, 228);
+
+    private boolean[] isChecked = {false, false, false, false};
 
     @Override
     protected void initData() {
@@ -168,13 +179,7 @@ public class ExecuteTestFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-
-                //判断游戏是否结束
-                if (gameOver) {
-                    ToastUtil.showToast(getContext(), "游戏结束");
-                    lockRadioButtion();
-                    return;
-                } else {
+                if (isChecked[0] || isChecked[1] || isChecked[2] || isChecked[3]) {
 
                     //清空结果显示
                     result.setText("");
@@ -182,11 +187,16 @@ public class ExecuteTestFragment extends BaseFragment {
                     //设置正常背景
                     next.setBackgroundColor(normalColor);
 
-                    answerGroup.clearCheck();
+
                     unlockRadioButton();
 
+                    clearAnswerIcon();
+
                     nextQuestion();
+                } else {
+                    ToastUtil.showToast(getContext(), "请答题");
                 }
+
 
             }
         });
@@ -194,28 +204,32 @@ public class ExecuteTestFragment extends BaseFragment {
         answerA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer();
+                isChecked[0] = true;
+                checkAnswer(v);
             }
         });
 
         answerB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer();
+                isChecked[1] = true;
+                checkAnswer(v);
             }
         });
 
         answerC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer();
+                isChecked[2] = true;
+                checkAnswer(v);
             }
         });
 
         answerD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer();
+                isChecked[3] = true;
+                checkAnswer(v);
             }
         });
 
@@ -235,7 +249,7 @@ public class ExecuteTestFragment extends BaseFragment {
         headerBar.getRightImageView().setVisibility(View.VISIBLE);
 
         //保存 测试记录
-        TestRecord testRecord=new TestRecord();
+        TestRecord testRecord = new TestRecord();
         testRecord.setTime(System.currentTimeMillis());
         testRecord.setUserId(userService.getUser().getId());
         testRecord.setScore(score);
@@ -245,12 +259,16 @@ public class ExecuteTestFragment extends BaseFragment {
     /**
      * 检查答案是否正确
      */
-    private void checkAnswer() {
-        switch (answerGroup.getCheckedRadioButtonId()) {
+    private void checkAnswer(View view) {
 
-            case R.id.rb_anser_a_execute_test_fragment:
+        //选项不能点击
+        lockRadioButtion();
+        switch (view.getId()) {
 
-                lockRadioButtion();
+
+            case R.id.tv_anser_a_execute_test_fragment:
+
+
                 if (question.getA().isTrue()) {
 
                     score++;
@@ -258,17 +276,20 @@ public class ExecuteTestFragment extends BaseFragment {
                     gameSubmit(true);
                     next.setBackgroundColor(correctColor);
                     result.setText(ANSWER_CORRECT);
+                    answerAIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+
+
                 } else {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-
+                    answerAIcon.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+                    showTheTrueAnswer();
                 }
 
                 break;
-            case R.id.rb_anser_b_execute_test_fragment:
+            case R.id.tv_anser_b_execute_test_fragment:
 
-                lockRadioButtion();
                 if (question.getB().isTrue()) {
 
                     score++;
@@ -276,17 +297,18 @@ public class ExecuteTestFragment extends BaseFragment {
                     gameSubmit(true);
                     next.setBackgroundColor(correctColor);
                     result.setText(ANSWER_CORRECT);
+                    answerBIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
                 } else {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-
-
+                    answerBIcon.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+                    showTheTrueAnswer();
                 }
                 break;
-            case R.id.rb_anser_c_execute_test_fragment:
+            case R.id.tv_anser_c_execute_test_fragment:
 
-                lockRadioButtion();
+
                 if (question.getC().isTrue()) {
 
                     score++;
@@ -294,17 +316,19 @@ public class ExecuteTestFragment extends BaseFragment {
                     gameSubmit(true);
                     next.setBackgroundColor(correctColor);
                     result.setText(ANSWER_CORRECT);
+                    answerCIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
                 } else {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-
+                    answerCIcon.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+                    showTheTrueAnswer();
                 }
 
                 break;
-            case R.id.rb_anser_d_execute_test_fragment:
+            case R.id.tv_anser_d_execute_test_fragment:
 
-                lockRadioButtion();
+
                 if (question.getD().isTrue()) {
 
                     score++;
@@ -312,12 +336,13 @@ public class ExecuteTestFragment extends BaseFragment {
                     next.setBackgroundColor(correctColor);
                     result.setText(ANSWER_CORRECT);
                     gameSubmit(true);
+                    answerDIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
                 } else {
                     next.setBackgroundColor(incorrectClolor);
                     result.setText(ANSWER_INCORRECT);
                     gameSubmit(false);
-
-
+                    answerDIcon.setImageDrawable(getResources().getDrawable(R.drawable.incorrect));
+                    showTheTrueAnswer();
                 }
 
                 break;
@@ -325,14 +350,37 @@ public class ExecuteTestFragment extends BaseFragment {
     }
 
     /**
+     * 显示正确答案
+     */
+    private void showTheTrueAnswer() {
+
+        if (question.getA().isTrue()) {
+            answerAIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+        } else if (question.getB().isTrue()) {
+            answerBIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+        } else if (question.getC().isTrue()) {
+            answerCIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+        } else if (question.getD().isTrue()) {
+            answerDIcon.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+        }
+
+    }
+
+    private void clearAnswerIcon() {
+        answerAIcon.setImageDrawable(null);
+        answerBIcon.setImageDrawable(null);
+        answerCIcon.setImageDrawable(null);
+        answerDIcon.setImageDrawable(null);
+    }
+
+    /**
      * 上报成绩
      */
     private void gameSubmit(boolean isTrue) {
-        testService.gameSumbit(userService.getToken(),isTrue, new BaseResponseListener(Object.class) {
+        testService.gameSumbit(userService.getToken(), isTrue, new BaseResponseListener(Object.class) {
             @Override
             protected void onSuccess(Object data) {
 
-                answerGroup.clearCheck();
                 unlockRadioButton();
 
             }
@@ -394,7 +442,7 @@ public class ExecuteTestFragment extends BaseFragment {
         }, new BaseErrorListener(getContext()) {
             @Override
             protected void onError(VolleyError volleyError) {
-
+                volleyError.printStackTrace();
             }
         });
 

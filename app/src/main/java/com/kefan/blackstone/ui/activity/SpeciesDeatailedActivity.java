@@ -717,9 +717,9 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
     public void loadDeatailed(Context context) {
-        if (isLoginUtil.getLogined())//如果登录了
+        if (userService.isLogined())//如果登录了
         {
-            updateToken.updateToken();//判断token是否过期，过期则更新
+
             JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
@@ -772,7 +772,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
-                    headers.put("token", userInformation.getToken());
+                    headers.put("token", userService.getToken());
                     return headers;
                 }
             };

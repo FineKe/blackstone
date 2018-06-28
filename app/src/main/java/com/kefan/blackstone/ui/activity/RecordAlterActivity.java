@@ -1,6 +1,5 @@
 package com.kefan.blackstone.ui.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,19 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.kefan.blackstone.BlackStoneApplication;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.common.SpeciesConstant;
 import com.kefan.blackstone.data.req.AlterRecordReq;
-import com.kefan.blackstone.data.req.RecordReq;
 import com.kefan.blackstone.database.AlterRecord;
 import com.kefan.blackstone.database.Note;
 import com.kefan.blackstone.database.NoteTemplate;
@@ -34,16 +26,12 @@ import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.adapter.AddRecordExpandAdapter;
 import com.kefan.blackstone.widget.HeaderBar;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

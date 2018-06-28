@@ -2,6 +2,8 @@ package com.kefan.blackstone.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -38,6 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
     private String searchURL = APIManager.BASE_URL + "v1/species/search";
@@ -47,11 +52,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private TextView cancel;
     private LinearLayout history;
     private ListView listView;
-    private ListView listViewHistory;
+    private RecyclerView listViewHistory;
     private MyListViewAdapter myListViewAdapter;
     private List<Species> myList;
     private List<HistoryRecord> historyRecordList;
-    private HistoryRecordAdapter historyRecordAdapter;
+    private HistorySearchAdapter historySearchAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,22 +75,23 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         myList = new ArrayList<>();
         myListViewAdapter = new MyListViewAdapter(myList);
         historyRecordList = DataSupport.limit(10).find(HistoryRecord.class);
-        historyRecordAdapter = new HistoryRecordAdapter(historyRecordList);
+
+        historySearchAdapter=new HistorySearchAdapter(historyRecordList);
 
     }
 
     private void initEvents() {
         cancel.setOnClickListener(this);
-        listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HistoryRecord historyRecord = (HistoryRecord) view.getTag();
-                Intent intent = new Intent(SearchActivity.this, SpeciesDeatailedActivity.class);
-                intent.putExtra("singal", historyRecord.getSingal());
-                intent.putExtra("speciesType", historyRecord.getSpeciesType());
-                startActivity(intent);
-            }
-        });
+//        listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                HistoryRecord historyRecord = (HistoryRecord) view.getTag();
+//                Intent intent = new Intent(SearchActivity.this, SpeciesDeatailedActivity.class);
+//                intent.putExtra("singal", historyRecord.getSingal());
+//                intent.putExtra("speciesType", historyRecord.getSpeciesType());
+//                startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -94,8 +100,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         cancel = (TextView) findViewById(R.id.activity_search_view_text_view_cancel);
         history = (LinearLayout) findViewById(R.id.activity_search_view_linear_layout_history);
         listView = (ListView) findViewById(R.id.activity_search_view_list_view);
-        listViewHistory = (ListView) findViewById(R.id.activity_search_list_view_history);
-        listViewHistory.setAdapter(historyRecordAdapter);
+        listViewHistory = (RecyclerView) findViewById(R.id.activity_search_list_view_history);
+        listViewHistory.setLayoutManager(new GridLayoutManager(this,3));
+        listViewHistory.setAdapter(historySearchAdapter);
         listView.setAdapter(myListViewAdapter);
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -269,5 +276,44 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             convertView.setTag(historyRecordList.get(position));
             return convertView;
         }
+    }
+
+    public static class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdapter.ViewHolder>{
+
+        List<HistoryRecord> historyRecordList;
+
+        public HistorySearchAdapter(List<HistoryRecord> historyRecordList) {
+            this.historyRecordList = historyRecordList;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.search_view_history_item,null);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.textView.setText(historyRecordList.get(position).getChineseName());
+        }
+
+        @Override
+        public int getItemCount() {
+            return historyRecordList.size();
+        }
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            @BindView(R.id.search_view_history_item_text_view)
+            TextView textView;
+
+
+//            convertView.setTag(historyRecordList.get(position));
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this,itemView);
+            }
+        }
+
     }
 }

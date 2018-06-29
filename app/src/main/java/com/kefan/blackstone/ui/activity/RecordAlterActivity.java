@@ -10,10 +10,14 @@ import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.common.SpeciesConstant;
+import com.kefan.blackstone.data.listener.BaseErrorListener;
+import com.kefan.blackstone.data.listener.BaseResponseListener;
 import com.kefan.blackstone.data.req.AlterRecordReq;
+import com.kefan.blackstone.data.req.NoteReq;
 import com.kefan.blackstone.database.AlterRecord;
 import com.kefan.blackstone.database.Note;
 import com.kefan.blackstone.database.NoteTemplate;
@@ -24,6 +28,7 @@ import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.RecordServiceImpl;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.adapter.AddRecordExpandAdapter;
+import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.widget.HeaderBar;
 
 import org.litepal.crud.DataSupport;
@@ -86,6 +91,8 @@ public class RecordAlterActivity extends BaseActivity {
 
     private UserService userService;
 
+    private Record record;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +117,7 @@ public class RecordAlterActivity extends BaseActivity {
         group = new ArrayList<>();
         noteTemplateList = new ArrayList<>();
         adapter = new AddRecordExpandAdapter(group, noteTemplateList);
-
+        record=recordService.findRecordById(recordId);
         createNoteTemplate();
     }
 
@@ -140,6 +147,15 @@ public class RecordAlterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        headerbar.getRightTextView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                uploadRecord();
+
             }
         });
 
@@ -193,7 +209,65 @@ public class RecordAlterActivity extends BaseActivity {
     }
 
     private void uploadRecord() {
-        
+
+        AlterRecordReq alterRecordReq=createRecord();
+
+        recordService.alterRecord(userService.getToken(), alterRecordReq, new BaseResponseListener<Object>(Object.class) {
+
+            @Override
+            protected void onSuccess(Object data) {
+                ToastUtil.showToast(getApplicationContext(),"修改成功");
+                record.delete();
+            }
+
+            @Override
+            protected void onFailed(int code, String message) {
+                ToastUtil.showToast(getApplicationContext(),message);
+            }
+
+
+        }, new BaseErrorListener(getApplicationContext()) {
+            @Override
+            protected void onError(VolleyError volleyError) {
+
+            }
+        });
+    }
+
+    /**
+     * 记录记录
+     *
+     * @return
+     */
+    private AlterRecordReq createRecord() {
+
+        List<NoteReq> notes = new ArrayList<>();
+
+        AlterRecordReq alterRecordReq=new AlterRecordReq();
+
+        for (List<NoteTemplate> noteTemplates : noteTemplateList) {
+
+            for (NoteTemplate noteTemplate : noteTemplates) {
+
+                if (noteTemplate.isChekced()) {
+
+                    NoteReq note = copyFromTemplate(noteTemplate);
+                    notes.add(note);
+
+                }
+
+            }
+
+        }
+
+        if (!getTime().equals(record.getTime())) {
+            alterRecordReq.setTime(getTime());
+        }
+
+        alterRecordReq.setTime(record.getTime());
+        alterRecordReq.setNotes(notes);
+        alterRecordReq.setId(record.getNetId());
+        return alterRecordReq;
     }
 
     private void createNoteTemplate() {
@@ -290,21 +364,12 @@ public class RecordAlterActivity extends BaseActivity {
      * @param noteTemplate
      * @return
      */
-    private Note copyFromTemplate(NoteTemplate noteTemplate) {
+    private NoteReq copyFromTemplate(NoteTemplate noteTemplate) {
 
-        return new Note(noteTemplate.getSpeciesId(),0l, noteTemplate.getRemark()
-                , noteTemplate.getSpeciesType(), noteTemplate.getFamily(), noteTemplate.getSpeciesName());
-    }
-
-
-    /**
-     * @param record
-     * @return
-     */
-    private AlterRecordReq copyFromRecord(Record record) {
-
-        return new AlterRecordReq(recordId,record.getTime(),record.getNotes());
-
+        NoteReq note=new NoteReq();
+        note.setRemark(noteTemplate.getRemark());
+        note.setSpeciesId(noteTemplate.getSpeciesId());
+        return note;
     }
 
 

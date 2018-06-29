@@ -117,7 +117,7 @@ public class MyRecordTwoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(MyRecordTwoActivity.this, RecordAlterActivity.class));
+               alter();
 
             }
         });

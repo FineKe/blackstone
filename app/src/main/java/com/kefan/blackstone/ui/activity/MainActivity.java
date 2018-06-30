@@ -1,19 +1,24 @@
 package com.kefan.blackstone.ui.activity;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Display;
@@ -55,6 +60,7 @@ import com.kefan.blackstone.ui.fragment.HomeFragment;
 import com.kefan.blackstone.ui.fragment.SettingFragment;
 import com.kefan.blackstone.ui.fragment.TeamFragment;
 import com.kefan.blackstone.ui.fragment.TestingFragment;
+import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.widget.HeaderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -547,8 +553,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
     private void deletePicture() {
         upLoadImage();
-        UserInformationUtil userInformationUtil = new UserInformationUtil(getContext());
-        userInformationUtil.setAvatar(null);
+        userService.getUser().setAvatar(null);
     }
 
     private void takePhoto() {
@@ -558,22 +563,34 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
         }
         takePhotoSavePath = Environment.getExternalStorageDirectory() + "/ClipHeadPhoto/cache/";
         takePhotoSaveName = System.currentTimeMillis() + ".png";
-        //photoSaveName =String.valueOf(System.currentTimeMillis()) + ".png";
-        Intent openCameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-        takePhotoimageUri = Uri.fromFile(new File(takePhotoSavePath, takePhotoSaveName));
-        openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, takePhotoimageUri);
-        startActivityForResult(openCameraIntent, TAKE_PHOTO);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            ContentValues values = new ContentValues(1);
+            values.put(MediaStore.Images.Media.MIME_TYPE,"image/png");
+            values.put(MediaStore.Images.Media.DATA,new File(takePhotoSavePath, takePhotoSaveName).getAbsolutePath());
+            takePhotoimageUri=getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+
+            Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, takePhotoimageUri);
+            intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+            startActivityForResult(intent, TAKE_PHOTO);
+        } else {
+            Intent openCameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+            takePhotoimageUri = Uri.fromFile(new File(takePhotoSavePath, takePhotoSaveName));
+            openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, takePhotoimageUri);
+            startActivityForResult(openCameraIntent, TAKE_PHOTO);
+        }
+
     }
 
     public void choosePictures(Dialog dialog) {
         Intent choosePictureIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //choosePictureIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         dialog.dismiss();
         startActivityForResult(choosePictureIntent, CHOOSE_PICTURE);
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setType("image/*");//相片类型
-//        startActivityForResult(intent, CHOOSE_PICTURE);
     }
 
     public void upLoadImage() {
@@ -587,11 +604,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 try {
                     int code = jsonObject.getInt("code");
                     if (code == 88) {
-                        Log.d(TAG, "onResponse:上传成功 ");
-//                        Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
-//                        Message message=new Message();
-//                        message.what=UPLOAD_IMAGE_OK;
-//                        handler.sendMessage(message);
+
+                        ToastUtil.showToast(getContext(),"删除成功");
+
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
@@ -609,10 +624,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                UpdateToken updateToken = new UpdateToken(getContext());
-                updateToken.updateToken();
-                UserInformationUtil userInformationUtil = new UserInformationUtil(getContext());
-                headers.put("token", userInformationUtil.getToken());
+                headers.put("token", userService.getToken());
                 return headers;
             }
         };
@@ -655,24 +667,27 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 break;
             case TAKE_PHOTO:
                 takePhotoPath = takePhotoSavePath + takePhotoSaveName;
+
+                System.out.println(takePhotoPath);
+
                 if (takePhotoPath != null) {
                     if (takePhotoimageUri != null) {
                         takePhotoimageUri = Uri.fromFile(new File(takePhotoPath));
                         if ((new File(takePhotoPath)).exists()) {
-                            Intent intent2 = new Intent(getContext(), ClipActivity.class);
-                            intent2.putExtra("path", takePhotoPath);
-                            startActivityForResult(intent2, TAKE_PHOTO_RESULT);
+                            Intent intent = new Intent(getContext(), ClipActivity.class);
+                            intent.putExtra("path", takePhotoPath);
+                            startActivityForResult(intent, TAKE_PHOTO_RESULT);
                         }
 
                     }
-
                 }
                 break;
 
             case TAKE_PHOTO_RESULT:
                 if (data != null) {
                     final String tempath = data.getStringExtra("path");
-                    icon.setImageBitmap(getLoacalBitmap(tempath));
+//                    icon.setImageBitmap(getLoacalBitmap(tempath));
+                    Glide.with(this).load(tempath).into(icon);
                 }
                 break;
 
@@ -726,6 +741,19 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             combine.setClickable(true);
         }
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+            }
+        }
 
     }
 }

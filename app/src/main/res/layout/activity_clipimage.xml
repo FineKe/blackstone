@@ -27,7 +27,7 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <com.kefan.blackstone.ClipImageLayout
+    <com.kefan.blackstone.ui.activity.ClipImageLayout
         android:id="@+id/id_clipImageLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

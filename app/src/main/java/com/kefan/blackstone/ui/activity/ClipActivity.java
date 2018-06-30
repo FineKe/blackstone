@@ -26,6 +26,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -55,6 +57,8 @@ public class ClipActivity extends Activity {
 
     private String uploadtoken;
     private String imageKey;
+
+    private UserService userService;
 //    private String path;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,6 +67,7 @@ public class ClipActivity extends Activity {
         setContentView(R.layout.activity_clipimage);
         //这步必须要加
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        userService=new UserServiceImpl();
         loadingDialog=new ProgressDialog(this);
         loadingDialog.setTitle("请稍后...");
         loadingDialog.setCancelable(false);
@@ -143,10 +148,7 @@ public class ClipActivity extends Activity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String>headers=new HashMap<>();
-                UpdateToken updateToken=new UpdateToken(getContext());
-                updateToken.updateToken();
-                UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
-                headers.put("token",userInformationUtil.getToken());
+                headers.put("token",userService.getToken());
                 return headers;
             }
         };
@@ -192,11 +194,8 @@ public class ClipActivity extends Activity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String>headers=new HashMap<>();
-                UpdateToken updateToken=new UpdateToken(getContext());
-                updateToken.updateToken();
-                UserInformationUtil userInformationUtil=new UserInformationUtil(getContext());
-                userInformationUtil.setAvatar("http://img.blackstone.ebirdnote.cn/"+imageKey);
-                headers.put("token",userInformationUtil.getToken());
+                userService.getUser().setAvatar("http://img.blackstone.ebirdnote.cn/"+imageKey);
+                headers.put("token",userService.getToken());
                 return headers;
             }
         };

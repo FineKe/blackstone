@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.activity.MyCollectionActivity">
+
+    <com.kefan.blackstone.widget.HeaderBar
+        android:background="@color/global_bg_clolor"
+        android:id="@+id/headerbar_my_collection_activity"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:left_margin="16dp"
+        app:right_margin="16dp"
+        app:leftIcon="@mipmap/action_back"
+        app:leftText="返回"
+        app:centerText="我的收藏">
+
+    </com.kefan.blackstone.widget.HeaderBar>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_view_my_collection_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

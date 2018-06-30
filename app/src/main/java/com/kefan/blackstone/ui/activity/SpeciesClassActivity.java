@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.widget.SliderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -76,13 +77,8 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private int position;
 
     private LinearLayoutManager linearLayoutManager;
-    private String typeTitle[] = {"两栖类", "爬行类", "鸟类"};
+    private String typeTitle[] = {"两栖类", "爬行类", "鸟类", "昆虫"};
     private List<String> indexList;
-
-    private UserInformationUtil userInformation;
-    private IsLoginUtil isLoginUtil;
-    private UpdateToken updateToken;
-
 
     private SharedPreferences sortingSharedPreferences;
     private SharedPreferences.Editor sortingEditor;
@@ -119,29 +115,26 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         sliderBar = (SliderBar) findViewById(R.id.species_class_sliderBar);
 
         viewInclude = findViewById(R.id.species_class_view_include_head);
-        if (position <= 2) {
-            speciesClassName.setText(typeTitle[position]);
-        } else {
-            speciesClassName.setText(getIntent().getStringExtra("speciesClassName"));
-        }
 
+        speciesClassName.setText(typeTitle[position]);
         linearLayoutManager = new LinearLayoutManager(this);
         speciesContent.setLayoutManager(linearLayoutManager);
         speciesContent.setHasFixedSize(true);
 
-//        w = View.MeasureSpec.makeMeasureSpec(0,
-//                View.MeasureSpec.UNSPECIFIED);
-//        h = View.MeasureSpec.makeMeasureSpec(0,
-//                View.MeasureSpec.UNSPECIFIED);
-//        viewInclude.measure(w,h);
-//
-//        width=viewInclude.getMeasuredWidth();
-//        height=viewInclude.getMeasuredHeight();
 
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android"); //状态栏高度
         if (resourceId > 0) {
             statusBarHeight = getResources().getDimensionPixelSize(resourceId);
         }
+
+
+
+
+        if (position==3) {
+            alertMenu.setClickable(false);
+
+        }
+
         height = statusBarHeight;
         width = WindowManager.LayoutParams.MATCH_PARENT;
     }
@@ -156,27 +149,32 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         resultList = new ArrayList<>();
 
         position = getIntent().getIntExtra("position", 0);
-        if (position <= 2) {
-            speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
-            createIndexList(speciesList);
+//        if (position <= 2) {
+        speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
 
-        } else {
-            speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
-            for (int i = 0, j = 0; i < speciesList.size(); i++, j++) {
-                indexList.add(speciesList.get(i).getOrder().substring(0, 1));
-                positionList.add(i);
-                Result result = new Result();
-                result.setHead(speciesList.get(i).getOrder());
-                result.setViewType(HEAD);
-                result.setLatinHead(speciesList.get(i).getLatinOrder());
-                resultList.add(result);
-
-                Result result1 = new Result();
-                result1.setViewType(ITEM);
-                result1.setSpecies(speciesList.get(i));
-                resultList.add(result1);
-            }
+        if (position == 3) {
+            sortingByOrder=true;
         }
+
+        createIndexList(speciesList);
+
+//        } else {
+//            speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
+//            for (int i = 0, j = 0; i < speciesList.size(); i++, j++) {
+//                indexList.add(speciesList.get(i).getOrder().substring(0, 1));
+//                positionList.add(i);
+//                Result result = new Result();
+//                result.setHead(speciesList.get(i).getOrder());
+//                result.setViewType(HEAD);
+//                result.setLatinHead(speciesList.get(i).getLatinOrder());
+//                resultList.add(result);
+//
+//                Result result1 = new Result();
+//                result1.setViewType(ITEM);
+//                result1.setSpecies(speciesList.get(i));
+//                resultList.add(result1);
+//            }
+//        }
 
     }
 
@@ -416,6 +414,9 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.species_class_imageButton_alert_menu:
+                if (position == 3) {
+                    return;
+                }
                 showAlertMenu(this);
                 break;
 

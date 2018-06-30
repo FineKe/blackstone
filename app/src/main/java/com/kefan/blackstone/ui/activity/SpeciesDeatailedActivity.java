@@ -40,6 +40,7 @@ import com.kefan.blackstone.database.Insect;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
+import com.kefan.blackstone.util.NetWorkUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -116,7 +117,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
 
     private UserService userService;
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -273,7 +273,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         orderFamilyGenus.setText(speciesDetailed.getOrder());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin());
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
-//        englishName.setText(speciesDetaileds.getEnglishName());
         englishName.setVisibility(View.GONE);
         String[] tables = getResources().getStringArray(R.array.insectTablesName);
         int i = 0;
@@ -344,7 +343,6 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() + ">" + speciesDetailed.getGenus());
         latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin() + ">");
         latinGenus.setText(speciesDetailed.getLatinName());//生物圈这么干的，latinname
-//        englishName.setText(speciesDetailed.getLatinName());
         englishName.setVisibility(View.GONE);
         String[] tables = getResources().getStringArray(R.array.reptilesTblesName);
         int i = 0;
@@ -717,7 +715,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
     }
 
     public void loadDeatailed(Context context) {
-        if (userService.isLogined())//如果登录了
+        if (userService.isLogined()&& NetWorkUtil.isConnected(this))//如果登录了
         {
 
             JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
@@ -778,7 +776,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             };
             speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000, 1, 1.0f));
             requestQueue.add(speciesDetailedRequest);
-        } else {
+        } else if (NetWorkUtil.isConnected(this)) {
             JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
@@ -836,6 +834,33 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             });
             speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000, 1, 1.0f));
             requestQueue.add(speciesDetailedRequest);
+        } else {
+            switch (speciesType) {
+                case "bird":
+                    speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Bird.class)).get(0);
+                    Message messageb = new Message();
+                    messageb.what = 1;
+                    handler.sendMessage(messageb);
+                    break;
+                case "amphibia":
+                    speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Amphibia.class)).get(0);
+                    Message messagea = new Message();
+                    messagea.what = 1;
+                    handler.sendMessage(messagea);
+                    break;
+                case "insect":
+                    speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Insect.class)).get(0);
+                    Message messagei = new Message();
+                    messagei.what = 1;
+                    handler.sendMessage(messagei);
+                    break;
+                case "reptiles":
+                    speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Reptiles.class)).get(0);
+                    Message messages = new Message();
+                    messages.what = 1;
+                    handler.sendMessage(messages);
+                    break;
+            }
         }
 
     }

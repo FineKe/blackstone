@@ -166,6 +166,8 @@ public class AccountAndSecurityActivity extends BaseActivity implements View.OnC
 
                 new UserServiceImpl().logout();
 
+                Intent intent=new Intent("logout");
+                sendBroadcast(intent);
 
                 logOutDialog.dismiss();
 

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -51,6 +53,7 @@ import com.kefan.blackstone.database.Insect;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.receiver.LogoutReceiver;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.dialog.LoginDialog;
@@ -81,7 +84,7 @@ import butterknife.ButterKnife;
 import static com.kefan.blackstone.BlackStoneApplication.getContext;
 
 
-public class MainActivity extends AutoLayoutActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "MainActivity";
     private int textColor = Color.argb(100, 74, 144, 226);
@@ -122,16 +125,16 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     public HeaderBar headerBar;
 
     @BindView(R.id.iv_home_header_view_main_activity)
-    ImageView home;
+    public ImageView home;
 
     @BindView(R.id.iv_icon_header_view_main_activity)
-    ImageView icon;
+    public ImageView icon;
 
     @BindView(R.id.tv_signup_header_view_main_activity)
-    TextView signUp;
+    public TextView signUp;
 
     @BindView(R.id.tv_signin_header_view_main_activity)
-    TextView signIn;
+    public TextView signIn;
 
 
     @BindView(R.id.ll_guide_main_activity)
@@ -159,7 +162,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     LinearLayout combine;
 
     @BindView(R.id.tv_center_place_holer_header_view_main_activity)
-    TextView centerPlaceHolder;
+    public TextView centerPlaceHolder;
 
 
     private UserService userService;
@@ -179,6 +182,9 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
     private SettingFragment settingFragment;
 
     private TeamFragment teamFragment;
+
+
+    private LogoutReceiver logoutReceiver;
 
 
     @Override
@@ -231,15 +237,14 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
                 requestQueue.add(speciesDetailedRequest);
             }
 
-//            for (Species species : DataSupport.findAll(Species.class)) {
-//                Record record = new Record(species.getChineseName(), species.getSingal(), species.getSpeciesType());
-//                record.save();
-//                System.out.println(species.getSingal());
-//            }
-
         }
 
         updateUserInformation(this);
+
+        logoutReceiver=new LogoutReceiver(this);
+        IntentFilter filter=new IntentFilter("logout");
+        registerReceiver(logoutReceiver,filter);
+
     }
 
     public void updateUserInformation(Context context) {
@@ -297,6 +302,7 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             public void onClick(View view) {
                 closeDrawer();
                 alterPicture();
+
             }
         });
 
@@ -352,6 +358,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             //添加记录切换
             case R.id.ll_add_record_main_activity:
 
+                if (!userService.isLogined()) {
+                    ToastUtil.showToast(getContext(),"未登录");
+                    return;
+                }
+
                 if (addRecordFragment == null) {
                     addRecordFragment = new AddRecordFragment();
                 }
@@ -365,6 +376,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
             //小测试切换
             case R.id.ll_testing_main_activity:
+
+                if (!userService.isLogined()) {
+                    ToastUtil.showToast(getContext(),"未登录");
+                    return;
+                }
 
                 if (testingFragment == null) {
                     testingFragment = new TestingFragment();
@@ -380,6 +396,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             //收藏切换
             case R.id.ll_collection_main_activity:
 
+                if (!userService.isLogined()) {
+                    ToastUtil.showToast(getContext(),"未登录");
+                    return;
+                }
+
                 if (collectionHomeFragment == null) {
 
                     collectionHomeFragment = new CollectionHomeFragment();
@@ -394,6 +415,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
 
             //观察记录切换
             case R.id.ll_observe_record_main_activity:
+
+                if (!userService.isLogined()) {
+                    ToastUtil.showToast(getContext(),"未登录");
+                    return;
+                }
 
                 if (observeRecordFragment == null) {
                     observeRecordFragment = new ObserveRecordFragment();
@@ -755,5 +781,11 @@ public class MainActivity extends AutoLayoutActivity implements View.OnClickList
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(logoutReceiver);
     }
 }

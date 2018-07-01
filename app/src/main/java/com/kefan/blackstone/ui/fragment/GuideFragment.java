@@ -2,6 +2,7 @@ package com.kefan.blackstone.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -110,18 +111,22 @@ public class GuideFragment extends BaseFragment implements View.OnClickListener{
         {
             case R.id.guideFragment_linearlayout_tab1:
                 startActivity(new Intent(getContext(),GuideTabOneActivity.class));
+//                getActivity().overridePendingTransition(R.anim.in,R.anim.in);
                 break;
 
             case R.id.guideFragment_linearlayout_tab2:
                 startActivity(new Intent(getContext(),GuideTableTwoActivity.class));
+//                getActivity().overridePendingTransition(R.anim.in,R.anim.in);
                 break;
 
             case R.id.guideFragment_linearlayout_tab3:
                 startActivity(new Intent(getContext(),GuideTableThreeActivity.class));
+//                getActivity().overridePendingTransition(R.anim.in,R.anim.in);
                 break;
 
             case R.id.guideFragment_linearlayout_tab4:
                 startActivity(new Intent(getContext(),GuideTableFourActivity.class));
+//                getActivity().overridePendingTransition(R.anim.in,R.anim.in);
                 break;
         }
     }

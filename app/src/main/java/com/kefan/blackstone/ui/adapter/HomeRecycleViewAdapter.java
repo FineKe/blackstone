@@ -1,7 +1,9 @@
 package com.kefan.blackstone.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.common.IntentFieldConstant;
 import com.kefan.blackstone.model.SpeciesClass;
+import com.kefan.blackstone.ui.activity.MainActivity;
 import com.kefan.blackstone.ui.activity.SpeciesClassActivity;
 import com.kefan.blackstone.vo.MainVo;
 
@@ -65,6 +68,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<HomeRecycleView
                     intent.putExtra(IntentFieldConstant.SPEICES_CLASS_ID, pos);
                     intent.putExtra(IntentFieldConstant.SPECIES_TYPE, categoriesBean.getSpeciesType());
                     context.startActivity(intent);
+                ((AppCompatActivity) context).overridePendingTransition(R.anim.in,R.anim.in);
 
 
             }

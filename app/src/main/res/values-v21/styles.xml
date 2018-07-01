@@ -9,4 +9,14 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mycolor</item>
+        <item name="colorPrimaryDark">@color/mycolor</item>
+        <item name="colorAccent">@color/mycolor</item>
+        <item name="android:windowExitTransition">@transition/slide</item>
+        <item name="android:windowEnterAnimation">@transition/slide</item>
+        <item name="android:windowReenterTransition">@transition/slide</item>
+    </style>
 </resources>

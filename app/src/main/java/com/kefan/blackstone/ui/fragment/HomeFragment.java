@@ -48,6 +48,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.kefan.blackstone.BlackStoneApplication.getContext;
+
 
 /**
  * @note:
@@ -118,7 +120,7 @@ public class HomeFragment extends BaseFragment {
         userService = new UserServiceImpl();
         homeService = new HomeServiceImpl();
         categoriesBeans = new ArrayList<>();
-        adapter = new HomeRecycleViewAdapter(getContext(), categoriesBeans);
+        adapter = new HomeRecycleViewAdapter(getActivity(), categoriesBeans);
 
     }
 
@@ -170,6 +172,21 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
+
+        testStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((MainActivity) getActivity())
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_content_main_activity,new TestingFragment())
+                        .commit();
+
+            }
+        });
+
+
 
     }
 

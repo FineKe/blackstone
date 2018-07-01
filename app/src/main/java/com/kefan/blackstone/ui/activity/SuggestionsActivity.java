@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +19,10 @@ import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
+import com.kefan.blackstone.service.UserService;
+import com.kefan.blackstone.service.impl.UserServiceImpl;
+import com.kefan.blackstone.util.NetWorkUtil;
+import com.kefan.blackstone.util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,12 +34,13 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
     private String feedBackURL = APIManager.BASE_URL + "v1/feedback/new";
     private RequestQueue requestQueue;
     private JsonObjectRequest suggestionRequest;
-    private UserInformationUtil userInformation;
     private LinearLayout actionBack;
 
     private TextView send;
 
     private EditText write;
+
+    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +51,11 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
         initDatas();
         initViews();
         initEvents();
-        UpdateToken updateToken = new UpdateToken(this);
-        updateToken.updateToken();
+
     }
 
     private void initDatas() {
-        userInformation = new UserInformationUtil(this);
+        userService=new UserServiceImpl();
 
     }
 
@@ -85,9 +90,11 @@ public class SuggestionsActivity extends BaseActivity implements View.OnClickLis
 
     private void send() {
         requestQueue = Volley.newRequestQueue(this);
-        final String token = userInformation.getToken();
+        final String token = userService.getToken();
         if (token.equals("")) {
             Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+        } else if (!NetWorkUtil.isConnected(this)) {
+            ToastUtil.showToast(this,"网络未连接");
         } else {
             JSONObject jsonObject = new JSONObject();
             try {

@@ -33,6 +33,7 @@ public class JsonResolverList {
             jsonArrayList.add(jsonObject.getJSONArray("reptiles"));
             jsonArrayList.add(jsonObject.getJSONArray("bird"));
             jsonArrayList.add(jsonObject.getJSONArray("amphibia"));
+            jsonArrayList.add(jsonObject.getJSONArray("mamal"));
 
             for (JSONArray array : jsonArrayList) {
                 for (int i = 0; i < array.length(); i++) {
@@ -41,7 +42,11 @@ public class JsonResolverList {
                     Species species = new Species();
                     species.setSingal(object.getInt("id"));
                     species.setChineseName(object.getString("chineseName"));
-                    species.setLatinName(object.getString("latinName"));
+
+                    if (object.has("latinName")) {
+
+                        species.setLatinName(object.getString("latinName"));
+                    }
                     if (object.has("englishName")) {
                         species.setEnglishName(object.getString("englishName"));
                     }

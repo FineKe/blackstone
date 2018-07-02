@@ -84,6 +84,21 @@
         <item>模糊特征</item>
     </array>
 
+    <array name="mamlTblesName">
+        <item>体型</item>
+        <item>体长</item>
+        <item>栖息地</item>
+        <item>主色</item>
+        <item>次色</item>
+        <item>身体是否斑点或者条纹</item>
+        <item>尾巴长短</item>
+        <item>生境</item>
+        <item>习性</item>
+        <item>分布</item>
+        <item>保护等级</item>
+    </array>
+
+
     <array name="aphibiaTablesName">
         <item>辨识特征</item>
         <item>体型</item>

@@ -3,6 +3,7 @@ package com.kefan.blackstone.JsonUtil;
 import com.kefan.blackstone.database.Amphibia;
 import com.kefan.blackstone.database.Bird;
 import com.kefan.blackstone.database.Insect;
+import com.kefan.blackstone.database.Mamal;
 import com.kefan.blackstone.database.Reptiles;
 
 import org.json.JSONArray;
@@ -49,6 +50,9 @@ public class JsonResolverSpeciesDetailed {
                         break;
                     case "insect":
                         resultObject = ResolveInsect(jsonObject);
+                        break;
+                    case "mamal":
+                        resultObject = ResolveMamal(jsonObject);
                         break;
                 }
             }
@@ -245,6 +249,52 @@ public class JsonResolverSpeciesDetailed {
             e.printStackTrace();
         }
         return reptiles;
+    }
+
+
+    private Mamal ResolveMamal(JSONObject jsonObject) {
+
+        Mamal mamal = new Mamal();
+        try {
+            JSONObject data = jsonObject.getJSONObject("data");
+            mamal.setSingal(data.getInt("id"));
+            mamal.setChineseName(data.getString("chineseName"));
+            mamal.setEnglishName(data.getString("englishName"));
+            mamal.setOrder(data.getString("order"));
+            mamal.setOrderLatin(data.getString("orderLatin"));
+            mamal.setFamily(data.getString("family"));
+            mamal.setFamilyLatin(data.getString("familyLatin"));
+            JSONArray imgs = data.getJSONArray("imgs");
+            ArrayList<String> imgsList = new ArrayList<>();
+            for (int i = 0; i < imgs.length(); i++) {
+                imgsList.add(imgs.getJSONObject(i).getString("url"));
+            }
+            mamal.setImgs(imgsList);
+            JSONObject features = data.getJSONObject("features");
+            mamal.setMain_color(features.getString("main_color"));
+            mamal.setHabits(features.getString("habits"));
+            mamal.setHabitat(features.getString("habitat"));
+            mamal.setShape(features.getString("shape"));
+            mamal.setTail(features.getString("tail"));
+            mamal.setLength(features.getString("length"));
+            mamal.setSub_color(features.getString("sub_color"));
+            mamal.setPots(features.getString("pots"));
+            mamal.setDistribution(features.getString("distribution"));
+            mamal.setProtect_level(features.getString("protect_level"));
+
+
+            if (data.has("collected")) {
+                mamal.setCollected(data.getBoolean("collected"));
+            } else {
+                mamal.setCollected(false);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mamal;
+
+
     }
 
 }

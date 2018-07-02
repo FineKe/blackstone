@@ -35,7 +35,6 @@ import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.database.Species;
-import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.widget.SliderBar;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -77,7 +76,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
     private int position;
 
     private LinearLayoutManager linearLayoutManager;
-    private String typeTitle[] = {"两栖类", "爬行类", "鸟类", "昆虫"};
+    private String typeTitle[] = {"两栖类", "爬行类", "鸟类", "昆虫","兽类"};
     private List<String> indexList;
 
     private SharedPreferences sortingSharedPreferences;
@@ -149,34 +148,15 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         resultList = new ArrayList<>();
 
         position = getIntent().getIntExtra("position", 0);
-//        if (position <= 2) {
         speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
 
         if (position == 3) {
-            sortingByOrder=true;
+            sortingByOrder = true;
         }
 
         createIndexList(speciesList);
-
-//        } else {
-//            speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
-//            for (int i = 0, j = 0; i < speciesList.size(); i++, j++) {
-//                indexList.add(speciesList.get(i).getOrder().substring(0, 1));
-//                positionList.add(i);
-//                Result result = new Result();
-//                result.setHead(speciesList.get(i).getOrder());
-//                result.setViewType(HEAD);
-//                result.setLatinHead(speciesList.get(i).getLatinOrder());
-//                resultList.add(result);
-//
-//                Result result1 = new Result();
-//                result1.setViewType(ITEM);
-//                result1.setSpecies(speciesList.get(i));
-//                resultList.add(result1);
-//            }
-//        }
-
     }
+
 
     private void createIndexList(List<Species> speciesList) {
         if (sortingByOrder) {
@@ -437,38 +417,31 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         }
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showBirdPickDialog() {
         hideTitleBar();
         mydialog_bird dialog = new mydialog_bird(this, R.style.customDialog, width, height);
-//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showAmphibiaPickDialog() {
         hideTitleBar();
         mydialog_amphibia dialog = new mydialog_amphibia(this, R.style.customDialog, width, height);
-//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showReptilesPickDialog() {
         hideTitleBar();
         mydialog_retile dialog = new mydialog_retile(this, R.style.customDialog, width, height);
-//        dialog.create();
+
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showInsectPickDialog() {
         hideTitleBar();
         mydialog_insect dialog = new mydialog_insect(this, R.style.customDialog, width, height);
-//        dialog.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
@@ -507,7 +480,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                             public void run() {
                                 sortingByOrder = true;
                                 sortingEditor.putBoolean("sortingWay", true).apply();
-                                if (position <= 2) {
+                                if (position <= 2||position>3) {
                                     speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
                                     resultList.clear();
                                     positionList.clear();
@@ -532,7 +505,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                             public void run() {
                                 sortingByOrder = true;
                                 sortingEditor.putBoolean("sortingWay", true).apply();
-                                if (position <= 2) {
+                                if (position <= 2||position>3) {
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();
@@ -565,7 +538,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                             public void run() {
                                 sortingByOrder = false;
                                 sortingEditor.putBoolean("sortingWay", false).apply();
-                                if (position <= 2) {
+                                if (position <= 2||position>3) {
                                     speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
                                     resultList.clear();
                                     positionList.clear();
@@ -592,7 +565,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                             public void run() {
                                 sortingByOrder = false;
                                 sortingEditor.putBoolean("sortingWay", false).apply();
-                                if (position <= 2) {
+                                if (position <= 2||position>3) {
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();

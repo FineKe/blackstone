@@ -37,6 +37,7 @@ import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
 import com.kefan.blackstone.database.Amphibia;
 import com.kefan.blackstone.database.Bird;
 import com.kefan.blackstone.database.Insect;
+import com.kefan.blackstone.database.Mamal;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
@@ -123,9 +124,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         getSupportActionBar().hide();
         singal = getIntent().getIntExtra("singal", 1);
         speciesType = getIntent().getStringExtra("speciesType");
-        //speciesTypeChineseName=getIntent().getStringExtra("speciesTypeChineseName");
+
         setContentView(R.layout.activity_species_deatailed);
-        Log.d(TAG, "onCreate: " + singal);
         initData();
         initViews();
         initEvents();
@@ -231,6 +231,21 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                 }
                 createInsectView((Insect) speciesDetaileds);
                 for (String picture : ((Insect) speciesDetaileds).getImgs()) {
+                    views.add(createView(picture));
+                    pointers.add(createPointer());
+                }
+                break;
+
+            case "mamal":
+                Mamal mamal = (Mamal) speciesDetaileds;
+                isCollected = mamal.isCollected();
+                if (mamal.isCollected()) {
+                    collection.setImageResource(R.mipmap.heart_pressed);
+                } else {
+                    collection.setImageResource(R.mipmap.heart_normal);
+                }
+                createMamalView((Mamal) speciesDetaileds);
+                for (String picture : ((Mamal) speciesDetaileds).getImgs()) {
                     views.add(createView(picture));
                     pointers.add(createPointer());
                 }
@@ -370,6 +385,40 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
     }
 
+    private void createMamalView(Mamal speciesDetailed) {
+        speciesDetailed.setViewTables();
+        actionBackText.setText("兽类");
+        titleText.setText(speciesDetailed.getChineseName());
+        orderFamilyGenus.setText(speciesDetailed.getOrder() + ">" + speciesDetailed.getFamily() );
+        latinOrderFamily.setText(speciesDetailed.getOrderLatin() + ">" + speciesDetailed.getFamilyLatin());
+        englishName.setText(speciesDetailed.getEnglishName());
+        latinGenus.setVisibility(View.INVISIBLE);
+        String[] tables = getResources().getStringArray(R.array.mamlTblesName);
+        int i = 0;
+        for (String s : speciesDetailed.getViewTables()) {
+            if (s!=null&&!s.equals("")) {
+                LinearLayout tableView = new LinearLayout(this);
+                tableView.setGravity(Gravity.CENTER_VERTICAL);
+                tableView.setOrientation(LinearLayout.VERTICAL);
+                TextView title = new TextView(this);
+                title.setText(tables[i]);
+                title.setTextColor(getResources().getColor(R.color.mycolor));
+                TextView content = new TextView(this);
+                content.setText(speciesDetailed.getViewTables().get(i));
+                content.setLineSpacing(8, 1);
+                tableView.addView(title);
+                tableView.addView(content);
+                View view1 = linearLayout.getChildAt(1);
+                tableView.setPadding(view1.getPaddingLeft(), 10, view1.getPaddingRight(), 10);
+                View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+                linearLayout.addView(tableView);
+                System.out.println(tables[i] + ":");
+            }
+            i++;
+        }
+        View view = LayoutInflater.from(this).inflate(R.layout.split_line, linearLayout);
+    }
+
     private void createBirdView(final Bird speciesDetailed) {
         speciesDetailed.setViewTables();
         actionBackText.setText("鸟类");
@@ -477,20 +526,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        playAudio.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(isPlay==true)
-//                {
-//                    isPlay=false;
-//                    mediaPlayer.stop();
-//                    playAudio.setImageResource(R.mipmap.play_audio_normal);
-//                }else
-//                {
-//                    isPlay=true;
-//                }
-//            }
-//        });
+
 
     }
 
@@ -560,10 +596,8 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         }
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private View createView(String picture) {
         RoundedImageView imgView = new RoundedImageView(this);
-//        imgView.setBackground(getDrawable(R.drawable.view_pager_background));
         imgView.setCornerRadius(8);
         imgView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(getApplicationContext()).load(picture + "?imageslim").placeholder(R.mipmap.loading_big).bitmapTransform(new GlideRoundTransform(this, 8)).into(imgView);
@@ -591,15 +625,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
         scheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(), 3, 3, TimeUnit.SECONDS);
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if(scheduledExecutorService!=null)
-//        {
-////            scheduledExecutorService.shutdown();
-//            scheduledExecutorService.shutdown();
-//        }
-//    }
+
 
     @Override
     protected void onStop() {
@@ -764,6 +790,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                             messages.what = 1;
                             handler.sendMessage(messages);
                             break;
+                        case "mamal":
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Mamal.class)).get(0);
+                            Message messagem = new Message();
+                            messagem.what = 1;
+                            handler.sendMessage(messagem);
+                            break;
                     }
                 }
             }) {
@@ -827,6 +859,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                             messages.what = 1;
                             handler.sendMessage(messages);
                             break;
+                        case "mamal":
+                            speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Mamal.class)).get(0);
+                            Message messagem = new Message();
+                            messagem.what = 1;
+                            handler.sendMessage(messagem);
+                            break;
                     }
 
 
@@ -859,6 +897,12 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
                     Message messages = new Message();
                     messages.what = 1;
                     handler.sendMessage(messages);
+                    break;
+                case "mamal":
+                    speciesDetaileds = (DataSupport.where("singal=?", "" + singal).find(Mamal.class)).get(0);
+                    Message messagem = new Message();
+                    messagem.what = 1;
+                    handler.sendMessage(messagem);
                     break;
             }
         }

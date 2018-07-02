@@ -50,6 +50,7 @@ import com.kefan.blackstone.common.HandlerConstant;
 import com.kefan.blackstone.database.Amphibia;
 import com.kefan.blackstone.database.Bird;
 import com.kefan.blackstone.database.Insect;
+import com.kefan.blackstone.database.Mamal;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.database.Species;
@@ -204,14 +205,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sharedPreferences = getSharedPreferences(isLoginedFile, MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        int size = (DataSupport.findAll(Bird.class)).size() + (DataSupport.findAll(Amphibia.class)).size() + (DataSupport.findAll(Insect.class)).size() + (DataSupport.findAll(Reptiles.class)).size();
-        System.out.println("size" + size + ":" + (DataSupport.findAll(Species.class)).size());
-        if (size != (DataSupport.findAll(Species.class)).size()) {
+        int size = (DataSupport.count(Bird.class)) + (DataSupport.count(Amphibia.class)) + (DataSupport.count(Insect.class)) + (DataSupport.count(Reptiles.class))+(DataSupport.count(Mamal.class));
+        if (size != (DataSupport.count(Species.class))) {
             DataSupport.deleteAll(Bird.class);
             DataSupport.deleteAll(Amphibia.class);
             DataSupport.deleteAll(Reptiles.class);
             DataSupport.deleteAll(Insect.class);
             DataSupport.deleteAll(Record.class);
+            DataSupport.deleteAll(Mamal.class);
             requestQueue = Volley.newRequestQueue(this);//创建请求队列
             List<Species> speciesList = DataSupport.findAll(Species.class);
             for (Species s : speciesList) {

@@ -117,8 +117,8 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter<ItemRemoveRcord
      */
     private String specesCount(List<Note> notes) {
 
-        String strs[] = {"", "", "", ""};
-        int counts[] = {0, 0, 0, 0};
+        String strs[] = {"", "", "", "", ""};
+        int counts[] = {0, 0, 0, 0, 0};
 
         for (Note note : notes) {
 
@@ -139,6 +139,9 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter<ItemRemoveRcord
                 case SpeciesConstant.REPTILES:
                     counts[3]++;
                     break;
+                case SpeciesConstant.MAMAL:
+                    counts[4]++;
+                    break;
             }
 
         }
@@ -157,6 +160,10 @@ public class ItemRemoveRcordAdapter extends RecyclerView.Adapter<ItemRemoveRcord
 
         if (counts[3] != 0) {
             strs[3] = "爬行类" + counts[3] + "种";
+        }
+
+        if (counts[4] != 0) {
+            strs[4] = "兽类" + counts[4] + "种";
         }
 
         String str = "";

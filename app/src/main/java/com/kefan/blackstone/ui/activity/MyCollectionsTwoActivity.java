@@ -27,6 +27,7 @@ import com.kefan.blackstone.BaseActivity;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
+import com.kefan.blackstone.database.Mamal;
 import com.kefan.blackstone.database.Species;
 import com.kefan.blackstone.model.SpeciesClass;
 import com.kefan.blackstone.widget.SliderBar;
@@ -288,11 +289,13 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                         List<Species> reptiles=new ArrayList<>();
                         List<Species> bird=new ArrayList<>();
                         List<Species> insect=new ArrayList<>();
+                        List<Species> mamal=new ArrayList<>();
 
                         int acount=0;
                         int bcount=0;
                         int rcount=0;
                         int icount=0;
+                        int mcount=0;
                         JSONArray data=jsonObject.getJSONArray("data");
                         for(int i=0;i<data.length();i++)
                         {
@@ -323,6 +326,13 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                                     ispecies.setSingal(object.getInt("id"));
                                     insect.add(ispecies);
                                     break;
+                                case  "mamal":
+                                    mcount++;
+                                    Species mspecies=new Species();
+                                    mspecies.setSingal(object.getInt("id"));
+                                    mamal.add(mspecies);
+                                    break;
+
                             }
                         }
                         if(acount!=0)
@@ -352,6 +362,13 @@ public class MyCollectionsTwoActivity extends BaseActivity implements View.OnCli
                             in.setName("昆虫目");
                             speciesClassList.add(in);
                         }
+
+                        if (mcount != 0) {
+                            SpeciesClass m=new SpeciesClass("mamal",mamal,mcount);
+                            m.setName("兽类");
+                            speciesClassList.add(m);
+                        }
+
                         nowSize=speciesClassList.size();
                         if(oldSize>nowSize)
                         {

@@ -27,6 +27,7 @@ import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.RecordServiceImpl;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.fragment.BaseFragment;
+import com.kefan.blackstone.util.NetWorkUtil;
 import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.vo.RecordVo;
 import com.kefan.blackstone.vo.UpLoadRecordVo;
@@ -36,6 +37,7 @@ import com.kefan.blackstone.widget.ItemRemoveRecordRecycleView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -231,9 +233,18 @@ public class ObserveRecordFragment extends BaseFragment {
 
         @Override
         public void run() {
-            records.clear();
-            records.addAll(recordService.list(userService.getUser().getId()));
 
+
+                records.clear();
+
+
+            if (!NetWorkUtil.isConnected(getContext())) {
+
+                records.addAll(recordService.list(userService.getUser().getId()));
+
+                handler.sendEmptyMessage(LOAD_RECORDS_COMPLETE);
+                return;
+            }
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET
                     , APIManager.PULL_RECORDS + userService.getUser().getId(), null
@@ -259,17 +270,19 @@ public class ObserveRecordFragment extends BaseFragment {
                                     //如果过本地存在 记录id不一样的 则创建
                                     if (recordService.findRecordByNetId(recordVo.getId()) == null) {
 
-                                        records.add(createRecordFromNet(recordVo));
+                                      createRecordFromNet(recordVo);
 
                                     }
 
-
                                 }
 
-                                Log.d(TAG, "onResponse: "+records.size());
-                                handler.sendEmptyMessage(LOAD_RECORDS_COMPLETE);
 
                             }
+
+                            records.addAll(recordService.list(userService.getUser().getId()));
+
+                            handler.sendEmptyMessage(LOAD_RECORDS_COMPLETE);
+
 
                         } else {
                             handler.sendEmptyMessage(LOAD_NET_RECORD);
@@ -281,7 +294,7 @@ public class ObserveRecordFragment extends BaseFragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-
+                    handler.sendEmptyMessage(LOAD_NET_RECORD);
                 }
             }) {
                 @Override
@@ -296,7 +309,7 @@ public class ObserveRecordFragment extends BaseFragment {
 
             BlackStoneApplication.getRequestQueue().add(jsonObjectRequest);
 
-            handler.sendEmptyMessage(LOAD_RECORDS_COMPLETE);
+
         }
     }
 

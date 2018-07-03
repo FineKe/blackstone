@@ -374,18 +374,21 @@ public class AddRecordFragment extends BaseFragment {
                             group.add("昆虫");
                             group.add("两栖类");
                             group.add("爬行类");
+                            group.add("兽类");
 
 
                             List<NoteTemplate> bird = DataSupport.where("speciesType=?", "bird").find(NoteTemplate.class);
                             List<NoteTemplate> insect = DataSupport.where("speciesType=?", "insect").find(NoteTemplate.class);
                             List<NoteTemplate> amphibia = DataSupport.where("speciesType=?", "amphibia").find(NoteTemplate.class);
                             List<NoteTemplate> reptiles = DataSupport.where("speciesType =?", "reptiles").find(NoteTemplate.class);
+                            List<NoteTemplate> mamal = DataSupport.where("speciesType =?", "mamal").find(NoteTemplate.class);
 
 
                             noteTemplateList.add(bird);
                             noteTemplateList.add(insect);
                             noteTemplateList.add(amphibia);
                             noteTemplateList.add(reptiles);
+                            noteTemplateList.add(mamal);
 
                             handler.sendEmptyMessage(LOAD_NODE_TEMPLATE_COMPLETE);
                         }
@@ -412,16 +415,19 @@ public class AddRecordFragment extends BaseFragment {
             group.add("昆虫");
             group.add("两栖类");
             group.add("爬行类");
+            group.add("兽类");
 
             List<NoteTemplate> bird = DataSupport.where("speciesType=?", "bird").find(NoteTemplate.class);
             List<NoteTemplate> insect = DataSupport.where("speciesType=?", "insect").find(NoteTemplate.class);
             List<NoteTemplate> amphibia = DataSupport.where("speciesType=?", "amphibia").find(NoteTemplate.class);
             List<NoteTemplate> reptiles = DataSupport.where("speciesType=?", "reptiles").find(NoteTemplate.class);
+            List<NoteTemplate> mamal = DataSupport.where("speciesType =?", "mamal").find(NoteTemplate.class);
 
             noteTemplateList.add(bird);
             noteTemplateList.add(insect);
             noteTemplateList.add(amphibia);
             noteTemplateList.add(reptiles);
+            noteTemplateList.add(mamal);
 
             handler.sendEmptyMessage(LOAD_NODE_TEMPLATE_COMPLETE);
         }

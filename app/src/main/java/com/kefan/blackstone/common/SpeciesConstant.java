@@ -14,4 +14,6 @@ public class SpeciesConstant {
     public static final String AMPHIBIA="amphibia";
 
     public static final String REPTILES="reptiles";
+
+    public static final String MAMAL="mamal";
 }

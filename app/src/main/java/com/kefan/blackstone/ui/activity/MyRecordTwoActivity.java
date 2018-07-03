@@ -117,7 +117,7 @@ public class MyRecordTwoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-               alter();
+                alter();
 
             }
         });
@@ -152,7 +152,8 @@ public class MyRecordTwoActivity extends BaseActivity {
         List<Note> bird = new ArrayList<>();
         List<Note> amphibia = new ArrayList<>();
         List<Note> insect = new ArrayList<>();
-        final List<Note> reptiles = new ArrayList<>();
+        List<Note> reptiles = new ArrayList<>();
+        List<Note> mamal = new ArrayList<>();
 
         record = recordService.findRecordById(recordId);
 
@@ -239,6 +240,10 @@ public class MyRecordTwoActivity extends BaseActivity {
                     case SpeciesConstant.REPTILES:
                         reptiles.add(note);
                         break;
+                    case SpeciesConstant.MAMAL:
+                        mamal.add(note);
+                        break;
+
                 }
 
             }
@@ -258,6 +263,10 @@ public class MyRecordTwoActivity extends BaseActivity {
             if (reptiles.size() > 0) {
                 speciesNotes.add(reptiles);
                 species.add("爬行类");
+            }
+            if (mamal.size() > 0) {
+                speciesNotes.add(mamal);
+                species.add("兽类");
             }
 
             this.father.clear();

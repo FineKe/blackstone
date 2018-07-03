@@ -62,7 +62,7 @@ public class RecordAlterActivity extends BaseActivity {
     private int year, month, day;
 
     private List<String> group;
-    private List<List<Note>> noteList=MyRecordTwoActivity.noteList;
+    private List<List<Note>> noteList = MyRecordTwoActivity.noteList;
     private List<List<NoteTemplate>> noteTemplateList;
 
     public static NoteTemplate noteTemplate;
@@ -110,14 +110,14 @@ public class RecordAlterActivity extends BaseActivity {
     @Override
     public void initData() {
 
-        recordService=new RecordServiceImpl();
-        userService=new UserServiceImpl();
+        recordService = new RecordServiceImpl();
+        userService = new UserServiceImpl();
 
-        recordId=getIntent().getLongExtra("recordId",0l);
+        recordId = getIntent().getLongExtra("recordId", 0l);
         group = new ArrayList<>();
         noteTemplateList = new ArrayList<>();
         adapter = new AddRecordExpandAdapter(group, noteTemplateList);
-        record=recordService.findRecordById(recordId);
+        record = recordService.findRecordById(recordId);
         createNoteTemplate();
     }
 
@@ -135,8 +135,16 @@ public class RecordAlterActivity extends BaseActivity {
         expandListView.setAdapter(adapter);
         expandListView.setGroupIndicator(null);
 
-    }
+        uploadSwitch.setOpened(record.getAddToObservedList());
+        uploadSwitch.setClickable(false);
 
+        if (record.getAddToObservedList()) {
+            headerbar.getRightTextView().setText("发表");
+        } else {
+            headerbar.getRightTextView().setText("保存");
+        }
+
+    }
 
 
     @Override
@@ -154,7 +162,15 @@ public class RecordAlterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                uploadRecord();
+                if (record.getAddToObservedList()) {
+                    //上传并保存本地
+                    updateRecord(record);
+                    uploadRecord();
+                } else {
+                    //只保存到本地
+                    updateRecord(record);
+                }
+
 
             }
         });
@@ -162,16 +178,15 @@ public class RecordAlterActivity extends BaseActivity {
         uploadSwitch.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
             @Override
             public void toggleToOn(SwitchView view) {
-                headerbar.getRightTextView().setText("发表");
-                view.toggleSwitch(true);
+                uploadSwitch.setOpened(record.getAddToObservedList());
             }
 
             @Override
             public void toggleToOff(SwitchView view) {
-                headerbar.getRightTextView().setText("保存");
-                view.toggleSwitch(false);
+                uploadSwitch.setOpened(record.getAddToObservedList());
             }
         });
+
 
         datePicker.init(year, month - 1, day, new DatePicker.OnDateChangedListener() {
             @Override
@@ -200,9 +215,9 @@ public class RecordAlterActivity extends BaseActivity {
             @Override
             public void onClick(View view, int groupPos, int childPos, NoteTemplate noteTemplate) {
 
-                RecordAlterActivity.noteTemplate=noteTemplate;
+                RecordAlterActivity.noteTemplate = noteTemplate;
 
-                Intent intent=new Intent(RecordAlterActivity.this,AlterNotesActivity.class);
+                Intent intent = new Intent(RecordAlterActivity.this, AlterNotesActivity.class);
                 startActivity(intent);
             }
         });
@@ -210,19 +225,19 @@ public class RecordAlterActivity extends BaseActivity {
 
     private void uploadRecord() {
 
-        AlterRecordReq alterRecordReq=createRecord();
+        AlterRecordReq alterRecordReq = createRecord();
 
         recordService.alterRecord(userService.getToken(), alterRecordReq, new BaseResponseListener<Object>(Object.class) {
 
             @Override
             protected void onSuccess(Object data) {
-                ToastUtil.showToast(getApplicationContext(),"修改成功");
-                record.delete();
+                ToastUtil.showToast(getApplicationContext(), "修改成功");
+
             }
 
             @Override
             protected void onFailed(int code, String message) {
-                ToastUtil.showToast(getApplicationContext(),message);
+                ToastUtil.showToast(getApplicationContext(), message);
             }
 
 
@@ -243,7 +258,7 @@ public class RecordAlterActivity extends BaseActivity {
 
         List<NoteReq> notes = new ArrayList<>();
 
-        AlterRecordReq alterRecordReq=new AlterRecordReq();
+        AlterRecordReq alterRecordReq = new AlterRecordReq();
 
         for (List<NoteTemplate> noteTemplates : noteTemplateList) {
 
@@ -270,6 +285,48 @@ public class RecordAlterActivity extends BaseActivity {
         return alterRecordReq;
     }
 
+    private void updateRecord(Record record) {
+
+        record.setNotes(null);
+        record.save();
+
+        List<Note> notes = new ArrayList<>();
+
+
+        for (List<NoteTemplate> noteTemplates : noteTemplateList) {
+
+            for (NoteTemplate noteTemplate : noteTemplates) {
+
+                if (noteTemplate.isChekced()) {
+
+                    Note note = copyFromTemplat(noteTemplate);
+                    note.save();
+                    notes.add(note);
+
+                }
+
+            }
+
+        }
+
+
+        record.setNotes(notes);
+        record.save();
+    }
+
+    /**
+     * 从笔记模板产生note 对象
+     *
+     * @param noteTemplate
+     * @return
+     */
+    private Note copyFromTemplat(NoteTemplate noteTemplate) {
+
+        return new Note(noteTemplate.getSpeciesId(), 0l, noteTemplate.getRemark()
+                , noteTemplate.getSpeciesType(), noteTemplate.getFamily(), noteTemplate.getSpeciesName());
+    }
+
+
     private void createNoteTemplate() {
 
         executorService.submit(new Runnable() {
@@ -285,16 +342,19 @@ public class RecordAlterActivity extends BaseActivity {
                 group.add("昆虫");
                 group.add("两栖类");
                 group.add("爬行类");
+                group.add("兽类");
 
                 List<NoteTemplate> bird = DataSupport.where("speciesType=?", "bird").find(NoteTemplate.class);
                 List<NoteTemplate> insect = DataSupport.where("speciesType=?", "insect").find(NoteTemplate.class);
                 List<NoteTemplate> amphibia = DataSupport.where("speciesType=?", "amphibia").find(NoteTemplate.class);
                 List<NoteTemplate> reptiles = DataSupport.where("speciesType=?", "reptiles").find(NoteTemplate.class);
+                List<NoteTemplate> mamal = DataSupport.where("speciesType=?", "mamal").find(NoteTemplate.class);
 
                 noteTemplateList.add(bird);
                 noteTemplateList.add(insect);
                 noteTemplateList.add(amphibia);
                 noteTemplateList.add(reptiles);
+                noteTemplateList.add(mamal);
 
                 //将添加的笔记填充笔记模板中
                 for (List<Note> notes : noteList) {
@@ -306,7 +366,19 @@ public class RecordAlterActivity extends BaseActivity {
                             case SpeciesConstant.BIRD:
 
                                 for (NoteTemplate noteTemplate : bird) {
-                                    if (note.getSpeciesId() == noteTemplate.getSpeciesId()) {
+                                    if (note.getSpeciesId().equals( noteTemplate.getSpeciesId())) {
+                                        noteTemplate.setChekced(true);
+                                        noteTemplate.setRemark(note.getRemark());
+                                    }
+                                }
+
+                                break;
+
+
+                            case SpeciesConstant.INSECT:
+
+                                for (NoteTemplate noteTemplate : insect) {
+                                    if (note.getSpeciesId().equals( noteTemplate.getSpeciesId())) {
                                         noteTemplate.setChekced(true);
                                         noteTemplate.setRemark(note.getRemark());
                                     }
@@ -317,18 +389,7 @@ public class RecordAlterActivity extends BaseActivity {
                             case SpeciesConstant.AMPHIBIA:
 
                                 for (NoteTemplate noteTemplate : amphibia) {
-                                    if (note.getSpeciesId() == noteTemplate.getSpeciesId()) {
-                                        noteTemplate.setChekced(true);
-                                        noteTemplate.setRemark(note.getRemark());
-                                    }
-                                }
-
-                                break;
-
-                            case SpeciesConstant.INSECT:
-
-                                for (NoteTemplate noteTemplate : insect) {
-                                    if (note.getSpeciesId() == noteTemplate.getSpeciesId()) {
+                                    if (note.getSpeciesId().equals( noteTemplate.getSpeciesId())) {
                                         noteTemplate.setChekced(true);
                                         noteTemplate.setRemark(note.getRemark());
                                     }
@@ -339,7 +400,21 @@ public class RecordAlterActivity extends BaseActivity {
                             case SpeciesConstant.REPTILES:
 
                                 for (NoteTemplate noteTemplate : reptiles) {
-                                    if (note.getSpeciesId() == noteTemplate.getSpeciesId()) {
+                                    if (note.getSpeciesId().equals( noteTemplate.getSpeciesId())) {
+                                        noteTemplate.setChekced(true);
+                                        noteTemplate.setRemark(note.getRemark());
+                                    }
+                                }
+
+                                break;
+
+                            case SpeciesConstant.MAMAL:
+
+                                for (NoteTemplate noteTemplate : mamal) {
+
+
+                                    if (note.getSpeciesId().equals( noteTemplate.getSpeciesId())) {
+
                                         noteTemplate.setChekced(true);
                                         noteTemplate.setRemark(note.getRemark());
                                     }
@@ -366,7 +441,7 @@ public class RecordAlterActivity extends BaseActivity {
      */
     private NoteReq copyFromTemplate(NoteTemplate noteTemplate) {
 
-        NoteReq note=new NoteReq();
+        NoteReq note = new NoteReq();
         note.setRemark(noteTemplate.getRemark());
         note.setSpeciesId(noteTemplate.getSpeciesId());
         return note;

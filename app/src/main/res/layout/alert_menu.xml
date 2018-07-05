@@ -44,5 +44,20 @@
             android:layout_height="40dp"
 
             android:textColor="@color/textColor"/>
+
+        <View
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#d9d9d9"></View>
+        <TextView
+            android:id="@+id/browse_by_alpha"
+            android:gravity="center"
+            android:text="按拼音首字母"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:textColor="@color/textColor"/>
     </LinearLayout>
 </LinearLayout>

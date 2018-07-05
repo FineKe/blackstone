@@ -19,6 +19,7 @@ public class Species extends DataSupport{
     private String latinFamily;
     private String mainPhoto;
     private String speciesType;
+    private String chineseAbbr;
 
     public String getEnglishName() {
         return englishName;
@@ -98,5 +99,13 @@ public class Species extends DataSupport{
 
     public void setLatinFamily(String latinFamily) {
         this.latinFamily = latinFamily;
+    }
+
+    public String getChineseAbbr() {
+        return chineseAbbr;
+    }
+
+    public void setChineseAbbr(String chineseAbbr) {
+        this.chineseAbbr = chineseAbbr;
     }
 }

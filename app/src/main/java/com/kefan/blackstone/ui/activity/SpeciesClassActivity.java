@@ -279,24 +279,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     }
                 }
             }
-//            }else if(speciesList.size()==1)
-//            {
-//                positionList.add(0);
-//                indexList.add(speciesList.get(0).getLatinOrder().substring(0,1));
-//                Result result=new Result();
-//                result.setViewType(HEAD);
-//                result.setLatinHead(speciesList.get(0).getLatinOrder());
-//                result.setHead(speciesList.get(0).getOrder());
-//                resultList.add(result);
-//
-//                Result result1=new Result();
-//                result1.setViewType(ITEM);
-//                result1.setSpecies(speciesList.get(0));
-//                resultList.add(result1);
-//            }
         } else {//按科
-
-//            if (speciesList.size() > 1) {
             for (int i = 0; i < speciesList.size() - 1; i++) {
                 if (i == 0) {
                     indexList.add(speciesList.get(0).getFamily().substring(0, 1));
@@ -321,7 +304,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                             Result result = new Result();
                             result.setViewType(HEAD);
                             result.setLatinHead(speciesList.get(i).getLatinFamily());
-                            result.setHead(speciesList.get(i).getFamily());
+                            result.setHead(speciesList.get(i).getChineseAbbr());
                             resultList.add(result);
                             positionList.add(j);
                             j++;
@@ -335,23 +318,89 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     }
                 }
             }
-//            }else if(speciesList.size()==1) {
-//                positionList.add(0);
-//                indexList.add(speciesList.get(0).getFamily().substring(0, 1));
-//                Result result = new Result();
-//                result.setViewType(HEAD);
-//                result.setLatinHead(speciesList.get(0).getLatinFamily());
-//                result.setHead(speciesList.get(0).getFamily());
-//                resultList.add(result);
-//
-//                Result result1 = new Result();
-//                result1.setViewType(ITEM);
-//                result1.setSpecies(speciesList.get(0));
-//                resultList.add(result1);
-//            }
+
         }
     }
 
+
+    private void sortByAlpha() {
+        for (int i = 0; i < speciesList.size() - 1; i++) {
+            if (i == 0) {
+                indexList.add(speciesList.get(0).getChineseAbbr().substring(0, 1));
+            }
+
+            for (int i1 = 0; i1 < indexList.size(); i1++) {
+
+                if (speciesList.get(i + 1).getChineseAbbr().substring(0, 1).equals(indexList.get(i1))) {
+                    break;
+                }
+
+                if (i1 == indexList.size()-1) {
+                    indexList.add(speciesList.get(i+1).getChineseAbbr().substring(0,1));
+                }
+
+            }
+
+
+        }
+
+        sortAlpha(indexList);
+
+        int j = 0;
+        int m=0;
+        for (String s : indexList) {
+            int k = 0;
+            for (int i = 0; i < speciesList.size(); i++) {
+                if (s.equals(speciesList.get(i).getChineseAbbr().substring(0, 1))) {
+                    if (k == 0) {
+                        Result result = new Result();
+                        result.setViewType(HEAD);
+//                        result.setLatinHead(speciesList.get(i).getLatinFamily());
+                        result.setHead(indexList.get(m).toUpperCase());
+                        resultList.add(result);
+                        positionList.add(j);
+                        j++;
+                    }
+                    Result result = new Result();
+                    result.setViewType(ITEM);
+                    result.setSpecies(speciesList.get(i));
+                    resultList.add(result);
+                    j++;
+                    k++;
+                }
+            }
+            m++;
+        }
+
+        for (int i = 0; i < indexList.size(); i++) {
+
+            indexList.set(i,indexList.get(i).toUpperCase());
+
+        }
+    }
+
+
+    /**
+     * 对字母排序
+     */
+    private void sortAlpha(List<String> list) {
+
+        for (int i = 0; i < list.size(); i++) {
+
+            for (int j=0;j<list.size()-i-1;j++) {
+
+                if (list.get(j).compareTo(list.get(j + 1)) >0) {
+                    String temp = list.get(j);
+                    list.set(j,list.get(j+1));
+                    list.set(j+1,temp);
+                }
+
+            }
+
+        }
+
+
+    }
 
     private void initEvents() {
         actionBack.setOnClickListener(this);
@@ -458,6 +507,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         View alertMenuView = LayoutInflater.from(context).inflate(R.layout.alert_menu, null);
         TextView button2 = (TextView) alertMenuView.findViewById(R.id.browse_by_section);
         TextView button1 = (TextView) alertMenuView.findViewById(R.id.browse_by_order);
+        TextView alpha = (TextView) alertMenuView.findViewById(R.id.browse_by_alpha);
 
         alertMenuView.setMinimumWidth(display.getWidth());
         dialog.setContentView(alertMenuView);
@@ -585,6 +635,36 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
                 }
 
+            }
+        });
+
+        alpha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if (position <= 2||position>3) {
+                                    speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
+                                    resultList.clear();
+                                    positionList.clear();
+                                    indexList.clear();
+                                    sortByAlpha();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.notifyDataSetChanged();
+                                            sliderBar.setData(indexList, positionList);
+                                        }
+                                    });
+                                } else {
+                                    speciesList = DataSupport.where("chineseName=?", getIntent().getStringExtra("speciesClassName")).find(Species.class);
+                                }
+                            }
+                        }).start();
             }
         });
 

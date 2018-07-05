@@ -50,6 +50,7 @@ public class JsonResolverList {
                     if (object.has("englishName")) {
                         species.setEnglishName(object.getString("englishName"));
                     }
+                    species.setChineseAbbr(object.getString("chineseAbbr"));
                     species.setOrder(object.getString("order"));
                     species.setFamily(object.getString("family"));
                     species.setLatinOrder(object.getString("orderLatin"));
@@ -74,6 +75,7 @@ public class JsonResolverList {
                 JSONObject object = insect.getJSONObject(i);
                 Species species = new Species();
                 species.setSingal(object.getInt("id"));
+                species.setChineseAbbr(object.getString("chineseAbbr"));
                 species.setChineseName(object.getString("chineseName"));
                 species.setLatinName(object.getString("latinName"));
                 species.setOrder(object.getString("order"));

@@ -10,6 +10,7 @@ import com.kefan.blackstone.ui.activity.UpdateToken;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +31,16 @@ public class VolleyRequest {
      */
     public static JsonObjectRequest baseRequest(int method, String url, JSONObject data, Response.Listener listener, Response.ErrorListener errorListener) {
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(method,url,data,listener,errorListener);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(method,url,data,listener,errorListener){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String,String> header=new HashMap<>();
+                header.put("ua","Android/2.1.0");
+                return header;
+
+            }
+        };
 
         return jsonRequest;
     }
@@ -60,6 +70,9 @@ public class VolleyRequest {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(method,url,data,listener,errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+
+                header.put("ua","Android/2.1.0");
+
                 return header;
             }
         };

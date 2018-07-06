@@ -34,23 +34,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 设置AppKey -->
-        <meta-data
-            android:name="PROJECT_KEY"
-            android:value="e20636cd3cd1295bb49b76aa0bac2727" />
-        <!-- 设置渠道信息 -->
-        <meta-data
-            android:name="CHANNEL"
-            android:value="" />
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="59391631310c9350ca0000bd" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="2d07c154133bd5253ca02e416e3ae7cb" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="902b0a942fa8043b1cc3302b607e7b4d" />
+            android:value="782f20765766b63a608d86e066bbfe10" />
 
         <activity
             android:name=".ui.activity.MainActivity"
@@ -75,7 +62,7 @@
             android:name="design_height"
             android:value="1920" />
 
-        <service android:name="com.amap.api.location.APSService" />
+        <service android:name="com.amap.api.location.APSService"></service>
 
         <activity
             android:name=".ui.activity.RegisterActivity"
@@ -166,6 +153,8 @@
         <activity android:name="ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RankActivity" />
         <activity android:name=".ui.activity.MyCollectionActivity"></activity>
+
+
     </application>
 
 </manifest>

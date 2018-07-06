@@ -2,10 +2,10 @@ package com.kefan.blackstone.ui.fragment;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -15,14 +15,13 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
-import com.android.volley.AuthFailureError;
+import com.amap.api.location.AMapLocationListener;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.kefan.blackstone.BlackStoneApplication;
 import com.kefan.blackstone.JavaBean.APIManager;
 import com.kefan.blackstone.R;
@@ -41,7 +40,6 @@ import com.kefan.blackstone.service.impl.RecordServiceImpl;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
 import com.kefan.blackstone.ui.activity.AddNotesActivity;
 import com.kefan.blackstone.ui.activity.MainActivity;
-import com.kefan.blackstone.ui.activity.UpdateToken;
 import com.kefan.blackstone.ui.adapter.AddRecordExpandAdapter;
 import com.kefan.blackstone.util.ToastUtil;
 import com.kefan.blackstone.vo.UpLoadRecordVo;
@@ -57,17 +55,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import ch.ielse.view.SwitchView;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by MY SHIP on 2017/3/18.
@@ -80,17 +74,7 @@ public class AddRecordFragment extends BaseFragment {
     public static final int LOAD_NODE_TEMPLATE_COMPLETE = 1;
 
 
-    private String loginURL = APIManager.BASE_URL + "v1/user/login";
-    private String upLoadRecordURL = APIManager.BASE_URL + "v1/record/new";
-    private RequestQueue requestQueue;
-    private JsonObjectRequest upLoadRequest;
-
     private String TAG = "AddRecordFragment";
-
-
-    private SharedPreferences userInformationSharedPreferences;
-    private SharedPreferences.Editor userInformationEditor;
-    private String userInformation = "UesrInformation";
 
 
     private boolean datePickerShow = false;
@@ -100,12 +84,14 @@ public class AddRecordFragment extends BaseFragment {
 
     private int year, month, day;
 
-    private String token;
 
     private List<String> group;
+
     private List<List<NoteTemplate>> noteTemplateList;
 
     private AMapLocationClient mapLocationClient;
+
+    private AMapLocationListener locationListener;
 
 
     private HeaderBar headerBar;
@@ -140,6 +126,9 @@ public class AddRecordFragment extends BaseFragment {
     private int childPosition;
 
 
+    private Double lat=0.0;
+    private Double lon = 0.0;
+
     @Override
     public int setLayout() {
         return R.layout.fragment_add_record;
@@ -155,6 +144,17 @@ public class AddRecordFragment extends BaseFragment {
         group = new ArrayList<>();
         noteTemplateList = new ArrayList<>();
         adapter = new AddRecordExpandAdapter(group, noteTemplateList);
+
+        mapLocationClient=new AMapLocationClient(getContext());
+        locationListener=new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+
+                lat=aMapLocation.getLatitude();
+                lon=aMapLocation.getLongitude();
+
+            }
+        };
 
         createNoteTemplate();
 
@@ -278,6 +278,15 @@ public class AddRecordFragment extends BaseFragment {
 
             }
         });
+
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+
+        } else {
+            mapLocationClient.setLocationListener(locationListener);
+            mapLocationClient.stopLocation();
+        }
     }
 
     @Override
@@ -292,14 +301,41 @@ public class AddRecordFragment extends BaseFragment {
     }
 
 
-    public void getLocation() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        if (requestCode == 1) {
+
+            int j = 0;
+            for (int i = 0; i < grantResults.length; i++) {
+
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    ToastUtil.showToast(getContext(), "权限拒绝");
+                } else {
+                    j++;
+                }
+
+            }
+
+            if (j == permissions.length) {
+
+                mapLocationClient.setLocationListener(locationListener);
+                mapLocationClient.stopLocation();
+
+            }
 
         }
+
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mapLocationClient.stopLocation();
+        mapLocationClient.onDestroy();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -487,6 +523,10 @@ public class AddRecordFragment extends BaseFragment {
         record.setLat(0.0);
         record.setLon(0.0);
         record.setNotes(notes);
+
+        record.setLat(lat);
+        record.setLon(lon);
+
         return record;
     }
 

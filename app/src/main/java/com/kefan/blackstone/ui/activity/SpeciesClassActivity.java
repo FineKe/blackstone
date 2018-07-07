@@ -151,12 +151,34 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
         speciesList = DataSupport.where("speciesType=?", getIntent().getStringExtra("speciesType")).find(Species.class);
 
         if (position == 3) {
-            sortingByOrder = true;
+
+            insectCreateIndexList();
+            return;
         }
 
         createIndexList(speciesList);
     }
 
+
+
+    private void insectCreateIndexList() {
+
+        for (int i = 0; i < speciesList.size(); i++) {
+            indexList.add(speciesList.get(i).getOrder().substring(0, 1));
+            positionList.add(i*2);
+            Result head = new Result();
+            head.setHead(speciesList.get(i).getOrder());
+            head.setViewType(HEAD);
+            head.setLatinHead(speciesList.get(i).getLatinOrder());
+
+            Result item=new Result();
+            item.setViewType(ITEM);
+            item.setSpecies(speciesList.get(i));
+            resultList.add(head);
+            resultList.add(item);
+        }
+
+    }
 
     private void createIndexList(List<Species> speciesList) {
         if (sortingByOrder) {
@@ -193,6 +215,12 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                     result.setSpecies(speciesList.get(i));
                     resultList.add(result);
                 }
+
+            }
+
+            for (Result result : resultList) {
+
+                System.out.println(result.toString());
 
             }
         } else {//按科
@@ -535,6 +563,7 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
                                     resultList.clear();
                                     positionList.clear();
                                     indexList.clear();
+
                                     createIndexList(speciesList);
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -764,6 +793,17 @@ public class SpeciesClassActivity extends AutoLayoutActivity implements View.OnC
 
         public void setSpecies(Species species) {
             this.species = species;
+        }
+
+
+        @Override
+        public String toString() {
+            return "Result{" +
+                    "viewType=" + viewType +
+                    ", head='" + head + '\'' +
+                    ", latinHead='" + latinHead + '\'' +
+                    ", species=" + species +
+                    '}';
         }
     }
 

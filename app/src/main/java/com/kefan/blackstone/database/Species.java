@@ -108,4 +108,21 @@ public class Species extends DataSupport{
     public void setChineseAbbr(String chineseAbbr) {
         this.chineseAbbr = chineseAbbr;
     }
+
+    @Override
+    public String toString() {
+        return "Species{" +
+                "singal=" + singal +
+                ", chineseName='" + chineseName + '\'' +
+                ", englishName='" + englishName + '\'' +
+                ", latinName='" + latinName + '\'' +
+                ", order='" + order + '\'' +
+                ", latinOrder='" + latinOrder + '\'' +
+                ", family='" + family + '\'' +
+                ", latinFamily='" + latinFamily + '\'' +
+                ", mainPhoto='" + mainPhoto + '\'' +
+                ", speciesType='" + speciesType + '\'' +
+                ", chineseAbbr='" + chineseAbbr + '\'' +
+                '}';
+    }
 }

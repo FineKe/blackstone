@@ -40,6 +40,7 @@
   public *;
 }
 -keep class com.kefan.blackstone.vo.**{*;}
+-keep class com.kefan.blackstone.database.**{*;}
 -keep class com.kefan.blackstone.model.**{*;}
 -keep class com.kefan.blackstone.data.req.**{*;}
 -keep class com.kefan.blackstone.data.response.**{*;}
@@ -195,3 +196,16 @@
    **[] $VALUES;
    public *;
  }
+
+
+ -dontwarn org.litepal.*
+ -keep class org.litepal.** { *; }
+ -keep enum org.litepal.**
+ -keep interface org.litepal.** { *; }
+ -keep public class * extends org.litepal.**
+ -keepattributes *Annotation*
+ -keepclassmembers enum * {
+     public static **[] values();
+     public static ** valueOf(java.lang.String);
+ }
+-keepclassmembers class * extends org.litepal.crud.DataSupport{*;}

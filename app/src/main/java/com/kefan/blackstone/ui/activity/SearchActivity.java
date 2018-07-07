@@ -76,7 +76,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         myListViewAdapter = new MyListViewAdapter(myList);
         historyRecordList = DataSupport.limit(10).find(HistoryRecord.class);
 
-        historySearchAdapter=new HistorySearchAdapter(historyRecordList);
+        historySearchAdapter = new HistorySearchAdapter(historyRecordList);
 
     }
 
@@ -101,7 +101,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         history = (LinearLayout) findViewById(R.id.activity_search_view_linear_layout_history);
         listView = (ListView) findViewById(R.id.activity_search_view_list_view);
         listViewHistory = (RecyclerView) findViewById(R.id.activity_search_list_view_history);
-        listViewHistory.setLayoutManager(new GridLayoutManager(this,3));
+        listViewHistory.setLayoutManager(new GridLayoutManager(this, 3));
         listViewHistory.setAdapter(historySearchAdapter);
         listView.setAdapter(myListViewAdapter);
         input.addTextChangedListener(new TextWatcher() {
@@ -144,6 +144,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
             }
         });
+
+
     }
 
     private void updateAdapter(String s) {
@@ -278,7 +280,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    public static class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdapter.ViewHolder>{
+    public class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdapter.ViewHolder> {
 
         List<HistoryRecord> historyRecordList;
 
@@ -288,13 +290,24 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.search_view_history_item,null);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_view_history_item, null);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.textView.setText(historyRecordList.get(position).getChineseName());
+
+            holder.textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HistoryRecord historyRecord = historyRecordList.get(position);
+                    Intent intent = new Intent(SearchActivity.this, SpeciesDeatailedActivity.class);
+                    intent.putExtra("singal", historyRecord.getSingal());
+                    intent.putExtra("speciesType", historyRecord.getSpeciesType());
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -302,16 +315,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             return historyRecordList.size();
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder {
+        public  class ViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.search_view_history_item_text_view)
             TextView textView;
 
-
-//            convertView.setTag(historyRecordList.get(position));
-
             public ViewHolder(View itemView) {
                 super(itemView);
-                ButterKnife.bind(this,itemView);
+                ButterKnife.bind(this, itemView);
             }
         }
 

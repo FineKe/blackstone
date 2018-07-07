@@ -1,17 +1,13 @@
 package com.kefan.blackstone.data.req;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 /**
  * @note:
  * @author: fine
  * @time: 2018/6/30 上午12:03
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class NoteReq {
 
     /**
@@ -23,4 +19,28 @@ public class NoteReq {
      * 描述
      */
     private String remark;
+
+    public NoteReq() {
+    }
+
+    public NoteReq(Long speciesId, String remark) {
+        this.speciesId = speciesId;
+        this.remark = remark;
+    }
+
+    public Long getSpeciesId() {
+        return speciesId;
+    }
+
+    public void setSpeciesId(Long speciesId) {
+        this.speciesId = speciesId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

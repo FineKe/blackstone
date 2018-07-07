@@ -1,17 +1,11 @@
 package com.kefan.blackstone.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * @note:
  * @author: fine
  * @time: 2018/6/23 下午6:09
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class TestVO {
 
     /**
@@ -28,4 +22,37 @@ public class TestVO {
      * 物种类型
      */
     private String speciesType;
+
+    public TestVO() {
+    }
+
+    public TestVO(String img, int speciesId, String speciesType) {
+        this.img = img;
+        this.speciesId = speciesId;
+        this.speciesType = speciesType;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getSpeciesId() {
+        return speciesId;
+    }
+
+    public void setSpeciesId(int speciesId) {
+        this.speciesId = speciesId;
+    }
+
+    public String getSpeciesType() {
+        return speciesType;
+    }
+
+    public void setSpeciesType(String speciesType) {
+        this.speciesType = speciesType;
+    }
 }

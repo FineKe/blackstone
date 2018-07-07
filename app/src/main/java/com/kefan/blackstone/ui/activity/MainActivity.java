@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +55,7 @@ import com.kefan.blackstone.database.Mamal;
 import com.kefan.blackstone.database.Record;
 import com.kefan.blackstone.database.Reptiles;
 import com.kefan.blackstone.database.Species;
+import com.kefan.blackstone.receiver.LoginReceiver;
 import com.kefan.blackstone.receiver.LogoutReceiver;
 import com.kefan.blackstone.service.UserService;
 import com.kefan.blackstone.service.impl.UserServiceImpl;
@@ -187,6 +189,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private LogoutReceiver logoutReceiver;
 
+    private LoginReceiver loginReceiver;
+
+    public Fragment currentFragment=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,9 +248,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         updateUserInformation(this);
 
+        //注册登出广播接收者
         logoutReceiver=new LogoutReceiver(this);
         IntentFilter filter=new IntentFilter("logout");
         registerReceiver(logoutReceiver,filter);
+
+        //注册登录广播接收者
+        loginReceiver=new LoginReceiver(this);
+        IntentFilter loginFilter = new IntentFilter("login");
+        registerReceiver(loginReceiver,loginFilter);
 
     }
 
@@ -268,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(R.id.fl_content_main_activity, homeFragment)
                 .commit();
 
+        currentFragment=homeFragment;
 
     }
 
@@ -302,7 +315,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 closeDrawer();
-                alterPicture();
+                if (userService.isLogined()) {
+
+                    alterPicture();
+                }
 
             }
         });
@@ -342,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, homeFragment)
                         .commit();
+                currentFragment = homeFragment;
                 break;
             //指南点击切换
             case R.id.ll_guide_main_activity:
@@ -353,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, guideFragment)
                         .commit();
-
+                currentFragment=guideFragment;
                 break;
 
             //添加记录切换
@@ -373,6 +390,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .replace(R.id.fl_content_main_activity, addRecordFragment)
                         .commit();
 
+                currentFragment=addRecordFragment;
                 break;
 
             //小测试切换
@@ -391,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, testingFragment)
                         .commit();
-
+                currentFragment=testingFragment;
                 break;
 
             //收藏切换
@@ -411,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, collectionHomeFragment)
                         .commit();
-
+                currentFragment=collectionHomeFragment;
                 break;
 
             //观察记录切换
@@ -430,7 +448,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, observeRecordFragment)
                         .commit();
-
+                currentFragment=observeRecordFragment;
                 break;
 
             //切换到设置
@@ -444,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, settingFragment)
                         .commit();
-
+                currentFragment=settingFragment;
                 break;
 
             //团队信息
@@ -458,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .beginTransaction()
                         .replace(R.id.fl_content_main_activity, teamFragment)
                         .commit();
-
+                currentFragment=teamFragment;
                 break;
 
         }
@@ -740,7 +758,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case HandlerConstant.LOGIN_SUCCESS:
 
                     initUserView();
-
+                    Intent intent=new Intent("login");
+                    sendBroadcast(intent);
                     break;
 
 
@@ -788,5 +807,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(logoutReceiver);
+        unregisterReceiver(loginReceiver);
     }
 }

@@ -2,10 +2,6 @@ package com.kefan.blackstone.database;
 
 import org.litepal.crud.DataSupport;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * @note: 小测试记录
  * @author: fine

@@ -1,17 +1,12 @@
 package com.kefan.blackstone.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @note:
  * @author: 柯帆
  * @date: 2018/6/9 下午11:29
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class UserVO {
 
     /**
@@ -45,4 +40,63 @@ public class UserVO {
      */
     private String avatar;
 
+    public UserVO() {
+    }
+
+    public UserVO(int id, String mobile, String studentId, String name, String gender, String avatar) {
+        this.id = id;
+        this.mobile = mobile;
+        this.studentId = studentId;
+        this.name = name;
+        this.gender = gender;
+        this.avatar = avatar;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

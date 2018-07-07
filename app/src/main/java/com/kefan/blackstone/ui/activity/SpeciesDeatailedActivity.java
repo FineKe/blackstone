@@ -808,7 +808,7 @@ public class SpeciesDeatailedActivity extends AutoLayoutActivity implements View
             };
             speciesDetailedRequest.setRetryPolicy(new DefaultRetryPolicy(1000, 1, 1.0f));
             requestQueue.add(speciesDetailedRequest);
-        } else if (NetWorkUtil.isConnected(this)) {
+        } else if (!userService.isLogined()&&NetWorkUtil.isConnected(this)) {
             JsonObjectRequest speciesDetailedRequest = new JsonObjectRequest(Request.Method.GET, getSpeciesDetailedURL + singal, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {

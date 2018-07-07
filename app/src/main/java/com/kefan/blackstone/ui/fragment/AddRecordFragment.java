@@ -285,7 +285,7 @@ public class AddRecordFragment extends BaseFragment {
 
         } else {
             mapLocationClient.setLocationListener(locationListener);
-            mapLocationClient.stopLocation();
+            mapLocationClient.startLocation();
         }
     }
 
@@ -307,23 +307,12 @@ public class AddRecordFragment extends BaseFragment {
 
         if (requestCode == 1) {
 
-            int j = 0;
-            for (int i = 0; i < grantResults.length; i++) {
-
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    ToastUtil.showToast(getContext(), "权限拒绝");
-                } else {
-                    j++;
-                }
-
-            }
-
-            if (j == permissions.length) {
+            if (grantResults.length > 0) {
 
                 mapLocationClient.setLocationListener(locationListener);
-                mapLocationClient.stopLocation();
-
+                mapLocationClient.startLocation();
             }
+
 
         }
 
@@ -520,10 +509,7 @@ public class AddRecordFragment extends BaseFragment {
         record.setUserId(userService.getUser().getId());
         record.setTime(getTime());
         record.setAddToObservedList(false);
-        record.setLat(0.0);
-        record.setLon(0.0);
         record.setNotes(notes);
-
         record.setLat(lat);
         record.setLon(lon);
 

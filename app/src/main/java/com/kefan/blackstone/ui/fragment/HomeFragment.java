@@ -17,6 +17,7 @@ import com.baoyz.widget.PullRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.kefan.blackstone.R;
 import com.kefan.blackstone.ShapeUtil.GlideRoundTransform;
+import com.kefan.blackstone.common.HandlerConstant;
 import com.kefan.blackstone.common.IntentFieldConstant;
 import com.kefan.blackstone.data.listener.BaseErrorListener;
 import com.kefan.blackstone.data.listener.BaseResponseListener;
@@ -408,6 +409,7 @@ public class HomeFragment extends BaseFragment {
                     refreshLayout.setRefreshing(false);
 
                     break;
+
             }
         }
     };

@@ -2,19 +2,13 @@ package com.kefan.blackstone.data.response;
 
 import com.kefan.blackstone.common.CommonConstant;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * @note: 基础响应bean
  * @author: 柯帆
  * @date: 2018/6/9 下午11:18
  */
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class BaseResponse <T>{
 
     /**
@@ -44,4 +38,36 @@ public class BaseResponse <T>{
 
     }
 
+    public BaseResponse() {
+    }
+
+    public BaseResponse(int code, T data, String message) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

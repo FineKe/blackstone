@@ -1,3 +1,4 @@
+
 package com.kefan.blackstone.JavaBean;
 
 /**
@@ -10,7 +11,7 @@ public class APIManager {
 
     private static final String BASE_DEV_URL ="http://api.blackstone.ebirdnote.cn/";
 
-    public static final String BASE_URL= BASE_DEV_URL;
+    public static final String BASE_URL= BASE_PROD_URL;
 
     public static final String LOGIN_URL = BASE_URL + "v1/user/login";
 
